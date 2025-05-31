@@ -1,0 +1,147 @@
+<section class="main-content" style="top: 70px;">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/vendordashboard/homepage">Dashboard</a></li>
+        <li><a routerLink="/vendordashboard/total_Quotation"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Vendor Dashboard </a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">RFP Details</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo"
+                src="../../../../../assets/images/RFP.png">
+            </p>
+            <span class="float-right text widget-r-m"></span>
+
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigateUrl(1)">Total RFP</span>
+                  <span class="status-value">{{dashboardData?.total_rfp}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigateUrl(2)">Pending
+                    RPF</span>
+                  <span class="status-value"> {{dashboardData?.pending_rfp}}</span>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">Quotation Details</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo"
+                src="../../../../../assets/images/Quotations.png">
+            </p>
+            <span class="float-right text widget-r-m"></span>
+
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigatetototalQuotaion()">Total
+                    Quotation</span>
+                  <span class="status-value">{{dashboardData?.total_quotation}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigateToPo()">Purchase Order
+                    Details</span>
+                  <span class="status-value"> {{dashboardData?.po_vs_quotation}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--     
+    <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">GRN Details</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo"
+                src="../../../../../assets/images/grn.png">
+            </p>
+            <span class="float-right text widget-r-m"></span>
+
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigateUrlGrn()">New GRN</span>
+                  <span class="status-value">{{dashboardData?.po_vs_quotation}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigateToGRN()">GRN Details</span>
+                  <span class="status-value">{{dashboardData?.grn_complete}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>  -->
+
+    <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">Delivery Challan Details</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo"
+                src="../../../../../assets/images/delivery-challan.png">
+            </p>
+            <span class="float-right text widget-r-m"></span>
+
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigateUrlGrn()">Delivery
+                    Challan</span>
+                  <span class="status-value">{{dashboardData?.po_vs_quotation}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;">
+                  <span class="status-key" style="text-transform: capitalize;" (click)="navigateUrlChallanList()">Delivery
+                    Challan Details</span>
+                  <span class="status-value">{{dashboardData?.po_vs_quotation}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

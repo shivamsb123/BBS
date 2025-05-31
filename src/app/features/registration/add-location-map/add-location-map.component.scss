@@ -1,0 +1,51 @@
+#myInputtest {
+  position: relative;
+}
+
+.fa.fa-angle-down {
+  position: absolute;
+  right: 13px;
+  top: 7px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #999;
+}
+
+.table-data {
+  margin-top: 2px;
+  border: 1px solid #b5b5b6;
+
+  .table-content {
+    display: block;
+    padding: 5px;
+  }
+
+  li {
+    padding: 5px !important;
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+}
+
+.table-value {
+  margin-top: 2px;
+  border: 1px solid #b5b5b6;
+  height: 300px;
+  overflow: auto;
+
+  .table-content {
+    display: block;
+    padding: 5px;
+  }
+
+  li {
+    padding: 5px !important;
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+
+}

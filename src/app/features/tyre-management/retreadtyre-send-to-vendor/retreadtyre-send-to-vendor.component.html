@@ -1,0 +1,141 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Maintenance/TyreMaster">Tyre Management</a></li>
+        <li><a routerLink="/Maintenance/retread_tyre_vendor"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Retread Tyre Send To Vendor</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="retreadTyreForm">
+            <div class="row">
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Zone Name </label>
+                </div>
+                <input type="text" class="form-control" formControlName="zone" placeholder="Search Zone Name." />
+              </div>
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Send Date</label>
+                </div>
+                <input type="text" class="form-control" placeholder="select date" formControlName="date" #dp="bsDatepicker" bsDatepicker>
+              </div>
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Vendor Name </label>
+                </div>
+                <input type="text" class="form-control" formControlName="vendorName"
+                  placeholder="Search Vendor Name." />
+              </div>
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Vendor Mobile </label>
+                </div>
+                <input type="text" formControlName="mobileNo" class="form-control" placeholder="Vendor Mobile ">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-lg-3"></div>
+              <div class="col-md-4 col-lg-3"></div>
+              <div class="col-md-4 col-lg-3"></div>
+              <div class="col-md-4 col-lg-3">
+                <button class="btn btn-primary" [disabled]="!retreadTyreForm.valid || !this.isSelectedAll" (click)="submit(retreadTyreForm.value)">
+                 <i class="fa fa-save"></i> Save
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of vendorData | searchFilter: searchKeyword |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};let i = index">
+                                      <td><input type="checkbox" [ngModel]="selectedIndex === i"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (change)="changeSelection($event, i, vehicle)"></td>
+                          <td>
+                            <!-- <div *ngIf="selectedValue">
+                              <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                  [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                  (onConfirm)="confirm($event)"></select-filter>
+                          </div>
+                          <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                              <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                  [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                          </div>
+                          <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                              <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                  (onConfirm)="confirm($event)"></select-filter>
+                          </div> -->
+
+                          {{vehicle?.vehiclE_NO}}
+                          </td>
+                          <td>
+                            {{vehicle?.tyrE_NO}}
+                          </td>
+                          <td>
+                            {{vehicle?.tyrE_MAKE}}
+                          </td>
+                          <td>
+                            {{vehicle?.tyrE_TYPE}}
+                          </td>
+                          <td>
+                            {{vehicle?.nsd}}
+                          </td>
+                          <td>
+                            {{vehicle?.fitteD_TYRE_KM}}
+                          </td>
+                          <td>
+                            <input type="text" value="{{vehicle?.retreaD_TYRE_KM}}" (change)="onChange($event)">
+                          </td>
+                          <td>
+                            {{vehicle?.status}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center"
+                      *ngIf="vendorData && vendorData.length == 0 || vendorData == null && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+                  <div class="pagination-data" *ngIf="vendorData && vendorData.length > 0">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

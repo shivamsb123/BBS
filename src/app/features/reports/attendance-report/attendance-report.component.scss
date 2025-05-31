@@ -1,0 +1,49 @@
+#EmpAttd {
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #c1c1c1;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+.EmpAttdOut tr,
+.EmpAttdIn tr {
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+    background: transparent;
+}
+
+th {
+    padding: 8px;
+    text-align: center;
+}
+
+#EmpAttd th {
+    border-top: none;
+    border-bottom: none;
+}
+
+.search-form {
+    float: right;
+  }
+  
+  .search-input {
+    border-color:#2f387c !important;
+  }
+  
+  .search-form .btn-search {
+    color: #2f387c;
+  }
+  #select-map{
+    color: blue !important;
+    cursor: pointer;
+  }
+
+  .count {
+    padding: 10px 0 0 0;
+    display: flex;
+    justify-content: space-between;
+  }

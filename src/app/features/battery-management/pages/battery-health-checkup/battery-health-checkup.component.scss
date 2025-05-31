@@ -1,0 +1,23 @@
+.select-type {
+    display: inline-block;
+    .mr-2.btn-icon.btn-icon-only.btn.btn-primary {
+        width: 100%;
+        margin: 30px 0px 0px 17px;
+      }
+
+      .mr-2.btn-icon.btn-icon-only.btn.btn-success {
+        width: 100%;
+        margin-top: 30px;
+      }
+  }
+  .search-form {
+    float: right;
+  }
+  
+  .search-input {
+    border-color:#2f387c !important;
+  }
+  
+  .search-form .btn-search {
+    color: #2f387c;
+  }

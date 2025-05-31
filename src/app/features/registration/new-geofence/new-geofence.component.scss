@@ -1,0 +1,37 @@
+.geo{
+    display: flex;
+    align-items: baseline;
+}
+:ng-deep{
+    .mx-search-box {
+        max-width: 45px;
+    }
+} 
+::ng-deep {
+    .text-left.suggestion-p {
+      display: none !important;
+    }
+  }
+  .mx-search-suggestions{
+    border: 1px solid #b1b1b1;
+      border-radius: 5px;
+      overflow: hidden;
+    position: absolute;
+    background: #FFFFFF;
+    width: 100%;
+    max-width: 314px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    z-index: 1050;
+    overflow: hidden;
+    overflow-y: auto;
+    display: block;
+    cursor: pointer;
+    ul{
+      line-height: 30px;
+    }
+    ul:hover {
+      background: lightgrey;
+    }
+  }

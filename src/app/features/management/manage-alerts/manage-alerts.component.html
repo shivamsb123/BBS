@@ -1,0 +1,263 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/Management/Alert_Settings"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Manage Alert</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-xl-3">
+      <div *ngIf="alertTypeData && alertTypeData?.length > 0">
+        <select-filter [vehicleData]="alertTypeData" [type]="'alert_type'" [placeholder]="'Select Alert Type'"
+          (onConfirm)="confirm($event)"></select-filter>
+      </div>
+      <div *ngIf="!alertTypeData || alertTypeData.length == 0">
+        <select-filter [type]="'alert_type'" [placeholder]="'Select Alert Type'"
+          (onConfirm)="confirm($event)"></select-filter>
+      </div>
+    </div>
+  </div>
+  <div class="row row-data">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header card-default">
+          Vehicles assigned for selected alert
+        </div>
+        <div class="card-body">
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody"
+                    [ngClass]="alertList?.assignedVehicleList && alertList?.assignedVehicleList?.length > 10 ? 'rpf-data' : ''">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of alertList?.assignedVehicleList;let i = index">
+                          <td><input type="checkbox" [ngModel]="selectedvehicleIndex === i"
+                              (change)="changeVehicleSelection($event, i, vehicle)" /></td>
+                          <td>{{vehicle?.text}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center" style="width: 100%;"
+                      *ngIf="alertList?.assignedVehicleList && alertList?.assignedVehicleList.length == 0 || alertList?.assignedVehicleList == null && !isloading">
+                      No Data Available</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row row-data">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="col-md-6">
+              <button class="btn btn-success" [disabled]="!selectedZoneId || !alertypeValue"
+                (click)="removeAlert()"><i class="fa fa-unlink"></i>Unlink Selected Device</button>
+            </div>
+          </div>
+          <div class="mt-3">
+            <form [formGroup]="selectedVehicleForm">
+              <div class="row row-data">
+                <div class="card-header card-default">
+                  Alert settings for selected vehicle
+                </div>
+                <br>
+                <div class="col-md-12 mt-3">
+                  <label for="exampleInputEmail1" class="form-label">Raise alert for duration of (in minutes) equal to
+                    or greater than </label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="alertvalue"
+                      placeholder="Enter Vehicle Code " aria-describedby="button-addon2" />
+                  </div>
+                </div>
+                <div class="card-header card-default mt-5">
+                  For Support Team
+                </div>
+                <div class="col-md-12 mt-3">
+                  <label for="exampleInputEmail1" class="form-label">Email Address(s) </label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="email"
+                      placeholder="Enter Email Address(s)" aria-describedby="button-addon2" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">Mobile Number(s)</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="phn"
+                      placeholder="Enter Mobile Number(s)" aria-describedby="button-addon2" />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">Repeat After (minutes) </label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="repatafter"
+                      placeholder="Enter Repeat After (minutes) " aria-describedby="button-addon2" />
+                  </div>
+                </div>
+                <div class="card-header card-default mt-5">
+                  For Higher Management
+                </div>
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">Email Address(s) </label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="emailHigher"
+                      placeholder="Enter Email Address(s)" aria-describedby="button-addon2" />
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">Mobile Number(s)</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="phnHigher"
+                      placeholder="Enter Mobile Number(s)" aria-describedby="button-addon2" />
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">Repeat After (minutes) </label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="repeatHigher"
+                      placeholder="Enter Repeat After (minutes)" aria-describedby="button-addon2" />
+                  </div>
+                </div>
+              </div>
+              <div class="row row-data">
+                <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+                </app-alert>
+                <div class="col-md-6">
+                  <button class="btn btn-primary" [disabled]="!alertypeValue || !selectedZoneId" (click)="update(selectedVehicleForm.value)"><i class="fa fa-edit"></i>Update Details</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header card-default">
+          Vehicles not assigned for selected alert
+        </div>
+        <div class="card-body">
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody"
+                    [ngClass]="alertList?.notAssignedVehicleList && alertList?.notAssignedVehicleList?.length > 10 ? 'rpf-data' : ''">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of alertList?.notAssignedVehicleList">
+                          <td><input type="checkbox" /></td>
+                          <td>{{vehicle?.text}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center" style="width: 100%;"
+                      *ngIf="alertList?.notAssignedVehicleList && alertList?.notAssignedVehicleList.length == 0 || alertList?.notAssignedVehicleList == null && !isloading">
+                      No Data Available</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <form [formGroup]="notselectedVehicleForm">
+            <div class="row row-data">
+              <div class="card-header card-default">
+                Alert settings
+              </div>  
+              <div class="col-md-12 mt-3">
+                <label for="exampleInputEmail1" class="form-label">Overspeed limit in Km/Hour</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" formControlName="overSpeed" placeholder="Enter Km/Hour"
+                    aria-describedby="button-addon2" />
+                </div>
+              </div>
+  
+              <div class="card-header card-default mt-5">
+                For Support Team
+              </div>
+  
+              <div class="col-md-12 mt-3">
+                <label for="exampleInputEmail1" class="form-label">Email Address(s) - Muliple records must be seperated by
+                  ',' or ';' </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" formControlName="email" placeholder="Enter Email Address" aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label for="exampleInputEmail1" class="form-label">Mobile Number(s) - Muliple records must be seperated by
+                  ',' or ';'</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" formControlName="phn" placeholder="Enter Mobile Number" aria-describedby="button-addon2" />
+                </div>
+              </div>
+  
+              <div class="col-md-12">
+                <label for="exampleInputEmail1" class="form-label">Repeat After (minutes)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" formControlName="repatafter" placeholder="Enter Repeat After" aria-describedby="button-addon2" />
+                </div>
+              </div>   
+              <div class="card-header card-default mt-5">
+                For Higher Management
+              </div>
+  
+              <div class="col-md-12 mt-3">
+                <label for="exampleInputEmail1" class="form-label">Email Address(s) - Muliple records must be seperated by
+                  ',' or ';'
+                </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" formControlName="emailHigher" placeholder="Enter Email Address  " aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label for="exampleInputEmail1" class="form-label">Mobile Number(s) - Muliple records must be seperated by
+                  ',' or ';'</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" formControlName="phnHigher" placeholder="Enter Mobile Number" aria-describedby="button-addon2" />
+                </div>
+              </div>
+  
+              <div class="col-md-12">
+                <label for="exampleInputEmail1" class="form-label">Repeat After (minutes)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" formControlName="repeatHigher" placeholder="Enter Repeat After" aria-describedby="button-addon2" />
+                </div>
+              </div>
+  
+            </div>
+            <div class="row row-data">
+              <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+              </app-alert>
+              <div class="col-md-6">
+                <button class="btn btn-primary" [disabled]="!selectedZoneId || !alertypeValue" (click)="addAlert(notselectedVehicleForm.value)"><i class="fa fa-plus" aria-hidden="true"></i> Add Alert</button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</section>

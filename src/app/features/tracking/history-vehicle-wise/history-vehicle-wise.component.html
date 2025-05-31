@@ -1,0 +1,253 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/rTracking/Tracking_Live">Tracking</a></li>
+        <li><a routerLink="/Tracking/Tracking_History"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>History
+            - Vehicle wise</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <div class="row row-data">
+          <div class="col-md-3">
+            <form [formGroup]="historyVehicleForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">Select Route</label>
+                  <div *ngIf="routeList && routeList.length > 0 ">
+                    <select-filter [vehicleData]="routeList" [type]="'route'" [placeholder]="'Select Route'"
+                      (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                  <div *ngIf="!routeList || routeList.length == 0">
+                    <select-filter [type]="'route'" [placeholder]="'Select Route'"
+                      (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                </div>
+              </div>
+              <div class="row row-data">
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                  <div *ngIf="selectedValue">
+                    <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData" [type]="'Vehicle'"
+                      [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                  <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                      (onConfirm)="confirm($event)"></select-filter>
+
+                  </div>
+                  <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                      (onConfirm)="confirm($event)"></select-filter>
+
+                  </div>
+                </div>
+              </div>
+              <div class="row row-data">
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">From Date</label>
+                  <input type="text" class="form-control" formControlName="fromDate" placeholder="MM/dd/yyyy"
+                    [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, HH:mm:ss', dateInputFormat: 'MMMM Do YYYY, HH:mm:ss'}"
+                    #dp="bsDatepicker" bsDatepicker />
+                </div>
+              </div>
+              <div class="row row-data">
+                <div class="col-md-12">
+                  <label for="exampleInputEmail1" class="form-label">To Date</label>
+                  <input type="text" class="form-control" formControlName="toDate" placeholder="MM/dd/yyyy"
+                    [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, HH:mm:ss', dateInputFormat: 'MMMM Do YYYY, HH:mm:ss'}"
+                    #dp="bsDatepicker" bsDatepicker />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <br>
+                  <button class="btn btn-primary" (click)="submit(historyVehicleForm.value)">
+                    Show History
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="row row-data">
+              <div class="col-md-6">
+                <div class="widget total-data">
+                  <div class="row row-table ">
+                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                      <p class="margin-b-5">Distance (Kms)</p>
+                      <h2 class="text-muted" style="margin-bottom: 5px !important;">
+                        {{historyData?.distance || 'NA'}}
+                      </h2>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="widget total-data">
+                  <div class="row row-table ">
+                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                      <p class="margin-b-5">Time Duration</p>
+                      <h2 class="text-muted" style="margin-bottom: 5px !important;">
+                        {{historyData?.timeDuration || 'NA'}}
+                      </h2>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="widget total-data">
+                  <div class="row row-table ">
+                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                      <p class="margin-b-5">Top Speed (Km/H)</p>
+                      <h2 class="text-muted" style="margin-bottom: 5px !important;">
+                        {{ historyData?.maxSpeed === 0 ? 0 : (historyData?.maxSpeed !== 0 ? historyData?.maxSpeed : 'NA') }}
+
+                      </h2>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="widget total-data">
+                  <div class="row row-table ">
+                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                      <p class="margin-b-5">Low Spped(Km/h)</p>
+                      <h2 class="text-muted" style="margin-bottom: 5px !important;">
+                         {{ historyData?.minSpeed === 0 ? 0 : (historyData?.minSpeed !== 0 ? historyData?.minSpeed : 'NA') }}
+
+                      </h2>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <!-- <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+              <loader [isRunning]="isloading"></loader>
+            </div> -->
+            <div class="map-container">
+              <!-- <div class="map-selection">
+                  <label for="mapType">Select Map Type:</label>
+                  <select id="mapType" [(ngModel)]="selectedMapType" (change)="changeMapType()">
+                    <option value="google">Google Maps</option>
+                    <option value="leaflet">Leaflet (OSM)</option>
+                  </select>
+                </div> -->
+              <!-- <div id="historyMap" style="width: 100%; height: 400px;"></div> -->
+             
+              <!-- <div id="routemap" style="width: 100%; height: 350px;"></div> 
+                               -->
+              <div class="map-container">
+                <agm-map  [latitude]="centerLatitude" [longitude]="centerLongitude" [zoom]="zoom"
+                  (mapReady)="onMapReady($event)">
+                </agm-map>
+                <div class="row row-data" *ngIf="historylist && historylist?.length> 0">
+                  <div class="col-md-6">
+                    <div class="controls">
+                      <button (click)="play()">
+                        <i class="fas fa-play"></i>
+                      </button>
+                      <button (click)="pause()">
+                        <i class="fas fa-pause"></i>
+                      </button>
+                      <button (click)="resume()">
+                        <i class="fa fa-step-forward" aria-hidden="true"></i>                      
+                      </button>
+                      <button (click)="reset()">
+                        <i class="fas fa-stop"></i>
+                      </button>
+                      <button (click)="fast()">
+                        <i class="fas fa-fast-forward"></i>
+                      </button>
+                      <span id="speed">Speed: {{ speedMultipliers }}x</span>
+                      <button (click)="slow()">
+                        <i class="fas fa-fast-backward"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+
+                    <button class="btn btn-primary" (click)="initRoute()">Visualize Route</button>
+                  </div>
+                </div>
+              </div>
+              <!-- <div id="mapContainer">
+                  <div id="mapp" style="width: 100%; height: 600px;"></div>
+                  <div id="legendsContainer">
+                    <span id="playLegend"></span>
+                    <span id="pauseLegend"></span>
+                  </div>
+                </div> -->
+            </div>
+            <!-- <div class="mb-3 card">
+              <div class="card-header-tab card-header">
+                <div class="card-header-title">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  History Vehicle wise tracking
+                </div>
+              </div>
+
+              <div class="card-body">
+                
+               
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <ng-container *ngIf="historylist?.length > 0 && graphType == 'Graphvalue'">
+      <tabset responsiveTabs [justified]="true" #staticTabs>
+        <tab>
+          <ng-template tabHeading>Speed Graph</ng-template>
+          <!-- <speed-graph [multi]="speedGraph" [type]="graphType"></speed-graph> -->
+          <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+            <loader [isRunning]="isloading"></loader>
+          </div>
+          <div *ngIf="!isloading">
+
+            <ngx-charts-line-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [timeline]="timeline"
+            [results]="speedGraph"
+            >
+          </ngx-charts-line-chart>
+          </div>
+        </tab>
+        <tab>
+          <ng-template tabHeading>Stops</ng-template>
+          <div class="row">
+
+          </div>
+
+
+        </tab>
+        <tab>
+          <ng-template tabHeading>History Location</ng-template>
+          <total-drive [content]="historylist"></total-drive>
+        </tab>
+      </tabset>
+    </ng-container>
+
+  </div>
+
+
+
+</section>

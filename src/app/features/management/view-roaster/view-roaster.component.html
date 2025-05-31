@@ -1,0 +1,201 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/management/add_roster"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            View roster</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div [formGroup]="Viewroaster">
+            <div class="row">
+
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Select Company</label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="company" [type]="'company'" [placeholder]="'Select Company'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+                <div *ngIf="!selectedValue && company && company.length > 0">
+                  <select-filter [vehicleData]="company" [type]="'company'" [placeholder]="'Select Company'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !company || company.length == 0">
+                  <select-filter  [type]="'company'" [placeholder]="'Select Company'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Route</label>
+                <div *ngIf="selectedRouteValue">
+                  <select-filter [selectedValue]="selectedRouteValue" [vehicleData]="routeList" [type]="'route'" [placeholder]="'Select Route'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+                <div *ngIf="!selectedRouteValue && routeList && routeList.length > 0">
+                  <select-filter [vehicleData]="routeList" [type]="'route'" [placeholder]="'Select Route'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedRouteValue && !routeList || routeList.length == 0">
+                  <select-filter [type]="'route'" [placeholder]="'Select Route'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Shift Type</label>
+                <select class="form-select" aria-label="Default select example" formControlName="shift">
+                  <!-- <option value="">Select Shift</option> -->
+                  <option value="M">Morning</option>
+                  <option value="A">Afternoon</option>
+  
+                </select>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Weekday</label>
+                <select class="form-select" aria-label="Default select example" formControlName="Weekday">
+                  <!-- <option value="">Select Weekday/Weekend</option> -->
+                  <option value="WK">Weekday</option>
+                  <!-- <option value="WKND">Weekend</option> -->
+                </select>
+              </div>
+            
+            
+
+          </div>
+          <div class="row row-data">
+
+            <div class="col-md-3">
+              <label class="form-label">From Date</label>
+              <input type="text" class="form-control" placeholder="select date" #dp="bsDatepicker" bsDatepicker
+                [bsValue]="bsValue" formControlName="fromdate">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">To Date</label>
+              <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
+                placeholder="select date" formControlName="todate" />
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Select driver</label>
+              <div *ngIf="selectedDriverValue">
+                <select-filter [selectedValue]="selectedDriverValue" [vehicleData]="driverList" [type]="'driver'" [placeholder]="'Select driver'"
+                (onConfirm)="confirm($event)"></select-filter>
+            </div>
+              <div *ngIf="!selectedDriverValue && driverList && driverList.length > 0">
+                <select-filter [vehicleData]="driverList" [type]="'driver'" [placeholder]="'Select driver'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!selectedDriverValue && !driverList || driverList.length == 0">
+                <select-filter [type]="'driver'" [placeholder]="'Select driver'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+            </div>
+          <div class="col-md-6 col-xl-3">
+            <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+            <div *ngIf="selectedVehicleValue">
+              <select-filter [selectedValue]="selectedVehicleValue" [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+              (onConfirm)="confirm($event)"></select-filter>
+          </div>
+            <div *ngIf="!selectedVehicleValue && vehicleData && vehicleData.length > 0">
+              <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                (onConfirm)="confirm($event)"></select-filter>
+            </div>
+            <div *ngIf="!selectedVehicleValue && !vehicleData || vehicleData.length == 0">
+              <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                (onConfirm)="confirm($event)"></select-filter>
+            </div>
+
+          </div>
+
+          </div>
+          <div class="row row-data">
+            <div class="col-md-3"></div>           
+            <div class="col-md-6 col-lg-3">
+              <button class="btn btn-success" [disabled]="Viewroaster.value.company == '' || Viewroaster.value.route == ''"
+                (click)="getshiftStatus(Viewroaster.value)"><i class="fa fa-eye" aria-hidden="true"></i>
+                Show Shift(s)
+              </button>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <button (click)="cancel()" class=" btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>
+                Cancel
+              </button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+              <div class="p-2 bd-highlight">
+                <span>Items per page: </span>
+                <select (change)="onTableSizeChange($event)" class="custom-select">
+                  <option *ngFor="let size of tableSizes" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="dataTables_scroll">
+                <div class="dataTables_scrollHead">
+                </div>
+                <div class="dataTables_scrollBody">
+                  <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                    <loader [isRunning]="isloading"></loader>
+                  </div>
+                  <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+                    aria-describedby="datatable_info" style="width: 100%" width="100%">
+
+                    <thead>
+                      <tr role="row">
+                        <th *ngFor="let vehicleHeading of tableData">
+                          <strong>{{vehicleHeading?.value}}</strong>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="!isloading">
+                      <tr *ngFor="let user of viewRosterList |  paginate : {
+                                  itemsPerPage: tableSize,
+                                  currentPage: page,
+                                  totalItems: count};">
+                        <td>{{user?.route_no}}</td>
+                        <td>{{user?.from_date}}</td>
+                        <td>
+                          <div *ngIf="user?.to_date && user?.from_date">
+                            {{user?.to_date}} to {{user?.from_date}}
+                          </div>
+                        </td>
+                        <td>{{user?.days_of_week}}</td>
+                        <td>{{user?.shift_type}} : {{user?.snr}}</td>
+                        <td>{{user?.depo_out}}</td>
+                        <td>{{user?.depo_in}}</td>
+                        <td>{{user?.vehicle_no}}</td>
+                        <td>{{user?.driver_code}} {{user?.driver_name}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="text-center"
+                    *ngIf="viewRosterList && viewRosterList.length == 0 || viewRosterList == null && !isloading"
+                    style="width: 100%;">No Data Available</div>
+                </div>
+              </div>
+              <div class="pagination-data" *ngIf="viewRosterList && viewRosterList.length > 0">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+</section>

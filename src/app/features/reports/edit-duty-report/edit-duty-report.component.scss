@@ -1,0 +1,32 @@
+.modal-body.p-20 {
+    height: 500px;
+
+    .footer {
+        height: auto;
+        padding: 10px;
+
+        .btn {
+            width: 100%;
+        }
+    }
+}
+
+.modal-content .modal-header {
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 22px;
+}
+
+.fa.fa-close {
+    color: white;
+    font-size: 17px;
+}
+
+::ng-deep {
+    bs-datepicker-container{
+        z-index: 999999 !important;
+    }
+}

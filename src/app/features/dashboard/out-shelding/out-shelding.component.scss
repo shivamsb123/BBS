@@ -1,0 +1,11 @@
+::ng-deep {
+    .active.nav-item {
+        background: #2c3477;
+      }
+      .nav-tabs .nav-link.active {
+        color: white;
+        border-bottom: 2px solid #2f387c;
+        background: none;
+      }
+
+}

@@ -1,0 +1,193 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Operational/EmployeeRosterMaster_V2"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    Staff Attendance</a></li>
+                <li><a routerLink="/Operational/Add_Staff_Attendance"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Add Staff Attendance</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <div class="card">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title">
+                    <i class="" aria-hidden="true"></i>
+                    Add Staff Attendance
+                </div>
+            </div>
+            <div class="card-body mb-5">
+                <form [formGroup]="addAttendanceForm">
+                    <div>
+                        <div class="row row-data">
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">Role</label>
+                                <div *ngIf="roleList && roleList.length > 0">
+                                    <select-filter [vehicleData]="roleList" [type]="'Role'"
+                                        [placeholder]="'Select Role'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!roleList || roleList.length == 0">
+                                    <select-filter [vehicleData]="roleList" [type]="'Role'"
+                                        [placeholder]="'Select Role'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">User Name</label>
+                                <input type="text" placeholder="User Name" class="form-control"
+                                    formControlName="User_Name">
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <br>
+                                <button class="btn btn-success"
+                                    (click)="getStaffAttendanceList(addAttendanceForm.value)"><i class="fa fa-eye"
+                                        aria-hidden="true"></i>
+                                    show Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="p-2 bd-highlight">
+                                <span>Items per page: </span>
+                                <select (change)="onTableSizeChange($event)" class="custom-select">
+                                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                        {{ size }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="dataTables_scroll">
+                                <div class="dataTables_scrollHead">
+                                </div>
+                                <div class="dataTables_scrollBody">
+                                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                        <loader [isRunning]="isloading"></loader>
+                                    </div>
+                                    <table id="datatable"
+                                        class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                                        aria-describedby="datatable_info" style="width: 100%" width="100%">
+
+                                        <thead>
+                                            <tr role="row">
+                                                <th *ngFor="let attendance of tableData">
+                                                    <strong>{{attendance?.val}}</strong>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="!isloading">
+                                            <tr *ngFor="let user of attendanceArr |  paginate : {
+                    itemsPerPage: tableSize,
+                    currentPage: page,
+                    totalItems: count};">
+
+                                                <td>{{user?.roleName}}</td>
+                                                <td>{{user?.userName}}</td>
+                                                <td>
+                                                    <div *ngIf="user?.status == 1">Active</div>
+                                                    <div *ngIf="user?.status == 0">De-Active</div>
+                                                </td>
+                                                <td>{{user?.firstName}}</td>
+                                                <td>{{user?.lastName}}</td>
+                                                <td>{{user?.contactNo}}</td>
+                                                <td>{{user?.email}}</td>
+                                                <td>{{user?.emP_CODE}}</td>
+                                                <td>{{user?.iD_NUMBER_1}}</td>
+                                                <td>{{user?.iD_NUMBER_2}}</td>
+                                                <td>{{user?.dL_No}}</td>
+
+                                                <td (click)="selectRoster(user, 'attendance')">
+                                                    <a class="select-roster" rel="noopener noreferrer">Select</a>
+                                                </td>
+
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-center"
+                                        *ngIf="attendanceArr && attendanceArr.length == 0 || attendanceArr == null && !isloading"
+                                        style="width: 100%;">No Data Available</div>
+                                </div>
+
+                            </div>
+                            <div class="pagination-data" *ngIf="attendanceArr && attendanceArr.length > 0">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="typeData == 'attendance'">
+                    <form [formGroup]="attendanceTime">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Date Time</label>
+
+                                <input type="text" placeholder="Datepicker" formControlName="date_time"
+                                    class="form-control"
+                                    [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                    bsDatepicker>
+                            </div>
+
+                            <div class="col-md-3">
+                                <br>
+                                <button (click)=" saveCheckInCheckOut(attendanceTime.value)" *ngIf="checkinList.length == 0"
+                                    class="btn btn-primary">
+                                    Check In
+                                </button>
+                                <button class="btn btn-primary" *ngIf="checkinList.length > 0">
+                                    Check Out
+                                </button>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </form>
+
+                    <div class="mt-5 dataTables_scroll">
+                        <div class="dataTables_scrollHead">
+                        </div>
+                        <div class="dataTables_scrollBody">
+                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                <loader [isRunning]="isloading"></loader>
+                            </div>
+                            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+
+                                <thead>
+                                    <tr role="row">
+                                        <th *ngFor="let attendance of tableData1">
+                                            <strong>{{attendance?.val}}</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!isloading">
+                                    <tr *ngFor="let user of checkinList |  paginate : { itemsPerPage: tableSize, currentPage: page, totalItems: count};">
+
+                                        <td>{{user?.datE_TIME}}</td>
+                                        <td>Delete</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center"
+                                *ngIf="checkinList && checkinList.length == 0 || checkinList == null && !isloading"
+                                style="width: 100%;">No Data Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

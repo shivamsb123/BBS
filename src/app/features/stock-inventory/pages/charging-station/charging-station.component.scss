@@ -1,0 +1,85 @@
+
+.charging-logo{
+  float: right;
+  max-width: 40%;
+}
+
+.logo-obu {
+  float: right;
+  max-width: 33%;
+}
+
+.widget-r-m {
+  margin-top: -62px;
+}
+
+.widget {
+  background: white;
+  cursor: pointer;
+}
+
+p.margin-b-5 {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.last-update {
+  // text-align: center;
+  .last-update-data {
+      font-size: 12px;
+  }
+}
+
+.search-form {
+  float: right;
+}
+
+.search-input {
+  border-color: #2f387c !important;
+}
+
+.search-form {
+  margin-top: 0px !important; 
+}
+
+.search-form .btn-search {
+  color: #2f387c;
+}
+
+.widget.total-data {
+  height: 83px;
+  cursor: auto;
+}
+.logo {
+  float: right;
+  max-width: 22%;
+  aspect-ratio: 3/2;
+  object-fit: contain;
+}
+
+.logo-obu {
+  float: right;
+  max-width: 33%;
+}
+
+.widget-r-m {
+  margin-top: -62px;
+}
+
+.widget {
+  background: white;
+  cursor: pointer;
+}
+
+.count {
+  padding: 10px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.charging-data{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}

@@ -1,0 +1,43 @@
+<section class="main-content">
+  <div class="row">
+      <div class="col-lg-12 align-self-center">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+            <li><a routerLink="/my-profile"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                      My Profile</a></li>
+          </ol>
+      </div>
+  </div>
+  <div class="container">
+    <div class="row mb-4 mt-4">
+      <div class="col-lg-4 col-xl-3 my-profile-nav-bg">
+        <div class="my-profile-nav-container">
+          <div class="my-profile-avatar-section">
+            <h6> Sky Itms</h6>
+          </div>
+          <ul class="my-profile-nav" myProfileNav>
+            <li class="nav-action-li"></li>
+            <li
+              class="nav-item"
+              routerLinkActive="active"
+              *ngFor="let nav of navigation"
+            >
+              <a
+                class="nav-link"
+                [routerLink]="'' + nav.path"
+              >
+                {{ nav.name }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-8 col-xl-9 white-bg">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  

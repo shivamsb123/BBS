@@ -1,0 +1,340 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/Dashboard/DashboardDMS">Dashboard</a>
+                </li>
+                <li>
+                    <a routerLink="/SupplyChain/Charging_Station">
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Charging
+                        Station
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="charging-data">
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Total Vehicle</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.totalVehicles ? chargingModel.totalVehicles : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/ITMS ICON-01.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Vehicle Charging Status Not Available</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargingStatusNotAvail ? chargingModel.chargingStatusNotAvail : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/not-available-charging.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Vehicle Charging Status Available</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargingStatusNotAvail && chargingModel.totalVehicles  ? chargingModel.totalVehicles - chargingModel.chargingStatusNotAvail : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/status-available.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charge Between 75 To 100</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargeBetween75To100 ? chargingModel.chargeBetween75To100 : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/charging/charge/100.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="charging-data">
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charge Between 50 To 75</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargeBetween50To75 ? chargingModel.chargeBetween50To75 : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/charging/charge/75.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charge Between 25 To 50</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargeBetween25To50 ? chargingModel.chargeBetween25To50 : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/charging/charge/60.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charge Between 1 To 25</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargeBetween1To25 ? chargingModel.chargeBetween1To25 : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/charging/charge/10.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Total Charging Station</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.totalChargingStations ? chargingModel.totalChargingStations : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/available-charge.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+
+    <div class="charging-data">
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Vehicle In Charge</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.vehicleInCharging > 10 ?  10 : chargingModel.vehicleInCharging}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/blank-chargning.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charging Station Available</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargingStationAvail < 0 ? 0 : chargingModel.chargingStationAvail}}
+                    </h2>
+                   
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/bus-charging.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charging Station Available Within 15 Min</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargingStationAvailInWithin15Min ? chargingModel.chargingStationAvailInWithin15Min : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/bus-battery-icon.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charging Station Available Within 30 Min</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargingStationAvailInWithin30Min ? chargingModel.chargingStationAvailInWithin30Min : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/bus-battery-icon.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charging Station Available Within 45 Min</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargingStationAvailInWithin45Min ? chargingModel.chargingStationAvailInWithin45Min : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/bus-battery-icon.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="widget">
+            <div class="row row-table ">
+                <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                    <p class="margin-b-5">Charging Station Available Within 60 Min</p>
+                    <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{chargingModel &&
+                        chargingModel.chargingStationAvailInWithin60Min ? chargingModel.chargingStationAvailInWithin60Min : 0}}
+                    </h2>
+                    <span class="float-right text widget-r-m"><img class="logo"
+                            src="../../../../../assets/images/bus-battery-icon.png"></span>
+                    <div class="last-update">
+                        <span class="last-update-data">Last 1 Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">Total Device</div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                        </div>
+
+                    </div>
+                    <div class="row row-data">
+                        <div class="col-md-12">
+
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <!-- <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select (change)="onTableSizeChange($event)" class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div> -->
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let charge of alltransactiondata?.listVehicleCharging | searchFilter: searchKeyword |  paginate : {
+                                                itemsPerPage: tableSize,
+                                                currentPage: page,
+                                                totalItems: count};let i = index">
+                                                    <td>
+                                                        {{charge?.srNo}}
+                                                    </td>
+                                                    <td>{{charge?.vehicleId}}</td>
+                                                    <td>{{charge?.vehicleNo}}</td>
+                                                    <td>{{charge?.vehicleIMEI}}</td>
+                                                    <td>{{charge?.soc}}</td>
+                                                    <td>{{charge?.lastDateTime}}</td>
+                                                    <td>{{charge?.chargingStatus == 1 ? 'Charging' : 'Not Charging'}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="alltransactiondata?.listVehicleCharging && alltransactiondata?.listVehicleCharging.length == 0 || alltransactiondata?.listVehicleCharging == null && !isloading || !(alltransactiondata?.listVehicleCharging | searchFilter:searchKeyword)?.length"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+                                    <div class="count">
+                                        <div class="total-count">
+                                            Total Count : {{alltransactiondata?.listVehicleCharging && alltransactiondata?.listVehicleCharging.length ? alltransactiondata?.listVehicleCharging?.length : 0
+                                            }}
+                                        </div>
+                                        <div class="pagination-data"
+                                            *ngIf="alltransactiondata?.listVehicleCharging && alltransactiondata?.listVehicleCharging.length > 0 && (alltransactiondata?.listVehicleCharging | searchFilter:searchKeyword)?.length">
+                                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                (pageChange)="onTableDataChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</section>

@@ -1,0 +1,157 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Reports/VehicleWiseShift">Reports</a></li>
+        <li><a routerLink="/Reports/VehicleWiseShift"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Vehicle Wise Shift Report</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xs-12 col-12 col-md-2">
+              <label class="form-label">Date</label>
+              <input  type="text" class="form-control" #dp="bsDatepicker" bsDatepicker placeholder="Select Date"
+                [(ngModel)]="myTime"  [disabled]="isInputEnabled"/>
+
+            
+            </div>
+            <div class="col-xs-12 col-12 col-md-2">
+              <label for="exampleInputEmail1" class="form-label">Shift Type</label>
+              <select class="form-select" aria-label="Default select example" [(ngModel)]="shiftType">
+                <option value="0">All Shift</option>
+                <option value="M">Morning</option>
+                <option value="A">AfterNoon</option>
+              </select>
+            </div>
+            <div class="col-xs-12 col-12 col-md-2">
+              <label for="exampleInputEmail1" class="form-label">Running Date</label>
+              <br>
+              <input class="largeCheckbox" type="checkbox"  [(ngModel)]="isInputEnabled" (change)="changeSelection($event)" >
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <br>
+              <button class="btn btn-success" (click)="showReport()"><i class="fa fa-eye" aria-hidden="true"></i>
+                show
+              </button>
+            </div>
+            <div class="col-xs-12 col-12 col-md-3">
+              <br>
+              <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+            </div>
+
+          </div>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="p-2 bd-highlight">
+                  <span>Items per page: </span>
+                  <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [value]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" #TABLE
+                      role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>
+                              <div [innerHtml]="vehicleHeading?.value"></div>
+                            </strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of vehicleWiseShift | searchFilter: searchKeyword |  paginate : {
+                                          itemsPerPage: tableSize,
+                                          currentPage: page,
+                                          totalItems: count};">
+                          <td>{{vehicle?.rosterDate}}</td>
+                          <td>{{vehicle?.routE_NAME}}</td>
+                          <td>{{vehicle?.shiftType}}</td>
+                          <td>{{vehicle?.busNo_S}}</td>
+                          <td>{{vehicle?.driver_Name_S}}</td>
+                          <td>
+                            <div *ngIf="vehicle?.busNo_S === vehicle?.bus_Act ; else elseBlockk" >
+                              {{vehicle?.bus_Act}}
+                          </div>
+                          <ng-template #elseBlockk>
+                              <span class="badge rounded-pill bg-danger">{{vehicle?.bus_Act}}</span>
+                          </ng-template>
+                          </td>
+                          <td>
+                            <div *ngIf="vehicle?.driver_Name_S === vehicle?.driverName_Act; else elseBlock">
+                              {{ vehicle?.driverName_Act }}
+                            </div>
+                            <ng-template #elseBlock>
+                              <span class="badge rounded-pill bg-danger">{{ vehicle?.driverName_Act }}</span>
+                            </ng-template>
+                          </td>
+                          <td>{{vehicle?.act_shift_on}}</td>
+                          <td>{{vehicle?.shift_on}}</td>
+                          <td>{{vehicle?.depo_out}}</td>
+                          <td>
+                            <div *ngIf="vehicle?.diff_Shift_Start <= 15; else shiftStart">
+                              {{ vehicle?.diff_Shift_Start }}
+                            </div>
+                            <ng-template #shiftStart>
+                              <span class="badge rounded-pill bg-danger">{{ vehicle?.diff_Shift_Start }}</span>
+                            </ng-template>
+                          </td>
+                          <td>{{vehicle?.act_shift_off}}</td>
+                          <td>{{vehicle?.depo_in}}</td>
+                          <td>{{vehicle?.shift_off}}</td>
+                          <td>
+                            <div *ngIf="vehicle?.diff_Shift_End <= 15 && vehicle?.diff_Shift_End >= -15; else shiftEnd">
+                              {{ vehicle?.diff_Shift_End }}
+                            </div>
+                            <ng-template #shiftEnd>
+                              <span class="badge rounded-pill bg-danger">{{ vehicle?.diff_Shift_End }}</span>
+                            </ng-template>
+                          </td>
+                          <td>{{vehicle?.odometer_Depo_Out}}</td>
+                          <td>{{vehicle?.odometer_Depo_IN}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center"
+                    *ngIf=" vehicleWiseShift && vehicleWiseShift.length == 0 || vehicleWiseShift == null  && !isloading || !(vehicleWiseShift | searchFilter: searchKeyword)?.length"
+                    style="width: 100%;">No Data Available</div>
+
+                    <div class="count">
+                      <div class="total-count">
+                        Total Count : {{vehicleWiseShift?.length > 0 ? vehicleWiseShift.length : 0 }}
+                      </div>
+                      <div class="pagination-data" *ngIf="vehicleWiseShift && vehicleWiseShift.length > 0 && (vehicleWiseShift | searchFilter: searchKeyword)?.length">
+                        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                      </div>
+                    </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

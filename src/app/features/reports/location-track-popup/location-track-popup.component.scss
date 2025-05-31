@@ -1,0 +1,21 @@
+.fa-close{
+    cursor: pointer;
+    font-size: 25px;
+    color: white;
+}
+.map-container {
+    height: calc(100vh - 310px);
+  
+}
+#location_canvas {
+    width: 100%;
+    height: calc(100vh - 328px);
+    border-radius: 11px;
+}
+.badge{
+    font-weight: 700;
+}
+.footer{
+    display: flex;
+    justify-content: center;
+}

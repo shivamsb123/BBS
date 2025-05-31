@@ -1,0 +1,65 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">{{title}}</h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+        <form [formGroup]="addDriver">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Driver</label>
+                    <div *ngIf="selectedDriverValue">
+                        <select-filter [selectedValue]="selectedDriverValue" [vehicleData]="driverList"
+                            [type]="'driver'" [placeholder]="'Select Driver'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedDriverValue && driverList && driverList.length > 0">
+                        <select-filter [vehicleData]="driverList" [type]="'driver'" [placeholder]="'Select Driver'"
+                            (onConfirm)="confirm($event)"></select-filter>
+
+                    </div>
+                    <div *ngIf="!selectedDriverValue && !driverList || driverList.length == 0">
+                        <select-filter [type]="'driver'" [placeholder]="'Select Driver'"
+                            (onConfirm)="confirm($event)"></select-filter>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                    <div *ngIf="selectedValue">
+                        <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData" [type]="'Vehicle'"
+                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0">
+                        <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+
+                    </div>
+                    <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                        <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                        (onConfirm)="confirm($event)"></select-filter>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-success" (click)="saveData(addDriver?.value)">
+                           {{primaryActionLabel}}
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary" (click)="cancel()">
+                            {{secondaryActionLabel}}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

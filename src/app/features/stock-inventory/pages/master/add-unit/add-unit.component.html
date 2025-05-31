@@ -1,0 +1,52 @@
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+          <li><a routerLink="/SupplyChain/ProductMaster_Unit_List"> <i class="fa fa-long-arrow-right"
+                aria-hidden="true"></i>
+               Unit Master </a></li>
+               <li><a routerLink="/SupplyChain/Add-Unit"> <i class="fa fa-long-arrow-right"
+                aria-hidden="true"></i>
+               Add Unit </a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <div class="card">
+          <div class="card-header card-default">
+           Add Unit        
+          </div>
+          <div class="card-body">
+            <form [formGroup]="unitForm">
+              <div class="row">
+                  <div class="col-md-3">
+                      <label class="form-label">Unit Name</label>
+                      <div class="input-group mb-3">
+                          <input type="text"  class="form-control" formControlName="name"
+                              placeholder="Enter Unit Name"  aria-describedby="button-addon2" />
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                  
+                  </div>          
+                  <div class="col-md-3">
+                      <button class="btn btn-success" (click)="submit(unitForm.value)">
+                        <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                      </button>
+                  </div>
+                  <div class="col-md-3">
+                      <button class="btn btn-danger" (click)="cancel()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                      </button>
+                  </div>
+              </div>      
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

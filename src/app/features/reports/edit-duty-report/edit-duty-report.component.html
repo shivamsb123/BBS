@@ -1,0 +1,161 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">
+            Update Duty Report / {{report.assetno}}
+        </h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger "></app-alert>
+        <div class="row row-data">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isloading">
+                        <tr>
+                            <td>{{report.date}}</td>
+                            <td>{{report.route}}</td>
+                            <td>{{report.shift}}</td>
+                            <td>{{report.dutyNo}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <form [formGroup]="editDutyReportForm">
+            <div class="row row-data">
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Select driver</label>
+                    <div *ngIf="selectedDriverValue">
+                        <select-filter [selectedValue]="selectedDriverValue" [vehicleData]="driverList"
+                            [type]="'driver'" [placeholder]="'Select driver'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedDriverValue && driverList && driverList.length > 0">
+                        <select-filter [vehicleData]="driverList" [type]="'driver'" [placeholder]="'Select driver'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedDriverValue && !driverList || driverList.length == 0">
+                        <select-filter [type]="'driver'" [placeholder]="'Select driver'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                    <div *ngIf="selectedvehicleValue">
+                        <select-filter [selectedValue]="selectedvehicleValue" [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedvehicleValue && vehicleData && vehicleData.length > 0">
+                        <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedvehicleValue && !vehicleData || vehicleData.length == 0">
+                        <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Shift From</label>
+                    <input type="text" class="form-control" placeholder="MM/dd/yyyy hh:mm:ss" #dp="bsDatepicker" bsDatepicker
+                 formControlName="shiftFrom" [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                 >
+                </div>
+            </div>
+
+            <div class="row row-data">
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Odometer From</label>
+                    <input type="text" class="form-control" formControlName="odometerFrom"
+                        placeholder="Enter Odometer From" />
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">SOC From</label>
+                    <input type="text" class="form-control" formControlName="socFrom"
+                        placeholder="Enter SOC From" />
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Shift To</label>
+                    <input type="text" class="form-control" placeholder="MM/dd/yyyy hh:mm:ss" #dp="bsDatepicker" bsDatepicker
+                    formControlName="shiftTo" [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}" />
+                </div>
+            </div>
+
+            <div class="row row-data">
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Odometer To</label>
+                    <input type="text" class="form-control" formControlName="odometerTo"
+                        placeholder="Enter Odometer To" />
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">SOC To</label>
+                    <input type="text" class="form-control" formControlName="socTo"
+                        placeholder="Enter SOC To" />
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Handover Time</label>
+                    <input type="text" class="form-control" placeholder="MM/dd/yyyy hh:mm:ss" #dp="bsDatepicker" bsDatepicker
+                    formControlName="handoverTime" [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}" />
+                </div>
+            </div>
+
+            <div class="row row-data">
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Reason</label>
+                    <input type="text" class="form-control" formControlName="reason"
+                        placeholder="Enter Reason" />
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <label for="exampleInputEmail1" class="form-label">Remarks</label>
+                    <input type="text" class="form-control" formControlName="remarks"
+                        placeholder="Enter Remarks" />
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-success" (click)="update(editDutyReportForm.value)">
+                                Update
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary" (click)="cancel()">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>

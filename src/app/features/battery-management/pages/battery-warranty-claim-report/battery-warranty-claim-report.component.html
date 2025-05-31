@@ -1,0 +1,111 @@
+
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/battery-management/battery_link">Battery Management</a></li>
+          <li><a routerLink="/battery-management/battery_warrenty_claim_report"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Battery Warrenty Claim Report</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label"
+                    >From Date</label
+                  >
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  #dp="bsDatepicker"
+                  bsDatepicker
+                  [bsValue]="bsValue"
+                />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label"
+                    >To Date</label
+                  >
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  #dp="bsDatepicker"
+                  bsDatepicker
+                  [bsValue]="bsValue"
+                />
+              </div>
+              <div class="col-md-6 col-lg-3"></div>
+            <div class="col-md-6 col-lg-3">
+              <br>
+                <button class="btn btn-success">
+                  <i class="fa fa-eye" aria-hidden="true"></i> Show Record
+                  </button>
+            </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-12">
+                <div class="search-form">
+                  <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                    class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                      aria-hidden="true"></i></button>
+                </div>
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="dataTables_scroll">
+                    <div class="p-2 bd-highlight">
+                      <span>Items per page: </span>
+                      <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [value]="size">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                        aria-describedby="datatable_info" style="width: 100%" width="100%">
+                        <thead>
+                          <tr role="row">
+                            <th *ngFor="let vehicleHeading of tableData">
+                              <strong>{{vehicleHeading?.val}}</strong>
+                            </th>
+                          </tr>
+                        </thead>
+  
+                        <tbody *ngIf="!isloading">
+                          <!-- <tr *ngFor="let battery of batteryData | searchFilter: searchKeyword |  paginate : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count};">
+                            
+                          </tr> -->
+                        </tbody>
+                      </table>
+                      <div class="text-center"
+                        style="width: 100%;">No Data Available</div>
+                    </div>
+                    <div class="pagination-data">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                      </pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+  

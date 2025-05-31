@@ -1,0 +1,48 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+      <h4 class="modal-title f-w w-100 ">
+     {{jobDetail.serialNumber}} | {{jobDetail.busNumber}}
+      </h4>
+      <div class="close-modal">
+        <i class="fa fa-close" (click)="cancel()"></i>
+      </div>
+    </div>
+    <div class="modal-body p-20">
+      <div class="row ">
+        <div class="col-md-12">
+          <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+            <div class="dataTables_scroll">
+              <div class="dataTables_scrollBody"
+              [ngClass]="jobCardChildList && jobCardChildList?.length > 10 ? 'job-data' : ''">
+                <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                  <loader [isRunning]="isloading"></loader>
+                </div>
+  
+                <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                  aria-describedby="datatable_info" style="width: 100%" width="100%">
+                  <thead>
+                    <tr role="row">
+                      <th *ngFor="let vehicleHeading of tableData">
+                        <strong>{{vehicleHeading?.val}}</strong>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="!isloading">
+                    <tr *ngFor="let job of jobCardChildList">
+                      <td>{{job?.description}}</td>
+                      <td>{{job?.mechanicName}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-center"
+                *ngIf=" jobCardChildList && jobCardChildList.length == 0 || jobCardChildList == null  && !isloading"
+                style="width: 100%;">No Data Available</div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>

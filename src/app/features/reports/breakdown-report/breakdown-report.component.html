@@ -1,0 +1,167 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/reports/BreakDownComplaintReport"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Breakdown Report </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Breakdown Report
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="breakdownForm">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Route Name</label>
+                                <div *ngIf="routeList && routeList?.length > 0">
+                                    <select-filter [vehicleData]="routeList" [type]="'Route'"
+                                        [placeholder]="'Select Route'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!routeList || routeList?.length == 0">
+                                    <select-filter [type]="'Route'" [placeholder]="'Select Route'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <label class="form-label">From Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="fromdate" class="form-control"  placeholder="MM/dd/yyyy" 
+                                        #dp="bsDatepicker" bsDatepicker />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">To Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker  placeholder="MM/dd/yyyy" 
+                                        formControlName="todate" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success" [disabled]="!breakdownForm.valid" (click)="getBreakdownReport(breakdownForm.value)"><i class="fa fa-eye"
+                                        aria-hidden="true"></i>
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row row-data">
+                        <div class="col-md-3">
+                            <div class="p-2 bd-highlight">
+                                <span>Items per page: </span>
+                                <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                                    <option *ngFor="let size of tableSizes" [value]="size">
+                                        {{ size }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                        </div>
+                        <div class="col-md-12">                       
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline" #TABLE
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let vehicle of data |  paginate : {
+                                                    itemsPerPage: tableSize,
+                                                    currentPage: page,
+                                                    totalItems: count};">
+                                                    
+                                                    <td>
+                                                        {{vehicle?.bus_No }}
+                                                    </td>
+                                                    <td>{{vehicle?.user_Name }}</td>
+                                                    <td>
+                                                        {{vehicle?.route_Name }}
+                                                    </td>
+                                                    <td>{{vehicle?.km }}</td>
+                                                      <td>
+                                                        {{vehicle?.location }}
+                                                    </td>
+                                                    <td>{{vehicle?.shift }}</td>
+                                                    <td>
+                                                        {{vehicle?.complaintReportTime }}
+                                                    </td>
+                                                    <td>{{vehicle?.attendTime }}</td>
+                                                    <td>
+                                                        {{vehicle?.name_of_Incharge  }}
+                                                    </td>
+                                                    <td>{{vehicle?.name_Mech_Elect_Acc  }}</td>
+                                                    <td>
+                                                        {{vehicle?.nature_of_Complaint  }}
+                                                    </td>
+                                                    <td>{{vehicle?.actionTaken  }}</td>
+                                                      <td>
+                                                        {{vehicle?.part_Description  }}
+                                                    </td>
+                                                    <td>{{vehicle?.part_No  }}</td>
+                                                    <td>
+                                                        {{vehicle?.no_of_Quantity  }}
+                                                    </td>
+                                                    <td>{{vehicle?.complaint_Status  }}</td>
+                                                   
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center" style="width: 100%;" *ngIf="data && data.length == 0 || data == null && !isloading">No Data Available</div>
+                                    <!-- <div class="pagination-data" *ngIf="data && data.length > 0">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
+                                    </div> -->
+
+                                    <div class="count">
+                                        <div class="total-count">
+                                            Total Count : {{data?.length > 0  ? data.length : 0 }}
+                                        </div>
+                                        <div class="pagination-data"
+                                            *ngIf="data && data.length > 0">
+                                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                (pageChange)="onTableDataChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

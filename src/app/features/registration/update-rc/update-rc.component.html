@@ -1,0 +1,103 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Registration/Installation_MCG">Registration</a></li>
+        <li><a routerLink="/Registration/Installation_MCG"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            RC Details</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <label class="form-label">Department</label>
+              <div *ngIf="department && department.length > 0">
+                <select-filter [vehicleData]="department" [type]="'Department'" [placeholder]="'Select Department'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+          </div>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="p-2 bd-highlight"><span>Items per page:
+                  </span>
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollHead">
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.value}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let complain of rcDetailList | searchFilter: searchKeyword | paginate : {
+                                          itemsPerPage: tableSize,
+                                          currentPage: page,
+                                          totalItems: count};">
+                          <td>
+                            <div *ngIf="complain?.status == 1">Active</div>
+                            <div *ngIf="complain?.status == 0">Inactive</div>
+                          </td>
+                          <td>{{complain?.department}}</td>
+                          <td>{{complain?.imei}}</td>
+                          <td>{{complain?.mobilE_NO}}</td>
+                          <td>{{complain?.asseT_NO}}</td>
+                          <td>{{complain?.asseT_SUB_ID}}</td>
+                          <td>{{complain?.asseT_VENDOR}}</td>
+                          <td>{{complain?.asseT_MODEL}}</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center"
+                      *ngIf="rcDetailList && rcDetailList.length == 0 || rcDetailList == null && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+
+                </div>
+                <div class="pagination-data">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>

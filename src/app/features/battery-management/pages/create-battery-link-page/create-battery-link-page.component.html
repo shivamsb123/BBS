@@ -1,0 +1,115 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="Maintenance/Bat_Battery_Link_Depot">Battery Management</a>
+                </li>
+                <li><a routerLink="/Maintenance/Bat_Battery_Link_Depot"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Battery Link</a></li>
+                <li><a routerLink="/Maintenance/Add-Battery-link"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add Battery Link</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="addBatteryForm">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Vehicle No.</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                        [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+    
+                            </div>
+                           
+                            <div class="col-md-3">
+                                <div class="select-type">
+                                    <label for="exampleInputEmail1" class="form-label">Battery No </label>
+                                </div>
+                                <div *ngIf="selectedBatteryValue">
+                                    <select-filter [selectedValue]="selectedBatteryValue" [vehicleData]="BatteryList"
+                                        [type]="'Battery'" [placeholder]="'Select Battery'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedBatteryValue && BatteryList && BatteryList.length > 0 ">
+                                    <select-filter [vehicleData]="BatteryList" [type]="'Battery'"
+                                        [placeholder]="'Select Battery'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedBatteryValue && !BatteryList || BatteryList.length == 0">
+                                    <select-filter [type]="'Battery'" [placeholder]="'Select Battery'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="select-type">
+                                    <label for="exampleInputEmail1" class="form-label">KM</label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" formControlName="km" class="form-control"
+                                        placeholder="Enter KM Install" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="select-type">
+                                    <label for="exampleInputEmail1" class="form-label">Fitted Date</label>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Select Date"  formControlName="fittedDate" 
+                                [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                #dp="bsDatepicker" bsDatepicker />
+                            </div>
+                        </div>
+                        <div class="row">                   
+
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Location </label>
+                                <div *ngIf="!locationList || locationList.length == 0">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Select Location</option>
+                                        <option>No Data Record</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="locationList && locationList.length > 0">
+                                    <select class="form-select" aria-label="Default select example" formControlName="location">
+                                        <option selected>Select Location</option>
+                                        <option *ngFor="let data of locationList">{{data?.baT_NAME}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success" [disabled]="!addBatteryForm.value.vehicleNo || !addBatteryForm.value.km || !addBatteryForm.value.fittedDate" (click)="submit(addBatteryForm.value)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>   {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-danger" (click)="cancel()">
+                                    <i class="fa fa-times" aria-hidden="true"></i>  Clear
+                                </button>
+                            </div>                     
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

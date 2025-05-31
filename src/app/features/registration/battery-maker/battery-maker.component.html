@@ -1,0 +1,109 @@
+
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/registration/RC_Details">Registration</a></li>
+          <li><a routerLink="/registration/battery_maker"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Battery Maker</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="addBatteryMaker">
+                <div class="row">
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">Battery Company Name</label>
+                    <div class="input-group mb-3">
+                      <input type="text"
+                        placeholder="Enter Battery Company Name" formControlName="company" aria-describedby="button-addon2" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">Status</label>
+                    <select class="form-select" aria-label="Default select example" formControlName="status">
+                        <option value=''>Select Status</option>
+                      <option value=1>Active</option>
+                      <option value=2>De-active</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <button class="mr-2 btn-icon btn-icon-only btn btn-success" (click)="submit(addBatteryMaker.value)">
+                      {{button}}
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button class="mr-2 btn-icon btn-icon-only btn btn-primary" (click)="cancel()">
+                      Clear
+                    </button>
+                  </div>
+                </div>
+            </form>
+            <div class="row">
+              <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                            {{ size }}
+                        </option>
+                    </select>
+                </div>
+                <div class="dataTables_scroll">
+                    <div class="dataTables_scrollHead">
+                    </div>
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                      </div>
+                        <table id="datatable"
+                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                            width="100%">
+                            <thead>
+                                <tr role="row">
+                                    <th *ngFor="let vehicleHeading of tableData">
+                                        <strong>{{vehicleHeading?.value}}</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="!isloading">
+                                <tr *ngFor="let complain of batteryMakerList |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count};">
+                                    <td>{{complain?.baT_COMPANY_NAME}}</td>
+                                    <td>{{complain?.status}}</td>
+                                    <td>
+                                        <a tooltip="Edit" (click)="update(complain?.sno)"
+                                        rel="noopener noreferrer"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                      </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center" *ngIf="batteryMakerList && batteryMakerList.length == 0 || batteryMakerList == null && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                    </div>
+
+                </div>
+                <div class="pagination-data">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                        (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                </div>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  

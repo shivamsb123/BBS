@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="customer-part">
+            <div class="card">
+                <div class="arrow-icon">
+                    <div class="arrow" (click)="toggleContent()">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div *ngIf="showContent">
+                    <div class="card-content">
+                        <div>
+                            <div class="swiper-data">
+                                <div class="alert-content">
+                                    <ul class="status-data" style="text-align: center;">
+                                      <li class="swiper-part" *ngFor="let statusvalue of statusData" [style.color]="statusvalue.color" (click)="selectStatus(statusvalue)" style="cursor: pointer;">
+                                        <div class="alert-img">
+                                         {{statusvalue?.label}}
+                                        </div>
+                                        <div class="count" [style.background-color]="statusvalue.class">
+                                          <span class="vehicle-status">{{statusvalue?.status}}</span>
+                                        </div>
+                                      </li>
+                                      <!-- <li>
+                                      </li> -->
+                                    </ul>
+                                  </div>
+                            </div>
+                            <div class="vehicle-follow mt-3">
+                                <ul class="vehicle-data" *ngIf="allVehicleData && allVehicleData.length > 0">
+                                    <li class="vehicle-value"  *ngFor="let vehicle of allVehicleData | searchFilter: searchKeyword, let i = index"  (click)="onSelectVehicle(vehicle)">
+                                        <span [class]="getVehicleColor(vehicle)">{{vehicle?.asseT_NO}}</span>
+                                        <span [class]="getVehicleColor(vehicle)">{{formatVehicleStatusDuration(vehicle)}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="vehicle-data"  *ngIf="!allVehicleData || allVehicleData.length == 0 || allVehicleData== null || !(allVehicleData | searchFilter:searchKeyword)?.length">
+                                    <li class="vehicle-value" style="text-align: center;padding: 8px;">
+                                        <span style="color: black; width: 100% !important;">No Data Available</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

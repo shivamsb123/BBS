@@ -1,0 +1,27 @@
+.cards {
+    background-color: #F8F8F8;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 8px;
+    padding: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    cursor: grab;
+    position: relative;
+    z-index: 1;
+    font-size: 13px;
+    /* Ensure the cardss are above the lines */
+  }
+  /* Add a hover effect */
+  .cards:hover {
+    background-color: #EAEAEA;
+  }
+  .items1 {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.importent{
+    color: red;
+}

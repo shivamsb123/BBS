@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Confirmation</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="decline()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="confirm-text"> {{message}}</p>
+  </div>
+  <div class="modal-fotter">
+    <button type="button" class="btn btn-cancle" (click)="decline()">No</button>
+    <button type="button" class="btn btn-yellow" (click)="confirm()">yes</button>
+  </div>

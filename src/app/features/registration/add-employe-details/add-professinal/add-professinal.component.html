@@ -1,0 +1,152 @@
+
+<section class="main-content">
+    <div class="row">
+       <div class="col-lg-12 align-self-center">
+           <ol class="breadcrumb">
+               <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+               <li><a routerLink="/Registration/User_Master_App"> <i class="fa fa-long-arrow-right"
+                           aria-hidden="true"></i>
+                       Staff Management</a></li>
+               <li><a routerLink="/Registration/edit-employeeDetails"> <i class="fa fa-long-arrow-right"
+                           aria-hidden="true"></i>
+                       Add More Details</a></li>
+                       <li><a routerLink="/Registration/add-professional/"> <i class="fa fa-long-arrow-right"
+                           aria-hidden="true"></i>
+                       Add Professional</a></li>
+           </ol>
+       </div>
+   </div>
+   <div class="row">
+     <div class="col-md-12">
+       <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+       </app-alert>
+       <div class="card">
+         <div class="card-body">
+           <form [formGroup]="professionalForm">
+             <div class="row">
+               <div class="col-md-6 col-lg-3">
+                 <label class="form-label">Employee Name</label>
+                 <input type="text"  class="form-control" formControlName="driver" placeholder="Enter Employee Name" >
+               </div>
+             
+               <div class="col-md-6 col-xl-3">
+                 <label for="exampleInputEmail1"  class="form-label">Father Name*</label>
+                 <div class="input-group mb-3">
+                     <input
+                       type="text"
+                       formControlName="fatherName"
+                       class="form-control"
+                       placeholder="Enter Father Name*"
+                       aria-describedby="button-addon2"
+                    
+                     />
+                   </div>
+               </div>
+               <div class="col-md-6 col-xl-3">
+                 <label for="exampleInputEmail1" class="form-label">Aadhar No.</label>
+                 <div class="input-group mb-3">
+                     <input
+                       type="text"
+                       formControlName="aadharNo"
+                       class="form-control"
+                       placeholder="Enter Aadhar No."
+                       aria-describedby="button-addon2"
+                     />
+                   </div>
+               </div>
+               <div class="col-md-6 col-lg-3">
+                   <label for="exampleInputEmail1" class="form-label">Organization Name </label>
+                   <div class="input-group mb-3">
+                       <input
+                         type="text"
+                         class="form-control"
+                         placeholder="Enter organization Name"
+                         aria-describedby="button-addon2"
+                         formControlName="org_name"
+                       />
+                     </div>
+               </div> 
+             </div>
+             <div class="row">
+               <div class="col-md-6 col-lg-3">
+                 <label class="form-label">Form Date</label>
+                 <input type="text" formControlName="formDate" class="form-control"  bsDatepicker placeholder="Enter Relation" >
+               </div>
+             
+               <div class="col-md-6 col-xl-3">
+                 <label for="exampleInputEmail1" class="form-label">To Date</label>
+                 <div class="input-group mb-3">
+                   <input type="text" formControlName="toDate"  placeholder="Select Date"
+                   class="form-control" bsDatepicker />
+                   </div>
+               </div>
+               <div class="col-md-6 col-xl-3">
+                 <label for="exampleInputEmail1"  class="form-label">Total Experience</label>
+                 <input
+                 type="text"
+                 class="form-control"               
+                 placeholder="Enter organization Name"
+                 aria-describedby="button-addon2"
+                 formControlName="total_exp"
+               />
+               </div>
+               <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1"  class="form-label">Reason For Job Change</label>
+                <input
+                type="text"
+                class="form-control"                
+                placeholder="Enter Reason For Job Change"
+                aria-describedby="button-addon2"
+                formControlName="jobChange"
+              />
+              </div>
+             </div>
+             <div class="row">
+                <div class="col-md-6 col-lg-3">
+                  <label class="form-label">Reference Name</label>
+                  <input  type="text"
+                  class="form-control"                
+                  placeholder="Enter organization Name"
+                  aria-describedby="button-addon2"
+                  formControlName="ref_name" >
+                </div>
+              
+                <div class="col-md-6 col-xl-3">
+                  <label for="exampleInputEmail1" class="form-label">Reference contact Number</label>
+                  <div class="input-group mb-3">
+                    <input  type="text"
+                    class="form-control"                
+                    placeholder="Enter Reference contact Number"
+                    aria-describedby="button-addon2"
+                    formControlName="ref_Contect_no" >
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="btn btn-primary" type="Submit" (click)="submit(professionalForm.value)"
+                    >
+                    <i class="fa fa-plus" aria-hidden="true"></i>Add
+                    Record
+                </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="btn btn-danger" type="Submit" >
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                    </div>
+               </div>
+              </div>
+            
+           </form>
+        
+         </div>
+       </div>
+     </div>
+   </div>
+ </section>
+
+
+ 
+ 
+ 
+ 
+   
+     

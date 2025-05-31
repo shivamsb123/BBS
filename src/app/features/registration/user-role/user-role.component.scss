@@ -1,0 +1,14 @@
+
+button.mr-2.btn-icon.btn-icon-only.btn.btn-outline-primary {
+    margin-top: 30px;
+  }
+
+  .mr-2.btn-icon.btn-icon-only.btn.btn-success{
+    margin-top: 30px;
+  }
+
+@media screen and (min-device-width: 320px) and (max-device-width: 768px) { 
+    button.mr-2.btn-icon.btn-icon-only.btn.btn-outline-primary {
+        margin-top: 0px;
+    }
+}

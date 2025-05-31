@@ -1,0 +1,13 @@
+#map_canvas {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 200px);
+    border-radius: 11px;
+}
+
+span.redTxt {
+    color: blue;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: pointer;
+  }

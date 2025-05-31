@@ -1,0 +1,25 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+      <h4 class="modal-title f-w w-100">{{vehicle}}</h4>
+      <!-- <h4 class="modal-title f-w w-100">{{datetime}}</h4> -->
+      <div class="close-modal">
+        <i class="fa fa-close" (click)="cancel()"></i>
+      </div>
+    </div>
+    <div class="modal-body p-30">
+          <agm-map [latitude]="markers[0]?.latitude" [longitude]="markers[0]?.longitude" [zoom]="15">
+            <agm-marker *ngFor="let marker of markers" [latitude]="marker.latitude" [longitude]="marker.longitude"
+              [label]="marker.label">
+            </agm-marker>
+          </agm-map>
+          <div class="footer">
+         
+
+                <span class="badge bg-info m-2">{{address}}</span>
+              
+       
+
+        </div>
+    </div>
+  </div>
+  

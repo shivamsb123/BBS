@@ -1,0 +1,27 @@
+   <section class="main-content">
+       <div class="map-container">
+          <div id="map_canvas"></div>
+          <div class="live" >
+             <div id="over_map" class="live-details" *ngIf="liveTime">
+                <div fxflex="33" fxlayoutalign="start center"
+                   style="margin-right: 1px; flex: 1 1 33%; box-sizing: border-box; place-content: center flex-start; align-items: center; flex-direction: row; display: flex; max-width: 33%;">
+                   <b>Refresh In: {{counter}}</b> s
+                </div>
+                <div fxflex="33" fxlayoutalign="center end"
+                   style="margin-right: 1px; flex: 1 1 33%; box-sizing: border-box; place-content: flex-end center; align-items: flex-end; flex-direction: row; display: flex; max-width: 33%;">
+                   <b>{{liveData?.asseT_NO}}</b>
+                </div>
+                <div fxflex="33" fxlayoutalign="end end"
+                   style="flex: 1 1 33%; box-sizing: border-box; place-content: flex-end; align-items: flex-end; flex-direction: row; display: flex; max-width: 33%;">
+                   <a (click)="closeTab()" style="cursor: pointer;"><i class="fa fa-close"></i></a>
+                </div>
+             </div>
+          </div>
+          <!-- <vehicle-details *ngIf="popupService.isOpened()" [data]="popupService.getData()"></vehicle-details> -->
+           <div *ngIf="vehicleListshow">
+              <div class="vehicle-list" *ngIf="vehicleData && trackList">
+                 <vehicle-list [vehicleData]="vehicleData" [trackList]="trackList" (onConfirm)="confirm($event)" (onSelectStatus)="getStatus($event)"></vehicle-list>
+              </div>
+           </div>
+       </div>
+   </section>

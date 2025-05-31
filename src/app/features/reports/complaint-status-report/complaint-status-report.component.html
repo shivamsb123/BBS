@@ -1,0 +1,171 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/reports/Complaints_Report"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Complaints Report</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="complaintForm">
+            <div class="row">
+              <div class="col-xs-12 col-12 col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Department
+                </label>
+                <div *ngIf="selectedDepartment">
+                  <select-filter [selectedValue]="selectedDepartment" [vehicleData]="company" [type]="'Company'"
+                    [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedDepartment && company && company.length > 0 ">
+                  <select-filter [vehicleData]="company" [type]="'Company'" [placeholder]="'Select Company'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedDepartment && !company || company.length == 0">
+                  <select-filter [type]="'Company'" [placeholder]="'Select Company'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+              <div class="col-xs-12 col-12 col-md-3">
+                <label class="form-label">From Date</label>
+                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker placeholder="MM/dd/YYYY"
+                  formControlName="FromDate" />
+              </div>
+              <div class="col-xs-12 col-12 col-md-3">
+                <label class="form-label">To Date</label>
+                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker placeholder="MM/dd/YYYY"
+                  formControlName="ToDate" />
+              </div>
+              <div class="col-xs-12 col-12 col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Vehicle No.
+                </label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData" [type]="'Vehicle'"
+                    [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                  <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                  <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-xs-12 col-12 col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Driver</label>
+                <div *ngIf="selectedDriverValue">
+                  <select-filter [selectedValue]="selectedDriverValue" [vehicleData]="driverList" [type]="'driver'"
+                    [placeholder]="'Select Driver'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedDriverValue && driverList && driverList.length > 0 ">
+                  <select-filter [vehicleData]="driverList" [type]="'driver'" [placeholder]="'Select Driver'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedDriverValue && !driverList || driverList.length == 0">
+                  <select-filter [type]="'driver'" [placeholder]="'Select Driver'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Complaint Type</label>
+                <select class="form-select" aria-label="Default select example" formControlName="ComplaintStatus">
+                  <option value="2">All</option>
+                  <option value="0">Open</option>
+                  <option value="1">Close</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <br>
+                <button class="btn btn-success" [disabled]="!complaintForm.value.FromDate || !complaintForm.value.ToDate || !complaintForm.value.deptId" (click)="getComplaint(complaintForm.value)"><i class="fa fa-eye" aria-hidden="true"></i>
+                  show
+                </button>
+              </div>
+              <div class="col-xs-12 col-12 col-md-3">
+                <br>
+                <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+              </div>
+            </div>
+          </form>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [value]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      #TABLE aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of complaintData | searchFilter: searchKeyword |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count};">
+                          <td>{{vehicle?.complaintId}}</td>
+                          <td>{{vehicle?.busNumber}}</td>
+                          <td>{{vehicle?.complaints}}</td>
+                          <td>{{vehicle?.vehicleStatus}}</td>
+                          <td>{{vehicle?.recordedTime}}</td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center"
+                    *ngIf="complaintData && complaintData.length == 0 || complaintData == null && !isloading"
+                    style="width: 100%;">No Data Available</div>
+                  <!-- <div class="pagination-data"
+                    *ngIf="complaintData && complaintData.length > 0 && (complaintData | searchFilter:searchKeyword)?.length">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div> -->
+
+                  <div class="count">
+                    <div class="total-count">
+                        Total Count : {{complaintData?.length > 0  ? complaintData.length : 0 }}
+                    </div>
+                    <div class="pagination-data"
+                        *ngIf="complaintData && complaintData.length > 0 && (complaintData | searchFilter:searchKeyword)?.length">
+                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                            (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                    </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

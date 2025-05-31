@@ -1,0 +1,6 @@
+
+<ng-multiselect-dropdown [data]="departmentList" [disabled]="disabledDropdown" [placeholder]="placeholder" [settings]="vehicleListSetting"
+    [(ngModel)]="selectedVehicleItems" (onSelectAll)="onSelectAll($event, 'AllVehicle')"  (onDeSelectAll)="onDeSelectAll($event, 'AllVehicle')" (onSelect)="onSelectVehicle($event, type)" (onDeSelect)="onDeSelectVehicle($event,type)">
+</ng-multiselect-dropdown>
+
+  

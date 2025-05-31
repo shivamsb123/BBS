@@ -1,0 +1,111 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">New Stops</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body text-center">
+    <div class="row ">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="address-input">
+                        <input placeholder="Search for..." [(ngModel)]="searchAddress"
+                            [ngModelOptions]="{standalone: true}" type="text" class="form-control search-input address">
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success" (click)="findeAddressValue()">Find Address</button>
+                </div>
+            </div>
+            <div class="row row-data">
+                <div class="col-md-12">
+
+                    <div class="map-container">
+                        <div class="map-container">
+                            <agm-map [latitude]="centerLatitude" [longitude]="centerLongitude" [zoom]="12"
+                                (mapClick)="onMapClick($event)">
+                                <!-- <agm-marker *ngIf="markerLatitude && markerLongitude" [latitude]="markerLatitude"
+                                    [longitude]="markerLongitude" [markerDraggable]="isMarkerDraggable"
+                                    (dragEnd)="onMarkerDragEnd($event)"  [disableDefaultUI]="false"
+                                    [zoomControl]="true" [scaleControl]="true">
+                                    <agm-info-window *ngIf="infoWindowContent" [disableAutoPan]="true">
+                                        <div [innerHTML]="infoWindowContent"></div>
+                                    </agm-info-window>
+                                </agm-marker> -->
+                                <agm-marker *ngFor="let route of formattedAddressData; let i = index"
+                                    [latitude]="route.lat" [longitude]="route.lng" [markerDraggable]="true">
+                                    <agm-info-window [disableAutoPan]="true">
+                                        <div>{{route?.place}}</div>
+                                    </agm-info-window>
+                                </agm-marker>
+                            </agm-map>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer selected-route">
+                    <div class="dataTables_scroll">
+                        <div class="dataTables_scrollHead"></div>
+                        <div class="dataTables_scrollBody">
+                            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th><strong>Stop Name</strong></th>
+                                        <th><strong>Location</strong></th>
+                                        <th><strong>Action</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let stop of formattedAddressData; let i = index">
+                                        <td>
+                                            <p *ngIf="stopType != i">{{stop?.StopName}}</p>
+                                            <p *ngIf="stopType == i"><input type="text" [(ngModel)]="stop.StopName"></p>
+                                        </td>
+                                        <td>
+                                            <a style="cursor: pointer; color: #0a58ca;"> {{stop?.Lat}} , {{stop?.Long}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a tooltip="Edit" rel="noopener noreferrer"><i class="fa fa-pencil mr-2"
+                                                    aria-hidden="true" (click)="editRow(i)"></i></a>
+                                            <a tooltip="Delete" rel="noopener noreferrer" (click)="deleteRow(i)"><i
+                                                    class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="formattedAddressData && formattedAddressData.length == 0 || formattedAddressData == null"
+                                class="text-center">No Data Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <button class="btn btn-success" (click)="addStop()">
+                Add Stop
+            </button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-danger" (click)="cancel()">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+</div>

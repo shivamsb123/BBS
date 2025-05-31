@@ -1,0 +1,23 @@
+
+h2.obu-data-value {
+    font-size: 15px;
+}
+.header {
+    top: 0px;
+    position: absolute;
+}
+
+.obu-data{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1rem;
+    margin-bottom: 20px;
+    .card {
+        margin-bottom: 0;
+    }
+  }
+
+  .card-body {
+    padding: 0px !important;
+}

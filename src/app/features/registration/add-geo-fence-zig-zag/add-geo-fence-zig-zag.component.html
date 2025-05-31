@@ -1,0 +1,263 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/registration/RC_Details">Registration</a></li>
+                <li><a routerLink="/Registration/Add_GeoFence_ZigZag"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add Geo-Fence Polygon</a></li>
+            </ol>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title">
+                        Search Geo Fence
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="exampleInputEmail1" class="form-label">DepartMent</label>
+                            <div *ngIf="department && department.length > 0">
+                                <select-filter [vehicleData]="department" [type]="'Department'"
+                                    [placeholder]="'Select Department'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!department || department.length == 0">
+                                <select-filter  [type]="'Department'"
+                                    [placeholder]="'Select Department'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="exampleInputEmail1" class="form-label">Geo Fence Name</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Geo Fence Name"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="mt-4 btn-icon btn-icon-only btn btn-success"><i class="fa fa-search"></i>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> -->
+
+    <div class="row" id="myPageId">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title">
+                        Geo-Fence details
+                    </div>                   
+                    <!-- <i class="fa fa-plus create" aria-hidden="true" (click)="openGeofenceModal()"> new
+                    </i>                  -->
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="addGeoFance">
+                        <div>
+                            <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">DepartMent</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="department"
+                                    [type]="'Department'" [placeholder]="'Select Department'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && department && department.length > 0">
+                                    <select-filter [vehicleData]="department" [type]="'Department'"
+                                        [placeholder]="'Select Department'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !department || department.length == 0">
+                                    <select-filter  [type]="'Department'"
+                                        [placeholder]="'Select Department'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">
+                                    Stop</label>
+                                <div class="dropdown">
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <input type="text" placeholder="Search.." [(ngModel)]="searchKeyword" autocomplete="off"
+                                             id="myInputtest"
+                                            formControlName="state" (keyup)="filterFunction()">
+                                            <div *ngIf="geofencelist && geofencelist.length > 0">
+                                                <div  *ngIf="statelistdiv" [ngClass]="geofencelist && geofencelist.length > 10 ? 'table-value' : 'tabledata'">
+                                                    <ul>
+                                                        <li *ngFor="let data of geofencelist | searchFilter: searchKeyword"
+                                                            (click)="onSelectData(data)">
+                                                            <a class="table-content" style="cursor: pointer;">{{data?.stop_Type_Name +'-' +
+                                                                data?.stopName}}</a>
+                                                        </li>                                              
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        <div style="text-align: center;" *ngIf="geofencelist && geofencelist.length == 0  || geofencelist == null && !(geofencelist | searchFilter:searchKeyword)?.length">No Data Found</div>
+                                    </div>
+                                </div> 
+                            </div>
+                            <!-- <div class="row row-data">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Selected Lat"
+                                    formControlName="selectedLat" aria-describedby="button-addon2" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Selected Lng"
+                                    formControlName="selectedLng" aria-describedby="button-addon2" />
+                                </div>
+                                <span style="text-align: center;color: red;" class="mb-2">You can also selected form map!</span>
+                               
+                            </div> -->
+                            <label for="exampleInputEmail1" class="form-label">Geo Fence Name</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Geo Fence Name"
+                                    formControlName="GeoFanceName" aria-describedby="button-addon2" />
+                            </div>
+                            <label for="exampleInputEmail1" class="form-label"> Latitude/Longitude</label>
+                            <div class="input-group mb-3">
+                                <textarea class="form-control" placeholder="Enter Lat/lng"
+                                    formControlName="selectedCorner" id="exampleFormControlTextarea1"
+                                    rows="4"></textarea>
+                            </div>
+
+                            <label for="exampleInputEmail1" class="form-label">Status</label>
+                            <select class="form-select mb-3" aria-label="Default select example"
+                                formControlName="status">
+                                <option value="1" >Active</option>
+                                <option value="0">Not Active</option>
+                            </select>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+                                    </app-alert>
+                                    <button type="submit"
+                                        class="btn btn-success mb-3" [disabled]="!addGeoFance.valid"
+                                        (click)="submit(addGeoFance.value)"><i class="fa fa-plus" aria-hidden="true"></i>
+                                        {{button}}
+                                    </button>
+                                </div>
+                                
+                            </div>
+                            <div class="row">                                
+                                <div class="col-md-12">
+                                    <button type="submit" (click)="cancel()"
+                                        class="btn btn-danger mb-3"><i class="fa fa-times" aria-hidden="true"></i>
+                                        Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="mb-3 card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title">
+                        Create GeoFence
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="map-container">
+                        <div id="map" style="width: 100%; height: 450px;"></div>
+                        <button (click)="deletePolygon();clear()"
+                            class="mt-4 mb-2 btn-icon btn-icon-only btn btn-warning">{{buttonText}}</button>
+                        <div *ngIf="polygonCoordinates">
+                            <h4>Polygon Coordinates:</h4>
+                            <ul>
+                                <li *ngFor="let coordinate of polygonCoordinates">
+                                    Lat: {{ coordinate.lat() }}, Lng: {{ coordinate.lng() }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">       
+            <div class="card">
+                <div class="card-header card-default">
+                    GeoFence List       
+                </div>
+                <div class="card-body">
+                  <div class="row row-data">
+                    <div class="col-md-12">
+                        <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="p-2 bd-highlight">
+                                <span>Items per page: </span>
+                                <select (change)="onTableSizeChange($event)" class="custom-select">
+                                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                        {{ size }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="dataTables_scroll">
+                                <div class="dataTables_scrollHead">
+                                </div>
+                                <div class="dataTables_scrollBody">
+                                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                        <loader [isRunning]="isloading"></loader>
+                                    </div>
+                                    <table id="datatable"
+                                        class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                        role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                        width="100%">
+    
+                                        <thead>
+                                            <tr role="row">
+                                                <th *ngFor="let vehicleHeading of tableData">
+                                                    <strong>{{vehicleHeading?.value}}</strong>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="!isloading">
+                                            <tr *ngFor="let user of geolistdata |  paginate : {
+                                                itemsPerPage: tableSize,
+                                                currentPage: page,
+                                                totalItems: count};">
+                                                <td><a style="color: blue !important;
+                                                    cursor: pointer;" (click)="selectedGeofance(user)">{{user?.stopName}}</a> </td>
+                                                <td>{{user?.corners}}</td>
+                                                <td>{{user?.status}}</td>
+                                                <td>
+                                                    {{user?.location}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-center"
+                                        *ngIf="geolistdata && geolistdata.length == 0 || geolistdata == null && !isloading"
+                                        style="width: 100%;">No Data Available</div>
+                                </div>
+    
+                            </div>
+                            <div class="pagination-data" *ngIf="geolistdata && geolistdata.length > 0">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+    
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+        </div>
+    </div>
+   
+</section>

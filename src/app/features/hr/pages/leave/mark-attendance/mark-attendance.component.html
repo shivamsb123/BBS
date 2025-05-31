@@ -1,0 +1,76 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/HR/mark_attendance"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Mark Attendance</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header card-default">
+                            Mark Attendance
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Day</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="">Select Duration Type</option>
+                                            <option value="1">Monday</option>
+                                            <option value="0">Tuesday</option>
+                                            <option value="0">Wednesday</option>
+                                            <option value="0">Thursday</option>
+                                            <option value="0">Friday</option>
+                                            <option value="0">Saturday</option>
+                                            <option value="0">Sunday</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">Date</label>
+                                    <div class="input-group mb-3"> <input type="text" class="form-control"
+                                            #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" /> </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">CheckIn Time</label>
+                                    <timepicker [(ngModel)]="fromtime" [showMeridian]="isMeridian" [hourStep]="hstep"
+                                        [minuteStep]="mstep"></timepicker>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">Last Checkout Time </label>
+                                    <timepicker [(ngModel)]="totime" [showMeridian]="isMeridian" [hourStep]="hstep"
+                                        [minuteStep]="mstep"></timepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="align-center">
+                            <div class="col-md-12 mb-2">
+                                <button type="submit" class="mr-2 btn-icon btn-icon-only btn btn-success">Check In</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="row match-height">
+            </div>
+        </div>
+    </div>
+</section>

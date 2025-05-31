@@ -1,0 +1,597 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Registration/RC_Details">Registration</a></li>
+        <li><a routerLink="/Registration/User_Master_App"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Staff Management</a></li>
+        <li><a routerLink="/Registration/add-driver"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Add Employee</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <div>
+            <form [formGroup]="addDriver">
+              <div class="vehicle-details">
+                <div class="row">
+                  <div class="col-md-6 col-lg-3">
+                    <label for="exampleInputEmail1" class="form-label">Role<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <select class="form-select" aria-label="Default select example" formControlName="role">
+                      <option value="">Select Role</option>
+                      <option *ngFor="let data of roleList" value="{{data?.roleID}}">{{data?.roleName}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 col-lg-3"></div>
+                  <div class="col-md-6 col-lg-3"></div>
+                  <div class="col-md-6 col-lg-3"></div>
+                </div>
+                <h4 class="primary-details">Primary Details</h4>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">First Name<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="First Name" aria-describedby="button-addon2"
+                        formControlName="fname" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Last Name<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Last Name" aria-describedby="button-addon2"
+                        formControlName="lname" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Mobile Number<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Mobile Number"
+                        aria-describedby="button-addon2" formControlName="phn" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Email<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="email" class="form-control" placeholder="Email" aria-describedby="button-addon2"
+                        formControlName="email" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Username<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Username" aria-describedby="button-addon2"
+                        formControlName="username" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Password<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="password" class="form-control" placeholder="Password"
+                        aria-describedby="button-addon2" formControlName="password" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Retype Password<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="password" class="form-control" placeholder="Retype Password"
+                        aria-describedby="button-addon2" formControlName="retypePassword" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Date Of Birth<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" placeholder="mm/dd/yy" class="form-control" formControlName="DOB" bsDatepicker>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">IMEI Number(type last 5 characters to
+                      serach)</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="IMEI Number" aria-describedby="button-addon2"
+                        formControlName="IMEINo" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">RFID Tag Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="RFID Tag Number"
+                        aria-describedby="button-addon2" formControlName="RFIDTag" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="vehicle-details">
+                <h4 class="primary-details">Other Details</h4>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Employee ID/Number/Code<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Employee ID" aria-describedby="button-addon2"
+                        formControlName="empId" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Father's Name</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Father's Name"
+                        aria-describedby="button-addon2" formControlName="father" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Alternate Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Alternate Number"
+                        aria-describedby="button-addon2" formControlName="alternateNo" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">
+                      Personal photo</label>
+                    <div class="input-group mb-3">
+                      <input class="form-control" type="file" formControlName="personalPhoto"
+                        (change)="changeDocument($event)">
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Permanent address</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Permanent Address"
+                        aria-describedby="button-addon2" formControlName="permanentAdd" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Permanent state</label>
+                    <!-- <div *ngIf="stateList && stateList.length > 0">
+                      <select-filter [vehicleData]="stateList" [type]="'Permanent_state'" [placeholder]="'Select Sate'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div> -->
+
+                    <!-- <div *ngIf="selectedValue">
+                      <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                      [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                      (onConfirm)="confirm($event)"></select-filter>
+                  </div> -->
+                  <div *ngIf="stateList && stateList.length > 0 ">
+                    <select-filter [vehicleData]="stateList" [type]="'Permanent_state'" [placeholder]="'Select Sate'"
+                      (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                  <div *ngIf="!stateList || stateList.length == 0">
+                    <select-filter [type]="'Permanent_state'" [placeholder]="'Select Sate'"
+                      (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Permanent Pin Code</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Permanent Pin Code"
+                        aria-describedby="button-addon2" formControlName="permanentPin" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Present address</label>
+                    <div class="input-group mb-3">
+                      <input type="textarea" class="form-control" placeholder="present Address"
+                        aria-describedby="button-addon2" formControlName="presentAdd" />
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Present State</label>
+                    <!-- <div *ngIf="stateList && stateList.length > 0">
+                      <select-filter [vehicleData]="stateList" [type]="'State'" [placeholder]="'Select Sate'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div> -->
+
+                    <div *ngIf="stateList && stateList.length > 0 ">
+                      <select-filter [vehicleData]="stateList" [type]="'State'" [placeholder]="'Select Sate'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!stateList || stateList.length == 0">
+                      <select-filter [type]="'State'" [placeholder]="'Select Sate'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Present Pin Code</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Present Pin Code"
+                        aria-describedby="button-addon2" formControlName="presentPin" />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="vehicle-details" *ngIf="addDriver.value.role == 101">
+                <h4 class="primary-details">Driver License details</h4>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Driver Licence Number </label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Driver Licence Number"
+                        aria-describedby="button-addon2" formControlName="licenceNo" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Licence Authority Name </label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Last Name" aria-describedby="button-addon2"
+                        formControlName="athuority" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Licence Type </label>
+                    <div class="input-group mb-3">
+                      <select class="form-select" aria-label="Default select example" formControlName="licenceType">
+                        <option value="">Select</option>
+                        <option value="1">Heavy Vehicle</option>
+                        <option value="2">Light Vehilce</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Licence Valid From </label>
+                    <div class="input-group mb-3">
+                      <input type="text" placeholder="mm/dd/yy" class="form-control" formControlName="licenceValidFrom"
+                        bsDatepicker>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Licence Valid To </label>
+                    <div class="input-group mb-3">
+                      <input type="text" placeholder="mm/dd/yy" class="form-control" formControlName="licenceValidTo"
+                        bsDatepicker>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+              <div class="vehicle-details">
+                <h4 class="primary-details">ID Proofs</h4>
+                <div class="row">
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID Proof </label>
+                    <!-- <div *ngIf="idProofeList && idProofeList.length > 0">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 1'"
+                        [placeholder]="'Select ID Proof'" (onConfirm)="confirm($event)"></select-filter>
+                    </div> -->
+                    <div *ngIf="idProofeList && idProofeList.length > 0 ">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 1'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!idProofeList || idProofeList.length == 0">
+                      <select-filter [type]="'ID Proof 1'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID Proof Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Id Proof Numer"
+                        aria-describedby="button-addon2" formControlName="idProofno1" />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID Picture/Document</label>
+                    <div class="input-group mb-3">
+                      <input class="form-control" type="file" formControlName="id1document"
+                        (change)="changeDocument($event)">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID Proof 2</label>
+                    <!-- <div *ngIf="idProofeList && idProofeList.length > 0">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 2'"
+                        [placeholder]="'Select ID Proof'" (onConfirm)="confirm($event)"></select-filter>
+                    </div> -->
+
+                    <div *ngIf="idProofeList && idProofeList.length > 0 ">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 2'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!idProofeList || idProofeList.length == 0">
+                      <select-filter [type]="'ID Proof 2'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">Issue Date</label>
+                    <div class="input-group mb-3">
+                      <input type="text" placeholder="mm/dd/yy" class="form-control" formControlName="issueDate"
+                        bsDatepicker>
+                    </div>
+                  </div> -->
+                </div>
+                <div class="row">                
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID2 Proof Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="ID Proof Number"
+                        aria-describedby="button-addon2" formControlName="idProofno2" />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID 2 Picture/Document</label>
+                    <div class="input-group mb-3">
+                      <input class="form-control" type="file" formControlName="id2document"
+                        (change)="changeDocument($event)">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID Proof 3</label>
+                    <!-- <div *ngIf="idProofeList && idProofeList.length > 0">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 3'"
+                        [placeholder]="'Select ID Proof'" (onConfirm)="confirm($event)"></select-filter>
+                    </div> -->
+
+                    <div *ngIf="idProofeList && idProofeList.length > 0 ">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 3'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!idProofeList || idProofeList.length == 0">
+                      <select-filter [type]="'ID Proof 3'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID 3 Proof Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="ID Proof Number"
+                        aria-describedby="button-addon2" formControlName="idProofno3" />
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">                 
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID 3 Picture/Document</label>
+                    <div class="input-group mb-3">
+                      <input class="form-control" type="file" formControlName="id3document"
+                        (change)="changeDocument($event)">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID Proof 4</label>
+                    <!-- <div *ngIf="idProofeList && idProofeList.length > 0">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 4'"
+                        [placeholder]="'Select ID Proof'" (onConfirm)="confirm($event)"></select-filter>
+                    </div> -->
+
+                    <div *ngIf="idProofeList && idProofeList.length > 0 ">
+                      <select-filter [vehicleData]="idProofeList" [type]="'ID Proof 4'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!idProofeList || idProofeList.length == 0">
+                      <select-filter [type]="'ID Proof 4'" [placeholder]="'Select ID Proof'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID 4 Proof Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Id Proof Number"
+                        aria-describedby="button-addon2" formControlName="idProofno4" />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">ID 4 Picture/Document</label>
+                    <div class="input-group mb-3">
+                      <input class="form-control" type="file" formControlName="id4document"
+                        (change)="changeDocument($event)">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                 
+                  <!-- <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">Authority Name</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Authority Name" formControlName="athuority"
+                        aria-describedby="button-addon2" />
+                    </div>
+                  </div> -->
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1" class="form-label">Status<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                    <select class="form-select" aria-label="Default select example" formControlName="status">
+                      <option value="">Select Status</option>
+                      <option value="1">Active</option>
+                      <option value="2">De-Active</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-6 col-lg-3">
+                    <button class="mr-2 btn-icon btn-icon-only btn btn-success"
+                      [disabled]="!addDriver.value.username || !addDriver.value.password || !addDriver.value.email || !addDriver.value.retypePassword  || !addDriver.value.empId   || !addDriver.value.status"
+                      (click)="submit(addDriver.value)"><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{button}} Record
+                    </button>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                    <button (click)="cancel()" class=" btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="vehicle-details">
+                <!-- <h4 class="primary-details">Salary Related Details</h4>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">ESIC No.</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="text"
+                         
+                          class="form-control"
+                          placeholder="ESIC No."
+                          aria-describedby="button-addon2"
+                          formControlName="ESICno"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Account No. </label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="text"
+                         
+                          class="form-control"
+                          placeholder="Account No."
+                          aria-describedby="button-addon2"
+                          formControlName="AcNo"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">IFSC Code</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="text"
+                         
+                          class="form-control"
+                          placeholder="IFSC Code"
+                          aria-describedby="button-addon2"
+                          formControlName="IFSCCode"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Duties Done</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="number"
+                         
+                          class="form-control"
+                          placeholder="Duties Done "
+                          aria-describedby="button-addon2"
+                          formControlName="dutiesDone"
+                        />
+                      </div>
+                    </div>                    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Spare Duties</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="number"
+                         
+                          class="form-control"
+                          placeholder="Spare Duties"
+                          aria-describedby="button-addon2"
+                          formControlName="spareDuties"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Total Duties</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="number"
+                         
+                          class="form-control"
+                          placeholder="Total Duties"
+                          aria-describedby="button-addon2"
+                          formControlName="totalDuties"
+                        />
+                      </div>
+                    </div>
+                     <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Minimum Wage</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="number"
+                         
+                          class="form-control"
+                          placeholder="Minimum Wage"
+                          aria-describedby="button-addon2"
+                          formControlName="minimumWage"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Incentive Category</label>
+                      <select class="form-select" aria-label="Default select example" formControlName="incentiveCategory">
+                        <option value="">Select</option>
+                        <option value="1">A1</option>
+                        <option value="2">A2</option>
+                        <option value="3">A3</option>
+                      </select>
+                    </div>                   
+                    
+                  </div>
+                  <div class="row">                            
+                      <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Status</label>
+                      <select class="form-select" aria-label="Default select example" formControlName="status">
+                        <option value="">Select Status</option>
+                        <option value="1">Active</option>
+                        <option value="2">De-Active</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Incentive Amount </label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="number"
+                         
+                          class="form-control"
+                          placeholder="Incentive Amount"
+                          aria-describedby="button-addon2"
+                          formControlName="incentiveAmount"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleInputEmail1" class="form-label">Total </label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="number"
+                         
+                          class="form-control"
+                          placeholder="Total Amount"
+                          aria-describedby="button-addon2"
+                          formControlName="totalAmount"
+                        />
+                      </div>
+                    </div>
+                  </div> -->
+                <!-- <div class="row">
+              <div class="col-md-6 col-lg-3"></div>
+              <div class="col-md-6 col-lg-3"></div>
+             
+            </div> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

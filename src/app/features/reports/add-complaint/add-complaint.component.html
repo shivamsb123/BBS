@@ -1,0 +1,177 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Reports/loaction_report">Reports</a></li>
+                <li><a routerLink="/Reports/Show_Complaints"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Complaint Report</a></li>
+                <li><a routerLink="/Reports/add-Show_Complaints"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add Complaint Report</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger "></app-alert>
+                    <form [formGroup]="addComplaintForm">
+                        <div class="col-md-12">
+                        </div>
+                        <div class="row row-data">
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Company</label>
+                                <div *ngIf="selectedDepartment">
+                                    <select-filter [selectedValue]="selectedDepartment" [vehicleData]="department" [type]="'Company'"
+                                        [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDepartment && department && department.length > 0">
+                                    <select-filter [vehicleData]="department" [type]="'Company'"
+                                        [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDepartment && !department || department.length == 0">
+                                    <select-filter [type]="'Company'" [placeholder]="'Select Company'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                        [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Select driver</label>
+                                <div *ngIf="selectedDriverValue">
+                                    <select-filter [selectedValue]="selectedDriverValue" [vehicleData]="driverList"
+                                        [type]="'driver'" [placeholder]="'Select driver'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDriverValue && driverList && driverList.length > 0">
+                                    <select-filter [vehicleData]="driverList" [type]="'driver'"
+                                        [placeholder]="'Select driver'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDriverValue && !driverList || driverList.length == 0">
+                                    <select-filter [type]="'driver'" [placeholder]="'Select driver'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Operator</label>
+                                <input type="text" class="form-control" formControlName="operator"
+                                    placeholder="Enter Operator" />
+                            </div>
+
+                        </div>
+                        <div class="row row-data">
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Complaint Type</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="complaintType">
+                                    <option *ngFor="let data of complaintTypeData">{{data}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Chaasis No</label>
+                                <input type="text" class="form-control" formControlName="chasisNo"
+                                    placeholder="Enter Chaasis Number" />
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Date</label>
+                                <input type="text" class="form-control" formControlName="date"
+                                    placeholder="Enter From Date" #dp="bsDatepicker" bsDatepicker />
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Category</label>
+                                <div *ngIf="selectedCategory">
+                                    <select-filter [selectedValue]="selectedCategory"  [vehicleData]="category" [type]="'Category'"
+                                        [placeholder]="'Select Category'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCategory && category && category.length > 0">
+                                    <select-filter [vehicleData]="category" [type]="'Category'"
+                                        [placeholder]="'Select Category'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCategory &&!category || category.length == 0">
+                                    <select-filter [type]="'Category'" [placeholder]="'Select Category'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-data">
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Status</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="status">
+                                    <option *ngFor="let data of status">{{data}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Complaint 1</label>
+                                <input type="text" class="form-control" formControlName="compalint1"
+                                    placeholder="Enter Complaint 1" />
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Complaint 2</label>
+                                <input type="text" class="form-control" formControlName="compalint2"
+                                    placeholder="Enter Complaint 2" />
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Complaint 3</label>
+                                <input type="text" class="form-control" formControlName="compalint3"
+                                    placeholder="Enter Complaint 3" />
+                            </div>
+
+
+                        </div>
+                        <div class="row row-data">
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Complaint 4</label>
+                                <input type="text" class="form-control" formControlName="compalint4"
+                                    placeholder="Enter Complaint 4" />
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Complaint 5</label>
+                                <input type="text" class="form-control" formControlName="compalint5"
+                                    placeholder="Enter Complaint 5" />
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <br>
+                                <button class=" btn btn-success"
+                                    [disabled]="!addComplaintForm.value.company || !addComplaintForm.value.vehicle || !addComplaintForm.value.driver || !addComplaintForm.value.operator || !addComplaintForm.value.complaintType || !addComplaintForm.value.date || !addComplaintForm.value.category || !addComplaintForm.value.status || !addComplaintForm.value.compalint1"
+                                    (click)="submit(addComplaintForm.value)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Save
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <br>
+                                <button class="btn btn-danger" (click)="cancel()">
+                                    <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

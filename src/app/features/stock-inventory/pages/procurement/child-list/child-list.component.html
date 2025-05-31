@@ -1,0 +1,58 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">
+            {{listName}}
+        </h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+        <div class="row ">
+            <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                        <div class="dataTables_scrollBody"
+                            [ngClass]="childList && childList?.length > 5 ? 'child-data' : ''">
+                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                <loader [isRunning]="isloading"></loader>
+                            </div>
+
+                            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th *ngFor="let vehicleHeading of chldTable">
+                                            <strong>{{vehicleHeading?.val}}</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="RFPid">
+                                    <tr *ngFor="let child of childList">
+                                        <td>{{child?.barcodeID}}</td>
+                                        <td>{{child?.productName}}</td>
+                                        <td>{{child?.qty}}</td>
+                                        <td>{{child?.rfpDate | date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="MRNId">
+                                    <tr *ngFor="let child of childList">
+                                        <td>{{child?.mrnChildid}}</td>
+                                        <td>{{child?.barcodeID}}</td>
+                                        <td>{{child?.productName}}</td>
+                                        <td>{{child?.qty}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center"
+                            *ngIf=" childList && childList.length == 0 || childList == null  && !isloading"
+                            style="width: 100%;">No Data Available</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

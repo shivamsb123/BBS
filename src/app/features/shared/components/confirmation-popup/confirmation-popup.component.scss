@@ -1,0 +1,25 @@
+// confirmation-modal
+.text-center {
+    text-align: center!important;
+    background-color: #495057;
+    color: #ffff;
+}
+
+.modal-fotter {
+    text-align: right;
+    background-color: #495057;
+
+    button.btn.btn-yellow {
+        background: yellow;
+        color: black;
+        margin: 10px 0;
+        margin-right: 10px;
+    }
+
+    button.btn.btn-cancle {
+        margin-right: 10px;
+        background:rgb(199 188 188 / 67%);
+        color: white;
+    }
+
+}

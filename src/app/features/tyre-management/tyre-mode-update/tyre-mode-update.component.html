@@ -1,0 +1,1030 @@
+<!-- <div class="information-modal">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Tyre</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="vehicle-information" *ngIf="type == 'TYRE_LINKING_PAGE'">
+            <div class="add-tyre" *ngIf="addTyreType == 'TYRE_LINKING'">
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Vehicle No</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Vehicle No." dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Demo 118
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0113(DMRC01)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0252(DMRC02)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0252(DMRC02)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0113(DMRC01)
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre No</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Tyre No." dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Test7
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            TYR0029
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">KM</label>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="search" id="myInput update-rc" class="form-control"
+                                placeholder="Enter KM Install" aria-describedby="button-addon2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Fitted Date</label>
+                        </div>
+                        <input type="text" class="form-control" bsDatepicker >
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Location</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Tyre No." dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic location" *dropdownMenu class="dropdown-menu" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Test7
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            TYR0029
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Status</label>
+                        </div>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select</option>
+                            <option value="1">Linking</option>
+                            <option value="2">Delinking</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre NSD </label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Tyre NSD  ." />
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(O)" />
+
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(M)" />
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre NSD(I) </label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD" />
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(MM)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD" />
+
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre Status</label>
+                        </div>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select</option>
+                            <option value="1">Retread Tyre</option>
+                            <option value="2">Original Tyre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-success">
+                            Save
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-primary clear">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-tyre" *ngIf="addTyreType == 'EDIT_TYRE_INFORMATION'">
+                <div class="row">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Vehicle No</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Vehicle No." dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Demo 118
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0113(DMRC01)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0252(DMRC02)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0252(DMRC02)
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            DL51GD0113(DMRC01)
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre No</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Tyre No." dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Test7
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            TYR0029
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">KM</label>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="search" id="myInput update-rc" class="form-control"
+                                placeholder="Enter KM Install" aria-describedby="button-addon2" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre Status</label>
+                        </div>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select</option>
+                            <option value="1">Linking</option>
+                            <option value="2">Delinking</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Fitted Date</label>
+                        </div>
+                        <input type="text" class="form-control"  bsDatepicker >
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Location</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Location" dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic location" *dropdownMenu class="dropdown-menu tyre-data" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Test7
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            TYR0029
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Status</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Status" dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic location" *dropdownMenu class="dropdown-menu tyre-data" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Linking
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Retreading
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Damage
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Warrenty
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Fitted Tyre No</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Fitted Tyre No" dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic location" *dropdownMenu class="dropdown-menu tyre-data" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234_6
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234_7
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234_8
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            w52345234_9
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre Removal Date</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Tyre Removal Date..." />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Tyre Removal Km</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Removal Km" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Reason For Removed</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Reason For Removed" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Driver Id</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Enter Driver Id" />
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <h5>Tyre NSD Removed(O.M.I.MM): </h5>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(M)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(I)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(MM)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(MM)" />
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <h5>Tyre NSD: </h5>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(O)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(M)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(I)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(MM)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(O)" />
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <h5>Tyre NSD Fitted(O.M.I.MM): </h5>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(O)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(M)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(I)" />
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">NSD(MM)</label>
+                        </div>
+                        <input type="text" class="form-control" placeholder="NSD(O)" />
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Route No</label>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="search" id="myInput update-rc" class="form-control" placeholder="Route No"
+                                aria-describedby="button-addon2" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Damage Type</label>
+                        </div>
+                        <div class="vehicle-data" dropdown >
+                            <input type="text" class="form-control" placeholder="Search Tyre No." dropdownToggle
+                                aria-controls="dropdown-basic" />
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                                aria-labelledby="button-basic">
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Blast
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Punctur
+                                        </label>
+                                    </div>
+                                </li>
+                                <li role="menuitem">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            TYR0029
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Puncture of Location</label>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="search" id="myInput update-rc" class="form-control"
+                                placeholder="Puncture of Location" aria-describedby="button-addon2" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <div class="select-type">
+                            <label for="exampleInputEmail1" class="form-label">Fitted Tyre Status</label>
+                        </div>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select</option>
+                            <option value="1">Retread Tyre</option>
+                            <option value="2">Original Tyre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row row-data">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-success">
+                            Upload Record
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-primary clear">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="vehicle-information" *ngIf="type == 'TYRE_NSD_page'">
+            <div class="row">
+                <div class="col-md-6 col-xl-4">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Vehicle No</label>
+                    </div>
+                    <div class="vehicle-data" dropdown >
+                        <input type="text" class="form-control" placeholder="Search Vehicle No." dropdownToggle
+                            aria-controls="dropdown-basic" />
+                        <ul id="dropdown-basic location" *dropdownMenu class="dropdown-menu" role="menu"
+                            aria-labelledby="button-basic">
+                            <li role="menuitem">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Demo 118
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="menuitem">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        DL51GD0113(DMRC01)
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="menuitem">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        DL51GD0252(DMRC02)
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="menuitem">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        DL51GD0252(DMRC02)
+                                    </label>
+                                </div>
+                            </li>
+                            <li role="menuitem">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        DL51GD0113(DMRC01)
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Fitted Date</label>
+                    </div>
+                    <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-2">
+                    <span>FRT RH(O.M.I.MM): </span>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(M)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(I)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Type</label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">Original Tyre</option>
+                        <option value="2">Retread Tyre</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Ware </label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">ETW</option>
+                        <option value="2">OTW</option>
+                        <option value="1">ITW</option>
+                        <option value="2">EDGE Tw</option>
+                        <option value="1">CTW</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-2">
+                    <span>FRT LH(O.M.I.MM): </span>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(M)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(I)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Type</label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">Original Tyre</option>
+                        <option value="2">Retread Tyre</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Ware </label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">ETW</option>
+                        <option value="2">OTW</option>
+                        <option value="1">ITW</option>
+                        <option value="2">EDGE Tw</option>
+                        <option value="1">CTW</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-2">
+                    <span>RR RHS Inner(O.M.I.MM): </span>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(M)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(I)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Type</label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">Original Tyre</option>
+                        <option value="2">Retread Tyre</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Ware </label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">ETW</option>
+                        <option value="2">OTW</option>
+                        <option value="1">ITW</option>
+                        <option value="2">EDGE Tw</option>
+                        <option value="1">CTW</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-2">
+                    <span>RR RHS outer(O.M.I.MM): </span>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(M)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(I)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Type</label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">Original Tyre</option>
+                        <option value="2">Retread Tyre</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Ware </label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">ETW</option>
+                        <option value="2">OTW</option>
+                        <option value="1">ITW</option>
+                        <option value="2">EDGE Tw</option>
+                        <option value="1">CTW</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-2">
+                    <span>RR LHS Inner(O.M.I.MM): </span>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(M)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(I)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Type</label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">Original Tyre</option>
+                        <option value="2">Retread Tyre</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Ware </label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">ETW</option>
+                        <option value="2">OTW</option>
+                        <option value="1">ITW</option>
+                        <option value="2">EDGE Tw</option>
+                        <option value="1">CTW</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-2">
+                    <span>RR LHS outer(O.M.I.MM): </span>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(O)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(M)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(M)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">NSD(I)</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="NSD(I)" />
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Type</label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">Original Tyre</option>
+                        <option value="2">Retread Tyre</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Tyre Ware </label>
+                    </div>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select</option>
+                        <option value="1">ETW</option>
+                        <option value="2">OTW</option>
+                        <option value="1">ITW</option>
+                        <option value="2">EDGE Tw</option>
+                        <option value="1">CTW</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xl-3">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Milo Km</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Milo Km">
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="select-type">
+                        <label for="exampleInputEmail1" class="form-label">Remarks</label>
+                    </div>
+                    <textarea class="form-control" placeholder="Remarks..."></textarea>
+                </div>
+                <div class="col-md-6 col-xl-6">
+                    <div class="d-block text-center card-footer">
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-success">
+                            Save
+                        </button>
+
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-primary">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

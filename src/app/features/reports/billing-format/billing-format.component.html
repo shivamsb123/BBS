@@ -1,0 +1,139 @@
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+          <li><a routerLink="/Reports/Billing_Via_Km"> <i class="fa fa-long-arrow-right"
+                aria-hidden="true"></i>
+              Trip Wise Billing Km </a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">
+            <div class="row">
+              <div class="col-md-3"> Trip Wise Billing Km </div>
+              <div class="col-md-3"> </div>
+              <div class="col-md-3"> </div>
+              <div class="col-md-3"></div>
+            
+            </div>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="billingForm">              
+              <div class="row">
+                <div class="col-md-3">
+                  <label class="form-label"> Date</label>
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control" 
+                          placeholder="Select Date" bsDatepicker formControlName="fromDate"/>
+                  </div>
+                </div>
+                <!-- <div class="col-md-3">
+                  <label class="form-label">To Date</label>
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control"
+                          placeholder="Select Date" bsDatepicker formControlName="toDate"/>
+                  </div>
+                </div> -->
+                
+                <div class="col-md-3"> 
+                  <!-- <label class="form-label">Billing Type</label>
+                  <select class="form-select" aria-label="Default select example">
+                    <option value="M"> Roster Wise</option>
+                    <option value="A"> GPS Wise</option>
+                  </select>              -->
+                </div>
+                <div class="col-md-3">
+                  <br>
+                  <button class="btn btn-success" (click)="showBillingReport(billingForm.value)">Show</button>
+                </div>
+                <div class="col-md-3">
+                  <br>
+                  <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                </div>
+              </div>
+            </form>
+            <div class="row row-data">
+              <div class="col-md-3">
+                <div class="p-2 bd-highlight">
+                  <span>Items per page: </span>
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [value]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                <div class="search-form">
+                  <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                    class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                      aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="dataTables_scroll">
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+                        aria-describedby="datatable_info" style="width: 100%" width="100%">
+                        <thead>
+                          <tr role="row">
+                            <th *ngFor="let vehicleHeading of tableData">
+                              <strong>{{vehicleHeading?.val}}</strong>
+                            </th>
+                          </tr>
+                        </thead>
+  
+                        <tbody *ngIf="!isloading">
+                          <tr *ngFor="let vehicle of billingData | searchFilter: searchKeyword |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                            <td>NA</td>
+                            <td>
+                              {{vehicle?.asseT_NO || 'NA'}}
+                            </td>
+                            <td>{{vehicle?.scheduleD_KM || 'NA'}}</td>
+                            <td>NA</td>
+                            <td>NA</td>
+                            <td>{{vehicle?.odometer_Depo_Out || 'NA'}}</td>
+                            <td>{{vehicle?.odometer_Depo_IN || 'NA'}}</td>
+                            <td>{{vehicle?.gpS_KM}}</td>
+                            <td>{{vehicle?.totaL_TRIPS}}</td>
+                            <td>0</td>
+                            <td>NA</td>
+                            <td>{{vehicle?.odometer_KM || 'NA'}}</td>
+                            <td>{{vehicle?.odometer_KM || 'NA'}}</td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="text-center" *ngIf="billingData && billingData.length == 0 || billingData == null && !isloading || !(billingData | searchFilter:searchKeyword)?.length"
+                        style="width: 100%;">No Data Available</div>
+                    </div>
+                    <div class="pagination-data" *ngIf="billingData && billingData.length > 0 && (billingData | searchFilter:searchKeyword)?.length">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        >
+                      </pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  </section>

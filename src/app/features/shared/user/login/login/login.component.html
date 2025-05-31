@@ -1,0 +1,95 @@
+<spinner-loader *ngIf="isloading"></spinner-loader>
+<div class="limiter" *ngIf="!isloading">
+    <div class="col-xs-12">
+      <div class="sliders">
+        <ng-container *ngFor="let img of img_list; let i = index">
+          <div class="slider" *ngIf="current == i" @fade>
+            <img class="img" [src]="img">
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  
+    <div class="container-login100">
+      <div class="wrap-login100">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)">
+          <h1 style="text-align: center;">
+            <img alt="" src="../../../../../assets/images/bn2.png" style="height: 40px;margin-right: 0px !important;" class="logo-icon margin-r-10">
+            <img alt="" src="../../../../../assets/images/skyitms.png" class="toggle-none hidden-xs">
+          </h1>
+          <span class="login100-form-title p-b-26">
+            Intelligent Transport Management System
+          </span>
+          <span class="login100-form-signuptittle">
+            Sign in to start your session
+          </span>
+          <span class="login100-form-title p-b-48">
+            <i class="zmdi zmdi-font"></i>
+          </span>
+  
+          <div class="wrap-input100 validate-input" >
+            <input class="input100" type="text" name="username" placeholder="username" formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
+            <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+              <div *ngIf="f['username'].errors['required']">username is required!!</div>
+              <div *ngIf="f['username'].errors['username']">
+                username must be a valid username address!!
+              </div>
+            </div>
+         
+    
+          </div>
+  
+          <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <span class="btn-show-pass">
+              <i class="zmdi zmdi-eye"></i>
+            </span>
+            <input class="input100" type="password" name="Password" placeholder="Password" formControlName="password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+              <div *ngIf="f['password'].errors['required']">
+                Password is required!!
+              </div>
+              <div *ngIf="f['password'].errors['minlength']">
+                Password should be at least 6 char long!!
+              </div>
+            </div>
+            
+          </div>
+          <div class="flexstyle">
+            <label class="switch">
+              <input type="checkbox"  (change)="toggleMessage()">
+              <span class="slider round"></span>
+            </label>
+            
+            <div [ngClass]="toggleStyle ? 'show':'hide'">
+              <p>you will be loggged in as Vendor</p>
+            </div>
+          </div>
+          
+          <div class="container-login100-form-btn">
+           
+            <div class="wrap-login100-form-btn">
+              <button class="btn btn-primary">
+                <i class="fa fa-sign-in"></i>  Login
+              </button>          
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12">
+            <a routerLink="/operation-statistics" style="font-size: 13px;display: flex;justify-content: end;text-decoration: underline;">Operation Statistics</a>
+            </div>
+          </div>
+  
+          <div class="text-center p-t-115">
+            <span class="txt1"> Operated by | </span>
+  
+            <a class="txt2"> BBS SkyITMS </a>
+          </div>
+          <div class="text-center p-t-115" style="font-size: 14px;">Powered & Copyright @ SSIPL</div>
+         
+        </form>
+      </div>
+    </div>
+  
+  </div>

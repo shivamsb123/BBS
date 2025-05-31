@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-default">
+        Alert History
+      </div>
+      <div class="card-body">
+        <div class="row row-data">
+          <div class="col-md-12">
+            <div class="search-form">
+              <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                  aria-hidden="true"></i></button>
+            </div>
+            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+              <div class="dataTables_scroll">
+                <div class="p-2 bd-highlight">
+                  <span>Items per page: </span>
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [value]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="dataTables_scrollBody">
+                  <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                    <loader [isRunning]="isloading"></loader>
+                  </div>
+                  <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                    aria-describedby="datatable_info" style="width: 100%" width="100%">
+                    <thead>
+                      <tr role="row">
+                        <th *ngFor="let vehicleHeading of tableData">
+                          <strong>{{vehicleHeading?.val}}</strong>
+                        </th>
+                      </tr>
+                    </thead>
+  
+                    <tbody *ngIf="!isloading">
+                      <tr *ngFor="let vehicle of data | searchFilter: searchKeyword |  paginate : {
+                                  itemsPerPage: tableSize,
+                                  currentPage: page,
+                                  totalItems: count};">
+                        <td>{{vehicle?.asseT_NO}}</td>
+                        <td>
+                          {{vehicle?.alerT_DESCRIPTION}}
+                        </td>
+                        <td>{{vehicle?.serveR_TIME}}</td>
+                        <td><a style="color: blue;cursor: pointer;" (click)="openPopup(vehicle)">{{vehicle?.loc}}</a></td>  
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="text-center"   *ngIf="data && data.length == 0 || data == null && !isloading || !(data | searchFilter:searchKeyword)?.length"
+                    style="width: 100%;">No Data Available</div>
+                </div>
+                <div class="pagination-data" *ngIf="data && data.length > 0 && (data | searchFilter:searchKeyword)?.length">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                    >
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

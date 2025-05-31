@@ -1,0 +1,90 @@
+.modal-body.p-20 {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.modal-content .modal-header {
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 22px;
+}
+
+.fa.fa-close {
+    color: white;
+    font-size: 17px;
+}
+/* Define the styles for the radio buttons */
+.radio-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+  }
+  
+  /* Hide the default radio buttons */
+  .radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Style the custom radio buttons */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .radio-container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the radio button is checked, add a blue background */
+  .radio-container input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+  
+  /* Create the tick mark using a pseudo-element */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the tick mark when the radio button is checked */
+  .radio-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the tick mark */
+  .radio-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+  .radio-buttons{
+    display: flex;
+    gap:15px
+  }
+
+  .footer {
+    height: 50px !important;
+    padding: 5px !important;
+    bottom: -33px !important;
+}

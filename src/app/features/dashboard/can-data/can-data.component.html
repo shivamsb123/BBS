@@ -1,0 +1,157 @@
+<!-- <ng-template #deleteVehicleTemplate>
+  <confirmation-popup [modalRef]='deleteVehicleData' [message]='message' (onConfirm)="confirm($event)">
+  </confirmation-popup>
+</ng-template> -->
+
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Dashboard/Dashboard_Can"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        CAN Data View</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    <div class="float-right mt-10">
+                        <button class="btn btn-primary clear-button" (click)="resetFilter()">
+                            Clear Filters
+                        </button>
+                    </div>
+                    <div class="col-md-3 select-data">
+                        <div class="form-group">
+                            <select class="form-select" [(ngModel)]="refreshValue"  aria-label="Default select example"
+                                (change)="onChangeRefreshSec($event)">
+                                <option value="null">Select Refresh Sec</option>
+                                <option *ngFor="let sec of refreshSecond" value="{{sec?.value}}">{{sec?.value}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <!-- <div class="col-md-3">
+                      <button class="btn btn-success" (click)="newOBUPage()">New OBU</button>
+                    </div> -->
+                  </div>
+                    <div class="row row row-data">
+                        <div class="col-md-2" *ngFor="let vehicleTrack of vehiclelistData['trackList']">
+                            <!-- <div class="widget padding-15" [ngStyle]="{'background-color': vehicleTrack['color'] == 'Orrange' ? 'orange' : vehicleTrack['color']  }">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30">
+                                        <h2 class="margin-b-5 text-muted">{{vehicleTrack['total']}}</h2>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-primary add-button" (click)="vehicleListBasedOnTrackList(vehicleTrack['fs_value'])">
+                                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                            {{vehicleTrack['ts_status']}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="widget" [ngStyle]="{'background-color': vehicleTrack['color'] == 'Orrange' ? 'orange' : vehicleTrack['color']  }">
+                              <div class="row row-table ">
+                                <div class="margin-b-10" (click)="selectedMapList(vehicleTrack?.fs_value)">
+                                  <h2 class="margin-b-5 text-muted">{{vehicleTrack['total']}}</h2>
+                                  <a class=" add-button"
+                                    >
+                                    {{vehicleTrack['ts_status']}}
+                                  </a>
+                                </div>
+                                <span class="text-right" style="float: right;color: #fff;font-size: 14px;cursor: pointer;" (click)="vehicleListBasedOnTrackList(vehicleTrack['route_id'],vehicleTrack['fs_value'])">Map View</span> 
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data">
+                      <div class="col-md-3">
+                        <div class="p-2 bd-highlight">
+                          <span>Items per page: </span>
+                          <select (change)="onTableSizeChange($event)" class="custom-select">
+                            <option *ngFor="let size of vehiclelistData.tableSizes" [value]="size">
+                              {{ size }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3"></div>
+                      <div class="col-md-3"></div>
+                      <div class="col-md-3">
+                        <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                      </div>
+                        <div class="col-md-12">
+                          <!-- <div class="search-form">
+                            <input class="form-control search-input" type="search" [(ngModel)]="searchKeyword"
+                              placeholder="Search for..." /> <button class="btn-search" type="button"><i *ngIf="!searchKeyword"
+                                class="fa fa-search"></i> <i *ngIf="searchKeyword" (click)="clearSearchField()" class="fa fa-times"
+                                aria-hidden="true"></i></button>
+                          </div> -->
+                          <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="dataTables_scroll">
+
+                              <div class="dataTables_scrollHead">
+                              </div>
+                              <div class="dataTables_scrollBody">
+                                  <div class="spin-loader" [ngClass]="vehiclelistData.isloading ? 'loader': ''">
+                                    <loader [isRunning]="vehiclelistData.isloading"></loader>
+                                  </div>
+                                <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+                                  aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                  <thead>
+                                    <tr role="row" >
+                                      <th *ngFor="let vehicleHeading of tableData">
+                                        <strong>{{vehicleHeading?.val}}</strong>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                
+                                  <tbody *ngIf="!vehiclelistData.isloading ">
+                                    <tr *ngFor="let vehicle of mapList |  paginate : {
+                                      itemsPerPage: vehiclelistData.tableSize,
+                                      currentPage: vehiclelistData.page,
+                                      totalItems: vehiclelistData.count};">
+                                      <td>{{vehicle?.sn}}</td>
+                                      <td>
+                                        {{vehicle?.device || 'NA'}}
+                                      </td>
+                                      <td>{{vehicle?.asseT_NO || 'NA'}}</td>
+                                      <td>{{vehicle?.timeg || 'NA'}}</td>
+                                      <td>{{vehicle?.place || 'NA'}}</td>
+                                      <td>{{vehicle?.soc || 'NA'}}</td>
+                                      <td>{{vehicle?.milage || 'NA'}}</td>            
+                                      <td>
+                                        {{vehicle?.charging_Status || 'NA'}}
+                                      </td>                                     
+                                      <td >{{vehicle?.total_Voltage || 'NA'}}</td>
+                                      <td>{{vehicle?.total_Current || 'NA'}}</td>
+                                     
+                                      <td>
+                                        {{vehicle?.battery1_Temp}},{{vehicle?.battery2_Temp}},{{vehicle?.battery3_Temp}},{{vehicle?.battery4_Temp}}
+                                      </td>
+                                      <td>
+                                        {{vehicle?.battery5_Temp}},{{vehicle?.battery6_Temp}},{{vehicle?.battery7_Temp}},{{vehicle?.battery8_Temp}}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <div class="text-center" *ngIf="mapList && mapList.length == 0 || mapList == null && !vehiclelistData['isloading']"
+                                  style="width: 100%;">No Data Available</div>
+                              </div>
+                              <div class="pagination-data" *ngIf="mapList && mapList.length > 0">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

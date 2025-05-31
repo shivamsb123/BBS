@@ -1,0 +1,25 @@
+th,td {
+    padding: 8px;
+    text-align: center;
+}
+#odoData{
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #c1c1c1;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+#odoDatatd{
+    display: flex;
+    justify-content: space-between;
+   
+}
+p{
+    margin-right: 60px;
+    margin-left: 30px ;
+}
+
+#odoData th{ border-top: none; border-bottom: none;}

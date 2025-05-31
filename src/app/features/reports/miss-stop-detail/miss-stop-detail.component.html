@@ -1,0 +1,89 @@
+<div class="modal-popup">
+  <div class="modal-header text-center">
+    <h4 class="modal-title f-w w-100 ">
+      {{report?.routeName}}
+    </h4>
+    <div class="close-modal">
+      <i class="fa fa-close" (click)="cancel()"></i>
+    </div>
+  </div>
+  <div class="modal-body p-20">
+    <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+    </app-alert>
+    <div class="row ">
+      <div class="col-md-12">
+        <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+          <div class="dataTables_scroll">
+            <div class="dataTables_scrollBody">
+              <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                <loader [isRunning]="isloading"></loader>
+              </div>
+          
+              <div class="radio-buttons" *ngIf="type !== 'STOPPAGE'">
+                <label class="radio-container">
+                  All
+                  <input type="radio" name="filterType" value="all" [(ngModel)]="filterType" (change)="filter()">
+                  <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">
+                  Miss Stop
+                  <input type="radio" name="filterType" value="missStop" [(ngModel)]="filterType" (change)="filter()">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+
+              <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                aria-describedby="datatable_info" style="width: 100%" width="100%">
+                <thead>
+                  <tr role="row">
+                    <th *ngFor="let vehicleHeading of tableData">
+                      <strong>{{vehicleHeading?.val}}</strong>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="!isloading">
+                  <tr *ngFor="let vehicle of missStopList;let i=index">
+                    <td>{{vehicle?.stopName}}</td>
+                    <td>{{vehicle?.ata}}</td>
+                    <td *ngIf="type == 'STOPPAGE'">{{vehicle?.atd}}</td>
+                    <td *ngIf="missstopSelected" >
+                      <form [formGroup]="reasonForm">
+                        <div class="reason-update" >
+
+                          <div class="reason">
+                            <textarea type="text" [ngModel]="reasonData" value="{{vehicle?.stopID}}" (change)="onChangeValue(vehicle,i)" formControlName="reasonValue"  placeholder="Please Enter Reason"></textarea>
+                          </div>
+                          <!-- <div class="add-reason">
+                            <button class="btn btn-success" (click)="onAddReason(vehicle, reasonForm?.value)">Add Reason</button>
+                          </div> -->
+                        </div>
+                      </form> 
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="text-center"
+              *ngIf=" missStopList && missStopList.length == 0 || missStopList == null  && !isloading"
+              style="width: 100%;">No Data Available</div>
+            <!-- <div class="pagination-data" *ngIf=" missStopList && missStopList.length > 0">
+              <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+              </pagination-controls>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <div class="row" *ngIf="missstopSelected">
+      <div class="col-md-3"></div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <button class="btn btn-success" [disabled]="!reasonForm.value.reasonValue" (click)="onAddReason()">Add Reason</button>
+      </div>
+    </div>
+  </div>
+</div>

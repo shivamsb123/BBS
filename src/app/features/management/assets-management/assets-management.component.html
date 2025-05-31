@@ -1,0 +1,127 @@
+<section class="main-content" *ngIf="!isloading">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Management/DepotAssets"> <i class="fa fa-long-arrow-right"
+                    aria-hidden="true"></i>
+                 Assets Management </a></li>
+                <li><a routerLink="/Management/Assets_Management"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Depot Assets Management </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                   Depot Assets Management 
+                </div>
+                <form>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Depot Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" 
+                                        placeholder="Enter Depot Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Assets Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" 
+                                        placeholder="Enter Assets Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Assets Type</label>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="1">Operational</option>
+                                    <option value="2">Charging</option>
+                                    <option value="3">Maintenance</option>
+                                    <option value="4">Manufacture</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Total Assets</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" 
+                                        placeholder="Enter Total Assets" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Total Assets Cost</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" 
+                                        placeholder="Enter Assets Cost" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Assets Limit</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" 
+                                        placeholder="Enter Assets Limit" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Place</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" 
+                                        placeholder="Enter Place" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Created Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" placeholder="Select Date" 
+                                        class="form-control" #dp="bsDatepicker" bsDatepicker >
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                            
+                        <div class="row">
+                            
+                                <div class="col-md-3">
+                                    <label class="form-label">Authority Name</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" 
+                                            placeholder="Enter Authority Name" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                        
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Submit
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-danger">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

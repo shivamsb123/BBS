@@ -1,0 +1,314 @@
+<section class="main-content">
+    <div class="row row-data">
+      <div class="col-md-4">
+        <div class="mb-3 card">
+          <div class="card-header-tab card-header">
+              <div class="row" >
+                <div class="col-md-6 mb-1" *ngFor="let bus of trackList">
+                  <button (click)="selectVehicleValue(bus?.fs_value)"  [ngClass]="dynamicFsvalue == bus?.fs_value ? 'vehicle-button' : ''" [ngStyle]="{'background-color': bus['color'] == 'Orrange' ? 'orange': bus['color'] }">{{bus.ts_status}}</button>
+                </div>
+              </div>
+          </div>
+          <div class="cancontainer" >
+              <div class="mb-3">
+                <div class="tab-content">                 
+                  <div class="tab-pane fade active show" id="tab-eg-55">
+                      <div class="widget-chart p-3">
+                        <div class="row">               
+                          <div class="col-md-6">
+                            <div *ngIf="selectedRouteValue">
+                              <select-filter [selectedValue]="selectedRouteValue" [vehicleData]="routelist" [type]="'route'"
+                              [placeholder]="'Select Route'"
+                              (onConfirm)="confirm($event)"></select-filter>
+                          </div>                   
+                            <div *ngIf="!selectedRouteValue && routelist && routelist?.length > 0 ">
+                                <select-filter [vehicleData]="routelist" [type]="'route'"
+                                    [placeholder]="'Select Route'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedRouteValue && !routelist || routelist?.length == 0">
+                                <select-filter  [type]="'route'"
+                                [placeholder]="'Select Route'"
+                                (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div *ngIf="selectedValue">
+                              <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData" [type]="'vehicle'"
+                              [placeholder]="'Select Vehicle'"
+                              (onConfirm)="confirm($event)"></select-filter>
+                          </div>
+                            <div *ngIf="!selectedValue && vehicleData && vehicleData?.length > 0 ">
+                                <select-filter [vehicleData]="vehicleData" [type]="'vehicle'"
+                                    [placeholder]="'Select Vehicle'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && !vehicleData || vehicleData?.length == 0 || vehicleData == null">
+                                <select-filter  [type]="'vehicle'"
+                                [placeholder]="'Select Vehicle'"
+                                (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                      </div>
+                          <div class="device-simple-view">
+                              <div class="vehcileList">
+                                <div class="detail">
+                                  <h3 class="mb-0 font-weight-bold text-primary" style="
+                                      color: rgb(0, 37, 64) !important;
+                                      font-size: 1.25rem !important;
+                                    ">
+                                    {{selectedVehicleData?.asseT_NO}}
+                                  </h3>
+                                </div>
+
+                              </div>
+                              <div class="section">
+                                <label class="item-label">STATUS</label>
+                                <div class="d-flex justify-content-between">
+                                  <div class="d-flex align-items-center">
+                                    <div class="text-center rounded d-flex align-items-center justify-content-center device-state-icon stopped">
+                                      <ng-container *ngIf="selectedVehicleData && selectedVehicleData.speed !== 0 && selectedVehicleData.speed !== 'No motion'; else elseBlock">
+                                        <img src="/assets/greenbus.png" style="height: 40px" />
+                                      </ng-container>
+                                      <ng-template #elseBlock>
+                                        <img src="/assets/yellowbus.png" style="height: 40px" />
+                                      </ng-template>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <h5 class="device-status stopped"
+                                      *ngIf="!selectedVehicleData || selectedVehicleData?.speed == 0 || selectedVehicleData?.speed == 'No motion'">
+                                      <span class="text-warning">Stopped</span>
+                                    </h5>
+                                    <h5 class="device-status stopped"
+                                      *ngIf="selectedVehicleData && selectedVehicleData?.speed !== 0 && selectedVehicleData?.speed !== 'No motion'">
+                                      <span class="text-success">Running</span>
+                                    </h5>
+                                    <p class="device-time">{{selectedVehicleData?.timeg}}</p>
+                                  </div>
+                                  <div>
+                                    <div style="width: 58px; height: 58px">
+                                     
+                                      <div class="text-center">
+                                        <span class="device_speed">{{selectedVehicleData?.speed}}</span>
+                                        <span class="device_speed_subs">Km/H</span>
+                                        <strong></strong>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="section"*ngIf="filterData" >
+                                <label class="item-label">Live Camera</label>
+                                <div class="camera">
+                                  <div *ngFor="let cam of camera;let i = index">
+                                    <div class="d-flex flex-wrap align-items-center"  (click)="selectIcon(i)"  >
+                                      <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                                        <span class="sensor_icons" >
+                                          <i [class]="cam.icon" aria-hidden="true"></i><br>                                   
+                                        </span>                                        
+                                      </div>                                                                 
+                                    </div>
+                                    <label class="item-label cam">{{cam.label}}</label>
+                                    <img  [src]="cam.src" *ngIf="cam.selected" class="cam" style="width:auto;height:23px;" alt="" srcset="">
+                                  </div>
+                                </div>
+                             
+                              </div>
+                              <div class="section" style="display: flex; justify-content: space-between;">
+                                <div>
+                                  <label class="item-label">Time Taken In Update</label>
+                                  <div>
+                                    <p class="description">
+                                      {{selectedVehicleData?.timE_TAKEN_IN_UPDATE}}
+                                    </p>
+                                  </div>
+                                </div>
+                                <!-- <div>
+                                  <div>
+                                    <a (click)="redirectToTracking('/Tracking/Tracking_Live/id', vehicleId)"
+                                      style="color: blue;cursor: pointer;" rel="noopener noreferrer">Trip Status</a>
+                                  </div>
+                                </div> -->
+                              </div>
+                              <div class="section" style="display: flex; justify-content: space-between;">
+                                <div>
+                                  <label class="item-label">Route No</label>
+                                  <div>
+                                    <p class="description">
+                                      {{selectedVehicleData?.route}}
+                                    </p>
+                                  </div>
+                                </div>
+                                <!-- <div>
+                                  <label class="item-label">Direction</label>
+                                  <div>
+                                    <div class="arrow-container" *ngIf="directionUpValue">
+                                      <img class="up-logo" src="assets/images/up-icon.png" alt="">
+                                    </div>
+                                    <div class="arrow-container" *ngIf="directionDownValue">
+                                      <img class="up-logo" style="transform: rotate(180deg);" src="assets/images/up-icon.png"
+                                        alt="">
+                                    </div>
+            
+                                  </div>
+                                </div> -->
+                              </div>
+                              <div class="section">
+                                <label class="item-label">Starting Point</label>
+                                <div>
+                                  <p class="description">
+                                    {{startingPoint}}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="section">
+                                <label class="item-label">Current Location</label>
+                                <div>
+                                  <p class="description">
+                                    {{selectedVehicleData?.place}}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="section">
+                                <div>
+                                  <label class="item-label">Next Stop</label>
+                                  <div>
+                                    <p class="description">
+                                      <!-- {{filterData?.destination}} -->
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="section">
+                                <label class="item-label">Destination Point</label>
+                                <div>
+                                  <p class="description">
+                                    {{endPoint}}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="section" style="display: flex; justify-content: space-between;">
+                                <div>
+                                  <label class="item-label">Driver Name</label>
+                                  <div>
+                                    <p class="description">
+                                      {{selectedVehicleData?.driver?.split(',')[0]}}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <label class="item-label">Mobile No.</label>
+                                  <div>
+                                    <p class="description">
+                                      {{selectedVehicleData?.driver?.split(',')[1]}}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+            
+                              <div class="section" style="display: flex; justify-content: space-between;">
+                                <div>
+                                  <label class="item-label">OBU No</label>
+                                  <div>
+                                    <p class="description">
+                                      {{filterData?.obU_DEVICE_ID}}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <label class="item-label">Total Distance</label>
+                                  <div>
+                                    <p class="description">
+                                      {{filterData?.dst?.split('/')[0]}}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <label class="item-label">Covered Distance</label>
+                                  <div>
+                                    <p class="description">
+                                      {{filterData?.dst?.split('/')[1]}}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="section">
+                                <label class="item-label"> CO-ORDINATES </label>
+                                <div class="d-flex justify-content-between">
+                                  <p class="description"><span>{{selectedVehicleData?.lat}} {{selectedVehicleData?.lon}}</span></p>                              
+                                </div>
+                              </div>
+                              <div class="section" *ngIf="filterData">
+                                  <label class="item-label">SENSORS</label>
+                                  <div>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                      <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                                        <span class="sensor_icon" *ngIf="filterData?.ign == '0'">
+                                          <img style="width: 24px; height: 16px"
+                                            src="../../../../../assets/images/switch-off-icon.png" />
+                                        </span>
+                                        <span class="sensor_icon" *ngIf="filterData?.ign=='1'">
+                                          <img style="width: 24px; height: 16px"
+                                            src="../../../../../assets/images/switch-on-icon.png" />
+                                        </span>
+              
+                                        <span class="sensor_value">IGN <span class="device_speed_subs"></span>
+                                        </span>
+                                      </div>
+                                      <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center"
+                                        *ngIf="filterData?.charging_Status == 'Not Charging'">
+                                        <span class="sensor_icon"><img src="assets/ignition_off.png" /></span>
+                                        <span class="sensor_value">Off</span>
+                                      </div>
+                                      <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center"
+                                        *ngIf="filterData?.charging_Status == 'Charging'">
+                                        <span class="sensor_icon"><img src="assets/images/chargin-status.png" /></span>
+                                        <span class="sensor_value">On</span>
+                                      </div>
+                                      <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                                        <span class="sensor_icon"><img
+                                            src="https://fastrackerz.co.in/assets/img/app/sensors/odometer.png" /></span>
+                                        <span class="sensor_value">{{filterData?.tkm}} <span class="device_speed_subs"></span></span>
+                                      </div>
+                                      <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                                        <span class="sensor_icon"><img src="../../../../assets/images/milage.png" /></span>
+                                        <span class="sensor_value">{{filterData?.milage}}</span>
+                                      </div>
+                                      <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                                        <span class="sensor_icon"><img src="../../../../assets/images/voltage.png" /></span>
+                                        <span class="sensor_value">{{filterData?.voltage}} </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div [ngClass]="divClass">
+        <div class="mb-3 card">       
+          <div class="card-body">
+            <div id="liveMap" class="map-container" style="width: 100%; height: 580px;"></div>
+          </div>
+        </div>
+      </div>
+      <div [ngClass]="divroute" *ngIf="busStops && busStops.length > 0">
+        <div class="container">
+            <div class="wrapper">
+              <ul class="sessions" #sessionsList>
+                <li *ngFor="let item of busStops; let i = index" id="{{  i === currentStopIndex ? 'scrollElement' : ''}}"
+                  [ngClass]="{'bus-green': i === currentStopIndex, 'bus-reached': i < currentStopIndex}">
+                  <p>{{item.stopName}}</p>
+                </li>
+              </ul>
+            </div>
+          </div> 
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,482 @@
+  
+  .mr-2.btn-icon.btn-icon-only.btn.btn-primary{
+    margin-top: 30px;
+  }
+  .form-select{
+    min-width: 120px;
+    max-width: 200px;
+  }
+  .legend-button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  
+  .leaflet-top .leaflet-control {
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  .legend-button[disabled] {
+    opacity: 0.5;
+    cursor:none;
+  }
+  ::ng-deep{
+  .btn.btn-icon {
+    position: relative;
+    overflow: hidden;
+    width: 120px;
+    cursor: pointer;
+}
+ }
+
+.card-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.logo {
+  float: right;
+  max-width: 20%;
+}
+
+.logo-obu {
+  float: right;
+  max-width: 25%;
+}
+
+.widget-r-m {
+  margin-top: -62px;
+}
+
+.widget {
+  background: white;
+  cursor: pointer;
+}
+
+p.margin-b-5 {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.last-update {
+  // text-align: center;
+  .last-update-data {
+      font-size: 12px;
+  }
+}
+
+.search-form {
+  float: right;
+}
+
+.search-input {
+  border-color: #2f387c !important;
+}
+
+.search-form {
+  margin-top: 0px !important; 
+}
+
+.search-form .btn-search {
+  color: #2f387c;
+}
+
+.widget.total-data {
+  height: 83px;
+  cursor: auto;
+}
+  
+
+  
+  
+
+.slidecontainer {
+    width: 100%;
+    /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    appearance: none;
+    width: 100%;
+    /* Full-width */
+    height: 1px;
+    border-radius: 2px;
+    background: #7d7e80;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 1;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s;
+    /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;
+    /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    width: 50px;
+    height: 20px;
+    border: 0;
+    background: url('https://fastrackerz.co.in/assets/img/app/range.png');
+    /* Slider handle height */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 50px;
+    height: 20px;
+    border: 0;
+    background: url('https://fastrackerz.co.in/assets/img/app/range.png');
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.card-box {
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 42px 0 rgb(0 0 0 / 8%);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+}
+
+.text-custom {
+    font-weight: 300;
+    font-size: 27px;
+}
+
+/* The side navigation menu */
+.slider.slider-horizontal {
+    width: 100%;
+}
+
+.sidenav {
+    height: 100%;
+    /* 100% Full-height */
+    width: 0;
+    /* 0 width - change this with JavaScript */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+    padding-top: 60px;
+    /* Place content 60px from the top */
+    transition: 0.5s;
+    /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover,
+.offcanvas a:focus {}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#map_canvas {
+    transition: margin-left .5s;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media  screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.marker_label {
+    color: black;
+    padding: 2px;
+    background-color: white;
+    font-family: "Roboto", "Lucida Grande", "Arial", sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    text-align: center;
+    width: auto;
+    border: 1px solid lightgray;
+    white-space: nowrap;
+}
+
+.select2-chosen {
+    line-height: 31px !important;
+}
+
+.leaf-device-marker .name {
+    display: block;
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: 5px;
+    -webkit-transform: translateX(-40%);
+    transform: translateX(-40%);
+}
+
+.leaf-device-marker .name:before,
+.leaf-device-marker .name:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+}
+
+.leaf-device-marker .name:before {
+    border: 11px solid transparent;
+    left: calc(50% - 11px);
+    bottom: -10px;
+    border-bottom: 0;
+    border-top-color: #d9d9d9;
+}
+
+.leaf-device-marker .name:after {
+    border: 10px solid transparent;
+    left: calc(50% - 10px);
+    bottom: -9px;
+    border-bottom: 0;
+    border-top-color: #ffffff;
+}
+
+.leaf-device-marker .name i {
+    font-style: normal;
+    display: inline-block;
+    white-space: nowrap;
+    background: #ffffff;
+    padding: 2px 2px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
+
+.hide {}
+
+@media  print {
+    @page  {
+        size: landscape;
+    }
+
+    /*body * {
+                                                visibility: hidden !important;
+                                            }
+                                            #map_canvas, #map_canvas * {
+                                                visibility: visible !important;
+                                            }*/
+    .border {
+        border: 1px solid #000 !important;
+    }
+
+    #map_canvas {
+        position: absolute !important;
+        left: 0;
+        top: 100;
+        width: 100% !important;
+        height: calc(100vh - 150px) !important;
+        margin: auto;
+        margin-top: 0 !important;
+        border: 1px solid;
+    }
+
+    #page-container {
+        padding: 0px !important;
+    }
+
+    #map-section {
+        width: 100% !important;
+        display: block !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        height: 100vh !important;
+    }
+}
+
+.btn-group,.btn-group-vertical {
+  position: relative;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  vertical-align: middle
+}
+
+.btn-group-vertical>.btn,.btn-group>.btn {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto
+}
+::ng-deep {
+  .fa{
+    font-weight: 900 !important;
+  }
+
+}
+
+.btn-group-vertical>.btn:hover,.btn-group>.btn:hover {
+  z-index: 1
+}
+
+.btn-group-vertical>.btn.active,.btn-group-vertical>.btn:active,.btn-group-vertical>.btn:focus,.btn-group>.btn.active,.btn-group>.btn:active,.btn-group>.btn:focus {
+  z-index: 1
+}
+
+.btn-toolbar {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: start;
+  justify-content: flex-start
+
+}
+::ng-deep{
+  .fa, .fas {
+    font-weight: 900 !important;
+  }
+  
+}
+.btn-toolbar .input-group {
+  width: auto
+}
+
+.btn-group>.btn-group:not(:first-child),.btn-group>.btn:not(:first-child) {
+  margin-left: -1px
+}
+
+.btn-group>.btn-group:not(:last-child)>.btn,.btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0
+}
+
+.btn-group>.btn-group:not(:first-child)>.btn,.btn-group>.btn:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0
+}
+
+
+
+.controls{
+  display: flex;
+  justify-content: start;
+
+  a {
+    color: darkblue;
+  }
+  
+  .controls {
+    position: absolute;
+    z-index: 999;
+    top: 120px;
+    right: 20px;
+  }
+  
+  button {
+    font-size: 16px;
+    background: #bbbdc5;
+    color: white;
+    border: none;
+    padding: 0px;
+    border-radius: 10px;
+    width: 40px;
+    margin-right: 2px;
+    height: 38px;
+  }
+  .visited {
+    background-color: #00ff00; /* Change to your desired color */
+  }
+  button:hover, button:focus {
+    background: red;
+  }
+  
+  .active {
+    background: red;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  span {
+    color: red;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+.logo {
+  max-width: 30%;
+}
+/* styles.css (or your preferred CSS file) */
+.tabset {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tab {
+  display: none;
+}
+
+.tab-content {
+  padding: 10px;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #f0f0f0;
+}
+
+input[type="radio"]:checked + label + .tab-content {
+  display: block;
+}
+
+agm-map {
+  height: 530px !important;
+}
+
+.widget h2 {
+  font-size: 13px !important;
+  font-weight: 400;
+  color: #000 !important;
+}

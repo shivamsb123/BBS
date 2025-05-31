@@ -1,0 +1,109 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Management/Change_Password">Management</a></li>
+        <li><a routerLink="/Management/Access_Wizard"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            User Access</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <div class="row row-data">
+           
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">User List</label>
+              <div *ngIf="userList && userList.length > 0">
+                <select-filter [vehicleData]="userList" [type]="'user'" [type]="'user'" [placeholder]="'Select User'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!userList || userList.length == 0">
+                <select-filter [vehicleData]="userList" [type]="'user'" [type]="'user'" [placeholder]="'Select User'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Module</label>
+              <div *ngIf="mainModuleList && mainModuleList?.length > 0">
+                <select-filter [vehicleData]="mainModuleList" [type]="'module'" [placeholder]="'Select Module'"
+                  (onConfirm)="confirm($event)">
+                </select-filter>
+
+              </div>
+              <div *ngIf="!mainModuleList || mainModuleList.length == 0">
+                <select-filter [type]="'module'" [placeholder]="'Select Module'" (onConfirm)="confirm($event)">
+                </select-filter>
+              </div>
+
+            </div>
+            <div class="col-md-6 col-xl-3"></div>
+            <div class="col-md-6 col-xl-3"></div>
+          </div>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody" [ngClass]="menuList && menuList?.length > 10 ? 'rpf-data' : ''">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let menu of menuList; let i = index">
+                          <td>
+                            <input type="checkbox" 
+                                   [ngModel]="menu?.view == 1" 
+                                   (change)="changeSelection($event, i, menu, 'allCheck')" />
+                          </td>
+                          <td>{{ menu?.module_Name }}</td>
+                          <td>{{ menu?.menu_Name }}</td>
+                          <td>
+                            <input type="checkbox" 
+                                   [ngModel]="menu?.add == 1" 
+                                   (change)="changeSelection($event, i, menu, 'add')" />
+                          </td>
+                          <td>
+                            <input type="checkbox" 
+                                   [ngModel]="menu?.update == 1" 
+                                   (change)="changeSelection($event, i, menu, 'update')" />
+                          </td>
+                          <td>
+                            <input type="checkbox" 
+                                   [ngModel]="menu?.delete == 1" 
+                                   (change)="changeSelection($event, i, menu, 'delete')" />
+                          </td>
+                          <td>
+                            <input type="checkbox" 
+                                   [ngModel]="menu?.view == 1" 
+                                   (change)="changeSelection($event, i, menu, 'view')" />
+                          </td>
+                        </tr>
+                      </tbody>
+                      
+                    </table>
+                    <div class="text-center" *ngIf="menuList && menuList.length == 0 || menuList == null && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,143 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/reports/loaction_report">Reports</a></li>
+        <li><a routerLink="/reports/show_trip"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Show Trip</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="exampleInputEmail1" class="form-label">Company</label>
+              <div *ngIf=" department && department.length > 0">
+                <select-filter [vehicleData]="department" [type]="'Company'" [placeholder]="'Select Company'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf=" !department || department.length == 0">
+                <select-filter [vehicleData]="department" [type]="'Company'" [placeholder]="'Select Company'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Route</label>
+              <div *ngIf=" routeList && routeList?.length > 0 ">
+                <select-filter [vehicleData]="routeList" [type]="'route'" [placeholder]="'Select Route'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf=" !routeList || routeList.length == 0 ">
+                <select-filter [type]="'route'" [placeholder]="'Select Route'"></select-filter>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Shift Type</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>select </option>
+                <option value="1">Morning</option>
+                <option value="2">Afternoon</option>
+              </select>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Select Driver</label>
+              <div *ngIf="driverList && driverList.length > 0">
+                <select-filter [vehicleData]="driverList" [type]="'Driver'" [placeholder]="'Select Driver'"
+                  (onConfirm)="confirm($event)"></select-filter>
+
+              </div>
+              <div *ngIf="!driverList || driverList.length == 0">
+                <select-filter [type]="'Driver'" [placeholder]="'Select Driver'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+            </div>
+          </div>
+          <div class="row row-data">
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Select Vehicle</label>
+              <div *ngIf="vehicleData && vehicleData.length > 0">
+                <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!vehicleData || vehicleData.length == 0">
+                <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3"></div>
+            <div class="col-md-6 col-lg-3"></div>
+            <div class="col-md-6 col-lg-3">
+              <br>
+              <button class="btn btn-success">
+                Get Record
+              </button>
+            </div>
+          </div>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [value]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <!-- <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                      </div> -->
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <!-- <tbody *ngIf="!isloading">
+                          <tr *ngFor="let vehicle of unitData | searchFilter: searchKeyword |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                            <td>{{vehicle?.unitID}}</td>
+                            <td>
+                              {{vehicle?.unitName || 'NA'}}
+                            </td>
+                            <td> <a tooltip="Edit" rel="noopener noreferrer" (click)="redirectTo(vehicle?.id)"><i class="fa fa-pencil"
+                                  aria-hidden="true"></i>
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody> -->
+                    </table>
+                    <div class="text-center" style="width: 100%;">No Data Available</div>
+                  </div>
+                  <!-- <div class="pagination-data" *ngIf="unitData && unitData.length > 0">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        >
+                      </pagination-controls>
+                    </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

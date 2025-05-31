@@ -1,0 +1,8 @@
+<div id="map" style="height: 500px;"></div>
+
+<div class="timeline">
+  <div *ngFor="let stop of busStops" class="timeline-item" [ngClass]="{ 'active': stop.isActive, 'covered': checkBusStopCovered(stop) }">
+    <div class="marker"></div>
+    <div class="stop-name">{{ stop.stopName }}</div>
+  </div>
+</div>

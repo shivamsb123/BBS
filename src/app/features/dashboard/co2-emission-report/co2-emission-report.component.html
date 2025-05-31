@@ -1,0 +1,69 @@
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+          <li><a routerLink="/Dashboard/co2-emission-report"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+             Co2 Emission</a></li>
+        
+        </ol>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+                KM Report
+            </div>
+            <div class="card-body">
+     
+              <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="dataTables_scroll">
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="vehiclelistData.isloading ? 'loader': ''">
+                        <loader [isRunning]="vehiclelistData.isloading"></loader>
+                      </div>
+                      <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                        #TABLE aria-describedby="datatable_info" style="width: 100%" width="100%">
+                        <thead>
+                          <tr role="row">
+                            <th *ngFor="let vehicleHeading of tableData">
+                              <strong>{{vehicleHeading?.val}}</strong>
+                            </th>
+                          </tr>
+                        </thead>
+    
+                        <tbody *ngIf="!vehiclelistData.isloading">
+                          <tr *ngFor="let vehicle of emissionReport | searchFilter: searchKeyword | paginate : {
+                                          itemsPerPage: vehiclelistData.tableSize,
+                                          currentPage: vehiclelistData.page,
+                                          totalItems: vehiclelistData.count};">
+                            <td>{{vehicle?.srno}}</td>
+                            <td>{{vehicle?.monthName || 'NA'}}</td>
+                            <td>{{vehicle?.yearid || 'NA'}}</td>
+                            <td>{{vehicle?.noofbuses || 'NA'}}</td>
+                            <td>{{vehicle?.opening || 'NA'}}</td>
+                            <td>{{vehicle?.monthlyKM || 'NA'}}</td>
+                            <td>{{vehicle?.totalKM || 'NA'}}</td>
+                            <td>{{(vehicle?.last_updated_date | date:'dd-MM-yyyy') || 'NA'}}</td>
+                            
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="text-center" *ngIf="emissionReport && emissionReport.length == 0 || emissionReport == null && !vehiclelistData['isloading']"
+                                  style="width: 100%;">No Data Available</div>
+                              </div>
+                              <div class="pagination-data" *ngIf="emissionReport && emissionReport.length > 0">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                              </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</section>

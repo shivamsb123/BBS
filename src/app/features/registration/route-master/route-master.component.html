@@ -1,0 +1,218 @@
+<section class="main-content" *ngIf="!isloading">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Registration/Route_Master"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Route Master</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <!-- <div class="card-header card-default">
+                    Route Master
+                </div> -->
+                <form [formGroup]="routeMasterForm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Route No.<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Route No"
+                                        aria-describedby="button-addon2" formControlName="route_no" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Route Name<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Route Name"
+                                        aria-describedby="button-addon2" formControlName="route_name" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Route Group No.<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Route Group No"
+                                        aria-describedby="button-addon2" formControlName="route_group_no" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Origin<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Origin"
+                                        (change)="changeOriginValue()" aria-describedby="button-addon2"
+                                        formControlName="origin" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Depot<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Depot"
+                                        (input)="changeOriginValue()" aria-describedby="button-addon2"
+                                        formControlName="depot" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Destination<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Destination"
+                                        aria-describedby="button-addon2" formControlName="destination" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Via<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Via"
+                                        aria-describedby="button-addon2" formControlName="via" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Origin To Depot<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Origin To Depot"
+                                        aria-describedby="button-addon2" formControlName="origin_to_depot" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Depot To Origin<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Depot To Origin"
+                                        aria-describedby="button-addon2" formControlName="depot_to_origin" />
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <label class="form-label">Route Colour<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Route Colour"
+                                        aria-describedby="button-addon2" formControlName="route_colour" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Scheduled KM<span style="font-size: 19px;font-weight: 700;color: red;"> *</span></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter Scheduled KM"
+                                        aria-describedby="button-addon2" formControlName="scheduled_KM" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <br>
+                                        <button class="btn btn-success"  [disabled]="!routeMasterForm.valid" (click)="submit(routeMasterForm.value)">
+                                            <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <br>
+                                        <button class="btn btn-danger" (click)="cancel()">
+                                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Route Master List
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div class="search-form">
+                                <input placeholder="Search for..." type="text" class="form-control search-input"
+                                    [(ngModel)]="searchKeyword"><button type="button" class="btn-search"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select (change)="onTableSizeChange($event)" class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let route of routMasterList |  searchFilter: searchKeyword |  paginate : {
+                                          itemsPerPage: tableSize,
+                                          currentPage: page,
+                                          totalItems: count};">
+                                          <!-- <td>{{route?.routE_NO}}</td> -->
+                                          <td>{{route?.routE_NAME}}</td>
+                                          <td>{{route?.route_group_no}}</td>
+                                          <td>{{route?.origin}}</td>
+                                          <td>{{route?.depot}}</td>
+                                          <td>{{route?.destination}}</td>
+                                          <td>{{route?.via}}</td>
+                                          <td>{{route?.depot_to_orgion}}</td>
+                                          <td>{{route?.origin_to_depot}}</td>
+                                          <td>{{route?.scheduled_KM}}</td>
+                                          <td><a tooltip="Edit" rel="noopener noreferrer"
+                                            (click)="updateRoute(route?.routE_ID)"><i class="fa fa-pencil"
+                                                aria-hidden="true"></i>
+                                        </a></td>         
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center" style="width: 100%;" *ngIf="routMasterList && routMasterList.length == 0 || routMasterList == null && !isloading"
+                                        >No Data Available</div>
+                                    </div>
+                                    <div class="pagination-data" *ngIf="routMasterList && routMasterList.length > 0">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

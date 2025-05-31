@@ -1,0 +1,56 @@
+<div id="datatable_wrapper" class="dataTables_wrapper no-footer mt-2">
+  <div class="dataTables_scroll">
+    <div class="dataTables_scrollHead">
+    </div>
+    <div class="dataTables_scrollBody">
+      <div class="spin-loader" [ngClass]="vehiclelistData.isloading ? 'loader': ''">
+        <loader [isRunning]="vehiclelistData.isloading"></loader>
+      </div>
+      <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+        aria-describedby="datatable_info" style="width: 100%" width="100%">
+        <thead>
+          <tr role="row">
+            <th *ngFor="let header of tableData" [attr.rowspan]="header.rowspan || null"
+              [attr.colspan]="header.colspan || null">
+              {{ header.val }}
+            </th>
+          </tr>
+          <tr role="row">
+            <th *ngFor="let subHeader of subHeaders">
+              {{ subHeader.val }}
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!vehiclelistData.isloading ">
+          <tr *ngFor="let vehicle of mapList  |  paginate : {
+            itemsPerPage: vehiclelistData.tableSize,
+            currentPage: vehiclelistData.page,
+            totalItems: vehiclelistData.count};">
+            <td>{{vehicle?.snNo}}</td>
+            <td>
+              <a class="select-vehicle" rel="noopener noreferrer">{{(vehicle?.vehicleNo) || 'NA'}}</a>
+            </td>
+            <td>{{vehicle?.timeRecorded || 'NA'}}</td>
+            <td>{{ vehicle?.speed ? vehicle.speed + ' km/h' : '0' }}</td>
+            <td>{{vehicle?.odometerGPS ? vehicle.odometerGPS + ' km' : '0'}}</td>
+            <td>
+              <i class="fa fa-map-marker" aria-hidden="true" style="color: rgb(30, 121, 239);cursor: pointer;"
+                (click)="openModal(vehicle)"></i>
+            </td>
+
+
+          </tr>
+        </tbody>
+
+
+      </table>
+      <div class="text-center"
+        *ngIf="mapList && mapList.length == 0 || mapList == null && !vehiclelistData['isloading']" style="width: 100%;">
+        No Data Available</div>
+    </div>
+    <div class="pagination-data" *ngIf="mapList && mapList.length > 0">
+      <pagination-controls previousLabel="Prev" nextLabel="Next"   (pageChange)="onTableDataChange($event)">
+      </pagination-controls>
+    </div>
+  </div>
+</div>

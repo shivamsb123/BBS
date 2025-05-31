@@ -1,0 +1,54 @@
+.timeline-item.covered {
+    background-color: #ccc; /* Change this to the desired color for the covered section */
+  }
+  
+  /* Rest of the CSS remains the same */
+  .timeline {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    position: relative;
+  }
+  
+  .timeline-info {
+    text-align: center;
+  }
+  
+  .timeline-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .timeline-description {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .timeline-marker {
+    width: 10px;
+    height: 10px;
+    background-color: #555;
+    border-radius: 50%;
+    margin-top: 5px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .timeline-connection {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 5px);
+    height: 2px;
+    background-color: #555;
+    width: calc(100% - 10px);
+    z-index: 0;
+  }
+  

@@ -1,0 +1,167 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/reports/loaction_report">Reports</a></li>
+        <li><a routerLink="/reports/loaction_report"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Location Report</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="locationReportForm">
+            <div class="row">
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData" [type]="'Vehicle'"
+                    [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0">
+                  <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                  <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <!-- <div *ngIf="isSubmmited && !selectedVehicle" class="text-danger">
+                  <div>
+                    Please Select Vehicle
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">From Date</label>
+                <input type="text" class="form-control" formControlName="fromDate" placeholder="MM/dd/yyyy"
+                  [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, HH:mm:ss', dateInputFormat: 'MMMM Do YYYY, HH:mm:ss'}"
+                  #dp="bsDatepicker" bsDatepicker  minuteStep="1"/>
+              </div>
+              <div class="col-xs-12 col-12 col-md-3">
+                <label class="form-label">To Date</label>
+                <input type="text" class="form-control" formControlName="toDate" placeholder="MM/dd/yyyy"
+                  [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, HH:mm:ss', dateInputFormat: 'MMMM Do YYYY, HH:mm:ss'}"
+                  #dp="bsDatepicker" bsDatepicker />
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Record interval (In Minute)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" formControlName="record_interval"
+                    placeholder="Enter Record interval" aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+
+            <div class="row row-data">
+              <div class="col-md-6 col-lg-3"></div>
+              <div class="col-md-6 col-lg-3">
+                <button class="btn btn-success" [disabled]="!locationReportForm.valid || !selectedVehicle"
+                  (click)="submit(locationReportForm.value)"><i class="fa fa-eye" aria-hidden="true"></i>
+                  show
+                </button>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <button class=" btn btn-danger" (click)="cancel()"><i class="fa fa-times" aria-hidden="true"></i>
+                  Cancel
+                </button>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+              </div>
+            </div>
+          </form>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="p-2 bd-highlight">
+
+                    <div> <span>Items per page: </span>
+                      <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [value]="size">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                    <!-- <span  *ngIf="locationReportData && locationReportData.length > 0" class="badge rounded-pill bg-danger">
+                        Showing results of  {{diffrenceIndays}} days
+                         </span>
+                        </span> -->
+                    <span  style="cursor: pointer;" (click)="showallTrack()"
+                      *ngIf="locationReportData && locationReportData.length > 0" class="badge rounded-pill bg-warning">
+                      Show all on Map
+                    </span>
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      #TABLE aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of locationReportData | searchFilter: searchKeyword |  paginate : {
+                          itemsPerPage: tableSize,
+                          currentPage: page,
+                          totalItems: count};">
+                          <td>{{vehicle?.vehicleNo}}</td>
+                          <td>{{vehicle?.datetime}}</td>
+                          <td>
+                            {{vehicle?.speed}} km/h
+                          </td>
+                          <td>
+                            {{vehicle?.place || 'NA'}}
+                          </td>
+                          <td>
+                            {{vehicle?.odoMeter}}
+                          </td>
+                          <td>
+                            {{vehicle?.lat}}
+                          </td>
+                          <td> {{vehicle?.lon}} </td>
+                          <td>
+                            <span class="badge bg-info" (click)="openModal(vehicle)"> show on map</span>
+
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center"
+                    *ngIf="locationReportData && locationReportData.length == 0 || locationReportData == null && !isloading || !(locationReportData | searchFilter: searchKeyword)?.length" 
+                    style="width: 100%;">No Data Available</div>
+                      
+                    <div class="count">
+                      <div class="total-count">
+                          Total Count : {{locationReportData?.length > 0 ? locationReportData.length : 0 }}
+                      </div>
+                      <div class="pagination-data" *ngIf="locationReportData && locationReportData.length > 0 && (locationReportData | searchFilter: searchKeyword)?.length">
+                        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

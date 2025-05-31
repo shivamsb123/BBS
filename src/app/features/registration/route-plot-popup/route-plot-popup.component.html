@@ -1,0 +1,35 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+      <h4 class="modal-title f-w w-100" style="font-size: 14px;">Route Name:- {{routeName}}</h4>
+      <div class="close-modal">
+        <i class="fa fa-close" (click)="cancel()"></i>
+      </div>
+    </div>
+    <div class="modal-body p-30">
+        <div class="row">
+            <div class="col-md-6">
+                <agm-map 
+                style="height: 600px;"
+                [streetViewControl]="true"
+                [latitude]="centerLatitude" [longitude]="centerLongitude"
+                [fullscreenControl]='true' [mapTypeControl]='true'
+                (mapReady)="onMapReady($event)">
+                
+              </agm-map>
+            </div>
+            <div class="col-md-6">
+                <div class="container">
+                    <div class="wrapper">
+                      <ul class="sessions">
+                        <li *ngFor="let item of data; let i = index"
+                        >
+                          <p>{{item.stopName}}</p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div> 
+            </div>
+        </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,45 @@
+.search-form {
+    float: right;
+  }
+  
+  .search-input {
+    border-color:#2f387c !important;
+  }
+  
+  .search-form .btn-search {
+    color: #2f387c;
+  }
+
+  .table-value {
+    width: 100%;
+    margin-top: 2px;
+    border: 1px solid #b5b5b6;
+    position: absolute;
+    z-index: 9999 !important;
+    background: #fff;
+  
+    .table-content {
+      display: block;
+      padding: 1px;
+      font-size: 13px;
+    }
+  
+    li {
+      padding: 0px !important;
+      border-bottom: 1px solid #b5b5b6;
+  
+      &:hover {
+        background-color: #ddd;
+      }
+    }
+  }
+  i.fa.fa-trash {
+    color: #2c3477;
+}
+
+a.add-item {
+  font-size: 14px;
+  color: #2c3477 !important;
+  float: right;
+  cursor: pointer;
+}

@@ -1,0 +1,92 @@
+.search-form {
+  float: right;
+}
+
+.search-input {
+  border-color: #2f387c !important;
+}
+
+.search-form .btn-search {
+  color: #2f387c;
+}
+
+.fa.fa-pencil {
+  margin-right: 10px;
+}
+
+i.fa.fa-arrow-circle-right {
+  font-size: 16px;
+  color: #2c3477;
+}
+
+::ng-deep {
+
+  .ngx-nav-drawer {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    left: -300px;
+    position: fixed;
+    z-index: 9999999 !important;
+    background-color: #fff;
+    overflow-y: auto;
+    transition: left .3s;
+    will-change: left;
+    border-right: 1px solid #dbdbdb;
+  }
+
+  .ngx-nav-drawer-open .ngx-nav-drawer {
+    left: 0;
+    width: 70% !important;
+  }
+
+  
+
+}
+
+.drawer-data {
+  padding: 20px;
+}
+
+.details {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  .close-button {
+
+    i.fa.fa-close {
+      position: absolute;
+      top: -19px;
+      right: -18px;
+      border-radius: 34px;
+      border: 1px solid #f7f7f7;
+      background: #f7f7f7;
+      width: 33px;
+      height: 35px;
+      padding: 8px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+  }
+}
+// .widget.total-data {
+//   height: 83px;
+//   cursor: auto;
+// }
+.logo {
+  float: right;
+  max-width: 20%;
+}
+.widget {
+  background: white;
+  cursor: pointer;
+}
+.widget-r-m {
+  margin-top: -62px;
+}

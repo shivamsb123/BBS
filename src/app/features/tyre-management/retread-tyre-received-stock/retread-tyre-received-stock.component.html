@@ -1,0 +1,128 @@
+
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Maintenance/TyreMaster">Tyre Management</a></li>
+          <li><a routerLink="/Maintenance/Retreading_Tyre_Issed_In_stock"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Retread Tyre Received in Stock</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="stockForm">
+              <div class="row">
+                  <div class="col-md-4 col-lg-3">
+                      <div class="select-type">
+                          <label for="exampleInputEmail1" class="form-label">Zone Name </label>
+                      </div>   
+                      <input type="text" class="form-control" formControlName="zone" placeholder="Search Zone Name." />
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                      <div class="select-type">
+                          <label for="exampleInputEmail1" class="form-label">Received Date</label>
+                      </div>
+                      <input type="text" class="form-control" formControlName="date" #dp="bsDatepicker" bsDatepicker>
+                  </div>
+                  <div class="col-md-4 col-lg-3">
+                      <div class="select-type">
+                          <label for="exampleInputEmail1" class="form-label">Status</label>
+                      </div>
+                      <select class="form-select" aria-label="Default select example" formControlName="status">
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                      <br>
+                      <div class="select-type">
+                          <button class="btn btn-primary" (click)="submit(stockForm.value)">
+                            <i class="fa fa-save"></i>  Save Changes
+                          </button>
+                      </div>
+                  </div>
+              </div>
+            </form>
+            <div class="row row-data">
+              <div class="col-md-12">
+                <div class="search-form">
+                  <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                    class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                      aria-hidden="true"></i></button>
+                </div>
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="dataTables_scroll">
+                    <div class="p-2 bd-highlight">
+                      <span>Items per page: </span>
+                      <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [value]="size">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                        aria-describedby="datatable_info" style="width: 100%" width="100%">
+                        <thead>
+                          <tr role="row">
+                            <th *ngFor="let vehicleHeading of tableData">
+                              <strong>{{vehicleHeading?.val}}</strong>
+                            </th>
+                          </tr>
+                        </thead>
+  
+                        <tbody *ngIf="!isloading">
+                          <tr *ngFor="let vehicle of receivedList | searchFilter: searchKeyword |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count}; let i= index;">
+                                      <td> <input type="checkbox" [ngModel]="selectedIndex === i"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (change)="isAllSelected($event, i, vehicle)"></td>
+                            <td>{{vehicle?.tyrE_NO}}</td>
+                            <td>
+                              {{vehicle?.tyrE_MAKE}}
+                            </td>
+                            <td>{{vehicle?.tyrE_TYPE}}</td>
+                            <td>
+                              <input type="number" value="{{vehicle?.reT_NSD_O}}" (change)="changeNSDOValue($event)">
+                            </td>
+                            <td>
+                              <input type="number" value="{{vehicle?.reT_NSD_M}}" (change)="changeNSDMValue($event)">
+                            </td>
+                            <td>
+                              <input type="number" value="{{vehicle?.reT_NSD_I}}" (change)="changeNSDIValue($event)">                              
+                            </td>
+                            <td>
+                              <input type="number" value="{{vehicle?.cosT_OF_SALE}}" (change)="changeNSDSaleValue($event)">                              
+                            </td>                           
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="text-center"  *ngIf="receivedList && receivedList.length == 0 || receivedList == null && !isloading"
+                        style="width: 100%;">No Data Available</div>
+                    </div>
+                    <div class="pagination-data" *ngIf="receivedList && receivedList.length > 0">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        >
+                      </pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+         
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  

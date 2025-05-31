@@ -1,0 +1,347 @@
+<section class="main-content" *ngIf="requestType !== 'MISS_BUS'">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Reports/RouteViolation_Report">Reports</a></li>
+        <li><a routerLink="/Reports/Miss_Stop_Report"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Miss Stop Report</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+              <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'All Vehicle'"
+                  (onConfirm)="confirm($event)"></select-filter>
+
+              </div>
+              <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                <select-filter [type]="'Vehicle'" [placeholder]="'All Vehicle'"
+                  (onConfirm)="confirm($event)"></select-filter>
+
+              </div>
+
+            </div>
+            <div class="col-xs-12 col-12 col-md-3">
+              <label class="form-label">Date</label>
+                <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date" bsDatepicker
+                [bsValue]="bsValue" [(ngModel)]="myDate" name="myDate"  required
+                #myDateField="ngModel" />
+                <div *ngIf="myDateField.invalid && (myDateField.dirty || myDateField.touched)" class="text-danger">
+                  Date is required.
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <label for="exampleInputEmail1" class="form-label">Shift Type</label>
+              <select class="form-select" aria-label="Default select example" [(ngModel)]="shiftType" required  #shiftTypeField="ngModel">
+                <option value="0">Select Shift</option>
+                <option value="M">Morning</option>
+                <option value="A">AfterNoon</option>
+              </select>
+              <div *ngIf="!shiftType && (shiftTypeField.dirty || shiftTypeField.touched)" class="text-danger">
+                Shift type is required.
+            </div>
+
+            </div>
+            <div class="col-md-3">
+              <br>
+              <button class="btn btn-success" (click)="showReport()"><i class="fa fa-eye" aria-hidden="true"></i>
+                show
+              </button>
+            </div>
+
+          </div>
+
+          <div class="row row-data">
+            <div class="col-md-3">
+              <div class="p-2 bd-highlight">
+                <span>Items per page: </span>
+                <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                  <option *ngFor="let size of tableSizes" [value]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+              <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+            </div>
+            <div class="col-md-12">
+
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" #TABLE
+                      role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>
+                              <div [innerHtml]="vehicleHeading?.val"></div>
+                            </strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of missBusStopData |  paginate : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count};">
+                          <td>{{vehicle?.busNumber}}</td>
+                          <td>{{vehicle?.routeName}}</td>
+                          <td>{{vehicle?.direction}}</td>
+                          <td>{{vehicle?.shift_Type}}</td>
+                          <td>{{vehicle?.tripID}}</td>
+                          <td>{{formatedDate(vehicle?.tripDate)}}</td>
+                          <td>{{vehicle?.startTime}}</td>
+                          <td>{{vehicle?.endTime}}</td>
+                          <td>{{vehicle?.noOfStopsCovered}}</td>
+                          <td>{{vehicle?.noOfStopsMissed}}</td>
+                          <td><a (click)="viewDetail(vehicle)" class="select-stop" rel="noopener noreferrer">
+                              {{vehicle?.totalStops}}</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center"
+                    *ngIf=" missBusStopData && missBusStopData.length == 0 || missBusStopData == null  && !isloading"
+                    style="width: 100%;">No Data Available</div>
+                  <!-- <div class="pagination-data" *ngIf=" missBusStopData && missBusStopData.length > 0">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div> -->
+                  <div class="count">
+                    <div class="total-count">
+                        Total Count : {{missBusStopData?.length > 0  ? missBusStopData.length : 0 }}
+                    </div>
+                    <div class="pagination-data"
+                    *ngIf="missBusStopData && missBusStopData.length > 0">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                            (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                    </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="row" *ngIf="requestType == 'MISS_BUS'">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-md-6 col-xl-3">
+            <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+            <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+              <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'All Vehicle'"
+                (onConfirm)="confirm($event)"></select-filter>
+
+            </div>
+            <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+              <select-filter [type]="'Vehicle'" [placeholder]="'All Vehicle'"
+                (onConfirm)="confirm($event)"></select-filter>
+
+            </div>
+
+          </div>
+          <div class="col-xs-12 col-12 col-md-3">
+            <label class="form-label">Date</label>
+            <input type="text" class="form-control" placeholder="MM/dd/YYYY" #dp="bsDatepicker" [(ngModel)]="myDate"
+              bsDatepicker [bsValue]="bsValue" />
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <label for="exampleInputEmail1" class="form-label">Shift Type</label>
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="shiftType">
+              <option value="0">Select Shift</option>
+              <option value="M">Morning</option>
+              <option value="A">AfterNoon</option>
+            </select>
+
+          </div>
+          <div class="col-md-3">
+            <br>
+            <button class="btn btn-success" (click)="showReport()"><i class="fa fa-eye" aria-hidden="true"></i>
+              show
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-12 col-md-3"></div>
+          <div class="col-xs-12 col-12 col-md-3"></div>
+          <div class="col-xs-12 col-12 col-md-3"></div>
+          <div class="col-xs-12 col-12 col-md-3">
+            <br>
+            <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+          </div>
+
+        </div>
+
+        <div class="row row-data">
+          <div class="col-md-12">
+
+            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+              <div class="p-2 bd-highlight">
+                <span>Items per page: </span>
+                <select (change)="onTableSizeChange($event)" class="custom-select">
+                  <option *ngFor="let size of tableSizes" [value]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+              <div class="dataTables_scroll">
+                <div class="dataTables_scrollBody">
+                  <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                    <loader [isRunning]="isloading"></loader>
+                  </div>
+                  <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" #TABLE
+                    role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                    <thead>
+                      <tr role="row">
+                        <th *ngFor="let vehicleHeading of tableData2">
+                          <strong>
+                            <div [innerHtml]="vehicleHeading?.val"></div>
+                          </strong>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="!isloading">
+                      <tr *ngFor="let vehicle of missBusStopData |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                        <td>{{vehicle?.busNumber}}</td>
+                        <td>{{vehicle?.routeName}}</td>
+                        <td>{{vehicle?.direction}}</td>
+                        <td>{{vehicle?.shift_Type}}</td>
+                        <td>{{vehicle?.tripID}}</td>
+                        <td>{{vehicle?.startTime}}</td>
+                        <td>{{vehicle?.endTime}}</td>
+                        <td>{{vehicle?.noOfStopsCovered}}</td>
+                        <td>{{vehicle?.noOfStopsMissed}}</td>
+                        <td><a (click)="viewDetail(vehicle)" class="select-stop" rel="noopener noreferrer">
+                            {{vehicle?.totalStops}}</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="text-center"
+                  *ngIf=" missBusStopData && missBusStopData.length == 0 || missBusStopData == null  && !isloading"
+                  style="width: 100%;">No Data Available</div>
+                <div class="pagination-data" *ngIf=" missBusStopData && missBusStopData.length > 0">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- <div class="row" *ngIf="requestType == 'MISS_BUS'">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-default">
+        Miss Stop
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xs-12 col-12 col-md-3">
+            <label class="form-label">Date</label>
+            <input type="text" class="form-control" #dp="bsDatepicker" [(ngModel)]="myDate" bsDatepicker [bsValue]="bsValue" />
+          </div>
+          <div class="col-xs-12 col-12 col-md-3"></div>
+          <div class="col-xs-12 col-12 col-md-3"></div>
+          <div class="col-md-3">
+            <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary" (click)="showReport()">
+              Show Reports
+            </button>
+          </div>
+        </div>
+        <div class="row row-data">
+          <div class="col-md-12">
+             
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="p-2 bd-highlight">
+                      <span>Items per page: </span>
+                      <select (change)="onTableSizeChange($event)" class="custom-select">
+                          <option *ngFor="let size of tableSizes" [value]="size">
+                              {{ size }}
+                          </option>
+                      </select>
+                  </div>
+                  <div class="dataTables_scroll">
+                      <div class="dataTables_scrollBody">
+                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                        </div>
+                          <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                              role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                              <thead>
+                                  <tr role="row">
+                                      <th *ngFor="let vehicleHeading of tableData">
+                                          <strong><div [innerHtml]="vehicleHeading?.val"></div></strong>
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody *ngIf="!isloading">
+                                  <tr *ngFor="let vehicle of missBusStopData |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                                      <td>{{vehicle?.shift}}</td>
+                                      <td>{{vehicle?.dutyNo}}</td>
+                                      <td>{{vehicle?.direction}}</td>
+                                      <td>{{vehicle?.vehicleNo}}</td>
+                                      <td>{{vehicle?.driverCode}}</td>
+                                      <td>{{vehicle?.driverName}}</td>
+                                      <td>{{vehicle?.tripNumber}}</td>
+                                      <td>{{vehicle?.tripStart}}</td>
+                                      <td>{{vehicle?.tripEnd}}</td>
+                                      <td>{{vehicle?.sequence_No}}</td>
+                                      <td>{{vehicle?.gpS_Date_Time}}</td>
+                                      <td>{{vehicle?.speed}}</td>
+                                      <td>{{vehicle?.distance_From_Stop}}</td>
+                                                      
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="text-center" *ngIf=" missBusStopData && missBusStopData.length == 0 || missBusStopData == null  && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                      <div class="pagination-data" *ngIf="missBusStopData && missBusStopData.length > 0">
+                          <pagination-controls previousLabel="Prev" nextLabel="Next" 
+                              (pageChange)="onTableDataChange($event)">
+                          </pagination-controls>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</div> -->

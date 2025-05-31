@@ -1,0 +1,250 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/battery-management/battery_link">Battery Management</a></li>
+        <li><a routerLink="/battery-management/battery_health_checkup"> <i class="fa fa-long-arrow-right"
+              aria-hidden="true"></i>
+            Battery Health Checkup</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="helthCheckupForm">
+            <div class="row">
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Vehicle No.
+                  </label>
+                </div>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData" [type]="'Vehicle'"
+                    [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                  <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                  <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Battery No.
+                  </label>
+                </div>
+                <div *ngIf="selectedBatteryValue">
+                  <select-filter [selectedValue]="selectedBatteryValue" [vehicleData]="BatteryList" [type]="'Battery'"
+                    [placeholder]="'Select Battery'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedBatteryValue && BatteryList && BatteryList.length > 0 ">
+                  <select-filter [vehicleData]="BatteryList" [type]="'Battery'" [placeholder]="'Select Battery'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedBatteryValue && !BatteryList || BatteryList.length == 0">
+                  <select-filter [type]="'Battery'" [placeholder]="'Select Battery'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+  
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Battery Check Date </label>
+                </div>
+                <input type="text" class="form-control" placeholder="Selete Date" formControlName="checkDate" #dp="bsDatepicker" bsDatepicker  />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Gravity 1</label>
+                </div>
+                <input type="number" formControlName="gravity1"  class="form-control" placeholder="Gravity 1" />
+              </div> 
+  
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Gravity 2 </label>
+                </div>
+                <input type="number" formControlName="gravity2" class="form-control" placeholder="Gravity 2" />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Gravity 3 </label>
+                </div>
+                <input type="number" formControlName="gravity3" class="form-control" placeholder="Gravity 3" />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Gravity 4 </label>
+                </div>
+                <input type="number" formControlName="gravity4" class="form-control" placeholder="Gravity 4" />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Gravity 5 </label>
+                </div>
+                <input type="number" formControlName="gravity5" class="form-control" placeholder="Gravity 5" />
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Gravity 6 </label>
+                </div>
+                <input type="number" formControlName="gravity6" class="form-control" placeholder="Gravity 6" />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Voltage </label>
+                </div>
+                <input type="number" formControlName="Voltage" class="form-control" placeholder="Select Voltage" />
+              </div>
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Water Top Up
+                  </label>
+                </div>
+                <select class="form-select" aria-label="Default select example" formControlName="waterToUp">
+                  <option selected>Select</option>
+                  <option value="1">Ok</option>
+                  <option value="2">Top Up</option>
+                </select>
+              </div>
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Clamp Rod
+                  </label>
+                </div>
+                <select class="form-select" aria-label="Default select example" formControlName="clampRod">
+                  <option selected>Select</option>
+                  <option value="1">Ok</option>
+                  <option value="2">Clamp Rod Missing</option>
+                </select>
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-4 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Petrol Jelly
+                  </label>
+                </div>
+                <select class="form-select" aria-label="Default select example" formControlName="petrolJelly">
+                  <option selected>Select</option>
+                  <option value="1">OK</option>
+                  <option value="2">NOT OK</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">Remarks/Battery Change No </label>
+                </div>
+                <input type="text" formControlName="remark" class="form-control" placeholder="Enter Remark" />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="select-type">
+                  <label for="exampleInputEmail1" class="form-label">
+                    Electrian Name </label>
+                </div>
+                <input type="text" formControlName="eleName" class="form-control" placeholder="Enter Electrian Name" />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <br>
+                <div class="row">
+                  <div class="col-md-6">
+                    <button class="btn btn-success" [disabled]="!helthCheckupForm.valid" (click)="submit(helthCheckupForm.value)"><i class="fa fa-plus"
+                        aria-hidden="true"></i>
+                      Save
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <button class=" btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>
+                      Cancel
+                    </button>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [value]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let battery of healthcheckupList | searchFilter: searchKeyword |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                          <td>{{battery?.depot_Name}}</td>
+                          <td>{{battery?.v_NO}}</td>
+                          <td>{{battery?.batterY_NO}}</td>
+                          <td>{{battery?.baT_CHK_DATE}}</td>
+                          <td>{{battery?.garvitY_1}}</td>
+                          <td>{{battery?.garvitY_2}}</td>
+                          <td>{{battery?.garvitY_3}}</td>
+                          <td>{{battery?.garvitY_4}}</td>
+                          <td>{{battery?.garvitY_5}}</td>
+                          <td>{{battery?.garvitY_6}}</td>
+                          <td>{{battery?.voltage}}</td>
+                          <td>{{battery?.wateR_TOP_UP}}</td>
+                          <td>{{battery?.clamP_ROD}}</td>
+                          <td>{{battery?.petroL_JELLY}}</td>
+                          <td>{{battery?.remarks}}</td>
+                          <td>{{battery?.eleC_NAME}}</td>
+
+                          
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center" *ngIf="healthcheckupList && healthcheckupList.length == 0 || healthcheckupList == null && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+                  <div class="pagination-data" *ngIf="healthcheckupList && healthcheckupList.length > 0">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

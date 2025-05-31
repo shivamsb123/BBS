@@ -1,0 +1,29 @@
+.app-main__inner{
+    background: #fff;    
+	border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0px 10px 5px rgb(0 0 0 / 10%);
+    padding: 20px;
+    margin: 54px 10px 54px
+}
+
+h4.primary-details {
+    text-align: center;
+    border-bottom: 1px solid;
+    padding-bottom: 10px;
+}
+
+
+.btn{
+    width: 100%;
+    margin-top: 30px;
+  }
+
+
+  .information-modal {
+    background: #fff;
+  }
+
+  .information-modal .modal-body {
+    padding: 5px 40px !important;
+  }

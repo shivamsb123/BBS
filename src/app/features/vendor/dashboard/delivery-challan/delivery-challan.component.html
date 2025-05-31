@@ -1,0 +1,400 @@
+<section class="main-content" style="top: 70px;">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/vendordashboard/homepage">Dashboard</a></li>
+                <li><a routerLink="/vendordashboard/delivery_challan"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Delivery Challan </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <form [formGroup]="challanForm">
+                <div class="card">
+                    <div class="card-header card-default">
+                        Bill To
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label"> Challan Number</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="challan_no" class="form-control"
+                                        placeholder="Enter Challan Number" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Challan Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                                        formControlName="challan_date" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Challan Type</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="challan_type">
+                                    <option value="1">Overspeeding</option>
+                                    <option value="2">Driving/Riding Without Licence</option>
+                                    <option value="3">Driving Without Seat Belt</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Vendor</label>
+                            <div *ngIf="vendorList && vendorList?.length > 0">
+                                <select-filter [vehicleData]="vendorList" [type]="'Vendor'"
+                                    [placeholder]="'Select Vendor'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Party Address</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="party_address"
+                                        placeholder="Enter Party Address" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">POS</label>
+                                <div *ngIf="posListData && posListData.length > 0">
+                                    <select-filter [vehicleData]="posListData" [type]="'Pos'"
+                                        [placeholder]="'Select POS'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!posListData || posListData.length == 0">
+                                    <select-filter [type]="'Pos'" [placeholder]="'Select POS'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Vehicle Number</label>
+                                <div *ngIf="vehicleData && vehicleData.length > 0">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'vehicle'"
+                                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Transport Id</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="transport_id"
+                                        placeholder="Enter Transport Id" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label class="form-label">Distance</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="distance"
+                                        placeholder="Enter Distance" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Company Address</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="company_address"
+                                        placeholder="Enter Company Address" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-default">
+                            Item Details
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="itemCreateform">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Product Name</label>
+                                        <div class="dropdown">
+                                            <div id="myDropdown" class="dropdown-content">
+                                                <input type="text" placeholder="Search.." formControlName="productName"
+                                                    (input)="getProductName()">
+                                                <div class="table-value" *ngIf="productdiv">
+                                                    <ul>
+                                                        <li *ngFor="let data of productNameData"
+                                                            (click)="onSelectproductData(data)">
+                                                            <a class="table-content"
+                                                                style="cursor: pointer;">{{data?.text}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Barcode No</label>
+                                        <div class="dropdown">
+                                            <div id="myDropdown" class="dropdown-content">
+                                                <input type="text" placeholder="Search.." formControlName="barcodeNo"
+                                                    (input)="getBarcodeList()">
+                                                <div class="table-value" *ngIf="statelistdiv">
+                                                    <ul>
+                                                        <li *ngFor="let data of barcodeData"
+                                                            (click)="onSelectBarData(data)">
+                                                            <a class="table-content"
+                                                                style="cursor: pointer;">{{data?.value}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label">Unit</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="unit"
+                                                placeholder="Enter Unit" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <label class="form-label">Amt</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="amt" (change)="changePRValue()"
+                                                placeholder=" Amt" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="form-label">Qty</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="qty" (input)="changePRValue()"
+                                                placeholder=" Qty" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-1">
+                                        <label class="form-label">Rate</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control"  formControlName="rate" 
+                                                placeholder="Rate" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>   
+                                </div>
+
+                                    <div class="row">
+                                       
+                                        <!-- <div class="col-md-1">
+                                            <label class="form-label">Disc. %</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="discount"
+                                                    (input)="changedisvalue()" placeholder=" Disc"
+                                                    aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">Disc. Amt</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="disAmt"
+                                                    placeholder=" Disc. Amt" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">Net Amt</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="netAmt"
+                                                    placeholder=" Net Amt" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div> -->
+
+                                        <div class="col-md-1">
+                                            <label class="form-label">C gst %</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="cGst"
+                                                    placeholder="C gst %" aria-describedby="button-addon2"
+                                                    (input)="changCgstAmt()" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">C gst Amt</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="cgstAmt"
+                                                    placeholder="C gst Amt" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">S Gst %</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="sgst"
+                                                    (input)="changSgstAmt()" placeholder="S Gst %"
+                                                    aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">S Gst Amt</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="sgstAmt"
+                                                    placeholder="S Gst Amt" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">I Gst %</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="igst"
+                                                    [readOnly]="disabled" placeholder="IGST %"
+                                                    aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">I Gst Amt</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="igstAmt"
+                                                    [readOnly]="disabled" placeholder="I Gst %"
+                                                    aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label class="form-label">Cess</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" (input)="changCessAmt()"   formControlName="cess"
+                                                    placeholder="Cess" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>                             
+                                        <div class="col-md-1">
+                                            <label class="form-label">Cess Amt</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="cessAmt" 
+                                                    placeholder="Cess Amount" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <br>
+                                            <button class="btn btn-success"
+                                                (click)="createItem(itemCreateform.value)"><i class="fa fa-plus"></i>
+                                                Add
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <br>
+                                            <button class="btn btn-danger"><i class="fa fa-times"></i>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- <div class="col-md-1">
+                                        <label class="form-label">Total Amount</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="total_amount"
+                                                placeholder="Enter Total Amount" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div> -->
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-default">
+                            Challan item List
+                        </div>
+                        <div class="card-body">
+                            <div class="row row-data">
+                                <div class="col-md-12">
+                                    <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                        <div class="dataTables_scroll">
+                                            <div class="dataTables_scrollBody">
+                                                <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                                    <loader [isRunning]="isloading"></loader>
+                                                </div>
+                                                <table id="datatable"
+                                                    class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                                    role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                                    width="100%">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th *ngFor="let ChallanHeading of tableData">
+                                                                <strong>{{ChallanHeading?.val}}</strong>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngIf="!isloading">
+                                                        <tr *ngFor="let challan of itemData;let i=index">
+                                                            <td>
+                                                                {{challan?.BarCodeNo}}
+                                                            </td>
+                                                            <td>
+                                                                {{challan?.ProductName}}
+                                                            </td>
+                                                            <td>{{challan?.Quantity}}</td>
+                                                            <td>{{challan?.EstimatedRate}}</td>
+                                                            <td>{{challan?.EstimatedTaxableValue}}</td>
+                                                            <td>{{challan?.SgstPer}}</td>
+                                                            <td>{{challan?.Sgst_Amt}}</td>
+                                                            <td>{{challan?.CgstPer}}</td>
+                                                            <td>{{challan?.Cgst_Amt}}</td>
+                                                            <td>{{challan?.IgstPer}}</td>
+                                                            <td>{{challan?.Igst_Amt}}</td>
+                                                            <td>{{challan?.CessRate}}</td>
+                                                            <td>{{challan?.Cess_Amt}}</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="text-center" style="width: 100%;"
+                                                    *ngIf="itemData && itemData.length == 0 || itemData == null && !isloading">
+                                                    No Data Available</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-data">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                    <br>
+                                    <button class="btn btn-success" (click)="submitChallan()">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Delivery Challan
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <br>
+                                    <button class="btn btn-danger">
+                                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

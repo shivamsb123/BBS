@@ -1,0 +1,41 @@
+.loader {
+    text-align: center;
+    margin-top: 20PX;
+  }
+  
+  .spinner {
+    display: inline-block;
+    border-radius: 50px;
+    border-style: solid;
+    border-bottom-color: #2f387c;
+    border-top-color: #047b3d;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    animation: rotate360 1s linear infinite;
+    -webkit-animation: rotate360 1s linear infinite;
+    border-width: 7px;
+    width: 43px;
+    height: 43px;
+  }
+  
+  
+  @keyframes rotate360 {
+    from {
+      transform: rotate(0deg);
+    }
+  
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-webkit-keyframes rotate360 {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+  
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }

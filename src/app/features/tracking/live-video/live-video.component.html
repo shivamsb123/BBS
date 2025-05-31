@@ -1,0 +1,25 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+      <h4 class="modal-title f-w w-100">Live camera</h4>
+      <div class="close-modal">
+        <i class="fa fa-close" (click)="cancel()"></i>
+      </div>
+    </div>
+    <div class="modal-body p-30">
+      <div class="video-row">
+        <div *ngFor="let index of totalArray; let i = index" class="flv-player">
+          <div class="video-container">
+            <span class="badge bg-info m-2" >{{completedata[index].label}}</span>
+              
+            <video width="320" height="240" controls>
+              <source  type="video/flv">
+              Your browser does not support the video tag.
+            </video>
+            <i class="fa fa-times-circle" (click)="closeVideo(i)"></i>
+          </div>
+        </div>
+        <div *ngIf="totalArray.length == 0" > No Camera selected Yet</div>
+      </div>
+    </div>
+  </div>
+  

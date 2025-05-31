@@ -1,0 +1,88 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/HR/C_Off"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    Compensation-Off </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Compensation-Off
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label">Employee Id</label>
+                            <div class="input-group mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="">Employee Id</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="exampleInputEmail1" class="form-label">Employee Name*</label>
+                            <div class="input-group mb-3"> 
+                                <input type="text" class="form-control" placeholder="Enter Employee"/> </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="exampleInputEmail1" class="form-label">In Time</label>
+                            <div class="input-group mb-3">
+                                <input type="text"
+                                placeholder="Datepicker"
+                                [(ngModel)]="outtime"
+                                class="form-control"
+                                [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                bsDatepicker>
+                            </div>
+                            <!-- <timepicker [(ngModel)]="inTime" [showMeridian]="isMeridian" [hourStep]="hstep" [minuteStep]="mstep"
+                            ></timepicker> -->
+                           
+                        </div>
+                        <div class="col-md-3">
+                            <label for="exampleInputEmail1" class="form-label">Out Time</label>
+                            <!-- <timepicker  [(ngModel)]="outtime" [showMeridian]="isMeridian" [hourStep]="hstep" [minuteStep]="mstep" ></timepicker>  -->
+                            <div class="input-group mb-3">
+                                <input type="text"
+                                placeholder="Datepicker"
+                                [(ngModel)]="outtime"
+                                class="form-control"
+                                [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                bsDatepicker>
+                            </div>
+                        </div>  
+                        <!-- <div class="col-md-4">
+                            <label class="form-label">Duration Type</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control"
+                                            #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" />
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row">
+                          <div class="col-md-3"></div>
+                          <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <div class="col-md-12 mb-2">
+                                <button type="submit" class="mr-2 btn-icon btn-icon-only btn btn-success"><i class="fa fa-plus"
+                                    aria-hidden="true"></i>Apply
+                                    </button>
+                            </div>
+                        </div>  
+                        <div class="col-md-3">
+                            <button class="btn btn-danger mb-2"><i
+                                class="fa fa-times" aria-hidden="true"></i>Cancel</button>
+                        </div>                    
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

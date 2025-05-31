@@ -1,0 +1,113 @@
+.logo {
+    float: right;
+    max-width: 20%;
+}
+
+.logo-obu {
+    float: right;
+    max-width: 25%;
+}
+
+.widget-r-m {
+    margin-top: -62px;
+}
+
+.widget {
+    background: white;
+    cursor: pointer;
+}
+
+p.margin-b-5 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.last-update {
+    // text-align: center;
+    .last-update-data {
+        font-size: 12px;
+    }
+}
+
+.search-form {
+    float: right;
+}
+
+.search-input {
+    border-color: #2f387c !important;
+}
+
+.search-form {
+    margin-top: 0px !important; 
+}
+
+.search-form .btn-search {
+    color: #2f387c;
+}
+
+.widget.total-data {
+    height: 83px;
+    cursor: auto;
+}
+.select-vehicle {
+    color: blue !important;
+    cursor: pointer;
+  }
+
+
+  .fa.fa-battery-three-quarters {
+    color: yellow !important;
+}
+
+.can-data {
+    display: flex;
+}
+.widget {
+    border-radius: 3px;
+    padding: 15px;
+    border: 0;
+    margin-bottom: 11px;
+    box-shadow: 0 1px 15px 1px rgba(62, 57, 107, 0.07);
+}
+
+::ng-deep {
+    .nav {
+        display: flex !important;
+        justify-content: space-between !important;
+        text-align: center !important;
+    }
+    .nav-tabs {
+        .nav-item {
+            margin-bottom: -1px !important;
+            border: 1px solid !important;
+            border-radius: 9px !important;
+            width: 100% !important;
+            align-items: center !important;
+        }
+
+    } 
+
+    .nav-tabs .active.nav-item {
+        color: white !important;
+        border-bottom: 2px solid #2f387c !important;
+        background: #2c3477 !important;
+        border-radius: 9px !important;
+        font-weight: 500 !important;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: white !important;
+        border-bottom: 2px solid #2f387c;
+        border-radius: 9px !important;
+        background: none;
+        font-weight: 500 !important;
+    }
+} 
+
+.excel-import {
+    display: flex;
+    justify-content: end;
+    .btn.btn-primary {
+        width: 20% !important;
+    }
+}

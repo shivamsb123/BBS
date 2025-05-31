@@ -1,0 +1,174 @@
+<section class="main-content" id="content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/battery-management/battery_link">Battery Management</a></li>
+        <li><a routerLink="/battery-management/add_battery_master"> <i class="fa fa-long-arrow-right"
+              aria-hidden="true"></i>
+            Add Battery Master</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="addbatteryform">
+            <div class="row">
+              <div class="col-md-4 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Battery Make
+                  </label>
+                <select class="form-select"  aria-label="Default select example" formControlName="batteryMake">
+                  <option value="1">Lumnious</option>
+                  <option value="2">Oxida</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">
+                    Battery No</label>
+                <input type="text" formControlName="batteryNo" class="form-control"
+                  placeholder="Enter Battery Number" />
+              </div>
+              <div class="col-md-4 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Battery Category
+                  </label>
+                <select class="form-select" aria-label="Default select example" formControlName="batteryCat">
+                  <option value="N">New Battery</option>
+                  <option value="S">Service Battery</option>
+                  <option value="W">Warranty Replacement</option>
+                  <option value="O">Old Battery</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Battery Invoice Date</label>
+                <input type="text" placeholder="Select Date" formControlName="batteryInvoiceDate" class="form-control" #dp="bsDatepicker"
+                  bsDatepicker />
+              </div>
+
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Battery Received Date </label>
+                <input type="text" placeholder="Select Date" formControlName="batteryReceivedDate" class="form-control" #dp="bsDatepicker"
+                  bsDatepicker />
+              </div>
+              <div class="col-md-4 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Battery Warranty Period
+                  </label>
+                <select class="form-select" aria-label="Default select example" formControlName="batteryWarrantyPeriod">
+                  <option value="Twelve Month">Twelve Month</option>
+                  <option value="Eighteen Month">Eighteen Month</option>
+                  <option value="Twenty Four Month">Twenty Four Month</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Warranty Expiry Date</label>
+                <input type="text" placeholder="Select Date" class="form-control" formControlName="warrentyExpire" #dp="bsDatepicker"
+                  bsDatepicker />
+              </div>
+              <div class="col-md-6 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Invoice No</label>
+                <input type="text" formControlName="invoiceNo" class="form-control"
+                  placeholder="Enter Invoice Number" />
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-lg-3"></div>
+              <div class="col-md-6 col-lg-3"></div>
+              <div class="col-md-6 col-lg-3">
+                <button class="btn btn-success" [disabled]="!addbatteryform.valid" (click)="submit(addbatteryform.value)">
+                  <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                </button>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <button class="btn btn-danger" (click)="cancel()">
+                  <i class="fa fa-times" aria-hidden="true"></i> Clear
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [value]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let battery of batteryData | searchFilter: searchKeyword |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                            <td>
+                              {{battery?.tgenerateD_NO}}
+                            </td>
+                            <td>{{battery?.baT_NO}}</td>
+                            <td>
+                              {{battery?.baT_MAKE}}
+                            </td>
+                            <td>{{battery?.baT_INVOICE_DATE}}</td>
+                            <td>
+                             {{battery?.invoicE_NO}}
+                            </td>
+                            <td>{{battery?.baT_RECEIVED_DATE}}</td>
+                            <td>
+                              {{battery?.warrentY_DATE}}
+                            </td>
+                            <td>{{battery?.waR_PRD}}</td>
+                            <td>
+                              {{battery?.issuE_BAT}}
+                            </td>
+                            <td>
+                              {{battery?.batterY_TYPE}}
+                            </td>
+                            <td><a tooltip="Edit" rel="noopener noreferrer" (click)="update(battery)"
+                              ><i class="fa fa-pencil"
+                                   aria-hidden="true"></i>
+                           </a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center"
+                      *ngIf="batteryData && batteryData.length == 0 || batteryData == null && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+                  <div class="pagination-data" *ngIf="batteryData && batteryData.length > 0">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

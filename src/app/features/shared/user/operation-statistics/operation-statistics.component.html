@@ -1,0 +1,43 @@
+<div class="card Operations">
+    <div class="card-header">
+        CRUT Electric Buses Operations Statistics(FAME-II)
+    </div>
+    <div class="card-body">
+        <div class="info-text mb-3">
+            {{opertionStatList?.heading || 'NA' }}
+        </div>
+        <ng-container *ngIf="isLoading; else elseBlock">
+            <loader [isRunning]="isLoading"></loader>
+        </ng-container>
+        <ng-template #elseBlock>
+            <table>
+                <tr>
+                    <th>Daily Running Kilometer</th>
+                    <th>Equivalent Fuel Saved in Litres/day</th>
+                    <th>Equivalent CO₂ reduction in Kg./day</th>
+                </tr>
+                <tr>
+                    <td>{{opertionStatList?.daily_Running_Kilometer || 'NA'}}</td>
+                    <td>{{opertionStatList?.equivalent_Fuel_Saved_in_Litres_per_day || 'NA'}}</td>
+                    <td>{{opertionStatList?.equivalent_Co2_reduction_per_day || 'NA'}}</td>
+                </tr>
+                <tr>
+                    <th>Total Running Kilometer (as on date)</th>
+                    <th>Equivalent Fuel Saved in Litres (as on date)</th>
+                    <th>Equivalent CO₂ reduction in Kg.(as on date)</th>
+                </tr>
+                <tr>
+                    <td>{{opertionStatList?.total_Running_Kilometer_as_on_date || 'NA'}}</td>
+                    <td>{{opertionStatList?.equivalent_Fuel_Saved_in_Litres_as_on_date || 'NA'}}</td>
+                    <td>{{opertionStatList?.equivalent_Co2_reduction_as_on_date || 'NA'}}</td>
+                </tr>
+            </table>
+        </ng-template>
+
+        <div class="last-update" *ngIf="!isLoading">
+            <p>Last updated on date: {{opertionStatList?.last_update_datetime ? (opertionStatList?.last_update_datetime | date: 'dd/MM/yyyy') : 'NA'}}</p>
+        </div>
+
+    </div>
+
+</div>

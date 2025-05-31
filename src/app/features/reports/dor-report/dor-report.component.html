@@ -1,0 +1,153 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/reports/DistanceReport">Reports</a></li>
+                <li><a routerLink="/reports/DORReport"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        DOR Report</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form [formGroup]="dorform">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="form-label">Date</label>
+                                <input type="text" class="form-control" placeholder="dd/MM/yyyy"
+                                    formControlName="date"
+                                    [bsConfig]="{ keepDatepickerOpened: true, rangeInputFormat: 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY' }"
+                                    #dp="bsDatepicker" bsDatepicker />
+                            </div>
+
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2"></div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <br>
+                                        <button class="btn btn-success" [disabled]="!dorform.valid"
+                                            (click)="submit(dorform.value)">
+                                            <i class="fa fa-eye" aria-hidden="true"></i> Show
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <br>
+                                        <button class="btn btn-danger" (click)="cancel()">
+                                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row row-data">
+                        <div class="col-md-3">
+                            <div class="p-2 bd-highlight">
+                                <span>Items per page: </span>
+                                <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)"
+                                    class="custom-select">
+                                    <option *ngFor="let size of tableSizes" [value]="size">
+                                        {{ size }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-3">
+                            <div class="search-form">
+                                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                                    class="form-control search-input"><button type="button" class="btn-search"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mt-1">
+                            <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" #TABLE aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let vehicle of deviceHealthData | searchFilter: searchKeyword  |  paginate : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count};">
+                                                    <td>{{vehicle?.srNo}}</td>
+                                                    <td>{{vehicle?.rosterDate}}</td>
+                                                    <td>{{vehicle?.shiftType == 'M' ? 'Morning' : 'Afternon'}}</td>
+                                                    <td>{{vehicle?.routeNo}}</td>
+                                                    <td>{{vehicle?.assetNo}}</td>
+                                                    <td>{{vehicle?.driver.split('_')[1]}}</td>
+                                                    <td>{{vehicle?.driver.split('_')[0]}}</td>
+                                                    <td>{{vehicle?.scheduleKM}}</td>
+                                                    <td>{{vehicle?.scheduleTrip}}</td>
+                                                    <td>{{vehicle?.totalTrip}}</td>
+                                                    <td>{{vehicle?.missTrip}}</td>
+                                                    <td>{{vehicle?.odometerDepoOut}}</td>
+                                                    <td>{{vehicle?.socPerDepoOut}}</td>
+                                                    <td>{{vehicle?.depoOutSch}}</td>
+                                                    <td>{{vehicle?.depoOut}}</td>
+                                                    <td>{{vehicle?.depoOutLate}}</td>
+                                                    <td>{{vehicle?.depoOutStatus}}</td>
+                                                    <td>{{vehicle?.odometerDepoIn}}</td>
+                                                    <td>{{vehicle?.socPerDepoIn}}</td>
+                                                    <td>{{vehicle?.depoInSch}}</td>
+                                                    <td>{{vehicle?.depoIn}}</td>
+                                                    <td>{{vehicle?.depoInStatus}}</td>
+                                                    <td>{{vehicle?.odometerKM}}</td>
+                                                    <td>{{vehicle?.socConsumptionPerKm}}</td>
+                                                    <td>{{vehicle?.kwh}}</td>
+                                                    <td>{{vehicle?.socPerKM}}</td>
+                                                    <td>{{vehicle?.scheduleKM - vehicle?.odometerKM}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center"
+                                        *ngIf="deviceHealthData && deviceHealthData.length == 0 || deviceHealthData == null && !isloading || !(deviceHealthData | searchFilter:searchKeyword)?.length"
+                                        style="width: 100%;">No Data Available</div>
+
+
+                                    <div class="count">
+                                        <div class="total-count">
+                                            Total Count : {{deviceHealthData?.length > 0 ? deviceHealthData.length : 0
+                                            }}
+                                        </div>
+                                        <div class="pagination-data"
+                                            *ngIf="deviceHealthData && deviceHealthData.length > 0 && (deviceHealthData | searchFilter:searchKeyword)?.length">
+                                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                (pageChange)="onTableDataChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

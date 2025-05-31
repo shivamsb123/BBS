@@ -1,0 +1,100 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/HSNMaster_List"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        HSN Master </a></li>
+                <li><a routerLink="/SupplyChain/Add-HSN"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Add HSN Master </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                    Add HSN
+                </div>
+                <div class="card-body" *ngIf="!isloading">
+                    <form [formGroup]="hsnForm">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">HSN Code</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="hsnCode"
+                                        placeholder="Enter HSN Code" aria-describedby="button-addon2" maxlength="12"
+                                        required />
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">HSN Description</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="Description"
+                                        placeholder="HSN Description" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">C GST%</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" formControlName="cgst"
+                                        placeholder="C GST%" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="submitted && hsnForm.controls['cgst'].touched &&
+                                    hsnForm.controls['cgst'].invalid" class="text-danger">
+                                    <div *ngIf="hsnForm.controls['cgst'].errors?.['max']">Maximum CGST can be 100
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">S GST%</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" formControlName="sgst"
+                                        placeholder="S GST%" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="submitted && hsnForm.controls['sgst'].touched &&
+                                    hsnForm.controls['sgst'].invalid" class="text-danger">
+                                    <div *ngIf="hsnForm.controls['sgst'].errors?.['max']">Maximum SGST can be 100
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">I GST%</label>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" formControlName="igst"
+                                        placeholder="I GST%" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="submitted && hsnForm.controls['igst'].touched &&
+                                hsnForm.controls['igst'].invalid" class="text-danger">
+                                    <div *ngIf="hsnForm.controls['igst'].errors?.['max']">Maximum IGST can be 100
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success" [disabled]="!hsnForm.valid"
+                                    (click)="submit(hsnForm.value)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button (click)="cancel()" class="btn btn-danger">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+                          
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

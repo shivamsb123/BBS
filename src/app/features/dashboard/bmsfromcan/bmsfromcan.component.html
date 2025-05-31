@@ -1,0 +1,70 @@
+<div id="datatable_wrapper" class="dataTables_wrapper no-footer mt-2">
+    <div class="dataTables_scroll">
+        <div class="dataTables_scrollHead">
+        </div>
+        <div class="dataTables_scrollBody">
+            <div class="spin-loader" [ngClass]="vehiclelistData.isloading ? 'loader': ''">
+                <loader [isRunning]="vehiclelistData.isloading"></loader>
+            </div>
+            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                role="grid" #TABLE aria-describedby="datatable_info" style="width: 100%"
+                width="100%">
+                <thead>
+                    <tr role="row">
+                      <th *ngFor="let header of tableData" 
+                          [attr.rowspan]="header.rowspan || null" 
+                          [attr.colspan]="header.colspan || null">
+                        {{ header.val }}
+                      </th>
+                    </tr>
+                    <tr role="row">
+                      <th *ngFor="let subHeader of subHeaders">
+                        {{ subHeader.val }}
+                      </th>
+                    </tr>
+                  </thead>
+
+                <tbody *ngIf="!vehiclelistData.isloading ">
+                    <tr *ngFor="let vehicle of mapList  |  paginate : {
+            itemsPerPage: vehiclelistData.tableSize,
+            currentPage: vehiclelistData.page,
+            totalItems: vehiclelistData.count};">
+                        <td>{{vehicle?.snNo}}</td>
+                        <td >
+                            <a class="select-vehicle" rel="noopener noreferrer" >{{(vehicle?.vehicleNo) || 'NA'}}</a>
+                        </td>
+                        <td [innerHTML]="getSocIcon(vehicle?.soc)"></td>
+                        <td>{{vehicle?.totalVoltage || 'NA'}}</td>
+                        <td>{{vehicle?.totalCurrent}}</td>
+                        <td>{{vehicle?.maxBatteryTemp || 'NA'}}</td>
+                        <td>{{vehicle?.maxBatteryVoltage || 'NA'}}</td>
+                        <td>{{vehicle?.minBatteryTemp || 'NA'}}</td>
+                        <td>{{vehicle?.minBatteryVoltage}}</td>
+                        <td>{{vehicle?.powerBatteryFailureLevel || 'NA'}}</td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td  [innerHTML]="getBatteryIcon(vehicle?.battery1Temp)"></td>
+                        <td [innerHTML]="getBatteryVoltage(vehicle?.batteryCell1Voltage)"></td>
+                        <td [innerHTML]="getBatteryVoltage(vehicle?.batteryCell2Voltage)"></td>
+                        <td [innerHTML]="getBatteryVoltage(vehicle?.batteryCell3Voltage)"></td>
+                        <td [innerHTML]="getBatteryVoltage(vehicle?.batteryCell4Voltage)"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center"
+                *ngIf="mapList && mapList.length == 0 || mapList == null && !vehiclelistData['isloading']"
+                style="width: 100%;">No Data Available</div>
+        </div>
+        <div class="pagination-data" *ngIf="mapList && mapList.length > 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+        </div>
+    </div>
+</div>

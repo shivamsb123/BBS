@@ -1,0 +1,270 @@
+<section class="main-content">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+          <li><a routerLink="/Dashboard/routes_status"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              Route Status</a></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <tabset responsiveTabs [justified]="true" #staticTabs>
+    <tab (selectTab)="onTablValue('1')">
+      <ng-template tabHeading>No of Routes</ng-template>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-default">
+              Routes List
+            </div>
+            <div class="card-body">
+              <div class="row row-data">
+                <div class="col-md-12">
+                  <!-- <div class="search-form">
+                    <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                      class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+                  </div> -->
+                  <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                      <div class="p-2 bd-highlight">
+                        <span>Items per page: </span>
+                        <select  (change)="onTableSizeChange($event)" class="custom-select">
+                          <option *ngFor="let size of routeCount.tableSizes" [value]="size">
+                            {{ size }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="dataTables_scrollBody">
+                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                        </div>
+                        <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                          role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                          <thead>
+                            <tr role="row">
+                              <th *ngFor="let vehicleHeading of tableData">
+                                <strong>{{vehicleHeading?.value}}</strong>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="!isloading">
+                            <tr *ngFor="let vehicle of routeList |  paginate : {
+                                      id:'foo',
+                                        itemsPerPage: routeCount.tableSize,
+                                        currentPage: routeCount.page,
+                                        totalItems: routeCount.count}">
+                              <td>{{vehicle?.routE_NAME}}</td>
+                              <td>{{vehicle?.routE_NO}}</td>
+                              <td>
+                                <!-- <img class="stop-logo" (click)="onShowStop(vehicle)" src="assets/images/stop-icon.png" alt=""> -->
+                                <a class="stop-view" (click)="onShowStop(vehicle)">View Stops</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="text-center"
+                          *ngIf="routeList && routeList.length == 0 || routeList == null && !isloading"
+                          style="width: 100%;">No Data Available</div>
+                      </div>
+                      <div class="pagination-data" *ngIf="routeList && routeList.length > 0">
+                        <pagination-controls id="foo" previousLabel="Prev" nextLabel="Next"
+                          (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </tab>
+    <tab (selectTab)="onTablValue('2')">
+      <ng-template tabHeading>No. Of Driver</ng-template>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-default">
+              Driver List
+            </div>
+            <div class="card-body">
+              <div class="row row-data">
+                <div class="col-md-12">
+                  <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                      <div class="p-2 bd-highlight">
+                        <span>Items per page: </span>
+                        <select (change)="onDriverTableChange($event)" class="custom-select">
+                          <option *ngFor="let size of diverData.tableSizes" [value]="size">
+                            {{ size }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="dataTables_scrollHead">
+                      </div>
+                      <div class="dataTables_scrollBody">
+                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                        </div>
+                        <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                          role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                          <thead>
+                            <tr role="row">
+                              <th *ngFor="let vehicleHeading of tableData2">
+                                <strong>{{vehicleHeading?.value}}</strong>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="!isloading">
+                            <tr *ngFor="let user of driverList |  paginate : {
+                              id:'foo1',
+                                                                                      itemsPerPage: diverData.tableSize,
+                                                                                      currentPage: diverData.page,
+                                                                                      totalItems: diverData.count};">
+                              <td>{{user.text}}</td>
+                              <td>{{user.value}}</td>
+
+                            </tr>
+                          </tbody>
+
+                        </table>
+                        <div class="text-center" style="width: 100%;"
+                          *ngIf="driverList && driverList.length == 0 || driverList == null && !isloading">No Data
+                          Available</div>
+                      </div>
+                      <div class="pagination-data" *ngIf="driverList && driverList.length > 0">
+                        <pagination-controls id='foo1' previousLabel="Prev" nextLabel="Next"
+                          (pageChange)="onDriverDataChange($event)">
+                        </pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </tab>
+
+    <tab (selectTab)="onTablValue('3')">
+      <ng-template tabHeading>Stop Wise Vehicle</ng-template>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <!-- <div class="card-header card-default">
+              Vehicle List
+            </div> -->
+            <div class="card-body">
+              <form [formGroup]="routeform">
+                <div class="row">
+                  <div class="col-md-6 col-xl-3">
+                    <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                    <div *ngIf="vehicleData && vehicleData.length > 0">
+                      <select-filter [vehicleData]="vehicleData" [type]="'vehicle'" [placeholder]="'Select Vehicle'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!vehicleData || vehicleData.length == 0">
+                      <select-filter [type]="'vehicle'" [placeholder]="'Select Vehicle'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label class="form-label">From Date</label>
+                    <input type="text" formControlName="fromDate" class="form-control" bsDatepicker placeholder="MM/dd/yyyy">
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <label class="form-label">To Date</label>
+                    <input type="text" formControlName="toDate" class="form-control" bsDatepicker placeholder="MM/dd/yyyy">
+                  </div>
+                  <div class="col-md-6 col-xl-3">
+                    <br>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <button class="btn btn-success" (click)="getStopWiseVehicle(routeform.value)"><i
+                            class="fa fa-eye" aria-hidden="true"></i>
+                          show
+                        </button>
+                      </div>
+                      <div class="col-md-6">
+                        <button (click)="cancel()" class=" btn btn-danger"><i class="fa fa-times"
+                            aria-hidden="true"></i>
+                          Cancel
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="row row-data">
+                <div class="col-md-12">
+                  <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                      <div class="p-2 bd-highlight">
+                        <span>Items per page: </span>
+                        <select (change)="onStopVehicleSizeChange($event)" class="custom-select">
+                          <option *ngFor="let size of stopVehicleData?.tableSizes" [value]="size">
+                            {{ size }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="dataTables_scrollHead">
+                      </div>
+                      <div class="dataTables_scrollBody">
+                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                        </div>
+                        <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                          role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                          <thead>
+                            <tr role="row">
+                              <th *ngFor="let vehicleHeading of tableData3">
+                                <strong>{{vehicleHeading?.value}}</strong>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody *ngIf="!isloading">
+                            <tr *ngFor="let user of stopWiseList |  paginate : {
+                              id:'foo2',
+                                                      itemsPerPage: stopVehicleData.tableSize,
+                                                      currentPage: stopVehicleData.page,
+                                                      totalItems: stopVehicleData.count};">
+                              <td>{{user.routE_NO}}</td>
+                              <td>{{user.routE_NAME}}</td>
+                              <td>{{user.stopName}}</td>
+                              <td><a class="badge badge-info">Detail</a></td>
+                            </tr>
+                          </tbody>
+
+                        </table>
+                        <div class="text-center" style="width: 100%;"
+                          *ngIf="stopWiseList && stopWiseList.length == 0 || stopWiseList == null && !isloading">No Data
+                          Available</div>
+                      </div>
+                      <div class="pagination-data" *ngIf="stopWiseList && stopWiseList.length > 0">
+                        <pagination-controls id='foo2' previousLabel="Prev" nextLabel="Next"
+                          (pageChange)="onStopVehicleDataChange($event)">
+                        </pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+  </tabset>
+
+</section>

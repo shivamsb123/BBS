@@ -1,0 +1,123 @@
+<!-- <section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Management/Change_Password">Management</a></li>
+        <li><a routerLink="/Management/User_Vehicle_Access"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            User Access</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row row-data">
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">Admin</label>
+              <select class="form-select" aria-label="Default select example">
+                <option value="">Select Admin</option>
+                <option></option>
+              </select>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <label for="exampleInputEmail1" class="form-label">User</label>
+              <select class="form-select" aria-label="Default select example">
+                <option value="">Select User</option>
+                <option></option>
+              </select>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+            </div>
+            <div class="col-md-6 col-xl-3">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header card-default">
+          Assigned Vehicles
+      </div>
+        <div class="card-body">
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">  
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of vehicleData?.notAssignedVehicleList | searchFilter: searchKeyword;let index = index">
+                          <td><input type="checkbox" [ngModel]="selectedIndex === index"
+                            [ngModelOptions]="{standalone: true}"
+                            (change)="changeSelection($event, index, vehicle)" /></td>
+                          <td>{{vehicle?.text}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center" 
+                      style="width: 100%;"  >No Data Available</div>
+                  </div>                    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header card-default">
+          Not assigned Vehicles
+      </div>
+        <div class="card-body">
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">  
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of vehicleData?.notAssignedVehicleList | searchFilter: searchKeyword;let index = index">
+                          <td><input type="checkbox" [ngModel]="selectedIndex === index"
+                            [ngModelOptions]="{standalone: true}"
+                            (change)="changeSelection($event, index, vehicle)" /></td>
+                          <td>{{vehicle?.text}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center" 
+                      style="width: 100%;" >No Data Available</div>
+                  </div>                    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<under-development></under-development>

@@ -1,0 +1,194 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Reports/ChargingSOCReport">Reports</a></li>
+                <li><a routerLink="/Reports/ChargingSOCReport"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Shift Wise SOC Consumed Report</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="chargingForm">
+                        <div class="row">
+
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                        [type]="'Vehicle'" [placeholder]="'All Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                        [placeholder]="'All Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'All Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">From Date</label>
+                                <input type="text" class="form-control" formControlName="fromDate"
+                                    placeholder="MM/dd/yyyy" #dp="bsDatepicker" bsDatepicker />
+                            </div>
+                            <div class="col-xs-12 col-12 col-md-3">
+                                <label class="form-label">To Date</label>
+                                <input type="text" class="form-control" formControlName="toDate"
+                                    placeholder="MM/dd/yyyy" #dp="bsDatepicker" bsDatepicker />
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <br>
+                                <button class="btn btn-success" [disabled]="!chargingForm.valid || !selectedVehicle"
+                                    (click)="showReport(chargingForm.value)"><i class="fa fa-eye"
+                                        aria-hidden="true"></i>
+                                    show Report
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="row row-data">
+                            <div class="col-md-6 col-xl-3"></div>
+                            <div class="col-md-6 col-xl-3"></div>
+                            <div class="col-md-6 col-xl-3"></div>
+
+                            <div class="col-md-6 col-xl-3">
+                                <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div class="search-form">
+                                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                                    class="form-control search-input"><button type="button" class="btn-search"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)"
+                                        class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [value]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" #TABLE aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">Report Date</th>
+                                                    <th rowspan="2">Route Name</th>
+                                                    <th rowspan="2">Scheduled Vehicle No.</th>
+                                                    <th rowspan="2">Actual Vehicle No.</th>
+                                                    <th rowspan="2">Scheduled Driver</th>
+                                                    <th rowspan="2">Actual Driver</th>
+                                                    <th rowspan="2">Scheduled Depo Out</th>
+                                                    <th rowspan="2">Actual Depo Out</th>
+                                                    <th rowspan="2">Scheduled Depo In</th>
+                                                    <th rowspan="2">Actual Depo In</th>
+                                                    <th rowspan="2">Shift Type</th>
+                                                    <th class="mainHeading" colspan="7">As Per Device</th>
+                                                    <th class="mainHeading" colspan="7">As Per Manual</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Start SOC</th>
+                                                    <th>End SOC</th>
+                                                    <th>Consume SOC</th>
+                                                    <th>Start Odometer</th>
+                                                    <th>End Odometer</th>
+                                                    <th>Odometer Distance Km</th>
+                                                    <th>SOC Consumed Per Km</th>
+                                                    <th>Start SOC</th>
+                                                    <th>End SOC</th>
+                                                    <th>Consume SOC</th>
+                                                    <th>Start Odometer</th>
+                                                    <th>End Odometer</th>
+                                                    <th>Odometer Distance Km</th>
+                                                    <th>SOC Consumed Per Km</th>
+                                                </tr>
+                                                
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let charging of chargingList | searchFilter: searchKeyword |  paginate : {
+                                            itemsPerPage: tableSize,
+                                            currentPage: page,
+                                            totalItems: count};">
+                                                    <td>{{charging?.reportDate | date:'dd/MM/yyyy'}}</td>
+                                                    <td>{{charging?.routeName}}</td>
+                                                    <td>{{charging?.scheduledVehicleNo}}</td>
+                                                    <td>{{charging?.actualVehicleNo}}</td>
+                                                    <td>{{charging?.scheduledDriver}}</td>
+                                                    <td>{{charging?.actualDriver}}</td>
+                                                    <td>{{charging?.scheduledDepoOut}}</td>
+                                                    <td>{{charging?.actualDepoOut.split('.')[0] }}</td>
+                                                    <td>{{charging?.scheduledDepoIn}}</td>
+                                                    <td>{{charging?.actualDepoIn.split('.')[0]}}</td>
+                                                    <td>{{charging?.shiftType}}</td>
+                                                    <td>{{charging?.startSOC}}</td>
+                                                    <td>{{charging?.endSOC}}</td>
+                                                    <td>{{charging?.consumeSOC}}</td>
+                                                    <td>{{charging?.startOdometer}}</td>
+                                                    <td>{{charging?.endOdometer}}</td>
+                                                    <td>{{charging?.odometerDistanceKM}}</td>
+                                                    <td>{{charging?.socConsumedKm | number:'1.3-3' }}</td>
+                                                    <td>{{charging?.mStartSOC}}</td>
+                                                    <td>{{charging?.mEndSOC}}</td>
+                                                    <td>{{charging?.mConsumeSOC}}</td>
+                                                    <td>{{charging?.mStartOdometer}}</td>
+                                                    <td>{{charging?.mEndOdometer}}</td>
+                                                    <td>{{charging?.mOdometerDistanceKM}}</td>
+                                                    <td>{{charging?.mSocConsumedKm | number:'1.3-3' }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- <div class="row row-data"
+                                        *ngIf="chargingList && chargingList.length > 0 && (chargingList | searchFilter: searchKeyword)?.length">
+                                        <div class="col-md-3">
+                                            <span>Total Time Consumed : {{chargingCount.totalTimeConsumed}}</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Total KWH : {{chargingCount.totalKWH}}</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span> Total Count : {{chargingList?.length > 0 ? chargingList.length : 0
+                                                }}</span>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div> -->
+                                    <div class="text-center"
+                                        *ngIf="chargingList && chargingList.length == 0 || chargingList == null && !isloading || !(chargingList | searchFilter: searchKeyword)?.length"
+                                        style="width: 100%;">No Data Available</div>
+                                    <div class="pagination-data"
+                                        *ngIf="chargingList && chargingList.length > 0 && (chargingList | searchFilter: searchKeyword)?.length">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

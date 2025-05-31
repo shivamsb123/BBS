@@ -1,0 +1,241 @@
+<section class="main-content" style="top: 70px;">
+      <div class="row">
+        <div class="col-lg-12 align-self-center">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/vendordashboard/homepage">Dashboard</a></li>
+            <li><a routerLink="/vendordashboard/RPF_Details"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                All RFP Details</a></li>
+          </ol>
+        </div>
+      </div>  
+    <tabset responsiveTabs [justified]="true" #staticTabs>
+      <tab (selectTab)="onTablValue('1')">
+        <ng-template tabHeading>Total RFP</ng-template>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">
+                Total RFP List
+              </div>
+              <div class="card-body">
+                <div class="row row-data">
+                  <div class="col-md-3">
+                    <div class="p-2 bd-highlight">
+                      <span>Items per page: </span>
+                      <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [value]="size">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable"
+                          class="table table-striped nowrap dataTable no-footer dtr-inline"
+                          role="grid" aria-describedby="datatable_info" style="width: 100%"
+                          width="100%">
+                          <thead>
+                              <tr role="row">
+                                  <th *ngFor="let vehicleHeading of tableData">
+                                    <strong>{{vehicleHeading?.val}}</strong>
+                                  </th>
+                                </tr>
+                          </thead>
+  
+                          <tbody *ngIf="!isloading">
+                              <tr *ngFor="let mrn of rpfData">                                  
+                                  <td>
+                                      {{mrn?.rfpid}}
+                                  </td>
+                                  <td>{{mrn?.rfpDate}}</td>
+                                  <td>
+                                      {{mrn?.mrnid}}
+                                  </td>
+                                  <td>
+                                    {{mrn?.supName}}
+                                  </td>
+                                  <td>
+                                    {{mrn?.qty}}
+                                  </td>
+                                  <td>
+                                    {{mrn?.status || 'NA'}}
+                                  </td>
+
+                                <td> <a style="margin-left: 15px;"  rel="noopener noreferrer" (click)="addQuotation('/vendordashboard/Quotation_Generate/id', mrn)"> <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a></td> 
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div class="text-center" *ngIf="rpfData && rpfData.length == 0 || rpfData == null && !isloading"
+                       
+                          style="width: 100%;">No Data Available</div>
+                  </div>
+                  <div class="pagination-data" *ngIf="rpfData && rpfData.length > 0">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next"
+                          (pageChange)="onTableDataChange($event)">
+                      </pagination-controls>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+      </tab>
+      <!-- <tab (selectTab)="onTablValue('2')">
+        <ng-template tabHeading>Generate Quotation</ng-template>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">
+                Generate Quotation List
+              </div>
+              <div class="card-body">
+                <div class="row row-data">
+                  <div class="col-md-3">
+                    <div class="p-2 bd-highlight">
+                      <span>Items per page: </span>
+                      <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [value]="size">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable"
+                          class="table table-striped nowrap dataTable no-footer dtr-inline"
+                          role="grid" aria-describedby="datatable_info" style="width: 100%"
+                          width="100%">
+                          <thead>
+                              <tr role="row">
+                                  <th *ngFor="let vehicleHeading of tableData2">
+                                    <strong>{{vehicleHeading?.val}}</strong>
+                                  </th>
+                                </tr>
+                          </thead>
+  
+                          <tbody *ngIf="!isloading">
+                              <tr *ngFor="let mrn of rpfData  |  paginate : {
+                    itemsPerPage: tableSize,
+                    currentPage: page,
+                    totalItems: count};">
+                                  
+                                  <td>
+                                      {{mrn?.rfpid}}
+                                  </td>
+                                  <td>{{mrn?.rfpDate}}</td>
+                                  <td>
+                                      {{mrn?.mrnid}}
+                                  </td>
+                                  <td>{{mrn?.vendorName}}</td>
+                                  <td>{{mrn?.productName}}</td>
+                                  <td>{{mrn?.qty}}</td>
+                                  <td>{{mrn?.hsnCode}}</td> 
+                              </tr>
+                          </tbody>
+                      </table>
+                      <div class="text-center"
+                       
+                          style="width: 100%;">No Data Available</div>
+                  </div>
+                  <div class="pagination-data" *ngIf="rpfData && rpfData.length > 0">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next"
+                          (pageChange)="onTableDataChange($event)">
+                      </pagination-controls>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+      </tab> -->
+      <tab (selectTab)="onTablValue('3')">
+        <ng-template tabHeading>Pending RFP</ng-template>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">
+                Pending RFP List 
+              </div>
+              <div class="card-body">
+                <div class="row row-data">
+                  <div class="col-md-3">
+                    <div class="p-2 bd-highlight">
+                      <span>Items per page: </span>
+                      <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [value]="size">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable"
+                          class="table table-striped nowrap dataTable no-footer dtr-inline"
+                          role="grid" aria-describedby="datatable_info" style="width: 100%"
+                          width="100%">
+                          <thead>
+                              <tr role="row">
+                                  <th *ngFor="let vehicleHeading of tableData3">
+                                    <strong>{{vehicleHeading?.val}}</strong>
+                                  </th>
+                                </tr>
+                          </thead>
+  
+                          <!-- <tbody *ngIf="!isloading">
+                              <tr *ngFor="let mrn of rpfData  |  paginate : {
+                    itemsPerPage: tableSize,
+                    currentPage: page,
+                    totalItems: count};">
+                                  
+                                  <td>
+                                      {{mrn?.rfpid}}
+                                  </td>
+                                  <td>{{mrn?.rfpDate}}</td>
+                                  <td>
+                                      {{mrn?.mrnid}}
+                                  </td>
+                                  <td>{{mrn?.vendorName}}</td>
+                                  <td>{{mrn?.productName}}</td>
+                                  <td>{{mrn?.qty}}</td>
+                                  <td>{{mrn?.hsnCode}}</td>
+                              </tr>
+                          </tbody> -->
+                      </table>
+                      <div class="text-center"
+                       
+                          style="width: 100%;">No Data Available</div>
+                  </div>
+                  <!-- <div class="pagination-data" *ngIf="rpfData && rpfData.length > 0">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next"
+                          (pageChange)="onTableDataChange($event)">
+                      </pagination-controls>
+                  </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>  
+    </tabset>
+  
+  </section>

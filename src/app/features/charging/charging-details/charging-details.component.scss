@@ -1,0 +1,42 @@
+
+::ng-deep {
+
+    bs-datepicker-container, bs-daterangepicker-container {
+        z-index: 99999999 !important;
+    }
+}
+
+.drawer-data {
+    height: 500px;
+    overflow: auto;
+}
+
+
+  
+  .details {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  
+    .close-button {
+  
+      i.fa.fa-close {
+        position: absolute;
+        top: -19px;
+        right: -18px;
+        border-radius: 34px;
+        border: 1px solid #f7f7f7;
+        background: #f7f7f7;
+        width: 33px;
+        height: 35px;
+        padding: 8px;
+        font-size: 17px;
+        cursor: pointer;
+      }
+    }
+  }

@@ -1,0 +1,1103 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/Dashboard/DashboardDMS"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+        DMS Dashboard</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row w-no-padding margin-b-30">
+    <div class="col-md-3" >
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">Fleet status</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo" src="../../../../../assets/images/fleet-bus.png">
+            </p>
+            <span class="float-right text widget-r-m">{{totalfleetData}}</span>
+        
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >On trip</span>
+                  <span class="status-value"
+                   > {{fleetData?.on_trip}}</span>
+                </a>
+              </li>
+              <li>
+                  <a class="status" style="cursor: pointer;" >
+                    <span class="status-key" style="text-transform: capitalize;"
+                     >In Depot</span>
+                    <span class="status-value"
+                     >{{fleetData?.in_depot}} </span>
+                  </a>
+                </li>
+                <!-- <li>
+                  <a class="status" style="cursor: pointer;" >
+                    <span class="status-key" style="text-transform: capitalize;"
+                     > Off Road</span>
+                    <span class="status-value"
+                     > {{fleetData?.off_road}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;" >
+                    <span class="status-key" style="text-transform: capitalize;"
+                     >Accident</span>
+                    <span class="status-value"
+                     >{{fleetData?.accident}} </span>
+                  </a>
+                </li> -->
+            </ul>
+          </div>
+          <!-- <div>
+            <p class="text-muted float-right margin-b-0 linking-path"><a
+                (click)="nevigateToAllStatusDashboard(allStatus['path'])" rel="noopener noreferrer">Go To All Details<i
+                  class="fa fa-arrow-right"></i></a> </p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" >
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">Trip status</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo" src="../../../../../assets/images/bus-route.png">
+            </p>
+            <span class="float-right text widget-r-m">{{TotaltripData}}</span>
+        
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >On Time</span>
+                  <span class="status-value"
+                   >{{tripData?.on_time}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Running Late</span>
+                  <span class="status-value"
+                   >{{tripData?.running_late}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Bus Replacement</span>
+                  <span class="status-value"
+                   >{{tripData?.bus_replacement}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Driver Replacement</span>
+                  <span class="status-value"
+                   >{{tripData?.driver_replacement}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- <div>
+            <p class="text-muted float-right margin-b-0 linking-path"><a
+                (click)="nevigateToAllStatusDashboard(allStatus['path'])" rel="noopener noreferrer">Go To All Details<i
+                  class="fa fa-arrow-right"></i></a> </p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" >
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">Tracking status</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo" src="../../../../../assets/images/tracking-bus.png">
+            </p>
+            <span class="float-right text widget-r-m">{{trackingDataCount}}</span>
+        
+          </div>
+          <div class="status-data">
+            <ul>
+              <li *ngFor="let status of trackingData">
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >{{status?.ts_status}}</span>
+                  <span class="status-value"
+                   >{{status?.total}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- <div>
+            <p class="text-muted float-right margin-b-0 linking-path"><a
+                (click)="nevigateToAllStatusDashboard(allStatus['path'])" rel="noopener noreferrer">Go To All Details<i
+                  class="fa fa-arrow-right"></i></a> </p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" >
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">Quality/Inspection status</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo" src="../../../../../assets/images/bus-quality-icon.png">
+            </p>
+            <span class="float-right text widget-r-m">{{totalQuality}}</span>
+        
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Pending</span>
+                  <span class="status-value"
+                   >{{qualityData?.pending}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Operational</span>
+                  <span class="status-value"
+                   >{{qualityData?.operational}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Operational But Not Ok</span>
+                  <span class="status-value"
+                   >{{qualityData?.operational_but_not_ok}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer;" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Minor Fault But Ok</span>
+                  <span class="status-value"
+                   >{{qualityData?.not_operational}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- <div>
+            <p class="text-muted float-right margin-b-0 linking-path"><a
+                (click)="nevigateToAllStatusDashboard(allStatus['path'])" rel="noopener noreferrer">Go To All Details<i
+                  class="fa fa-arrow-right"></i></a> </p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row w-no-padding margin-b-30">
+    <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">Total Complain Status</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo" src="../../../../../assets/images/complain-bus.png">
+            </p>
+            <span class="float-right text widget-r-m">{{totalComplain}}</span>
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Passenger Complain</span>
+                  <span class="status-value"
+                   >{{complaintStatus?.total_complaint}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Resolved</span>
+                  <span class="status-value"
+                   >{{complaintStatus?.resolved}}</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Pending</span>
+                  <span class="status-value"
+                   >{{complaintStatus?.pending}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- <div>
+            <p class="text-muted float-right margin-b-0 linking-path"><a
+                (click)="nevigateToAllStatusDashboardMenu(allStatus['path'])" rel="noopener noreferrer">Go To All
+                Details<i class="fa fa-arrow-right"></i></a> </p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">
+              Total Accident Status</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;">
+              <img class="logo" src="../../../../../assets/images/accident-bus.png">
+            </p>
+            <span class="float-right text widget-r-m">{{totalAccident}}</span>
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer" >
+                  <span class="status-key" style="text-transform: capitalize;"
+                   >Total Accident</span>
+                  <span class="status-value"
+                   >{{accidentData?.total_accident}}</span>
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">
+              Real Data Access</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;">
+              <img class="logo" src="../../../../../assets/images/data-access.png">
+            </p>
+            <span class="float-right text widget-r-m">{{totalRealTimeData}}</span>
+          </div>
+          <div class="status-data">
+            <ul>
+              <li>
+                <a class="status" style="cursor: pointer" >
+                  <span class="status-key" style="text-transform: capitalize;width: 62%;"
+                   >Total Fleet Running</span>
+                  <span class="status-value"
+                   >{{realTimeData?.total_odom_all_fleet}} Km</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer" >
+                  <span class="status-key" style="text-transform: capitalize;width: 62%;"
+                   >CO2 Emmissions</span>
+                  <span class="status-value"
+                   >{{realTimeData?.co2_emissions}} Kg</span>
+                </a>
+              </li>
+              <li>
+                <a class="status" style="cursor: pointer" >
+                  <span class="status-key" style="text-transform: capitalize;width: 62%;"
+                   >Fuel Saved</span>
+                  <span class="status-value"
+                   >{{realTimeData?.fual_saved}} Liters</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- <div>
+            <p class="text-muted float-right margin-b-0 linking-path"><a
+                (click)="nevigateToAllStatusDashboardMenu(allStatus['path'])" rel="noopener noreferrer">Go To All
+                Details<i class="fa fa-arrow-right"></i></a> </p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-3">
+      <div class="widget bg-light">
+        <div class="row row-table ">
+          <div class="margin-b-30" style="margin-bottom: 0px !important;">
+            <h2 class="margin-b-5">CAN Data View / BMS</h2>
+            <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo"
+                src="../../../../../assets/images/bus-can.png" /></p>
+            <span class="float-right text widget-r-m" style="color: #f6bb42 !important;">0</span>
+          </div>
+    
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="mb-3 card">
+        <div class="card-header-tab card-header-tab-animation card-header">
+          <div class="card-header-title" tooltip="Assets Report">
+            <i class="header-icon lnr-apartment icon-gradient bg-love-kiss">
+            </i>
+            Assets Report
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tabs-eg-77">
+              <h6 class="text-muted text-uppercase font-size-md opacity-5 font-weight-normal">
+                Top Status
+              </h6>
+            
+              <div class="scroll-area-sm">
+                <div class="scrollbar-container">
+                  <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                          <div class="widget-content-left mr-3">
+                            <img width="42" class="rounded-circle" src="../../../../../assets/images/fleet.jpg"
+                              alt="" />
+                          </div>
+                          <div class="widget-content-left">
+                            <div class="widget-heading">Fleet</div>
+                          </div>
+                          <div class="widget-content-right">
+                            <div class="font-size-xlg text-muted">
+                              <span>129</span>
+                              <small class="text-danger pl-2">
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                          <div class="widget-content-left mr-3">
+                            <img width="42" class="rounded-circle" src="../../../../../assets/images/trip.png" alt="" />
+                          </div>
+                          <div class="widget-content-left">
+                            <div class="widget-heading">Trip</div>
+                          </div>
+                          <div class="widget-content-right">
+                            <div class="font-size-xlg text-muted">
+                              <span>54</span>
+                              <small class="text-success pl-2">
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                          <div class="widget-content-left mr-3">
+                            <img width="42" class="rounded-circle" src="../../../../../assets/images/tracking.png"
+                              alt="" />
+                          </div>
+                          <div class="widget-content-left">
+                            <div class="widget-heading">
+                              tracking
+                            </div>
+                          </div>
+                          <div class="widget-content-right">
+                            <div class="font-size-xlg text-muted">
+                              <span>429</span>
+                              <small class="text-warning pl-2">
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                          <div class="widget-content-left mr-3">
+                            <img width="42" class="rounded-circle" src="../../../../../assets/images/quality.png"
+                              alt="" />
+                          </div>
+                          <div class="widget-content-left">
+                            <div class="widget-heading">
+                              Quality status
+                            </div>
+                          </div>
+                          <div class="widget-content-right">
+                            <div class="font-size-xlg text-muted">
+                              <span>129</span>
+                              <small class="text-danger pl-2">
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                          <div class="widget-content-left mr-3">
+                            <img width="42" class="rounded-circle" src="../../../../../assets/images/complain.png"
+                              alt="" />
+                          </div>
+                          <div class="widget-content-left">
+                            <div class="widget-heading">
+                              Complain
+                            </div>
+                          </div>
+                          <div class="widget-content-right">
+                            <div class="font-size-xlg text-muted">
+                              <span>54</span>
+                              <small class="text-success pl-2">
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                          <div class="widget-content-left mr-3">
+                            <img width="42" class="rounded-circle" src="../../../../../assets/images/accident.jpg"
+                              alt="" />
+                          </div>
+                          <div class="widget-content-left">
+                            <div class="widget-heading">
+                              Accident
+                            </div>
+                          </div>
+                          <div class="widget-content-right">
+                            <div class="font-size-xlg text-muted">
+                              <span>54</span>
+                              <small class="text-success pl-2">
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+      <div class="mb-3 card">
+        <div class="card-header-tab card-header">
+          <div class="card-header-title" tooltip="Performance Report">
+            <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure">
+            </i>
+            Performance Reports
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane fade active show" id="tab-eg-55">
+            <div class="widget-chart p-3">
+              <div style="height: 350px">
+                <div id="chart">
+ 
+                </div>
+              </div>
+            </div>
+            <div class="pt-2 card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="widget-content">
+                    <div class="widget-content-outer">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                          <div class="widget-numbers fsize-3 text-muted">
+                            63%
+                          </div>
+                        </div>
+                        <div class="widget-content-right">
+                          <div class="text-muted opacity-6">
+                            Fleet
+                          </div>
+                        </div>
+                      </div>
+                      <div class="widget-progress-wrapper mt-1">
+                        <div class="progress-bar-sm progress-bar-animated-alt progress">
+                          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="63" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 63%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="widget-content">
+                    <div class="widget-content-outer">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                          <div class="widget-numbers fsize-3 text-muted">
+                            32%
+                          </div>
+                        </div>
+                        <div class="widget-content-right">
+                          <div class="text-muted opacity-6">
+                            Trip
+                          </div>
+                        </div>
+                      </div>
+                      <div class="widget-progress-wrapper mt-1">
+                        <div class="progress-bar-sm progress-bar-animated-alt progress">
+                          <div class="progress-bar bg-success" role="progressbar" aria-valuenow="32" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 32%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="widget-content">
+                    <div class="widget-content-outer">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                          <div class="widget-numbers fsize-3 text-muted">
+                            71%
+                          </div>
+                        </div>
+                        <div class="widget-content-right">
+                          <div class="text-muted opacity-6">
+                            Tracking
+                          </div>
+                        </div>
+                      </div>
+                      <div class="widget-progress-wrapper mt-1">
+                        <div class="progress-bar-sm progress-bar-animated-alt progress">
+                          <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="71" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 71%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="widget-content">
+                    <div class="widget-content-outer">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                          <div class="widget-numbers fsize-3 text-muted">
+                            41%
+                          </div>
+                        </div>
+                        <div class="widget-content-right">
+                          <div class="text-muted opacity-6">
+                            quality
+                          </div>
+                        </div>
+                      </div>
+                      <div class="widget-progress-wrapper mt-1">
+                        <div class="progress-bar-sm progress-bar-animated-alt progress">
+                          <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="41" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 41%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="widget-content">
+                    <div class="widget-content-outer">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                          <div class="widget-numbers fsize-3 text-muted">
+                            0%
+                          </div>
+                        </div>
+                        <div class="widget-content-right">
+                          <div class="text-muted opacity-6">
+                            Complain
+                          </div>
+                        </div>
+                      </div>
+                      <div class="widget-progress-wrapper mt-1">
+                        <div class="progress-bar-sm progress-bar-animated-alt progress">
+                          <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="41" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="widget-content">
+                    <div class="widget-content-outer">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                          <div class="widget-numbers fsize-3 text-muted">
+                            0%
+                          </div>
+                        </div>
+                        <div class="widget-content-right">
+                          <div class="text-muted opacity-6">
+                            Accdient
+                          </div>
+                        </div>
+                      </div>
+                      <div class="widget-progress-wrapper mt-1">
+                        <div class="progress-bar-sm progress-bar-animated-alt progress">
+                          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="41" aria-valuemin="0"
+                            aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="mb-3 card">
+        <div class="card-header-tab card-header">
+          <div class="card-header-title">
+            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+            Battery System Health
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane fade active show" id="tab-eg-55">
+            <div class="widget-chart p-3">
+              <div style="height: 350px">
+                <div id="chart">
+           
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+      <div class="mb-3 card">
+        <div class="card-header-tab card-header">
+          <div class="card-header-title">
+            <i class="fa fa-battery-full" aria-hidden="true"></i>
+            Battery System Charge
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane fade active show" id="tab-eg-55">
+            <div class="widget-chart p-3">
+              <div style="height: 350px">
+                <div id="chart">
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <div class="mb-3 card">
+        <div class="card-header-tab card-header">
+          <div class="card-header-title">
+            CAN Data View
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane fade active show" id="tab-eg-55">
+            <div class="widget-chart p-3">
+              <div style="height: 350px">
+                <div id="chart">
+             
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Recent Comments
+          <p class="text-muted">Latest Comments on users</p>
+        </div>
+        <div class="comment-widgets">
+          <div class="d-flex flex-row comment-row">
+            <div class="mr-2"><img alt="user" class="rounded-circle" src="assets/img/avtar-1.png" width="50"></div>
+            <div class="comment-text w-100">
+              <h5>John Doe</h5>
+              <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
+              <div class="comment-footer">
+                <span class="text-muted pull-right">April 8, 2018</span>
+                <span class="label label-info">Pending</span>
+                <span class="action-icons">
+                  <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
+                  <a href="javascript:void(0)"><i class="ti-check"></i></a>
+                  <a href="javascript:void(0)"><i class="ti-heart"></i></a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row comment-row active">
+            <div class="mr-2">
+              <span class="round"><img alt="user" src="assets/img/avtar-2.png" width="50"></span>
+            </div>
+            <div class="comment-text active w-100">
+              <h5>John Doe</h5>
+              <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
+              <div class="comment-footer">
+                <span class="text-muted pull-right">April 7, 2018</span>
+                <span class="label label-success">Approved</span>
+                <span class="action-icons">
+                  <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
+                  <a href="javascript:void(0)"><i class="ti-check"></i></a>
+                  <a href="javascript:void(0)"><i class="ti-heart"></i></a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row comment-row">
+            <div class="mr-2">
+              <span class="round"><img alt="user" src="assets/img/avtar-3.png" width="50"></span>
+            </div>
+            <div class="comment-text w-100">
+              <h5>John Doe</h5>
+              <p class="m-b-5">Lorem Ipsum has beenorem Ipsum is simply dummy text of the printing and type setting
+                industry.</p>
+              <div class="comment-footer">
+                <span class="text-muted pull-right">April 6, 2018</span> <span
+                  class="label label-danger">Rejected</span> <span class="action-icons"><a href="javascript:void(0)"><i
+                      class="ti-pencil-alt"></i></a> <a href="javascript:void(0)"><i class="ti-check"></i></a> <a
+                    href="javascript:void(0)"><i class="ti-heart"></i></a></span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row comment-row">
+            <div class="mr-2">
+              <span class="round"><img alt="user" src="assets/img/avtar-4.png" width="50"></span>
+            </div>
+            <div class="comment-text w-100">
+              <h5>John Doe</h5>
+              <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
+              <div class="comment-footer">
+                <span class="text-muted pull-right">April 5, 2018</span> <span class="label label-info">Pending</span>
+                <span class="action-icons"><a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a> <a
+                    href="javascript:void(0)"><i class="ti-check"></i></a> <a href="javascript:void(0)"><i
+                      class="ti-heart"></i></a></span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row comment-row">
+            <div class="mr-2">
+              <span class="round"><img alt="user" src="assets/img/avtar-2.png" width="50"></span>
+            </div>
+            <div class="comment-text active w-100">
+              <h5>John Doe</h5>
+              <p class="m-b-5">Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
+              <div class="comment-footer">
+                <span class="text-muted pull-right">April 7, 2018</span>
+                <span class="label label-success">Approved</span>
+                <span class="action-icons">
+                  <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
+                  <a href="javascript:void(0)"><i class="ti-check"></i></a>
+                  <a href="javascript:void(0)"><i class="ti-heart"></i></a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-6">
+              Todo List
+              <p class="text-muted">Lorem ipsum dolor sit amet</p>
+            </div>
+            <div class="col-md-6">
+              <a href="javascript: void(0);" class="btn btn-success btn-border box-shadow btn-circle pull-right"><i
+                  class="fa fa-plus"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="scrollDiv">
+            <ul class="todo-list">
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox1" type="checkbox">
+                  <label for="checkbox1">Lorem Ipsum is simply dummy text of the printing <small
+                      class="label label-info">Today</small></label>
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox2" type="checkbox">
+                  <label for="checkbox2"> Lorem Ipsum is simply dummy text of the printing dummy text of the printing
+                    and typesetting industry. <small class="label label-danger">Yesterday</small></label>
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox3" type="checkbox">
+                  <label for="checkbox3"> Lorem Ipsum is simply dummy text of the printing dummy text of the <small
+                      class="label label-info">1 Week</small></label>
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox1" type="checkbox">
+                  <label for="checkbox1"> Lorem Ipsum is simply dummy text of the <small class="label label-primary"><i
+                        class="fa fa-clock-o"></i> 3 Mins</small></label>
+
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox4" type="checkbox">
+                  <label for="checkbox4"> Lorem Ipsum is simply dummy text of the printing dummy text of the
+                    printing<small class="label label-warning">2 Week</small></label>
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox5" type="checkbox">
+                  <label for="checkbox5"> Lorem Ipsum is simply dummy text of the<small
+                      class="label label-info">Today</small></label>
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox1" type="checkbox">
+                  <label for="checkbox1"> Lorem Ipsum is simply dummy text of the printing dummy text of<small
+                      class="label label-danger">Yesterdat</small></label>
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox4" type="checkbox">
+                  <label for="checkbox4"> Lorem Ipsum is simply dummy text of the printing dummy text of the
+                    printing<small class="label label-info"><i class="fa fa-clock-o"></i> 3 Mins</small></label>
+                </div>
+              </li>
+              <li>
+                <div class="checkbox checkbox-primary margin-r-5">
+                  <input id="checkbox5" type="checkbox">
+                  <label for="checkbox5"> Lorem Ipsum is simply dummy text of the<small class="label label-danger"><i
+                        class="fa fa-clock-o"></i> 1 Week</small></label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Add Todo...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+                Add</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 col-xlg-9">
+      <div class="card">
+        <div class="card-header card-default">
+          Activity Timeline
+          <p class="text-muted">Lorem ipsum dolor sit amet</p>
+        </div>
+        <div class="card-body">
+
+          <div class="profiletimeline">
+            <div class="sl-item">
+              <div class="sl-left"> <img src="assets/img/avtar-1.png" alt="user" class="rounded-circle"> </div>
+              <div class="sl-right">
+                <div><a href="#" class="link">John Doe</a> <span class="sl-date">12 minutes ago</span>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-2"><img src="assets/img/gallery/1s.jpg" alt="user"
+                        class="img-fluid rounded"></div>
+                    <div class="col-lg-3 col-md-6 mb-2"><img src="assets/img/gallery/2s.jpg" alt="user"
+                        class="img-fluid rounded"></div>
+                    <div class="col-lg-3 col-md-6 mb-2"><img src="assets/img/gallery/3s.jpg" alt="user"
+                        class="img-fluid rounded"></div>
+                    <div class="col-lg-3 col-md-6 mb-2"><img src="assets/img/gallery/4s.jpg" alt="user"
+                        class="img-fluid rounded"></div>
+                  </div>
+                  <div class="like-comm">
+                    <a href="javascript:void(0)" class="link mr-2">385 comment</a>
+                    <a href="javascript:void(0)" class="link mr-2"><i class="fa fa-heart text-danger"></i> 174 Love</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="sl-item">
+              <div class="sl-left"> <img src="assets/img/avtar-2.png" alt="user" class="rounded-circle"> </div>
+              <div class="sl-right">
+                <div> <a href="#" class="link">John Doe</a> <span class="sl-date">8 minutes ago</span>
+                  <div class="mt-2 row">
+                    <div class="col-md-3 col-xs-12"><img src="assets/img/gallery/1s.jpg" alt="user"
+                        class="img-fluid rounded"></div>
+                    <div class="col-md-9 col-xs-12">
+                      <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+                        Sed cursus ante dapibus diam. </p>
+                    </div>
+                  </div>
+                  <div class="like-comm mt-2">
+                    <a href="javascript:void(0)" class="link mr-2">248 comment</a>
+                    <a href="javascript:void(0)" class="link mr-2"><i class="fa fa-heart text-danger"></i> 84 Love</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="sl-item">
+              <div class="sl-left"> <img src="assets/img/avtar-3.png" alt="user"> </div>
+              <div class="sl-right">
+                <div><a href="#" class="link">John Doe</a> <span class="sl-date">6 minutes ago</span>
+                  <p class="mt-1"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
+                    libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis
+                    sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper </p>
+                </div>
+                <div class="like-comm mt-2">
+                  <a href="javascript:void(0)" class="link mr-2">68 comment</a>
+                  <a href="javascript:void(0)" class="link mr-2"><i class="fa fa-heart text-danger"></i> 36 Love</a>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="sl-item">
+              <div class="sl-left"> <img src="assets/img/avtar-4.png" alt="user" class="rounded-circle"> </div>
+              <div class="sl-right">
+                <div><a href="#" class="link">John Doe</a> <span class="sl-date">4 minutes ago</span>
+                  <blockquote class="mt-1">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card weather">
+        <div class="city-selected">
+          <div class="weather-box">
+            <div class="info">
+              <div class="city">Ankara</div>
+              <div class="night">Night - 22:07 PM</div>
+              <div class="temp text-primary">3°</div>
+              <div class="wind">
+                <i class="wi wi-windy"></i>
+                <span>25 km/h</span>
+              </div>
+            </div>
+            <div class="icon text-primary">
+              <i class="wi wi-night-alt-hail"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="days">
+          <div class="row row-no-gutter">
+            <div class="col-md-4">
+              <div class="day">
+                <h1>Monday</h1>
+                <i class="wi wi-day-rain"></i>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="day">
+                <h1>Tuesday</h1>
+                <i class="wi wi-day-storm-showers"></i>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="day">
+                <h1>Wednesday</h1>
+                <i class="wi wi-solar-eclipse"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header card-default">
+          Browser Stats
+          <p class="text-muted">Lorem ipsum dolor sit amet</p>
+        </div>
+        <div class="card-body">
+          <table class="table browser no-border">
+            <tbody>
+              <tr>
+                <td><img src="assets/img/browser/chrome-logo.png" alt="logo"></td>
+                <td>Google Chrome</td>
+                <td class="text-right"><span class="label label-primary">33%</span></td>
+              </tr>
+              <tr>
+                <td><img src="assets/img/browser/firefox-logo.png" alt="logo"></td>
+                <td>Mozila Firefox</td>
+                <td class="text-right"><span class="label label-success">27%</span></td>
+              </tr>
+              <tr>
+                <td><img src="assets/img/browser/safari-logo.png" alt="logo"></td>
+                <td>Apple Safari</td>
+                <td class="text-right"><span class="label label-info">17%</span></td>
+              </tr>
+              <tr>
+                <td><img src="assets/img/browser/internet-logo.png" alt="logo"></td>
+                <td>Internet Explorer</td>
+                <td class="text-right"><span class="label label-warning">11%</span></td>
+              </tr>
+              <tr>
+                <td><img src="assets/img/browser/opera-logo.png" alt="logo"></td>
+                <td>Opera mini</td>
+                <td class="text-right"><span class="label label-danger">8%</span></td>
+              </tr>
+              <tr>
+                <td><img src="assets/img/browser/internet-logo.png" alt="logo"></td>
+                <td>Microsoft edge</td>
+                <td class="text-right"><span class="label label-indigo">4%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <footer class="footer">
+    <span>Copyright © 2023. Website by SSIPL. All rights reserved</span>
+  </footer>
+</section>

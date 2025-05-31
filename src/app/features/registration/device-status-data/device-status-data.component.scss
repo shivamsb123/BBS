@@ -1,0 +1,30 @@
+::ng-deep {
+    .active.nav-item {
+        background: #2c3477;
+      }
+      .nav-tabs .nav-link.active {
+        color: white;
+        border-bottom: 2px solid #2f387c;
+        background: none;
+      }
+
+}
+.search-form {
+  float: right;
+}
+
+.search-input {
+  border-color:#2f387c !important;
+}
+
+.search-form .btn-search {
+  color: #2f387c;
+}
+.fa.fa-pencil {
+  margin-right: 10px;
+}
+
+.btn{
+  margin-top: 30px;
+
+}

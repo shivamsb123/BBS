@@ -1,0 +1,678 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-md-4">
+      <ol class="breadcrumb">
+        <li class="time-data">Time : {{ time | date: 'dd/MM/yyyy hh:mm:ss a' }}</li>
+      </ol>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <ol class="breadcrumb" style="float: right;">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/Dashboard/DashboardDMS"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            DMS Dashboard</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <ng-container *ngIf="showRealData; else elseblock">
+    <div class="card-data">
+      <div class="card-value" style="cursor: pointer" (click)="navigateUrlfromDashboard('/Dashboard/co2-emission-report')">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">
+                Real Data Access</h2>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-07.png">
+              </p>
+              <span class="float-right text widget-r-m"></span> -->
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="fms"></ng-lottie>
+              </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer">
+                    <span class="status-key" >Total Fleet Running</span>
+                    <span class="status-value">{{realTimeData?.total_odom_all_fleet}}Km</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" >
+                    <span class="status-key" >CO2 Emmissions</span>
+                    <span class="status-value">{{realTimeData?.co2_emissions}}Kg</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer">
+                    <span class="status-key" >Fuel Saved</span>
+                    <span class="status-value">{{realTimeData?.fual_saved}}L</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer">
+                    <span class="status-key" >Last Updated date</span>
+                    <span class="status-value">{{realTimeData?.last_updated_date | date:'dd/MM/yyyy'}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>  
+            </div>         
+          </div>
+      </div>
+      <div class="card-value"></div>
+      <div class="card-value"></div>
+      <div class="card-value"></div>
+    </div>
+  </ng-container>
+  <ng-template #elseblock>
+    <div class="card-data">
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">Fleet Operation</h2>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;"><img class="logo"
+                src="../../../../../assets/images/ITMS ICON-01.png">
+            </p> -->
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" [styles]="styles" containerClass="moving-box another-class"
+                  [options]="fleet"></ng-lottie>
+              </div>
+              <!-- <span class="float-right text widget-r-m">{{totalfleetData}}</span> -->
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer;" (click)="navigateUrl(3)">
+                    <span class="status-key" style="text-transform: capitalize;">On trip</span>
+                    <span class="status-value"> {{fleetData?.on_trip}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;">
+                    <span class="status-key" style="text-transform: capitalize;" (click)="navigateUrl(4)">In
+                      Depot</span>
+                    <span class="status-value">{{fleetData?.in_depot}} </span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;" (click)="navigateUrl(2)">
+                    <span class="status-key" style="text-transform: capitalize;"> Held Up</span>
+                    <span class="status-value"> {{fleetData?.off_road}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;">
+                    <span class="status-key" style="text-transform: capitalize;" (click)="navigateUrl(1)">Accident</span>
+                    <span class="status-value">{{fleetData?.accident}} </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">Trip Status</h2>
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="trip"></ng-lottie>
+              </div>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-02.png">
+              </p>
+              <span class="float-right text widget-r-m">{{TotaltripData}}</span> -->
+  
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/on_trip_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">On Time</span>
+                    <span class="status-value">{{tripData?.on_time}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/on_trip_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">Running Late</span>
+                    <span class="status-value">{{tripData?.running_late}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/on_trip_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">Bus Replacement</span>
+                    <span class="status-value">{{tripData?.bus_replacement}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/on_trip_status/id','4')">
+                    <span class="status-key" style="text-transform: capitalize;">Driver Replacement</span>
+                    <span class="status-value">{{tripData?.driver_replacement}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">GPS Tracking Status</h2>
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="gps"></ng-lottie>
+              </div>
+  
+            </div>
+            <div class="status-data">
+              <ul>
+                <li *ngFor="let status of trackingData">
+                  <a class="status" style="cursor: pointer;">
+                    <span class="status-key" style="text-transform: capitalize;"
+                      (click)="navigateToSubData('/Dashboard/FleetStatus_DMS/id',status?.fs_value)">{{status?.ts_status}}</span>
+                    <span class="status-value">{{status?.total}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">Quality/ Inspection Status</h2>
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="quality"></ng-lottie>
+              </div>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-02.png">
+              </p>
+              <span class="float-right text widget-r-m">{{TotaltripData}}</span> -->
+    
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/quality_status/id','0')">
+                    <span class="status-key" style="text-transform: capitalize;">QC Pending</span>
+                    <span class="status-value">{{qualityData?.pending}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/quality_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">QC Pass</span>
+                    <span class="status-value">{{qualityData?.operational}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/quality_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">Minor Fault But Ok</span>
+                    <span class="status-value">{{qualityData?.operational_but_not_ok}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer;"
+                    (click)="nevigateToClickData('Dashboard/quality_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">Operational But Not Ok</span>
+                    <span class="status-value">{{qualityData?.not_operational}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+    
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-value" style="cursor: pointer" (click)="navigateUrlfromDashboard('/Dashboard/co2-emission-report')">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">
+                Real Data Access</h2>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-07.png">
+              </p>
+              <span class="float-right text widget-r-m"></span> -->
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="fms"></ng-lottie>
+              </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer">
+                    <span class="status-key" >Total Fleet Running</span>
+                    <span class="status-value">{{realTimeData?.total_odom_all_fleet}}Km</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" >
+                    <span class="status-key" >CO2 Emmissions</span>
+                    <span class="status-value">{{realTimeData?.co2_emissions}}Kg</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer">
+                    <span class="status-key" >Fuel Saved</span>
+                    <span class="status-value">{{realTimeData?.fual_saved}}L</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer">
+                    <span class="status-key" >Last Updated date</span>
+                    <span class="status-value">{{realTimeData?.last_updated_date | date:'dd/MM/yyyy'}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>  
+            </div>         
+          </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">FMS</h2>
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="fms1"></ng-lottie>
+              </div>
+              <span class="float-right text widget-r-m"></span>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer" (click)="navigateUrlfromDashboard('/Dashboard/FleetStatus_DMS')">
+                    <span class="status-key" style="text-transform: capitalize;">Dynamic Status</span>
+                    <span class="status-value">{{fmsData?.dynamic_count}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer" (click)="navigateUrlfromDashboard('/Dashboard/FleetStatus_DMS_RouteWise_v2')">
+                    <span class="status-key" style="text-transform: capitalize;">Routes Status</span>
+                    <span class="status-value">{{fmsData?.route_count}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer" (click)="navigateUrlfromDashboard('/Dashboard/Dashboard_Can')">
+                    <span class="status-key" style="text-transform: capitalize;">CAN/OBU</span>
+                    <span class="status-value">{{fmsData?.obu_count}}</span>
+                  </a>
+                </li>
+                <!-- <li>
+                  <a class="status">
+                    <span class="status-key" style="text-transform: capitalize;">GPS</span>
+                    <span class="status-value">{{fmsData?.gps_count}}</span>
+                  </a>
+                </li> -->
+              </ul>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">Routes </h2>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-09.png">
+              </p>
+              <span class="float-right text widget-r-m"></span> -->
+              <div class="ani-image">
+                <ng-lottie width="130px" height="100px" containerClass="moving-box another-class"
+                  [options]="routes"></ng-lottie>
+              </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Dashboard/routes_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">No. of Routes</span>
+                    <span class="status-value">{{routesData?.no_of_routes}}</span>
+                  </a>
+                </li>
+  
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Dashboard/routes_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">No. of driver</span>
+                    <span class="status-value">{{routesData?.no_of_drivers}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Dashboard/routes_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">vehicle route wise</span>
+                    <span class="status-value">{{routesData?.no_of_veh_routes}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">
+                Shift Status</h2>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-10.png">
+              </p>
+              <span class="float-right text widget-r-m"></span> -->
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="shift"></ng-lottie>
+              </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Dashboard/Shift_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">No of shift</span>
+                    <span class="status-value">{{shiftStatus?.no_of_shifts}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Dashboard/Shift_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">Duty Tracking</span>
+                    <span class="status-value">{{shiftStatus?.driver_on_shifts}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Dashboard/Shift_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">Driver status change </span>
+                    <span class="status-value">{{shiftStatus?.no_driver_change}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Dashboard/Shift_status/id','4')">
+                    <span class="status-key" style="text-transform: capitalize;">Vehicle status change</span>
+                    <span class="status-value">{{shiftStatus?.no_veh_change}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">
+                Bus Status </h2>
+                <div class="ani-image">
+                  <ng-lottie width="130px" height="100px" containerClass="moving-box another-class"
+                    [options]="busStatus"></ng-lottie>
+                </div>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-05.png">
+              </p>
+              <span class="float-right text widget-r-m">{{outSehddingCount}}</span> -->
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Operational/Driver_Wise_Bus_DepoInOut_Report/id', '2')">
+                    <span class="status-key" style="text-transform: capitalize;">Depot Out</span>
+                    <span class="status-value">{{outSheddingData?.depo_out}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Operational/Driver_Wise_Bus_DepoInOut_Report/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">Depot In</span>
+                    <span class="status-value">{{outSheddingData?.depo_in}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Operational/Driver_Wise_Bus_DepoInOut_Report/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">Hold</span>
+                    <span class="status-value">{{outSheddingData?.quality_testing}}</span>
+                  </a>
+                </li>
+  
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light" >
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">
+                Maintenance</h2>
+                <div class="ani-image">
+                  <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                    [options]="maintanace"></ng-lottie>
+                </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/maintenance_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">Complain</span>
+                    <span class="status-value">{{maintenanceData?.total_complaint}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/maintenance_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">Permit expire</span>
+                    <span class="status-value">{{maintenanceData?.permit_expire}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/maintenance_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">Pollution</span>
+                    <span class="status-value">{{maintenanceData?.pollution_expire}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/maintenance_status/id','4')">
+                    <span class="status-key" style="text-transform: capitalize;">Insurance </span>
+                    <span class="status-value">{{maintenanceData?.insurance_expire}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/maintenance_status/id','5')">
+                    <span class="status-key" style="text-transform: capitalize;">Driver lenience Alert </span>
+                    <span class="status-value">{{maintenanceData?.driver_licence_ex}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">Deviation</h2>
+              <!-- <p class="text-muted" style="margin-bottom: 5px !important;">
+                <img class="logo" src="../../../../../assets/images/ITMS ICON-12.png">
+              </p>
+              <span class="float-right text widget-r-m">{{deviationCount}}</span> -->
+              <div class="ani-image">
+                <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                  [options]="deviation"></ng-lottie>
+              </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Reports/deviation_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">Miss Bus Stop</span>
+                    <span class="status-value">{{deviationData?.miss_bus_stop}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Reports/deviation_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">Route Violation</span>
+                    <span class="status-value">{{deviationData?.route_violance}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Reports/deviation_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">Over Speed</span>
+                    <span class="status-value">{{deviationData?.over_speed}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Reports/deviation_status/id','4')">
+                    <span class="status-key" style="text-transform: capitalize;">Miss Trip</span>
+                    <span class="status-value">{{deviationData?.miss_trip}}</span>
+                  </a>
+                </li>
+                <!-- <li>
+                  <a class="status" style="cursor: pointer">
+                    <span class="status-key" style="text-transform: capitalize;">Bunching</span>
+                    <span class="status-value"></span>
+                  </a>
+                </li> -->
+              </ul>
+            </div>
+            <!-- <div>  
+                <p class="text-muted float-right margin-b-0 linking-path"><a
+                    (click)="nevigateToAllStatusDashboardMenu(allStatus['path'])" rel="noopener noreferrer">Go To All
+                    Details<i class="fa fa-arrow-right"></i></a> </p>
+              </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">Passenger Complain Status</h2>
+              <div class="ani-image">
+                <ng-lottie width="130px" height="100px" containerClass="moving-box another-class"
+                  [options]="passenger"></ng-lottie>
+              </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/passenger_complain_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">Total Passenger Complain</span>
+                    <span class="status-value">{{totalComplainCount}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/passenger_complain_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">Close Complain</span>
+                    <span class="status-value">{{closeCountValue}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Maintenance/passenger_complain_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">Open Complain</span>
+                    <span class="status-value">{{openCountValue}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <div class="card-value">
+        <div class="widget bg-light">
+          <div class="row row-table ">
+            <div class="margin-b-30" style="margin-bottom: 0px !important;">
+              <h2 class="margin-b-5">
+                Device Count</h2>
+                <div class="ani-image">
+                  <ng-lottie width="150px" height="100px" containerClass="moving-box another-class"
+                    [options]="device"></ng-lottie>
+                </div>
+            </div>
+            <div class="status-data">
+              <ul>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Registration/device_status/id','1')">
+                    <span class="status-key" style="text-transform: capitalize;">Vehicle</span>
+                    <span class="status-value">{{deviceTypeData?.total_veh}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Registration/device_status/id','2')">
+                    <span class="status-key" style="text-transform: capitalize;">OBU</span>
+                    <span class="status-value">{{deviceTypeData?.total_obu}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Registration/device_status/id','3')">
+                    <span class="status-key" style="text-transform: capitalize;">RFID</span>
+                    <span class="status-value">{{deviceTypeData?.total_mdvr}}</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="status" style="cursor: pointer"
+                    (click)="nevigateToClickData('Registration/device_status/id','4')">
+                    <span class="status-key" style="text-transform: capitalize;width: 62%;">GPS</span>
+                    <span class="status-value">{{deviceTypeData?.total_gps}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  </section>

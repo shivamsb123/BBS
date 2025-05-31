@@ -1,0 +1,59 @@
+<!-- <div class="row" id="bus">
+    <div class="col-md-12">
+        <div class="card">
+        <div class="card-header card-default">
+                    Set Alert
+                </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-xl-4">
+                <label for="exampleInputEmail1" class="form-label">Alert Time</label>
+                <input type="text" class="form-control" [(ngModel)]="alertTime" placeholder="Enter Alert Time" />
+            </div>
+            <div class="col-md-6 col-xl-4"></div>
+            <div class="col-md-6 col-xl-4">
+                <br>
+                <button class=" btn btn-success" (click)="submit()">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Submit
+                </button>
+            </div>
+        </div>
+        </div>
+        </div>
+
+    </div>
+</div> -->
+
+
+<div class="container-token100" id="bus">
+    <div class="wrap-token100">
+        <span class="token100-form-title p-b-26">
+            Alert Time
+        </span>
+        <div class="mb-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" [checked]="isNotification" [(ngModel)]="isNotification" (change)="onChangeNotification()">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Notification {{notificationData}}</label>
+            </div>
+        </div>
+        <div class="wrap-input100 validate-input">
+            <input class="input100" type="text" name="username" [(ngModel)]="alertTime"
+                placeholder="Enter Alert Time" />
+        </div>
+        <div class="mb-2">
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedLanguage" (change)="onLanguageChange($event)">
+                <option value="EN">English</option>
+                <option value="HI">Hindi</option>
+            </select>
+        </div>
+
+        <div class="container-token100-form-btn">
+            <div class="wrap-token100-form-btn">
+                <button class=" btn btn-success" (click)="submit()">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Submit
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

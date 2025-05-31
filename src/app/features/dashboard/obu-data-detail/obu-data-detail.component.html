@@ -1,0 +1,96 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Dashboard/Dashboard_Can"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Can and OBU</a></li>
+                <li><a routerLink="/Dashboard/obu_data_detail/id"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        CAN Data View</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="header">
+        <h2 class="obu-data-value"> Device : - {{obuValue?.vehicleNo}}</h2>
+    </div>
+    <div class="obu-data">
+        <div class="card">
+            <div class="card-header">
+                Milage
+            </div>
+            <div class="card-body">
+                <ngx-charts-gauge [view]="view" [scheme]="colorScheme" [results]="milage">
+                </ngx-charts-gauge>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-default">
+                Engine Speed
+            </div>
+            <div class="card-body">
+                <div class="radial-gauge">
+                    <ngx-charts-gauge [view]="view" [scheme]="colorScheme" [results]="single">
+                    </ngx-charts-gauge>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-default">
+                Accelerator Pedal
+            </div>
+            <div class="card-body">
+                <chart-view [chartOptions]="acceleratorOptions"></chart-view>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-default">
+                Motor controller temp.
+            </div>
+            <div class="card-body">
+                <chart-view [chartOptions]="voltageOptions"></chart-view>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-default">
+                DC Status
+            </div>
+            <div class="card-body">
+                <chart-view [chartOptions]="chartOptions"></chart-view>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-default">
+                Motor Temperature
+            </div>
+            <div class="card-body">
+                <chart-view [chartOptions]="motortemperature"></chart-view>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-default">
+                SOC
+            </div>
+            <div class="card-body">
+                <ngx-charts-bar-vertical [view]="view" [scheme] ="colorScheme" [results]="SOCData" [xAxis]="showXAxis"
+                [yAxis]="showYAxis"  [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel" >
+               </ngx-charts-bar-vertical>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-default">
+                Battery Temperature
+            </div>
+            <div class="card-body">
+                <ngx-charts-bar-vertical [view]="view" [scheme] ="colorScheme" [results]="batterytempData"  [xAxis]="showXAxis"
+                [yAxis]="showYAxis"  [xAxisLabel]="batterytempxLabel"
+                [yAxisLabel]="batterytempyLabel" >
+               </ngx-charts-bar-vertical>
+            </div>
+        </div>
+       
+        
+    </div>   
+
+</section>

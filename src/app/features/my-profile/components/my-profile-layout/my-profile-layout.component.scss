@@ -1,0 +1,113 @@
+@import '/src/styles/colors';
+@import '/src/styles/mixins/breakpoints';
+
+.my-profile-nav-bg {
+    min-height: 600px;
+    background: $color-white;
+
+    @include breakpoint-range($max : lg) {
+        min-height: auto;
+    }
+
+    @include breakpoint-range($max : sm) {
+        padding: 0;
+    }
+}
+
+.my-profile-nav-container {
+    padding: 25px;
+    background-color: $profile-menu-color;
+    height: 100%;
+
+    @include breakpoint-range($max : lg) {
+        padding: 25px 15px;
+    }
+}
+
+.my-profile-avatar-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    h6 {
+        color: $color-white;
+        margin-bottom: 0;
+        margin-left: 12px;
+        font-size: 22px;
+        font-weight: 400;
+    }
+}
+
+.my-profile-nav {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    .nav-item {
+        width: 100%;
+
+        .nav-link {
+            color: $color-white;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        &.active {
+            .nav-link {
+                background: $color-red;
+            }
+        }
+    }
+
+    .nav-action-li {
+        display: none;
+    }
+
+    @include breakpoint-range($max : lg) {
+        .nav-action-li {
+            display: block;
+            width: 100%;
+            color: $color-white;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background: $color-red;
+            display: flex;
+            justify-content: space-between;
+
+            &::after {
+                content: '\e900';
+                font-family: var(--mohawak-icon-font);
+            }
+        }
+
+        &.open {
+            .nav-action-li {
+                &::after {
+                    content: '\e934';
+                }
+            }
+        }
+
+        .nav-item {
+            height: 0;
+            overflow: hidden;
+
+            &.view {
+                height: auto;
+                overflow: visible;
+            }
+        }
+    }
+}
+
+.white-bg {
+    background: $color-white;
+}
+// .container{
+//     margin-top: 180px;
+// }
+

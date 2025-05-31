@@ -1,0 +1,279 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/registration/RC_Details">Registration</a></li>
+        <li><a routerLink="/Registration/Route_Registration"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Route Registration</a></li>
+      </ol>
+    </div>
+  </div>
+<div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-primary" (click)="onAddNewStop()"><i class="fa fa-plus"></i> Add New Stop</button>
+            </div>
+          </div>
+          <form [formGroup]="addRoute">
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Company </label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="department" [type]="'Company'"
+                    [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && department && department.length > 0">
+                  <select-filter [vehicleData]="department" [type]="'Company'" [placeholder]="'Select Company'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !department || department.length == 0">
+                  <select-filter [vehicleData]="department" [type]="'Company'" [placeholder]="'Select Company'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Route Number </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Enter Route Number "
+                    aria-describedby="button-addon2" formControlName="route_no" />
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Route Name </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Enter Route Name"
+                    aria-describedby="button-addon2" formControlName="route_name" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Scheduled Km </label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" formControlName="scheduelKm"
+                    placeholder="Enter Scheduled Km" aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Direction</label>
+                <select class="form-select" aria-label="Default select example" formControlName="direction">
+                  <option value="BOTH">Both</option>
+                  <option value="UP">UP</option>
+                  <option value="DOWN">DOWN</option>
+                </select>
+              </div>
+              <!-- <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Scheduled Time </label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Enter Scheduled Time" formControlName="scheduleTime"
+                    aria-describedby="button-addon2"  />
+                </div>
+              </div> -->
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Stop</label>
+                <div *ngIf="listVehicleStopDetails && listVehicleStopDetails.length > 0">
+                  <select-filter [mulitiselection]="multiselection" [multiSelected]="multiselected"
+                    [closeDropdown]="closeDropdown" [vehicleData]="listVehicleStopDetails" [type]="'Stop'"
+                    [placeholder]="'Select Stop'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!listVehicleStopDetails || listVehicleStopDetails.length == 0">
+                  <select-filter [vehicleData]="listVehicleStopDetails" [type]="'Stop'" [placeholder]="'Select Stop'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row row-data">
+                  <div class="mb-3 card">
+                    <div class="card-header-tab card-header" *ngIf="selectedRouteName">
+                      <div class="card-header-title">
+                        {{selectedRouteName}}
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="map-container">
+                        <agm-map [latitude]="centerLatitude" [longitude]="centerLongitude" [zoom]="zoom"
+                          (mapReady)="onMapReady($event)">
+                        </agm-map>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-12">
+                    <br>
+                    <h3 class="selected-route" *ngIf="selectedRouteData.length > 0">
+                      Arrange your selected routes
+                    </h3>
+                  </div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4">
+                  </div>
+                </div>
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer selected-route">
+                  <div class="dataTables_scroll">
+                    <div class="dataTables_scrollHead"></div>
+                    <div class="dataTables_scrollBody">
+                      <!-- <div class="items1" (drop)="onDrop($event)" [sortablejs]="selectedRouteData"
+                        [sortablejsOptions]="options">
+                        <div *ngFor="let item of selectedRouteData" class="cards">
+                          {{ item.stopName }}
+                        </div>
+                      </div> -->
+                      <div class="items1" (drop)="onDrop($event)" [sortablejs]="selectedRouteData" [sortablejsOptions]="options">
+                        <ng-container *ngIf="selectedRouteData.length <= 30; else showMoreLess">
+                          <div *ngFor="let item of selectedRouteData" class="cards">
+                            {{ item.stopName }}
+                          </div>
+                        </ng-container>
+                        <ng-template #showMoreLess>
+                          <div *ngFor="let item of selectedRouteData.slice(0, showCount)" class="cards">
+                            {{ item.stopName }}
+                          </div>
+                          <a *ngIf="!showMore" style="color: blue;cursor: pointer;padding-top: 30px;" (click)="toggleShowMoreLess()">...Show More</a>
+                          <a *ngIf="showMore" style="color: blue;cursor: pointer;padding-top: 30px;" (click)="toggleShowMoreLess()">...Show Less</a>
+                        </ng-template>
+                      </div>
+                      <div class="text-center"
+                        *ngIf="selectedRouteData && selectedRouteData.length == 0 || selectedRouteData == null && !isloading"
+                        style="width: 100%;">Stop not selected</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row row-data" *ngIf="selectedRouteData && selectedRouteData.length > 0">
+                  <div class="controls mb-3"
+                    *ngIf="isIconOpen && selectedRouteData && selectedRouteData.length > 0 || selectedRouteData == null && !isloading">
+                    <button (click)="play()">
+                      <i class="fas fa-play"></i>
+                    </button>
+                    <button (click)="pause()">
+                      <i class="fas fa-pause"></i>
+                    </button>
+                    <button (click)="resume()">
+                      <i class="fa fa-step-forward" aria-hidden="true"></i>
+                    </button>
+                    <button (click)="reset()">
+                      <i class="fas fa-stop"></i>
+                    </button>
+                    <button (click)="fast()">
+                      <i class="fas fa-fast-forward"></i>
+                    </button>
+                    <span id="speed">Speed: {{ speedMultiplier }}x</span>
+                    <button (click)="slow()">
+                      <i class="fas fa-fast-backward"></i>
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <button class="btn btn-primary" (click)="showStopOnmap()">Show On Map</button>
+                  </div>
+                  <div class="col-md-6">
+                    <button class="btn btn-primary" (click)="initRoute()">Visualize Route</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                <button (click)="submit(addRoute.value)" class="mr-2 mt-4 btn-icon btn-icon-only btn btn-success"
+                  [disabled]="addRoute.invalid || selectedStop"><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{button}}
+                </button>
+              </div>
+              <div class="col-md-3">
+                <button (click)="cancel()" class="mr-2 mt-4 btn-icon btn-icon-only btn btn-danger">
+                  <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-default">
+          Route Details
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="p-2 bd-highlight">
+                  <span>Items per page: </span>
+                  <select (change)="onTableSizeChange($event, 'routepage')" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollHead">
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isRouteLoading ? 'loader': ''">
+                      <loader [isRunning]="isRouteLoading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.value}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isRouteLoading" class="tablerow">
+                        <tr *ngFor="let user of routeList |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count};">
+                          <td id="tableColumn" (click)="getRouteOnMap(user?.routE_ID,user?.routE_NAME, '')">
+                            {{user?.routE_NO}}</td>
+                          <td>{{user?.routE_NAME || 'NA'}}</td>
+                          <td>{{user?.origin || 'NA'}}</td>
+                          <!-- <td>{{user?.destination || 'NA'}}</td> -->
+                          <td>{{user?.scheduled_KM || 'NA'}}</td>
+                          <td> <a tooltip="Edit" rel="noopener noreferrer"
+                              (click)="onEditRoute(user)"><i class="fa fa-pencil"
+                                aria-hidden="true"></i>
+                            </a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center"
+                      *ngIf="routeList && routeList.length == 0 || routeList == null && !isRouteLoading"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+                </div>
+                <div class="pagination-data" *ngIf="routeList && routeList.length > 0">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next"
+                    (pageChange)="onTableDataChange($event, 'routepage')">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

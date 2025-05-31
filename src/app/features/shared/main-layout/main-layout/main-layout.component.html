@@ -1,0 +1,12 @@
+
+
+<div id="wrapper" class="wrapper bg-ash custom-scrollbar">
+    <header></header>
+    <spinner-loader *ngIf="isloading"></spinner-loader>
+    <div *ngIf="!isloading">
+      <router-outlet ></router-outlet>
+      <footer class="footer-data">
+        <span>Copyright © 2023. Website by SSIPL. All rights reserved</span>
+      </footer>
+    </div>
+ </div>

@@ -1,0 +1,471 @@
+<section class="main-content">
+  <div class="row">
+    <div class="row row-data">
+      <div class="col-md-3">
+        <div class="mb-3 card">
+          <div class="card-header-tab card-header">
+            <div class="card-header-title">
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                  [(ngModel)]="isRouteShow" (change)="onChangeValue($event)" value="VehicleWise">
+                <label class="form-check-label" for="exampleRadios2">
+                  Vehicle Wise
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                  [(ngModel)]="isRouteShow" (change)="onChangeValue($event)" value="RouteWise" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                  Route Wise
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="tab-content">
+            <div class="tab-pane fade active show" id="tab-eg-55">
+              <div class="widget-chart p-3">
+                <div class="vehcileList">
+                  <ng-container *ngIf="this.isRouteShow == 'VehicleWise'">
+                    <div class="device-simple-view">
+                      <div class="device_panel vehicle" *ngFor="let item of mapList"
+                        [ngClass]="vehicleId == item?.id ? 'data' : ''" id="{{vehicleId == item?.id ? 'selectedVehicle' : ''}}">
+                        <div style="width: 80%; float: left; display: inline"
+                          (click)="showDiv(item?.asseT_NO, 'Vehicle', '')">
+                          <img src="https://fastrackerz.co.in/assets/img/app/icons/device/car_1_yellow.png"
+                            class="device_image" style="height: 32px" />
+                          <span class="device_name">{{item?.asseT_NO}}</span>
+                          <span class="device_subscript" *ngIf="selectedVehicleId == item?.id">{{selectedTime}}</span>
+                          <br />
+                          <!-- <span class="device_address">{{item?.place}}
+                          </span> -->
+                        </div>
+                        <div style="display: inline; float: right; width: 5%">
+                          <button type="button" data-device_id="10" data-toggle="modal"
+                            data-target="#sensors-info-modal" id="modal-btn-10"
+                            class="cursor-pointer btn btn-xs sensors-info-modal-btn text-muted mt-2">
+                            <i class="fa fa fa-chevron-right"></i>
+                          </button>
+                        </div>
+                        <div style="display: inline; float: right; width: 15%">
+                          <div class="d-flex justify-content-center flex-column">
+                            <div class="d-flex justify-content-center">
+                              <!---->
+                              <img src="https://fastrackerz.co.in/assets/img/app/icons/ignition/off.png"
+                                class="device_icon" />
+                              <img src="https://fastrackerz.co.in/assets/img/app/valid.png"
+                                class="device_con m-l-2 p-0" />
+                            </div>
+                            <span class="device_speed" *ngIf="selectedVehicleId == item?.id">{{speedData}}</span>
+                            <span class="device_speed_subs">Km/H</span>
+                            <!---->
+                          </div>
+                        </div>
+                        <br />
+                        <br />
+                      </div>
+
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="this.isRouteShow == 'RouteWise'">
+                    <div class="device-simple-view">
+                      <div class="device_panel" *ngFor="let item of trackListData"
+                        [ngClass]="routeId == item?.route_id ? 'data' : ''">
+                        <div style="width: 92%; float: left; display: inline"
+                          (click)="showDiv('', 'Route', item?.route_id)">
+                          <img src="assets/images/ITMS ICON-09.png" class="device_image" style="height: 32px" />
+                          <span class="device_name"
+                            style="font-size: 13px !important;">{{camelCase(item?.ts_status)}}</span>
+                          <span class="device_subscript" style="font-size: 13px !important;">Total Bus -
+                            {{item?.total}}</span>
+
+                          <br />
+
+                        </div>
+                        <div style="display: inline; float: right; width: 5%">
+                          <button type="button" data-device_id="10" data-toggle="modal"
+                            data-target="#sensors-info-modal" id="modal-btn-10"
+                            class="cursor-pointer btn btn-xs sensors-info-modal-btn text-muted mt-2">
+                            <i class="fa fa fa-chevron-right"></i>
+                          </button>
+                        </div>
+
+                        <br />
+                        <br />
+                      </div>
+
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="openData == 'Vehicle'">
+        <div class="col-md-3 cancontainer" *ngIf="isDivVisible">
+          <div class="mb-3 card">
+            <div class="tab-content">
+              <div class="tab-pane fade active show" id="tab-eg-55">
+                <div class="widget-chart p-3">
+                  <div class="device-simple-view">
+                    <div class="vehcileList">
+                      <div class="detail">
+                        <h3 class="mb-0 font-weight-bold text-primary" style="
+                            color: rgb(0, 37, 64) !important;
+                            font-size: 1.25rem !important;
+                          ">
+                          {{selectedVehicleData?.asseT_NO}}
+                        </h3>
+                      </div>
+                      <div class="candata">
+                        <button class="btn btn-xs bg-white" style="background: transparent !important"
+                          data-device_id="11">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="section">
+                      <label class="item-label">STATUS</label>
+                      <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="text-center rounded d-flex align-items-center justify-content-center device-state-icon stopped">
+                            <img src="https://fastrackerz.co.in/assets/img/app/icons/device/car_1_yellow.png"
+                              style="height: 40px" />
+                          </div>
+                        </div>
+                        <div>
+                          <h5 class="device-status stopped"
+                            *ngIf="selectedVehicleData?.speed == 0 || selectedVehicleData?.speed == 'No motion'">
+                            <span class="text-warning">Stopped</span>
+                          </h5>
+                          <h5 class="device-status stopped"
+                            *ngIf="selectedVehicleData?.speed !== 0 && selectedVehicleData?.speed !== 'No motion'">
+                            <span class="text-success">Running</span>
+                          </h5>
+                          <p class="device-time">{{selectedVehicleData?.timeg}}</p>
+                        </div>
+                        <div>
+                          <div style="width: 58px; height: 58px">
+                            <div class="d-flex justify-content-center align-items-center">
+                              <img id="sensor_ignition_img2" src="/assets/ignition_off.png" class="device_icon mr-2"
+                                style="height: 14px" />
+                              <img src="https://fastrackerz.co.in/assets/img/app/valid.png" class="device_con"
+                                style="height: 15px" />
+                            </div>
+                            <div class="text-center">
+                              <span class="device_speed">{{speedData}}</span>
+                              <span class="device_speed_subs">Km/H</span>
+                              <strong></strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section" style="display: flex; justify-content: space-between;">
+                      <div>
+                        <label class="item-label">Time Taken In Update</label>
+                        <div>
+                          <p class="description">
+                            {{selectedVehicleData?.timE_TAKEN_IN_UPDATE}}
+                          </p>
+                        </div>
+                      </div>
+                      <!-- <div>
+                        <div>
+                          <a (click)="redirectToTracking('/Tracking/Tracking_Live/id', vehicleId)"
+                            style="color: blue;cursor: pointer;" rel="noopener noreferrer">Trip Status</a>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="section" style="display: flex; justify-content: space-between;">
+                      <div>
+                        <label class="item-label">Route No</label>
+                        <div>
+                          <p class="description">
+                            {{selectedVehicleData?.route}}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <label class="item-label">Direction</label>
+                        <div>
+                          <div class="arrow-container" *ngIf="directionUpValue">
+                            <img class="up-logo" src="assets/images/up-icon.png" alt="">
+                          </div>
+                          <div class="arrow-container" *ngIf="directionDownValue">
+                            <img class="up-logo" style="transform: rotate(180deg);" src="assets/images/up-icon.png"
+                              alt="">
+                          </div>
+  
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section">
+                      <label class="item-label">Starting Point</label>
+                      <div>
+                        <p class="description">
+                          {{startingPoint}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="section">
+                      <label class="item-label">Current Location</label>
+                      <div>
+                        <p class="description">
+                          {{selectedVehicleData?.place}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="section">
+                      <div>
+                        <label class="item-label">Next Stop</label>
+                        <div>
+                          <p class="description">
+                            <!-- {{filterData?.destination}} -->
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section">
+                      <label class="item-label">Destination Point</label>
+                      <div>
+                        <p class="description">
+                          {{endPoint}}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="section" style="display: flex; justify-content: space-between;">
+                      <div>
+                        <label class="item-label">Driver Name</label>
+                        <div>
+                          <p class="description">
+                            {{filterData?.driver?.split(',').slice(0,1)}}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <label class="item-label">Mobile No.</label>
+                        <div>
+                          <p class="description">
+                            {{selectedVehicleData?.driver?.split(',')[1]}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="section" style="display: flex; justify-content: space-between;">
+                      <div>
+                        <label class="item-label">OBU No</label>
+                        <div>
+                          <p class="description">
+                            {{filterData?.obU_DEVICE_ID}}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <label class="item-label">Total Distance</label>
+                        <div>
+                          <p class="description">
+                            {{filterData?.dst?.split('/')[0]}}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <label class="item-label">Covered Distance</label>
+                        <div>
+                          <p class="description">
+                            {{filterData?.dst?.split('/')[1]}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section">
+                      <label class="item-label"> CO-ORDINATES </label>
+                      <div class="d-flex justify-content-between">
+                        <p class="description"><span>{{selectedVehicleData?.lat}}, {{selectedVehicleData?.lon}}</span></p>
+                    
+                      </div>
+                    </div>
+                    <div class="section">
+                      <label class="item-label">SENSORS</label>
+                      <div>
+                        <div class="d-flex flex-wrap align-items-center">
+                          <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                            <span class="sensor_icon" *ngIf="filterData['ign'] == '0'">
+                              <img style="width: 24px; height: 16px"
+                                src="../../../../../assets/images/switch-off-icon.png" />
+                            </span>
+                            <span class="sensor_icon" *ngIf="filterData['ign']=='1'">
+                              <img style="width: 24px; height: 16px"
+                                src="../../../../../assets/images/switch-on-icon.png" />
+                            </span>
+  
+                            <span class="sensor_value">IGN <span class="device_speed_subs"></span>
+                            </span>
+                          </div>
+                          <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center"
+                            *ngIf="filterData?.charging_Status == 'Not Charging'">
+                            <span class="sensor_icon"><img src="assets/ignition_off.png" /></span>
+                            <span class="sensor_value">Off</span>
+                          </div>
+                          <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center"
+                            *ngIf="filterData?.charging_Status == 'Charging'">
+                            <span class="sensor_icon"><img src="assets/images/chargin-status.png" /></span>
+                            <span class="sensor_value">On</span>
+                          </div>
+                          <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                            <span class="sensor_icon"><img
+                                src="https://fastrackerz.co.in/assets/img/app/sensors/odometer.png" /></span>
+                            <span class="sensor_value">{{filterData?.tkm}} <span class="device_speed_subs"></span></span>
+                          </div>
+                          <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                            <span class="sensor_icon"><img src="../../../../assets/images/milage.png" /></span>
+                            <span class="sensor_value">{{filterData?.milage}}</span>
+                          </div>
+                          <div class="sensor d-flex flex-column flex-fill justify-content-center align-items-center">
+                            <span class="sensor_icon"><img src="../../../../assets/images/voltage.png" /></span>
+                            <span class="sensor_value">{{filterData?.voltage}} </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="openData ==  'Route'">
+        <div class="col-md-3 cancontainer" *ngIf="isDivVisible">
+          <div class="mb-3 card">
+            <div class="tab-content">
+              <div class="tab-pane fade active show" id="tab-eg-55">
+                <div class="widget-chart p-3">
+                  <!-- <div class="vehcileList">
+                    <div class="detail">
+                      <h3 class="mb-0 font-weight-bold text-primary" style="
+                          color: rgb(0, 37, 64) !important;
+                          font-size: 1.20rem !important;
+                        ">
+                       Vehicle No
+                      </h3>
+                    </div>
+                  </div> -->
+                  <div class="device-simple-view">
+                    <!-- <accordion [isAnimated]="true">
+                      <accordion-group *ngFor="let item of RouteWiseVehicle" heading="{{item?.asseT_NO}}">
+                          <div style="width: 80%; float: left; display: inline">
+                            <img src="https://fastrackerz.co.in/assets/img/app/icons/device/car_1_yellow.png"
+                              class="device_image" style="height: 32px" />
+                            <span class="device_subscript">{{item?.timeg}}</span>
+                            <br />
+                            <span class="device_subscript">{{item?.driver}}</span>
+                            <br />
+                            <span class="device_address">{{item?.place}}
+                            </span>
+                          </div>
+  
+                          <div style="display: inline; float: right; width: 15%">
+                            <div class="d-flex justify-content-center flex-column">
+                              <div class="d-flex justify-content-center">
+                                <img src="https://fastrackerz.co.in/assets/img/app/icons/ignition/off.png"
+                                  class="device_icon" style="
+                                    height: 13px;
+                                    float: right;
+                                  " />
+                                <img src="https://fastrackerz.co.in/assets/img/app/valid.png"
+                                  class="device_con m-l-2 p-0" />
+                              </div>
+                              <span class="device_speed">{{formatSpeed(item?.speed?.slice(0,2))}}</span>
+                              <span class="device_speed_subs">Km/H</span>
+                            </div>
+                          </div>
+                      </accordion-group>
+                    </accordion> -->
+                    <div class="vehcileList">
+                      <div class="device-simple-view">
+                        <div class="device_panel" *ngFor="let item of RouteWiseVehicle"
+                          [ngClass]="vehicleId == item?.id ? 'data' : ''">
+                          <div style="width: 80%; float: left; display: inline" (click)="vehicleOnRoute(item,'RouteVehicle')">
+                            <img src="https://fastrackerz.co.in/assets/img/app/icons/device/car_1_yellow.png"
+                              class="device_image" style="height: 32px" />
+                            <span class="device_name">{{item?.asseT_NO}}</span>
+                            <span class="device_subscript">{{item?.timeg}}</span>
+                            <br />
+                            <span class="device_address">{{item?.place}}
+                            </span>
+                          </div>
+                          <div style="display: inline; float: right; width: 5%">
+                            <button type="button" data-device_id="10" data-toggle="modal"
+                              data-target="#sensors-info-modal" id="modal-btn-10"
+                              class="cursor-pointer btn btn-xs sensors-info-modal-btn text-muted mt-2">
+                              <i class="fa fa fa-chevron-right"></i>
+                            </button>
+                          </div>
+                          <div style="display: inline; float: right; width: 15%">
+                            <div class="d-flex justify-content-center flex-column">
+                              <div class="d-flex justify-content-center">
+                                <img src="https://fastrackerz.co.in/assets/img/app/icons/ignition/off.png"
+                                  class="device_icon" />
+                                <img src="https://fastrackerz.co.in/assets/img/app/valid.png"
+                                  class="device_con m-l-2 p-0" />
+                              </div>
+                              <span class="device_speed">{{formatSpeed(item?.speed.slice(0,2))}}</span>
+                              <span class="device_speed_subs">Km/H</span>
+                            </div>
+                          </div>
+                          <br />
+                          <br />
+                        </div>
+  
+                      </div>
+  
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div [ngClass]="divClass">
+        <div class="mb-3 card">
+     
+          <div class="card-body">
+            <div id="map" class="map-container" style="width: 100%; height: 400px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <section class="timeline">
+        <ol>
+          <li *ngFor="let item of busStops; let i = index" id="{{  i === currentStopIndex ?'currentStop' : ''}}">
+            <div class="stop-name" [ngClass]="{'bus-green': i === currentStopIndex, 'bus-reached': i < currentStopIndex}">
+              {{item.stopName}}
+              <!-- <p class="next-stop" *ngIf="i === currentStopIndex && i < busStops.length - 1">
+                Next Stop: {{ busStops[currentStopIndex + 1].stopName }}
+                <br>
+                Distance to Next Stop: {{ nextStopDistance.toFixed(2) }}km
+                <br>
+                Estimated Arrival Time: {{ calculateEstimatedArrivalTime(nextStopDistance).toFixed(2)
+                }}min
+      
+              </p> -->
+            </div>
+    
+          </li>      
+        </ol>
+      </section>
+    </div>
+  </div>
+</section>

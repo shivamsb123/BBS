@@ -1,0 +1,158 @@
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/tyre-management/tyre_master">Tyre Management</a></li>
+          <li><a routerLink="/tyre-management/report_tyre_linking_delinking"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Report Tyre Linking Delinking</a></li>
+        </ol>
+      </div>
+    </div>
+
+      <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Tyre Linking List
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" (click)="AddTyreLinking()">
+                            <i class="fa fa-plus"></i>   Add Tyre Linking
+                            </button>
+                        </div>
+                    </div>
+                    <form [formGroup]="tyreLinkingForm">
+                        <div class="row row-data">
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">From Date</label>
+                                <input type="text" class="form-control" #dp="bsDatepicker"
+                                    placeholder="Enter From Date" bsDatepicker [bsValue]="bsValue"
+                                    formControlName="from_date" />
+                            </div>
+                            <div class="col-xs-12 col-12 col-md-3">
+                                <label class="form-label">To Date</label>
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                                    placeholder="Enter To Date" [bsValue]="bsValue" formControlName="to_date" />
+                            </div>   
+                            <div class="col-md-3">
+                                <label class="form-label">Vehicle No</label>
+                                  <div *ngIf="vehicleData && vehicleData.length > 0">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                      (onConfirm)="confirm($event)"></select-filter>
+                                  </div>
+                                  <div *ngIf="!vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                      (onConfirm)="confirm($event)"></select-filter>
+                                  </div>
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Tyre Number</label>
+                                <div *ngIf="selectedTyreValue">
+                                  <select-filter [selectedValue]="selectedTyreValue" [vehicleData]="tyrNumberList" [type]="'tyre'" [placeholder]="'Select Tyre No.'"
+                                  (onConfirm)="confirm($event)"></select-filter>
+                              </div>
+                                <div *ngIf="!selectedTyreValue && tyrNumberList && tyrNumberList?.length > 0 ">
+                                  <select-filter [vehicleData]="tyrNumberList" [type]="'tyre'" [placeholder]="'Select Tyre No.'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedTyreValue && !tyrNumberList || tyrNumberList.length == 0 ">
+                                  <select-filter [type]="'tyre'" [placeholder]="'Select Tyre No.'"></select-filter>
+                                </div>
+                
+                              </div>
+                                                     
+                        </div>
+                        <div class="row row-data">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <br>
+                                <div class="select-type">
+                                    <button class="btn btn-success"
+                                        (click)="getTyreLinking(tyreLinkingForm.value)">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>Search Records
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div class="search-form">
+                                <input placeholder="Search for..." type="text" class="form-control search-input" [(ngModel)]="searchKeyword"><button
+                                    type="button" class="btn-search" ><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" >
+                            <loader [isRunning]="isloading"></loader>
+                          </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                              <tr *ngFor="let tyre of linkingListArr |  searchFilter: searchKeyword |  paginate : {
+                                                itemsPerPage: tableSize,
+                                                currentPage: page,
+                                                totalItems: count};">
+                                                          <td>{{tyre?.depoT_NAME}}</td>
+                                                          <td>{{tyre?.vehiclE_NO}}</td>
+                                                          <td>{{tyre?.tyrE_NO}}</td>
+                                                          <td>{{tyre?.tyrE_MAKE}}</td>
+                                                          <td>{{tyre?.kM_INSTALLATION}}</td>
+                                                          <td>{{tyre?.tyrE_INSTALLATION_DATE}}</td>
+                                                          <td>{{tyre?.nsD_LOCATION}}</td>
+                                                          <td>{{tyre?.tyrE_NSD_O}}</td>
+                                                          <td>{{tyre?.tyrE_NSD_M}}</td>
+                                                          <td>{{tyre?.tyrE_NSD_I}}</td>
+                                                          <td>{{tyre?.statuS_REMARK}}</td>
+                                                          <td>{{tyre?.damagE_TYPE}}</td>
+                                                          <td>{{tyre?.routE_NO}}</td>
+                                                          <td>{{tyre?.placE_OF_PUNCTURE}}</td>
+                                                          <td><a tooltip="Edit" rel="noopener noreferrer"  (click)="updateTyreLinking('/Maintenance/Add_Tyre_Linking_delinking/id',tyre)"><i class="fa fa-pencil"
+                                                            aria-hidden="true"></i>
+                                                        </a></td>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center" style="width: 100%;" *ngIf="linkingListArr && linkingListArr.length == 0 || linkingListArr == null && !isloading || !(linkingListArr | searchFilter:searchKeyword)?.length">No Data
+                                            Available</div>
+                                    </div>
+                                    <div class="pagination-data" *ngIf="linkingListArr && linkingListArr.length > 0 && (linkingListArr | searchFilter:searchKeyword)?.length">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  </section>
+  
+

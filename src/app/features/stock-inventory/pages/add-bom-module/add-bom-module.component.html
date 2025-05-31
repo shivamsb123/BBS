@@ -1,0 +1,132 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/Bom_module"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Bom Report </a></li>
+                <li><a routerLink="/SupplyChain/add_bom_module"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add Product </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6 col-xl-3">
+                            <label for="exampleInputEmail1" class="form-label">Select Company</label>
+                            <div *ngIf="selectedValue">
+                                <select-filter [selectedValue]="selectedValue" [vehicleData]="company"
+                                    [type]="'company'" [placeholder]="'Select Company'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && company && company.length > 0">
+                                <select-filter [vehicleData]="company" [type]="'company'"
+                                    [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && !company || company.length == 0">
+                                <select-filter [type]="'company'" [placeholder]="'Select Company'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                            <div *ngIf="selectedVehicleValue">
+                                <select-filter [selectedValue]="selectedVehicleValue" [vehicleData]="vehicleData"
+                                    [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedVehicleValue && vehicleData && vehicleData.length > 0">
+                                <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                    [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedVehicleValue && !vehicleData || vehicleData.length == 0">
+                                <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Product</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Product"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Product Seriol No.</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Product Seriol No."
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row row-data">
+
+                        <div class="col-md-3">
+                            <label class="form-label">Select Unit</label>
+
+                            <div *ngIf="selectedbaseValue">
+                                <select-filter [selectedValue]="selectedbaseValue" [vehicleData]="unitData"
+                                    [type]="'unit'" [placeholder]="'Select Unit'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedbaseValue && unitData && unitData.length > 0">
+                                <select-filter [vehicleData]="unitData" [type]="'unit'" [placeholder]="'Select Unit'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedbaseValue && !unitData || unitData.length == 0">
+                                <select-filter [type]="'unit'" [placeholder]="'Select Unit'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Quantity Per Unit</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Quantity Per Unit"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Minimum Stock</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Minimum Stock"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Product Category</label>
+                            <div>
+                                <select-filter [type]="'Product'" [placeholder]="'Select Product Category'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-data">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 col-lg-3">
+                            <button class="btn btn-success">
+                                <i class="fa fa-plus"></i>Add Product
+                            </button>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <button (click)="cancel()" class=" btn btn-danger"><i class="fa fa-times"
+                                    aria-hidden="true"></i>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

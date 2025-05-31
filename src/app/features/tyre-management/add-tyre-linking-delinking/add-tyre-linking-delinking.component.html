@@ -1,0 +1,482 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Maintenance/TyreMaster">Tyre Management</a></li>
+        <li><a routerLink="/Maintenance/Add_Tyre_Linking"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Tyre Linking Delinking</a></li>
+        <li><a routerLink="/Maintenance/Add_Tyre_Linking_delinking"> <i class="fa fa-long-arrow-right"
+              aria-hidden="true"></i>
+            Add Tyre linking</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row" *ngIf="!tyreId">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="AddTyreForm">
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                <div *ngIf="selectedVehicleValue">
+                  <select-filter [selectedValue]="selectedVehicleValue" [vehicleData]="vehicleData" [type]="'Vehicle'"
+                    [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedVehicleValue && vehicleData && vehicleData?.length > 0">
+                  <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedVehicleValue && !vehicleData || vehicleData?.length == 0">
+                  <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Tyre Number</label>
+                <div *ngIf="selectedTyreValue">
+                  <select-filter [selectedValue]="selectedTyreValue" [vehicleData]="tyrNumberList" [type]="'tyre'"
+                    [placeholder]="'Select Tyre No.'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedTyreValue && tyrNumberList && tyrNumberList?.length > 0 ">
+                  <select-filter [vehicleData]="tyrNumberList" [type]="'tyre'" [placeholder]="'Select Tyre No.'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedTyreValue && !tyrNumberList || tyrNumberList?.length == 0 ">
+                  <select-filter [type]="'tyre'" [placeholder]="'Select Tyre No.'"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">KM</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Enter KM" formControlName="km" />
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Fitted Date</label>
+                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker formControlName="fitted_date">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Location</label>
+                <select class="form-select" aria-label="Default select example" formControlName="location">
+                  <option selected>Select Location</option>
+                  <option *ngFor="let data of locationData">{{data.baT_NAME}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" aria-label="Default select example" formControlName="status">
+                  <option selected disabled>Select Status</option>
+                  <option value="Linkig">Linkig</option>
+                  <option value="De-Linking">De-Linking</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(O)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(O)" formControlName="tyre_nsd_O" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(M)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(M)" formControlName="tyre_nsd_m" />
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(I)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(I)" formControlName="tyre_nsd_i" />
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(MM)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(MM)" formControlName="tyre_nsd_mm" />
+                </div>
+
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Status</label>
+                <select class="form-select" aria-label="Default select example" formControlName="tyre_status">
+                  <option selected>Select Tyre Status</option>
+                  <option value="Retread Tyre">Retread Tyre</option>
+                  <option value="Original Tyre">Original Tyre</option>
+                  <option value="Duplicate Tyre">Duplicate Tyre</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <br>
+                    <button class="btn btn-success" [disabled]="!AddTyreForm.valid" (click)="submit(AddTyreForm.value)">
+                      <i class="fa fa-plus" aria-hidden="true"></i> Save
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <br>
+                    <button class="btn btn-danger" (click)="cancel()">
+                      <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row" *ngIf="tyreId">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="AddTyreLinkingForm">
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                <div *ngIf="selectedVehicleValue">
+                  <select-filter [selectedValue]="selectedVehicleValue" [vehicleData]="vehicleData" [type]="'Vehicle'"
+                    [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedVehicleValue && vehicleData && vehicleData?.length > 0">
+                  <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedVehicleValue && !vehicleData || vehicleData?.length == 0">
+                  <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Tyre Number</label>
+                <div *ngIf="selectedTyreValue">
+                  <select-filter [selectedValue]="selectedTyreValue" [vehicleData]="tyrNumberList" [type]="'tyre'"
+                    [placeholder]="'Select Tyre No.'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedTyreValue && tyrNumberList && tyrNumberList?.length > 0 ">
+                  <select-filter [vehicleData]="tyrNumberList" [type]="'tyre'" [placeholder]="'Select Tyre No.'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedTyreValue && !tyrNumberList || tyrNumberList?.length == 0 ">
+                  <select-filter [type]="'tyre'" [placeholder]="'Select Tyre No.'"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">KM</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Enter KM" formControlName="km" />
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Fitted Date</label>
+                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker formControlName="fitted_date">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Location</label>
+                <select class="form-select" aria-label="Default select example" formControlName="location">
+                  <option selected>Select Location</option>
+                  <option *ngFor="let data of locationData">{{data.baT_NAME}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" aria-label="Default select example" formControlName="status">
+                  <option selected disabled>Select Status</option>
+                  <option value="Linkig">Linkig</option>
+                  <option value="De-Linking">De-Linking</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Fitted Tyre No.</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Enter Fitted Tyre No" formControlName="fitted_tyre_no" />
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Removal Date</label>
+                <input type="text" class="form-control" placeholder="MM/dd/yyyy" #dp="bsDatepicker" bsDatepicker formControlName="tyre_removal_date">
+              </div>
+
+              <!-- <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(O)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(O)" formControlName="tyre_nsd_O" />
+                </div>
+              </div> -->
+              <!-- <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(M)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(M)" formControlName="tyre_nsd_m" />
+                </div>
+              </div> -->
+
+            </div>
+
+            <div class="row">
+
+              <!-- <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(I)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(I)" formControlName="tyre_nsd_i" />
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Nsd(MM)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Tyre Nsd(MM)" formControlName="tyre_nsd_mm" />
+                </div>
+
+              </div> -->
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Removal KM</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Tyre Removal KM" formControlName="tyre_removal_km" />
+                </div>
+
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Reason For Removed</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Reason For Removed" formControlName="Reason_for_removed" />
+                </div>
+
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Driver Id</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Driver Id" formControlName="driver_id" />
+                </div>
+
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Status</label>
+                <select class="form-select" aria-label="Default select example" formControlName="tyre_status">
+                  <option selected>Select Tyre Status</option>
+                  <option value="Retread Tyre">Retread Tyre</option>
+                  <option value="Original Tyre">Original Tyre</option>
+                  <option value="Duplicate Tyre">Duplicate Tyre</option>
+                </select>
+              </div>
+              <!-- <div class="col-md-6 col-lg-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <br>
+                    <button class="btn btn-success" [disabled]="!AddTyreForm.valid" (click)="submit(AddTyreForm.value)">
+                      <i class="fa fa-plus" aria-hidden="true"></i> Save
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <br>
+                    <button class="btn btn-danger" (click)="cancel()">
+                      <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                    </button>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                  <br>
+                  <label class="form-label">Tyre NSD Removed (O.M.I.MM)</label>
+              </div>
+              <div class="col-md-2">
+                  <label class="form-label"> Nsd(O)</label>
+                  <div class="input-group mb-3">
+                    <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="tyre_nsd_removed_O" />
+                  </div>
+              </div>
+              <div class="col-md-2">
+                  <label class="form-label">Nsd(M)</label>
+                  <div class="input-group mb-3">
+                    <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="tyre_nsd_removed_M" />
+                  </div>
+              </div>
+              <div class="col-md-2">
+                  <label class="form-label">Nsd(I)</label>
+                  <div class="input-group mb-3">
+                    <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="tyre_nsd_removed_I" />
+                  </div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Nsd(MM)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(MM)" formControlName="tyre_nsd_removed_MM" />
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+                <br>
+                <label class="form-label">Tyre NSD</label>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label"> Nsd(O)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="tyre_nsd_O" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Nsd(M)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="tyre_nsd_M" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Nsd(I)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="tyre_nsd_I" />
+                </div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Nsd(MM)</label>
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="tyre_nsd_MM" />
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+              <br>
+              <label class="form-label">Tyre NSD Fitted (O.M.I.MM)</label>
+          </div>
+          <div class="col-md-2">
+              <label class="form-label"> Nsd(O)</label>
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="tyre_nsd_fitted_O" />
+              </div>
+          </div>
+          <div class="col-md-2">
+              <label class="form-label">Nsd(M)</label>
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="tyre_nsd_fitted_M" />
+              </div>
+          </div>
+          <div class="col-md-2">
+              <label class="form-label">Nsd(I)</label>
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="tyre_nsd_fitted_I" />
+              </div>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Nsd(MM)</label>
+            <div class="input-group mb-3">
+              <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="tyre_nsd_fitted_MM" />
+            </div>
+        </div>
+      </div>  
+
+      <div class="row">
+        <div class="col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Route</label>
+          <div *ngIf="selectedRouteValue">
+            <select-filter [selectedValue]="selectedRouteValue" [vehicleData]="routeList" [type]="'route'" [placeholder]="'Select Route'"
+            (onConfirm)="confirm($event)"></select-filter>
+        </div>
+          <div *ngIf="!selectedRouteValue && routeList && routeList.length > 0">
+            <select-filter [vehicleData]="routeList" [type]="'route'" [placeholder]="'Select Route'"
+              (onConfirm)="confirm($event)"></select-filter>
+          </div>
+          <div *ngIf="!selectedRouteValue && !routeList || routeList.length == 0">
+            <select-filter [type]="'route'" [placeholder]="'Select Route'"
+              (onConfirm)="confirm($event)"></select-filter>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="exampleInputEmail1" class="form-label">Damage Tyre</label>
+          <div *ngIf="selectedDamageTyreValue">
+            <select-filter [selectedValue]="selectedDamageTyreValue" [vehicleData]="damageTyreList" [type]="'Damage_tyre'" [placeholder]="'Select Damage Tyre'"
+            (onConfirm)="confirm($event)"></select-filter>
+        </div>
+          <div *ngIf="!selectedDamageTyreValue && damageTyreList && damageTyreList.length > 0">
+            <select-filter [vehicleData]="damageTyreList" [type]="'Damage_tyre'" [placeholder]="'Select Damage Tyre'"
+              (onConfirm)="confirm($event)"></select-filter>
+          </div>
+          <div *ngIf="!selectedDamageTyreValue && !damageTyreList || damageTyreList.length == 0">
+            <select-filter [type]="'Damage_tyre'" [placeholder]="'Select Damage Tyre'"
+              (onConfirm)="confirm($event)"></select-filter>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Puncture Of Location</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter Puncture Of Location" formControlName="puncture_location" />
+          </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <label class="form-label">Tyre Status</label>
+        <select class="form-select" aria-label="Default select example" formControlName="tyre_status_no">
+          <option selected>Select Tyre Status</option>
+          <option value="Retread Tyre">Retread Tyre</option>
+          <option value="Original Tyre">Original Tyre</option>
+          <option value="Duplicate Tyre">Duplicate Tyre</option>
+        </select>
+      </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          <br>
+          <button class="btn btn-success" [disabled]="!AddTyreLinkingForm.valid" (click)="submit(AddTyreForm.value)">
+            <i class="fa fa-plus" aria-hidden="true"></i> Update
+          </button>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <button class="btn btn-danger" (click)="cancel()">
+            <i class="fa fa-times" aria-hidden="true"></i>Cancel
+          </button>
+        </div>
+      </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

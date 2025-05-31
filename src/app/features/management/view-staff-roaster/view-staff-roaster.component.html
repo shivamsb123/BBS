@@ -1,0 +1,155 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/management/add_roster"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            View Staff roster</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <!-- <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert> -->
+      <div class="card">
+        <div class="card-header-tab card-header">
+          <div class="card-header-title">
+            <i class="" aria-hidden="true"></i>
+            View Staff roster
+          </div>
+        </div>
+        <div class="card-body">
+          <div [formGroup]="viewRoaster">
+            <div class="row row-data">
+              <div class="col-md-3">
+                <label class="form-label">Company Name</label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="department" [type]="'company_name'" [placeholder]="'Select Department'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+                <div *ngIf="!selectedValue && department && department.length > 0">
+                  <select-filter [vehicleData]="department" [type]="'company_name'" [placeholder]="'Select Department'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !department || department.length == 0">
+                  <select-filter  [type]="'company_name'" [placeholder]="'Select Department'"
+                  (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <label class="form-label">From Date</label>
+                <input type="text" placeholder="Select Date" class="form-control" #dp="bsDatepicker" bsDatepicker
+                  [bsValue]="bsValue" formControlName="fromdate">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">To Date</label>
+                <input type="text" placeholder="Select Date" class="form-control" #dp="bsDatepicker" bsDatepicker
+                  [bsValue]="bsValue" formControlName="todate" />
+              </div>
+
+              <div class="col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Shift Type</label>
+                <select class="form-select" aria-label="Default select example" formControlName="shift">
+                  <option value="M">Morning</option>
+                  <option value="R">Regular</option>
+                  <option value="A">Evening</option>
+                  <option value="N">Night</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="row row-data">
+              <div class="col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Weekday</label>
+                <select class="form-select" aria-label="Default select example" formControlName="Weekday">
+                  <option value="WK">Weekday</option>
+                  <!-- <option value="WKND">Weekend</option> -->
+                </select>
+              </div>
+
+              <div class="col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Select driver</label>
+                <div *ngIf="driverList && driverList.length > 0">
+                  <select-filter [vehicleData]="driverList" [type]="'driver_list'" [placeholder]="'Select driver'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <br>
+                <button class="btn btn-primary" [disabled]="!viewRoaster.value.company || !viewRoaster.value.shift || !viewRoaster.value.Weekday || !viewRoaster.value.fromdate || !viewRoaster.value.todate" (click)="getViewStaffRoaster(viewRoaster.value)"><i class="fa fa-eye"
+                    aria-hidden="true"></i>
+                  View Roaster
+                </button>
+              </div>
+              <div class="col-md-3">
+                <br>
+                <button (click)="cancel()" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>
+                  Cancel
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [ngValue]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dataTables_scroll">
+                    <div class="dataTables_scrollHead">
+                    </div>
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                        role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+
+                        <thead>
+                          <tr role="row">
+                            <th *ngFor="let vehicleHeading of tableData">
+                              <strong>{{vehicleHeading?.val}}</strong>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="!isloading">
+                          <tr *ngFor="let user of viewList |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count};">
+
+                            <td>{{user?.from_Date}}</td>
+                            <td>{{user?.daysOfWeek}}</td>
+                            <td>{{user?.shift_Type}}</td>
+                            <td>{{user?.driver_Name}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="text-center"
+                        *ngIf="viewList && viewList.length == 0  || viewList == null && !isloading"
+                        style="width: 100%;">No Data Available</div>
+                    </div>
+
+                  </div>
+                  <div class="pagination-data" *ngIf="viewList && viewList.length > 0">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,183 @@
+<div class="">
+    <div class="modal-body">
+        <div class="drawer-data">
+            <div class="header">
+                <div class="charger-name">
+                    <h1>{{singleDevice?.zone}}</h1>
+                </div>
+                <!-- <div class="close-button">
+                    <i class="fa fa-close" ></i>
+                </div> -->
+            </div>
+            <div class="last-time">
+                <span style="margin-right: 20px;">Device ID : <span
+                        style="font-size: 20px; font-weight: 500;">{{singleDevice?.device_id}}</span></span>
+                <span>Last Online : <span style="font-size: 20px; font-weight: 500;">{{singleDevice?.timestamp | date:
+                        "dd.MM.yyyy HH:MM"}}</span> </span>
+            </div>
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-header card-default">
+                    Devcie Details
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-6">
+                            <span>
+                                Host Details
+                            </span>
+                            <p class="details"></p>
+                            <span>
+                                Org
+                            </span>
+                            
+                            <p class="details">{{camelCase(singleDevice?.org)}}</p>
+                            <span>
+                                Zone
+                            </span>
+                            <p class="details">{{singleDevice?.zone}}</p>
+                            <span>
+                                Protocol
+                            </span>
+                            <p class="details">{{singleDevice?.protocol}}</p>
+                            <span>
+                                Address
+                            </span>
+                            <p class="details">{{singleDevice?.geo_state}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span>
+                                Firmware Version
+                            </span>
+                            <p class="details">{{singleDevice?.firmware_version}}</p>
+                            <span>
+                                Maker
+                            </span>
+                            <p class="details">{{singleDevice?.vendor}}</p>
+                            <span>
+                                Segment
+                            </span>
+                            <p class="details"></p>
+                            <span>
+                                Sub Segment
+                            </span>
+                            <p class="details"></p>
+                            <span>
+                                Total Utilization
+                            </span>
+                            <p class="details"></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-default">
+                            Charging Session
+                        </div>
+                        <div class="card-body">
+                            <div  [formGroup]="transactionForm">    
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">From Date</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="fromDate"
+                                            placeholder="Select Date" bsDatepicker />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">From Date</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="toDate"
+                                            placeholder="Select Date" bsDatepicker />                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <br>
+                                        <button type="button" class="btn btn-success" (click)="submit(transactionForm.value)">Show Record</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-data">
+                                <div class="col-md-12">
+                                    <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                        <div class="dataTables_scroll">
+                                            <div class="p-2 bd-highlight">
+                                                <span>Items per page: </span>
+                                                <select (change)="onTableSizeChange($event)" class="custom-select">
+                                                    <option *ngFor="let size of tableSizes" [value]="size">
+                                                        {{ size }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="dataTables_scrollBody">
+                                                <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                <loader [isRunning]="isloading"></loader>
+                              </div>
+                                                <table id="datatable"
+                                                    class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                                    role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                                    width="100%">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th *ngFor="let vehicleHeading of tableData1">
+                                                                <strong>{{vehicleHeading?.val}}</strong>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+    
+                                                    <tbody *ngIf="!isloading">
+                                                        <tr *ngFor="let chargerData of transactionDetails | searchFilter: searchKeyword |  paginate : {
+                                              itemsPerPage: tableSize,
+                                              currentPage: page,
+                                              totalItems: count};">
+                                                            <td>{{chargerData?.device_id}}</td>
+                                                            <td>
+                                                                {{chargerData?.txn_id}}
+                                                            </td>
+                                                            <td>
+                                                                {{chargerData?.connector_id}}
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td>
+                                                                {{chargerData?.vehicle_no}}
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td>
+                                                                {{chargerData?.soc}}
+                                                            </td>
+                                                            <td>
+                                                                {{chargerData?.total_usage}}
+                                                            </td>
+                                                            <td>
+                                                                {{chargerData?.voltage}}
+                                                            </td>
+                                                            <td>
+                                                              
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="text-center"   *ngIf="transactionDetails && transactionDetails.length == 0 || transactionDetails == null && !isloading"
+                                              style="width: 100%;">No Data Available</div>
+                                            <div class="pagination-data" *ngIf="transactionDetails && transactionDetails?.length > 0">
+                                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                    (pageChange)="onTableDataChange($event)">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

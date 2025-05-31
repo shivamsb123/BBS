@@ -1,0 +1,153 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/management/change_password">Management</a></li>
+        <li><a routerLink="/management/on_off_road"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            On-Off Road Vehicle</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row row-data">
+    <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+    </app-alert>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header card-default">
+          Mark a vehicle On Road
+        </div>
+        <div class="card-body">
+          <form [formGroup]="markOnRoadForm">
+            <div class="row mb-2" *ngIf="type == 'OnRoad'">
+              <ul>
+                <li><span><b>Status:</b> </span> {{onOffRoadVehicleData?.status}}</li>
+                  <li> <span><b> Last update:</b></span> {{onOffRoadVehicleData?.offRoad_ServerTime | date : 'dd/MM/yyyy hh:mm:ss' }}</li>
+                    <li> <span><b>Odometer:</b> </span> {{onOffRoadVehicleData?.offRoad_Odometer }}</li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xl-12">
+                <label>Off Road Vehicle(s)</label>
+                <div *ngIf="vehicleList?.notAssignedVehicleList && vehicleList?.notAssignedVehicleList.length > 0">
+                  <select-filter [vehicleData]="vehicleList?.notAssignedVehicleList" [type]="'OffVehicle'" [placeholder]="'Select Off Road Vehilce'" (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!vehicleList?.notAssignedVehicleList || vehicleList?.notAssignedVehicleList.length == 0">
+                <select-filter [type]="'OffVehicle'" [placeholder]="'Select Off Road Vehilce'" (onConfirm)="confirm($event)"></select-filter>
+            </div>
+              </div>
+            </div>
+  
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-12">
+                <label>On Road Odometer</label>
+                <input type="Text" class="form-control" formControlName="onRoadOdd" placeholder="Enter Value" aria-label="First name" />
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-12">
+                <label>On Road Remark</label>
+                <input type="Text" class="form-control" formControlName="onRoadRemark"  placeholder="Enter Value" aria-label="First name" />
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-12">
+                <label>On Road Date Time</label>
+                <div class="input-group mb-4">
+                  <input type="text"
+                  placeholder="Datepicker"
+                  formControlName="onRoadDateTime" 
+                  class="form-control"
+                  [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                  bsDatepicker>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12">
+              <button type="submit" class="btn btn-primary" [disabled]="!markOnRoadForm.valid" (click)="markOnRoad(markOnRoadForm.value)">
+                Mark On Road
+              </button>
+            </div>
+          </form>
+          
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert> -->
+      <div class="card">
+        <div class="card-header card-default">
+          Mark a vehicle Off Road
+        </div>
+        <div class="card-body">
+          <form [formGroup]="markOffRoadForm">
+            <div class="row mb-2" *ngIf="type == 'OFFRoad'">
+              <ul>
+                <li><span><b>Status:</b> </span> {{onOffRoadVehicleData?.status}}</li>
+                  <li> <span><b> Last update:</b></span> {{onOffRoadVehicleData?.offRoad_ServerTime | date : 'dd/MM/yyyy hh:mm:ss' }}</li>
+                    <li> <span><b>Odometer:</b> </span> {{onOffRoadVehicleData?.offRoad_Odometer }}</li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xl-12">
+                <label>On Road Vehicle(s)</label>
+                <div *ngIf="vehicleList?.assignedVehicleList && vehicleList?.assignedVehicleList.length > 0">
+                  <select-filter [vehicleData]="vehicleList?.assignedVehicleList" [type]="'OnVehicle'" [placeholder]="'Select On Road Vehilce'" (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!vehicleList?.assignedVehicleList || vehicleList?.assignedVehicleList.length == 0">
+                <select-filter [type]="'OnVehicle'" [placeholder]="'Select On Road Vehilce'" (onConfirm)="confirm($event)"></select-filter>
+            </div>
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-12">
+                <label>Off Road Reason</label>
+                <select class="form-select" aria-label="Default select example" formControlName="offRoadReason">
+                  <option value="1">SOC Short</option>
+                  <option value="2">Bus Pressure</option>
+                  <option value="3">ITS Defect</option>
+                  <option value="3">Tire Puncher</option>
+                  <option value="3">Door Defect</option>
+                  <option value="3">Accident</option>
+                  <option value="3">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-12">
+                <label>Off Road Odometer</label>
+                <input type="Text" class="form-control" formControlName="offRoadOdd" placeholder="Enter Value" aria-label="First name" />
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-12">
+                <label>Off Road Remark</label>
+                <input type="Text" class="form-control" formControlName="offRoadRemark" placeholder="Enter Value" aria-label="First name" />
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-12">
+                <label>Off Road Date Time</label>
+                <div class="input-group mb-3">
+                  <input type="text"
+                  placeholder="Datepicker"
+                  formControlName="offRoadDateTime"
+                  class="form-control"
+                  [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                  bsDatepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12">
+              <button type="submit" class="btn btn-primary" [disabled]="!markOffRoadForm.valid" (click)="MarkOffRoad(markOffRoadForm.value)">
+                Mark Off Road
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

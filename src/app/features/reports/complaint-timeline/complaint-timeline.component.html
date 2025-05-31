@@ -1,0 +1,161 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Reports/loaction_report">Reports</a></li>
+                <li><a routerLink="/Reports/Show_Complaints"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    Complaint Report</a></li>
+                <li><a routerLink="/Reports/Show_Complaints"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Complaint Timeline</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Initial Information
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollHead">
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let complain of complaintTimeline">
+                                                    <td>{{complain?.complaints}}</td>
+                                                    <td>{{complain?.status}}</td>
+                                                    <td>{{complain?.category}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- <div class="text-center" *ngIf="complaintData && complaintData.length == 0 || complaintData == null && !vehiclelistData['isloading']"
+                                      style="width: 100%;">No Data Available</div> -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Add Complain Timeline
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="addComplaintTimlineForm">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">Document 1</label>
+                                <div class="input-group mb-3">
+                                    <input class="form-control" type="file" id="formFile" formControlName="document1"
+                                        (change)="changeDocument($event, 1)">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">Document 2</label>
+                                <div class="input-group mb-3">
+                                    <input class="form-control" type="file" id="formFile" formControlName="document2"
+                                        (change)="changeDocument($event, 2)">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">Document 3</label>
+                                <div class="input-group mb-3">
+                                    <input class="form-control" type="file" id="formFile" formControlName="document3"
+                                        (change)="changeDocument($event, 3)">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">Disposition</label>
+                                <div class="input-group mb-3">
+                                    <select class="form-select" aria-label="Default select example" formControlName="dispositionValue">
+                                        <option *ngFor="let dispositon of dispostionData" value="{{dispositon?.id}}">{{dispositon?.value}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">Part No</label>
+                                <div class="input-group mb-3">
+                                    <input type="search" id="myInput update-rc" placeholder="Enter Part No" formControlName="partNo"
+                                        aria-describedby="button-addon2" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label">Quantity</label>
+                                <div class="input-group mb-3">
+                                    <input type="search" id="myInput update-rc" placeholder="Enter Quantity" formControlName="quantity"
+                                        aria-describedby="button-addon2" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary mt-20" type="submit" (click)="submit(addComplaintTimlineForm.value)">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Complain Timeline Thread
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="content">
+                                <ul class="timeline">
+                                    <li class="event" *ngFor="let thread of complainThread"
+                                        [attr.data-date]="thread?.entry_Date">
+                                        <div class="status-key">
+                                            <h3>{{thread?.fName}}</h3>
+                                            <p>{{thread?.complaint_Body}}</p>
+                                        </div>
+                                        <div class="status-value">
+                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{thread?.comment_Time}}
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

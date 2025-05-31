@@ -1,0 +1,284 @@
+<section class="main-content" id="content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a>Registration</a>
+          </li>
+          <li>
+            <a routerLink="/Registration/Add_Device">
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              Device Master</a>
+          </li>
+          <li>
+            <a routerLink="/Registration/Create_Device">
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Add
+              Device</a>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <form [formGroup]="addDevice">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+        </app-alert>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">Device details</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="form-label">IMEI Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" class="form-control" placeholder="IMEI Number"
+                        formControlName="imei" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Device Id</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" class="form-control" placeholder="Device Id"
+                        formControlName="deviceId" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Vendor</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" class="form-control" placeholder="Vendor"
+                        aria-describedby="button-addon2" formControlName="deviceVendor" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Model</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" class="form-control" placeholder="Model"
+                        aria-describedby="button-addon2" formControlName="deviceModel" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">Asset details</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="form-label">Assets Number</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" formControlName="assetsNo" class="form-control"
+                        placeholder="Assets Number" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Asset Type</label>
+                    <div *ngIf="selectedValue">
+                      <select-filter [selectedValue]="selectedValue" [vehicleData]="subVehicleTypeList"
+                        [type]="'Asset_Type'" [placeholder]="'Select Asset Type'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedValue && subVehicleTypeList && subVehicleTypeList?.length > 0 ">
+                      <select-filter  [vehicleData]="subVehicleTypeList"
+                        [type]="'Asset_Type'" [placeholder]="'Select Asset Type'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedValue && !subVehicleTypeList || subVehicleTypeList?.length == 0">
+                      <select-filter [type]="'Asset_Type'" [placeholder]="'Select Asset Type'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Vendor</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" formControlName="assetsVendor" class="form-control"
+                        placeholder="Vendor" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Model</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" formControlName="assetsModel" class="form-control"
+                        placeholder="Model" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">Communication settings</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="form-label">IP Address/URL </label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" formControlName="ipAdd" class="form-control"
+                        placeholder="IP Address/URL " aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Port No </label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" formControlName="portno" class="form-control"
+                        placeholder="Port No " aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Polling Interval </label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" formControlName="poll_interval" class="form-control"
+                        placeholder="Polling Interval " aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Communication Password </label>
+                    <div class="input-group mb-3">
+                      <input type="password" id="myInput update-rc" formControlName="com_pwd" class="form-control"
+                        placeholder="Communication Password" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">Sim details</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="form-label">Mobile Number </label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" formControlName="phn" class="form-control"
+                        placeholder="Mobile Number " aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Sim Vendor </label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" formControlName="simVendor" class="form-control"
+                        placeholder="Sim Vendor " aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Sim Number </label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" formControlName="simNumber" class="form-control"
+                        placeholder="Sim Number " aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">APN </label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" formControlName="apn" class="form-control" placeholder="APN"
+                        aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">GMT Corrections</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="form-label">Hour</label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" formControlName="hour" class="form-control"
+                        placeholder="Hour" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Minute </label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" formControlName="minute" class="form-control"
+                        placeholder="Minute " aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Speed Correction </label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" class="form-control" placeholder="Speed Correction "
+                        formControlName="speed_corr" aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">Device Status</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" aria-label="Default select example" formControlName="status">
+                      <option value="">Select Status</option>
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Sim No2</label>
+                    <div class="input-group mb-3">
+                      <input type="text" id="myInput update-rc" class="form-control" placeholder="Sim No2"
+                        aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">IMSI No</label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" class="form-control" placeholder="IMSI No"
+                        aria-describedby="button-addon2" />
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-3">
+                    <label class="form-label">Device Type</label>
+                    <div class="input-group mb-3">
+                      <input type="number" id="myInput update-rc" class="form-control" placeholder="Device Type"
+                        aria-describedby="button-addon2" />
+                    </div>
+                  </div> -->
+                </div>
+                <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3">
+                    <button class="mr-2 btn-icon btn-icon-only btn btn-success" [disabled]="!addDevice.valid" (click)="submit(addDevice.value)"><i
+                        class="fa fa-plus" aria-hidden="true"></i>
+                      {{button}}
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button (click)="cancel()" class="mr-2 btn-icon btn-icon-only btn btn-danger">
+                      <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+</section>

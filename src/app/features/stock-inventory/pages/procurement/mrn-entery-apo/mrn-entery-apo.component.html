@@ -1,0 +1,133 @@
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+          <li><a routerLink="/SupplyChain/MRNentryAPO"> <i class="fa fa-long-arrow-right"
+                aria-hidden="true"></i>
+                MRN Entery(APO) </a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">
+            Stock Entry List(via APO) 
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary" (click)="AddSubCategory('/SupplyChain/add-MRNentryAPO')"  >
+                  <i class="fa fa-plus"></i>
+                  Add Stock Entry 
+              </button>
+              </div>
+            </div>
+            <div class="row row-data">
+              <div class="col-md-12">
+                <div class="search-form">
+                  <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                    class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                      aria-hidden="true"></i></button>
+                </div>
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                  <div class="dataTables_scroll">
+                    <div class="p-2 bd-highlight">
+                      <span>Items per page: </span>
+                      <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [value]="size">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="dataTables_scrollBody">
+                      <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                      </div>
+                      <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                        aria-describedby="datatable_info" style="width: 100%" width="100%">
+                        <thead>
+                          <tr role="row">
+                            <th *ngFor="let vehicleHeading of tableData">
+                              <strong>{{vehicleHeading?.val}}</strong>
+                            </th>
+                          </tr>
+                        </thead>
+  
+                        <!-- <tbody *ngIf="!isloading">
+                          <tr *ngFor="let vehicle of mapList | searchFilter: searchKeyword |  paginate : {
+                                    itemsPerPage: vehiclelistData.tableSize,
+                                    currentPage: vehiclelistData.page,
+                                    totalItems: vehiclelistData.count};">
+                            <td>{{vehicle?.sn}}</td>
+                            <td>
+                              {{vehicle?.device || 'NA'}}
+                            </td>
+                            <td>{{vehicle?.asseT_NO || 'NA'}}</td>
+                            <td>{{vehicle?.speed || 'NA'}}</td>
+                            <td>{{vehicle?.place || 'NA'}}</td>
+                            <td>{{vehicle?.timeu || 'NA'}}</td>
+                            <td>{{vehicle?.pwr || 'NA'}}</td>
+                            <td *ngIf="vehicle['ign']=='0'">
+                              <img style="width: 24px; height: 16px"
+                                src="../../../../../assets/images/switch-off-icon.png" />
+                            </td>
+                            <td *ngIf="vehicle['ign']=='1'">
+                              <img style="width: 24px; height: 16px"
+                                src="../../../../../assets/images/switch-on-icon.png" />
+                            </td>
+                            <td *ngIf="vehicle['ign']==''">
+                              {{vehicle['ign'] || 'NA'}}
+                            </td>
+  
+                            <td>{{vehicle?.voltage || 'NA'}}</td>
+                            <td>{{vehicle?.timeg || 'NA'}}</td>
+                            <td *ngIf="vehicle['sos']=='Closed'">
+                              <img style="width: 24px; height: 16px" src="../../../../../assets/images/right-sign.png"
+                                alt="">
+                            </td>
+                            <td *ngIf="vehicle['sos']==''">
+                              {{vehicle['sos']}}
+                            </td>
+                            <td><a (click)="redirectToRoute(vehicle?.fS_VALUE, vehicle?.routE_ID, vehicle?.id)"
+                                style="color: blue;cursor: pointer;">Route View</a> </td>
+                            <td>{{vehicle?.obU_ASSET_NO || 'NA'}}</td>
+                            <td><a [routerLink]="['/Tracking/Tracking_Live', vehicle?.id]">Live View</a> </td>
+                            <td><a routerLink="/Tracking/Tracking_History">History View</a></td>
+                            <td>{{vehicle?.milage}}</td>
+                            <td>{{vehicle?.charging_Status}}</td>
+                            <td>{{vehicle?.total_Voltage}}</td>
+                            <td>{{vehicle?.total_Current}}</td>
+                            <td>
+                              {{vehicle?.battery1_Temp}},{{vehicle?.battery2_Temp}},{{vehicle?.battery3_Temp}},{{vehicle?.battery4_Temp}}
+                              <br />
+                              {{vehicle?.battery5_Temp}},{{vehicle?.battery6_Temp}},{{vehicle?.battery7_Temp}},{{vehicle?.battery8_Temp}}
+                            </td>
+                            <td></td>
+                          </tr>
+                        </tbody> -->
+                      </table>
+                      <div class="text-center" 
+                        style="width: 100%;">No Data Available</div>
+                    </div>
+                    <div class="pagination-data">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        >
+                      </pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  </section>

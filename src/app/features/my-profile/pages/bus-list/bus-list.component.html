@@ -1,0 +1,79 @@
+<div class="row" id="bus">
+    <div class="col-md-12">
+        <!-- <div class="card"> -->
+            <!-- <div class="card-header card-default">
+                Bus List
+            </div> -->
+
+            <!-- <div class="card-body"> -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label">Date</label>
+                        <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                            bsDatepicker [(ngModel)]="myDate" [bsValue]="bsValue" />
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <br>
+                        <button class="btn btn-success" (click)="getVehicleList()"><i class="fa fa-eye"
+                                aria-hidden="true"></i>
+                            show
+                        </button>
+                    </div>
+
+                </div>
+                <div class="row row-data">
+                    <div class="col-md-12">
+                        <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="dataTables_scroll">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scrollBody">
+                                    <div class="spin-loader">
+                                        <loader [isRunning]="isloading"></loader>
+                                    </div>
+                                    <table id="datatable"
+                                        class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                                        aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                        <thead>
+                                            <tr role="row">
+                                                <th *ngFor="let vehicleHeading of tableData">
+                                                    <strong>{{vehicleHeading?.value}}</strong>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="!isloading">
+                                            <tr *ngFor="let user of busList |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                                                <td>{{user?.r_Att_Date | date:'dd-MM-YYYY'}}</td>
+                                                <td>{{user?.asseT_NO}}</td>
+                                                <td>{{user?.driverName}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-center" style="width: 100%;"
+                                        *ngIf="busList && busList.length == 0 || busList == null && !isloading">
+                                        No Data Available</div>
+                                </div>
+                                <div class="pagination-data" *ngIf="busList && busList.length > 0">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="onTableDataChange($event)">
+                                    </pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+</div>

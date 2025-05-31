@@ -1,0 +1,71 @@
+
+
+        <div class="">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="location-data">
+                    <div id="map" class="map-container"></div>
+                    <div id="popup-content" #myDiv></div>
+                </div>
+            </div>
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content" #myDiv></div>
+              </div> 
+               <div class="sidepanel"  [ngStyle]="{'display': isOpenlocationData ? 'block' : 'none','width' : isOpenlocationData ? '400px' : ''}">
+                <div class="container">
+                  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()" >×</a>
+                  <div class="vehicle-location">
+                    <ul>
+                      <li>
+                        <span>Vehicle: {{filteredData?.asseT_NO}} | Driver : {{filteredData?.driver == '' ? 'N/A' : filteredData?.driver  }} </span>
+                      </li>
+                      <li>
+                        <span>Time: {{filteredData?.timeg}}</span>
+                      </li>
+                      <li>
+                        <span>Place: {{filteredData?.place}}</span>
+                      </li>
+                      <li>
+                        <span>Last GPS Update : {{filteredData?.timeg}}</span>
+                      </li>
+                      <li>
+                        <span>Speed: {{filteredData?.speed}}</span>
+                      </li>
+                      <li>
+                        <span>Total Current: {{filteredData?.total_Current}}</span>
+                      </li>
+                      <li>
+                        <span>Total Voltage: {{filteredData?.total_Voltage}}</span>
+                      </li>
+                      <li>
+                        <span>Milage: {{filteredData?.milage}}</span>
+                      </li>
+                      <li>
+                        <span>Fuel: {{filteredData?.fuel}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- <div class="row">
+                    <div class="col-md-6">
+                      <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary"
+                        >Live Location </button>
+                    </div>
+                    <div class="col-md-6">
+                      <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary">History Location</button>
+                    </div>
+                  </div>
+                  <div class="row row-data">
+                    <div class="col-md-6">
+                      <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary">Alerts</button>
+                    </div>
+                    <div class="col-md-6">
+                      <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary">Reports</button>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

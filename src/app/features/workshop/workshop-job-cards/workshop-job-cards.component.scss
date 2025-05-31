@@ -1,0 +1,27 @@
+.search-form {
+    float: right;
+  }
+  .search-input {
+    border-color:#2f387c !important;
+  }
+  
+  .search-form .btn-search {
+    color: #2f387c;
+  }
+  a.add-item {
+    font-size: 14px;
+    color: #2c3477 !important;
+    float: right;
+    cursor: pointer;
+  }
+  .dataTables_scrollBody.job-data {
+    height: 500px;
+  }
+
+  #datascroll{
+    position: relative;
+    overflow: unset !important;
+    width: 100%;
+    height: auto;
+    scrollbar-width: thin;
+  }

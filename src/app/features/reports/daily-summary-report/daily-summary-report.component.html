@@ -1,0 +1,426 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Reports/Daily_Summary_Report">Reports</a></li>
+                <li><a routerLink="/Reports/Daily_Summary_Report"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Daily Summary Report</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Daily Summary Report
+                </div>
+                <div class="card-body">
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="exampleInputEmail1" class="form-label">Select Company</label>
+                            <div *ngIf="selectedValue">
+                                <select-filter [selectedValue]="selectedValue" [vehicleData]="company"
+                                    [type]="'company'" [placeholder]="'Select Company'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && company && company?.length > 0">
+                                <select-filter [vehicleData]="company" [type]="'company'"
+                                    [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && !company || company.length == 0">
+                                <select-filter [type]="'company'" [placeholder]="'Select Company'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Date</label>
+                            <div class="input-group mb-3">
+                                <input type="text" [(ngModel)]="selectDate" class="form-control"
+                                    placeholder="MM/dd/yyyy" #dp="bsDatepicker" bsDatepicker />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <br>
+                            <button (click)="showReport()" [disabled]="!SelectedDepartment || !selectDate" class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i>
+                                show
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <br>
+                            <button class=" btn btn-danger" (click)="cancel()"><i class="fa fa-times" aria-hidden="true"></i>
+                                Cancel
+                              </button>
+                        </div>
+                    </div>
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                        <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <div class="card-data" *ngIf="!isloading">
+                        
+                        <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30">Route Violation</h2>
+
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Total
+                                                        Vehicles</span>
+                                                    <span class="status-value">{{dailyRouteViolation?.totalVehicles ? dailyRouteViolation?.totalVehicles : 0}}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">No. Of
+                                                        Vehicle Violation</span>
+                                                    <span class="status-value">
+                                                        {{dailyRouteViolation?.noOfVehicleVoilateRoute ? dailyRouteViolation?.noOfVehicleVoilateRoute : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Total
+                                                        Running</span>
+                                                    <span
+                                                        class="status-value">{{dailyRouteViolation?.totalRunningKm ? dailyRouteViolation?.totalRunningKm : 0}} KM</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Route
+                                                        Violation </span>
+                                                    <span
+                                                        class="status-value">{{dailyRouteViolation?.routeVoilateKm ? dailyRouteViolation?.routeVoilateKm : 0}} KM</span>
+                                                </a>
+                                            </li>
+                                           
+                                            
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                         <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30">CO2 Emmissions</h2>
+
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;"> Total
+                                                        Runnig </span>
+                                                    <span
+                                                        class="status-value">{{dailySummaryCO2?.totalRunningKM ? dailySummaryCO2?.totalRunningKM : 0}} KM</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLight">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">CO2
+                                                        Emmissions Saved</span>
+                                                    <span
+                                                        class="status-value">{{dailySummaryCO2?.cO2EmissionsSaved ? dailySummaryCO2?.cO2EmissionsSaved : 0}} Kg</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLight">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Diesel
+                                                        Saved</span>
+                                                    <span class="status-value">{{dailySummaryCO2?.dieselSaved ? dailySummaryCO2?.dieselSaved : 0}} L</span>
+                                                </a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30">Complaint Summary</h2>
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Total
+                                                        Complaint</span>
+                                                    <span
+                                                        class="status-value">{{dailySummaryComplaint?.totalComplaint ? dailySummaryComplaint?.totalComplaint : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Close
+                                                        Complaint</span>
+                                                    <span
+                                                        class="status-value">{{dailySummaryComplaint?.closeComplaint ? dailySummaryComplaint?.closeComplaint : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Pending
+                                                        Complaint</span>
+                                                    <span
+                                                        class="status-value">{{dailySummaryComplaint?.pendingComplaint ? dailySummaryComplaint?.pendingComplaint : 0}}</span>
+                                                </a>
+                                            </li>
+                                        
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30"> Devices Summary </h2>
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key"
+                                                        style="text-transform: capitalize;">Total GPS</span>
+                                                    <span class="status-value">{{dailySummaryDevices?.totalGPS ? dailySummaryDevices?.totalGPS : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Gps Working</span>
+                                                    <span class="status-value">{{dailySummaryDevices?.workingGPS ? dailySummaryDevices?.workingGPS : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Gps Not Working</span>
+                                                    <span class="status-value">{{dailySummaryDevices?.gpsNotWorking ? dailySummaryDevices?.gpsNotWorking : 0}}</span>
+                                                </a>
+                                            </li>
+                                             <li>
+                                                <a class="status">
+                                                    <span class="status-key"
+                                                        style="text-transform: capitalize;">Total OBU</span>
+                                                    <span class="status-value">{{dailySummaryDevices?.totalOBU ? dailySummaryDevices?.totalOBU : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">OBU Working</span>
+                                                    <span class="status-value">{{dailySummaryDevices?.workingOBU ? dailySummaryDevices?.workingOBU : 0}}</span>
+                                                </a>
+                                            </li>
+                                           
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key"
+                                                        style="text-transform: capitalize;">OBU Not Working</span>
+                                                    <span class="status-value">{{dailySummaryDevices?.obuNotWorking ? dailySummaryDevices?.obuNotWorking : 0}}</span>
+                                                </a>
+                                            </li>
+                                           
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30">Driver Att. Summary </h2>
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key"style="text-transform: capitalize;">Total Driver By Roaster</span>
+                                                    <span class="status-value">{{dailySummaryDriverAtt?.totalDriverByRoster ? dailySummaryDriverAtt?.totalDriverByRoster : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Driver Att. By Shift</span>
+                                                    <span class="status-value"> {{dailySummaryDriverAtt?.driverAttByShift ? dailySummaryDriverAtt?.driverAttByShift : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Driver Att. By Mobile</span>
+                                                    <span class="status-value">{{dailySummaryDriverAtt?.driverAttByMobile ? dailySummaryDriverAtt?.driverAttByMobile : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Absent Driver</span>
+                                                    <span class="status-value">{{dailySummaryDriverAtt?.absentDriver ? dailySummaryDriverAtt?.absentDriver : 0}}</span>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30">QA / Infaction Summary </h2>
+
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key"style="text-transform: capitalize;">QA Inspection</span>
+                                                    <span class="status-value">{{dailySummaryQA?.qaInspection ? dailySummaryQA?.qaInspection : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Operational</span>
+                                                    <span class="status-value">{{dailySummaryQA?.operational ? dailySummaryQA?.operational : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key"style="text-transform: capitalize;">Operational But Not Ok</span>
+                                                    <span class="status-value">{{dailySummaryQA?.operationalButNotOK ? dailySummaryQA?.operationalButNotOK : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Not Operational</span>
+                                                    <span class="status-value">{{dailySummaryQA?.notOeperational ? dailySummaryQA?.notOeperational : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Breakdown Complaint</span>
+                                                    <span class="status-value">{{dailySummaryQA?.breakDownComplaint ? dailySummaryQA?.breakDownComplaint : 0}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30">Roaster Summary </h2>
+
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key"
+                                                        style="text-transform: capitalize;">Shift Date</span>
+                                                    <span class="status-value">{{dailySummaryRoaster?.shiftDate | date:'MM/dd/yyyy'}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Scheduled Shift</span>
+                                                    <span class="status-value">{{dailySummaryRoaster?.scheduledShift ? dailySummaryRoaster?.scheduledShift : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Actual Shift</span>
+                                                    <span class="status-value">{{dailySummaryRoaster?.actualShift ? dailySummaryRoaster?.actualShift : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Vehicle Change</span>
+                                                    <span class="status-value">{{dailySummaryRoaster?.vehicleChange ? dailySummaryRoaster?.vehicleChange : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Driver Change</span>
+                                                    <span class="status-value">{{dailySummaryRoaster?.driverChange ? dailySummaryRoaster?.driverChange : 0}}</span>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-value">
+                            <div class="widget bg-light">
+                                <div class="row row-table ">
+                                    <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                                        <h2 class="margin-b-30">Trip Summary </h2>
+                                    </div>
+                                    <div class="status-data">
+                                        <ul>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;"> Total Trip</span>
+                                                    <span class="status-value">{{dailySummaryTrip?.totalTrip ? dailySummaryTrip?.totalTrip : 0}}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Trip Complete</span>
+                                                    <span class="status-value">{{dailySummaryTrip?.tripCompleted ? dailySummaryTrip?.tripCompleted : 0}}</span>
+                                                </a>
+                                            </li>
+                                           
+                                            <li class="highLightText">
+                                                <a class="status">
+                                                    <span class="status-key" style="text-transform: capitalize;">Miss trip</span>
+                                                    <span class="status-value">{{dailySummaryTrip?.missTrip ? dailySummaryTrip?.missTrip : 0}}</span>
+                                                </a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

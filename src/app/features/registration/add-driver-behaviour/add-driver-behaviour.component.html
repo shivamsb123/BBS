@@ -1,0 +1,103 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Registration/User_Master_App"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Staff Management</a></li>
+                <li><a routerLink="/Registration/edit-employeeDetails"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add More Details</a></li>
+                <li><a routerLink="/Registration/add-driver-behaviour"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add Driver Behavior</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+       </app-alert> -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-xl-3">
+                            <label for="exampleInputEmail1" class="form-label">Driver Name</label>
+                            <div *ngIf="selectedDriver">
+                                <select-filter [selectedValue]="selectedDriver" [vehicleData]="driverList"
+                                    [type]="'Driver'" [placeholder]="'Select Driver'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedDriver && driverList && driverList.length > 0 ">
+                                <select-filter [vehicleData]="driverList" [type]="'Driver'"
+                                    [placeholder]="'Select Driver'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedDriver && !driverList || driverList.length == 0">
+                                <select-filter [type]="'Driver'" [placeholder]="'Select Driver'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <label for="exampleInputEmail1" class="form-label">Fathe Name</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Father Numer"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <label for="exampleInputEmail1" class="form-label">Aadhar No.</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Aadhar No."
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <label for="exampleInputEmail1" class="form-label">Vehicle No</label>
+                            <div *ngIf="selectedValue">
+                                <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                    [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                                <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                    [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                                <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-3">
+                        <label for="exampleInputEmail1" class="form-label">From Date</label>
+                        <div class="input-group mb-3">
+                            <input type="text" placeholder="mm/dd/yy" class="form-control" bsDatepicker>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <label for="exampleInputEmail1" class="form-label">To Date</label>
+                        <div class="input-group mb-3">
+                            <input type="text" placeholder="mm/dd/yy" class="form-control" bsDatepicker>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <br>
+                        <button class="mr-2 btn-icon btn-icon-only btn btn-success">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            Add Record
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <br>
+                        <button class=" btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>

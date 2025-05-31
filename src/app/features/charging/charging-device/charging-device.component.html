@@ -1,0 +1,66 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+      <h4 class="modal-title f-w w-100 ">
+        {{vehicleNo}}
+      </h4>
+      <div class="close-modal">
+        <i class="fa fa-close" (click)="cancel()"></i>
+      </div>
+    </div>
+    <div class="modal-body p-20">
+        <div class="row row-data">
+            <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                      
+                        <div class="dataTables_scrollBody">
+                            <div class="spin-loader" [ngClass]="isTransloading ? 'loader': ''">
+                                <loader [isRunning]="isTransloading"></loader>
+                            </div>
+                            <table id="datatable"
+                                class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th *ngFor="let vehicleHeading of tableData2">
+                                            <strong>{{vehicleHeading?.val}}</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="!isTransloading && transactionDetails">
+                                    <tr>
+                                        <td>{{transactionDetails?.device_id}}</td>
+                                        <td>
+                                            {{transactionDetails?.vehicle_no}}
+                                        </td>
+                                        <td>
+                                            {{changeTimeFormat(transactionDetails?.timestamp)}}
+                                        </td>
+                                        <td>
+                                            {{changeTimeFormat(transactionDetails?.start_time)}}
+                                        </td>
+                                        <td>
+                                            {{changeTimeFormat(transactionDetails?.end_time )}}
+                                        </td>
+                                        <td>
+                                            {{transactionDetails?.soc}}
+                                        </td>
+                                        <td>
+                                            {{transactionDetails?.total_usage}}
+                                        </td>                                                
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center"
+                                *ngIf="transactionDetails && transactionDetails.length == 0 || transactionDetails == null && !isTransloading"
+                                style="width: 100%;">No Data Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+    </div>
+  </div>

@@ -1,0 +1,166 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/registration/RC_Details">Registration</a></li>
+        <li><a routerLink="/registration/add_accident"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            RC Details</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="accidentForm">
+            <div class="row row-data">
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Route</label>
+                <div *ngIf="selectedRouteValue">
+                  <select-filter [selectedValue]="selectedRouteValue" [vehicleData]="routeList" [type]="'Route'" [placeholder]="'Select Route'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedRouteValue && routeList && routeList.length > 0">
+                  <select-filter [vehicleData]="routeList" [type]="'Route'" [placeholder]="'Select Route'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedRouteValue && !routeList || routeList.length == 0">
+                  <select-filter  [type]="'Route'" [placeholder]="'Select Route'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                <div *ngIf="selectedVehicleValue">
+                  <select-filter [selectedValue]="selectedVehicleValue" [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedVehicleValue && vehicleData && vehicleData.length > 0">
+                  <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedVehicleValue && !vehicleData || vehicleData.length == 0">
+                  <select-filter  [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Driver</label>
+                <div *ngIf="selectedDriverValue">
+                  <select-filter [selectedValue]="selectedDriverValue" [vehicleData]="driverList" [type]="'Driver'" [placeholder]="'Select Driver'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+
+                <div *ngIf="!selectedDriverValue && driverList && driverList.length > 0">
+                  <select-filter [vehicleData]="driverList" [type]="'Driver'" [placeholder]="'Select Driver'"
+                    (onConfirm)="confirm($event)"></select-filter>
+
+                </div>
+                <div *ngIf="!selectedDriverValue && !driverList || driverList.length == 0">
+                  <select-filter [type]="'Driver'" [placeholder]="'Select Driver'"
+                    (onConfirm)="confirm($event)"></select-filter>
+
+                </div>
+              </div>
+
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Time</label>
+                <input type="text" formControlName="time" class="form-control"
+                  [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                  bsDatepicker>
+              </div>
+
+            </div>
+            <div class="row row-data">
+              <!-- <div class="col-md-6 col-xl-4">
+                  <label for="exampleInputEmail1" class="form-label">Location</label>
+                  <div class="input-group mb-3">
+                    <input type="text" id="myInput update-rc" class="form-control" placeholder="Location"
+                      aria-describedby="button-addon2" />
+                  </div>
+                </div> -->
+
+              <!-- <div class="col-md-6 col-xl-4">
+                  <label class="form-label"> Nature Of Accident</label>
+                  <div class="input-group mb-3">
+                    <input type="text" id="myInput update-rc" formControlName="nature_of_accident" class="form-control" placeholder="Nature of accident"
+                      aria-describedby="button-addon2" />
+                  </div>
+                </div> -->
+                <div class="col-md-6 col-xl-3">
+                  <label class="form-label"> Date</label>
+                  <input type="text" class="form-control" #dp="bsDatepicker" formControlName="date" bsDatepicker
+                    [bsValue]="bsValue" />
+                </div>
+
+              <div class="col-md-6 col-xl-3">
+                <label class="form-label"> Cause Of Accident</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="myInput update-rc" formControlName="cause_of_accident" class="form-control"
+                    placeholder="Cause of accident" aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Remarks</label>
+                <div class="input-group mb-3">
+                  <input type="text" id="myInput update-rc" formControlName="remark" class="form-control"
+                    placeholder="Remark" aria-describedby="button-addon2" />
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <div>
+                  <label for="formFileLg" class="form-label">Photo</label>
+                  <input class="form-control form-control-lg" (change)="changeDocument($event)" formControlName="photo"
+                    id="formFileLg" type="file">
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3"></div>
+
+            </div>
+
+            <div class="row ">
+              <div class="col-md-6 col-lg-3"></div>
+              <div class="col-md-6 col-lg-3"></div>
+              
+                <div class="col-md-6 col-lg-3">
+
+                  <button (click)="submit(accidentForm.value)" class="btn btn-success"
+                    [disabled]="accidentForm.invalid"><i class="fa fa-plus" aria-hidden="true"></i>
+                    Add Record
+                  </button>
+                </div>
+                <div div class="col-md-6 col-lg-3">
+                  <button (click)="cancel()" class="btn btn-danger">
+                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                  </button>
+                </div>
+            
+
+              <!-- <div class="col-md-6 col-lg-4 mt-20">
+                  <div>
+                    <button class="mr-2 btn-icon btn-icon-only btn btn-success">
+                      Save
+                    </button>
+                  </div>
+                  
+                </div> -->
+              <!-- <div class="col-md-6 col-lg-4 mt-20">
+                  <div>
+                    <button (click)="cancel()" class="mr-2 mt-4 btn-icon btn-icon-only btn btn-danger">
+                      <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                  </button>
+                  </div>
+                </div> -->
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

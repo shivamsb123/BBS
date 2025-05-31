@@ -1,0 +1,202 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Reports/Route_Survey_Report">Reports</a></li>
+                <li><a routerLink="/Reports/Route_Survey_Report"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Route Survey Report</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="routeSurveyForm">
+                        <div class="row">
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Route Name</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="routeList"
+                                        [type]="'Route'" [placeholder]="'Select Route'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            
+                                <div *ngIf="!selectedValue && routeList && routeList?.length > 0">
+                                    <select-filter [vehicleData]="routeList" [type]="'Route '"
+                                        [placeholder]="'Select Route'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !routeList || routeList?.length == 0">
+                                    <select-filter [type]="'Route'" [placeholder]="'Select Route'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <label class="form-label">Direction</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="direction" (change)="selectionChange()">
+                                    <option value="">Select Direction</option>
+                                    <option value="UP">UP</option>
+                                    <option value="DOWN">DOWN</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-12 col-md-3">
+                                <label class="form-label">From Date</label>
+                                <input type="text" class="form-control" placeholder="MM/dd/YYYY" formControlName="fromDate" #dp="bsDatepicker" bsDatepicker  />
+                              </div>
+                              <div class="col-xs-12 col-12 col-md-3">
+                                <label class="form-label">To Date</label>
+                                <input type="text" class="form-control" placeholder="MM/dd/YYYY" formControlName="toDate" #dp="bsDatepicker" bsDatepicker  />
+                              </div>
+                            
+                        </div>
+                        <div class="row row-data">
+                            <div class="col-md-6 col-xl-3"></div>
+                            <div class="col-md-6 col-xl-3">
+                                
+                                <button class="btn btn-success" (click)="showReport(routeSurveyForm.value)"
+                                    [disabled]="!routeSurveyForm.value.fromDate || !routeSurveyForm.value.toDate || !routeSurveyForm.value.direction"><i
+                                        class="fa fa-eye" aria-hidden="true"></i>
+                                    show
+                                </button>
+                            </div>
+
+                            <div class="col-md-6 col-xl-3">
+                              
+                                <button class=" btn btn-danger" (click)="cancel()"><i class="fa fa-times"
+                                        aria-hidden="true"></i>
+                                    Cancel
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                               
+                                <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row row-data">
+                        <div class="col-md-3">
+                            <div class="p-2 bd-highlight">
+
+                                <div> <span>Items per page: </span>
+                                  <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                                    <option *ngFor="let size of tableSizes" [value]="size">
+                                      {{ size }}
+                                    </option>
+                                  </select>
+                                </div>
+                               
+                                <span  style="cursor: pointer;" (click)="showallTrack()" id="showMap"
+                                  *ngIf="routeSurveyData && routeSurveyData.length > 0" class="badge rounded-pill bg-warning">
+                                  Show on Map
+                                </span>
+                              </div>
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <strong *ngIf="routeSurveyData && routeSurveyData.length > 0">Total Distance : {{totalDistanceCount | number: '1.2-2'}}</strong>
+                            <!-- <label *ngIf="routeSurveyData && routeSurveyData.length > 0" for="exampleInputEmail1" class="form-label">Total Distance : {{totalDistanceCount | number: '1.2-2'}}</label> -->
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <div class="search-form">
+                                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                                    aria-hidden="true"></i></button>
+                              </div>
+                        </div>
+                        <div class="col-md-12">
+                            
+                            <!-- <div class="search-form">
+                                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                                    aria-hidden="true"></i></button>
+                              </div> -->
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <!-- <div class="p-2 bd-highlight">
+
+                                        <div> <span>Items per page: </span>
+                                          <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                              {{ size }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                       
+                                        <span  style="cursor: pointer;" (click)="showallTrack()" id="showMap"
+                                          *ngIf="routeSurveyData && routeSurveyData.length > 0" class="badge rounded-pill bg-warning">
+                                          Show on Map
+                                        </span>
+                                      </div> -->
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" #TABLE aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let report of routeSurveyData | searchFilter: searchKeyword |  paginate : {
+                                                  itemsPerPage: tableSize,
+                                                  currentPage: page,
+                                                  totalItems: count};">
+                                                    <td>{{report?.routeName}}</td>
+                                                    <td>{{report?.direction}}</td>
+                                                    <td>{{report?.stopName}}</td>
+                                                    <td>{{report?.remarks}}</td>
+                                                    <td>{{report?.stopStatuName}}</td>
+                                                    <td id="select-map" (click)="openModal(report, 'ROUTE')">
+                                                        <a class="badge badge-success"><i class="fa fa-map-marker"
+                                                                aria-hidden="true"></i>
+                                                            &nbsp;{{report?.lat}} , {{report?.lon}} </a>
+                                                        <br>
+                                                        {{report?.captureName}}
+                                                    </td>
+                                                    <td>{{report?.distanceBtLoc | number: '1.2-2'}}</td>
+                                                    <!-- <td> <a *ngIf="report?.imagepath" (click)="openImage(report ,report?.imagepath)" class="viewImage" tooltip="View" rel="noopener noreferrer"><i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a *ngIf="!report?.imagepath" class="viewImage" tooltip="No Image" rel="noopener noreferrer"><i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                                    </a>
+                                                  </td> -->
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center"
+                                        *ngIf=" routeSurveyData && routeSurveyData.length == 0 || routeSurveyData == null  && !isloading || !(routeSurveyData | searchFilter:searchKeyword)?.length"
+                                        style="width: 100%;">No Data Available</div>
+
+                                    <div class="count">
+                                        <div class="total-count">
+                                            Total Count : {{routeSurveyData?.length > 0 ? routeSurveyData.length : 0 }}
+                                        </div>
+                                        <div class="pagination-data" *ngIf="routeSurveyData && routeSurveyData.length > 0 && (routeSurveyData | searchFilter:searchKeyword)?.length">
+                                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                (pageChange)="onTableDataChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>

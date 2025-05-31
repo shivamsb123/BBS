@@ -1,0 +1,170 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Maintenance/Damage_Tyre_Disposed">Tyre Management</a></li>
+        <li><a routerLink="/Maintenance/Damage_Tyre_Disposed"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Damage Tyre</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="damageForm">
+            <div class="row">
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Vehicle No</label>
+                <div *ngIf="selectedVehicleValue">
+                  <select-filter [selectedValue]="selectedVehicleValue" [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+                <div *ngIf="!selectedVehicleValue && vehicleData && vehicleData.length > 0">
+                  <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedVehicleValue && !vehicleData || vehicleData.length == 0">
+                  <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label for="exampleInputEmail1" class="form-label">Tyre Number</label>
+                <div *ngIf="selectedTyreValue">
+                    <select-filter [selectedValue]="selectedTyreValue" [vehicleData]="tyrNumberList" [type]="'tyre'" [placeholder]="'Select Tyre No.'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedTyreValue && tyrNumberList && tyrNumberList?.length > 0 ">
+                  <select-filter [vehicleData]="tyrNumberList" [type]="'tyre'" [placeholder]="'Select Tyre No.'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedTyreValue && !tyrNumberList || tyrNumberList.length == 0 ">
+                  <select-filter [type]="'tyre'" [placeholder]="'Select Tyre No.'"></select-filter>
+                </div>
+
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Make</label>
+                <select class="form-select" aria-label="Default select example" formControlName="tyre_make">
+                  <ng-container *ngIf="tyreNoVehicleWise && tyreNoVehicleWise.length > 0">
+                    <option *ngFor="let tyre of tyreNoVehicleWise" value="{{tyre.tyre_Make}}">{{tyre?.tyre_Make}}</option>
+                  </ng-container>
+                  <ng-container *ngIf="!tyreNoVehicleWise || tyreNoVehicleWise.length == 0">
+                    <option >No Data Available</option>
+                  </ng-container>
+                </select>
+              </div>
+
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Type</label>
+                <select class="form-select" aria-label="Default select example" formControlName="tyre_type">
+                  <ng-container *ngIf="tyreNoVehicleWise && tyreNoVehicleWise.length > 0">
+                    <option *ngFor="let tyre of tyreNoVehicleWise" value="{{tyre.tyre_Make}}">{{tyre.tyre_Make}}</option>
+                  </ng-container>
+                  <ng-container *ngIf="!tyreNoVehicleWise || tyreNoVehicleWise.length == 0">
+                    <option >No Data Available</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+              <div class="row row-data">
+                <div class="col-md-6 col-lg-3">
+                  <label class="form-label">Location</label>
+                  <select class="form-select" aria-label="Default select example" formControlName="location">
+                    <option value="">Select Location</option>
+                    <option value="Front Left">Front Left</option>
+                    <option value="Front Right">Front Right</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                  <label for="exampleInputEmail1" class="form-label">Received Date</label>
+                  <input type="text" class="form-control" placeholder="Select Date" formControlName="received_date"
+                    #dp="bsDatepicker" bsDatepicker>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <br>
+                  <button class="btn btn-success" [disabled]="!damageForm.valid" (click)="submit(damageForm.value)">
+                    <i class="fa fa-plus"></i> {{button}}
+                  </button>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <br>
+                  <button class="btn btn-danger" (click)="cancel()">
+                    <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                  </button>
+                </div>
+              </div>
+          </form>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [value]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let tyre of damageTyreData | searchFilter: searchKeyword |  paginate : {
+                                      itemsPerPage: tableSize,
+                                      currentPage: page,
+                                      totalItems: count};">
+                         <td>{{tyre?.vehicle_No}}</td>
+                         <td>{{tyre?.received_Date}}</td>
+                         <td>{{tyre?.tyre_No}}</td>
+                         <td>{{tyre?.tyre_Make}}</td>
+                         <td>{{tyre?.tyre_Type}}</td>
+                         <td>{{tyre?.location}}</td>
+                         <td><a tooltip="Edit" rel="noopener noreferrer" (click)="updateDamageTyre(tyre?.id)"><i class="fa fa-pencil"
+                          aria-hidden="true"></i>
+                      </a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center"
+                      *ngIf="damageTyreData && damageTyreData.length == 0 || damageTyreData == null && !isloading || !(damageTyreData | searchFilter:searchKeyword)?.length"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+                  <div class="pagination-data" *ngIf="damageTyreData && damageTyreData.length > 0 && (damageTyreData | searchFilter:searchKeyword)?.length">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

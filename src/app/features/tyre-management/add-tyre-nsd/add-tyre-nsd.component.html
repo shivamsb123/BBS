@@ -1,0 +1,354 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/tyre-management/tyre_master">Tyre Management</a></li>
+                <li><a routerLink="/Maintenance/AddTyreNSD"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    Tyre NSD</a></li>
+                <li><a routerLink="/Maintenance/Add_Nsd"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Add Tyre NSD</a></li>
+            </ol>
+        </div>
+    </div>
+    <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+    </app-alert>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="AddTyreNsd">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                                <div *ngIf="selectedVehicleValue">
+                                    <select-filter [selectedValue]="selectedVehicleValue" [vehicleData]="vehicleData"
+                                        [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedVehicleValue && vehicleData && vehicleData.length > 0">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedVehicleValue && !vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label"> Date</label>
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker formControlName="date">
+                            </div>
+                        </div>
+                        <br>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                <br>
+                                <label class="form-label">FRT RH(O.M.I.MM)</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label"> Nsd(O)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="Frt_Rh_Nsd_O" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(M)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="Frt_Rh_Nsd_M" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(I)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="Frt_Rh_Nsd_I" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">FRT RH Tyre Type</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="Frt_Rh_Tyre_Type">
+                                    <option value="1" disabled>Select Tyre Type</option>
+                                    <option value="Original Tyre">Original Tyre</option>
+                                    <option value="Retread Tyre">Retread Tyre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">FRT RH Tyre Ware</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="Frt_Rh_Tyre_Ware">
+                                    <option value="2" disabled>Select Tyre Ware</option>
+                                    <option value="ETW">ETW</option>
+                                    <option value="OTW">OTW</option>
+                                    <option value="ITW">ITW</option>
+                                    <option value="EDGE TW">EDGE TW</option>
+                                    <option value="CTW">CTW</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <br>
+                                <label class="form-label">FRT LH(O.M.I.MM)</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(O)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="Frt_Lh_Nsd_O" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(M)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="Frt_Lh_Nsd_M" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(I)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="Frt_Lh_Nsd_I" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">FRT LH Tyre Type</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="Frt_Lh_Tyre_Type">
+                                    <option value="1" disabled>Select Tyre Type</option>
+                                    <option value="Original Tyre">Original Tyre</option>
+                                    <option value="Retread Tyre">Retread Tyre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">FRT LH Tyre Ware</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="Frt_Lh_Tyre_Ware">
+                                    <option value="2" disabled>Select Tyre Ware</option>
+                                    <option value="ETW">ETW</option>
+                                    <option value="OTW">OTW</option>
+                                    <option value="ITW">ITW</option>
+                                    <option value="EDGE TW">EDGE TW</option>
+                                    <option value="CTW">CTW</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <br>
+                                <label class="form-label">RR RHS Inner(O.M.I.MM) </label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(O)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="RR_Rhs_Inner_Nsd_O" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(M)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="RR_Rhs_Inner_Nsd_M" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(I)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="RR_Rhs_Inner_Nsd_I" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR RHS Inner Tyre Type</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Rhs_I_Tyre_Type">
+                                    <option value="1" disabled>Select Tyre Type</option>
+                                    <option value="Original Tyre">Original Tyre</option>
+                                    <option value="Retread Tyre">Retread Tyre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR RHS Inner Tyre Ware</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Rhs_I_Tyre_Ware">
+                                    <option value="2" disabled>Select Tyre Ware</option>
+                                    <option value="ETW">ETW</option>
+                                    <option value="OTW">OTW</option>
+                                    <option value="ITW">ITW</option>
+                                    <option value="EDGE TW">EDGE TW</option>
+                                    <option value="CTW">CTW</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <br>
+                                <label class="form-label">RR RHS outer(O.M.I.MM)</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(O)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="RR_Rhs_Outer_Nsd_O" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(M)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="RR_Rhs_Outer_Nsd_M" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(I)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="RR_Rhs_Outer_Nsd_I" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR RHS outer Tyre Type</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Rhs_O_Tyre_Type">
+                                    <option value="1" disabled>Select Tyre Type</option>
+                                    <option value="Original Tyre">Original Tyre</option>
+                                    <option value="Retread Tyre">Retread Tyre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR RHS outer Tyre Ware</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Rhs_O_Tyre_Ware">
+                                    <option value="2" disabled>Select Tyre Ware</option>
+                                    <option value="ETW">ETW</option>
+                                    <option value="OTW">OTW</option>
+                                    <option value="ITW">ITW</option>
+                                    <option value="EDGE TW">EDGE TW</option>
+                                    <option value="CTW">CTW</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <br>
+                                <label class="form-label">RR LHS Inner(O.M.I.MM)</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(O)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="RR_Lhs_Inner_Nsd_O" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(M)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="RR_Lhs_Inner_Nsd_M" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(I)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="RR_Lhs_Inner_Nsd_I" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR LHS Inner Tyre Type</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Lhs_I_Tyre_Type">
+                                    <option value="1" disabled>Select Tyre Type</option>
+                                    <option value="Original Tyre">Original Tyre</option>
+                                    <option value="Retread Tyre">Retread Tyre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR LHS Inner Tyre Ware</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Lhs_I_Tyre_Ware">
+                                    <option value="2" disabled>Select Tyre Ware</option>
+                                    <option value="ETW">ETW</option>
+                                    <option value="OTW">OTW</option>
+                                    <option value="ITW">ITW</option>
+                                    <option value="EDGE TW">EDGE TW</option>
+                                    <option value="CTW">CTW</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <br>
+                                <label class="form-label">RR LHS Outer(O.M.I.MM)</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(O)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="RR_Lhs_Outer_Nsd_O" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(M)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="RR_Lhs_Outer_Nsd_M" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Nsd(I)</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="RR_Lhs_Outer_Nsd_I" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR LHS Outer Tyre Type</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Lhs_O_Tyre_Type">
+                                    <option value="1" disabled>Select Tyre Type</option>
+                                    <option value="Original Tyre">Original Tyre</option>
+                                    <option value="Retread Tyre">Retread Tyre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label">RR LHS Outer Tyre Ware</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="RR_Lhs_O_Tyre_Ware">
+                                    <option value="2" disabled>Select Tyre Ware</option>
+                                    <option value="ETW">ETW</option>
+                                    <option value="OTW">OTW</option>
+                                    <option value="ITW">ITW</option>
+                                    <option value="EDGE TW">EDGE TW</option>
+                                    <option value="CTW">CTW</option>
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Milo Km</label>
+                                <div class="input-group mb-3">
+                                  <input type="number" class="form-control" placeholder="Milo Km" formControlName="Milo_km" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Remarks</label>
+                                <div class="input-group mb-3">
+                                  <input type="text" class="form-control" placeholder="Remark" formControlName="Remark" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success" (click)="submit(AddTyreNsd.value)" [disabled]="!AddTyreNsd.valid">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-danger" (click)="cancel()">
+                                    <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

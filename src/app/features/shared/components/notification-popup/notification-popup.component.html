@@ -1,0 +1,23 @@
+<div class="close-modal">
+    <span class="bold-underline">view All</span>
+    <i class="fa fa-close" (click)="cancel()"></i>
+  </div>
+
+<div class="notifictaion  custom-scrollbar">
+    <div class="right_content_details" *ngFor="let item of newData">
+        <div class="card" >
+            <div class="carditem">
+                <div>
+                    <div>{{item?.asseT_NO}} </div>
+                    <div>{{item?.alerT_DESCRIPTION}}</div>
+                    <div>{{item?.serveR_TIME}}</div>
+                </div>
+                <div class="action">Action</div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+

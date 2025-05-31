@@ -1,0 +1,365 @@
+<section class="main-content" *ngIf="requestType !== 'vehicle'" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/registration/RC_Details">Registration</a>
+                </li>
+                <li>
+                    <a routerLink="/Registration/Vehicle_Master">
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>Vehicle Master</a>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">Vehicle Master</div>
+                <form [formGroup]="vechileMasterForm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Company Name</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="department"
+                                        [type]="'Company'" [placeholder]="'Select Company'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && department && department.length > 0">
+                                    <select-filter [vehicleData]="department" [type]="'Company'"
+                                        [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !department || department.length == 0">
+                                    <select-filter [vehicleData]="department" [type]="'Company'"
+                                        [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Assest Type</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="asset_type"
+                                        placeholder="Chassis Number" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Chassis Number</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="Chassis_number"
+                                        placeholder="Chassis Number" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Bus Number</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="Bus_number"
+                                        placeholder="Bus Number" aria-describedby="button-addon2" />
+                                </div>
+                                <!-- <div class="text-danger" *ngIf="vechileMasterForm.get('Bus_number')?.hasError('required') && 
+                                vechileMasterForm.get('Bus_number')?.touched">
+                                Bus Number is required</div> -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Vendor Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="vendor_name"
+                                        placeholder="Vendor Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">RC Owner Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="owner_name"
+                                        placeholder="RC Owner Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">RC Present Address</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="RC Present Address"
+                                        aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Authority Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="authority_name"
+                                        placeholder="Authority Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <!-- <button class="mr-2 btn-icon btn-icon-only btn btn-success"
+                                    (click)="submit(vechileMasterForm.value)" [disabled]="vechileMasterForm.invalid">
+                                    Submit
+                                </button> -->
+
+                                <button class="btn btn-success"
+                                    (click)="submit(vechileMasterForm.value)" [disabled]="vechileMasterForm.invalid"><i
+                                        class="fa fa-plus" aria-hidden="true"></i>
+                                    {{vehicleButton}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button (click)="cancelVehicle()" class=" btn btn-danger"><i class="fa fa-times"
+                                        aria-hidden="true"></i>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Document Type
+                </div>
+                <form [formGroup]="documentForm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Document type</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="documentType">
+                                    <option value="rc">Rc</option>
+                                    <option value="pollution">Pollution</option>
+                                    <option value="Insurance">Insurance</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Document Number</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="ducmentNo"
+                                        placeholder="Document Number" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Registration Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Registration Date"
+                                        #dp="bsDatepicker" bsDatepicker formControlName="registration_Date"
+                                        [bsValue]="bsValue" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Expiry Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="expiry_date"
+                                        placeholder="Expiry Date" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
+                                        aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Upload Document</label>
+                                <div class="input-group mb-12">
+                                    <input type="file" class="form-control" formControlName="upload_document"
+                                        aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Authority Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="authority"
+                                        placeholder="Authority Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-success"
+                                    (click)="submitDucument(documentForm.value)" [disabled]="documentForm.invalid"><i
+                                        class="fa fa-plus" aria-hidden="true"></i>
+                                    {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button (click)="cancelDocument()" class=" btn btn-danger"><i class="fa fa-times"
+                                        aria-hidden="true"></i>
+                                    Cancel
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header card-default">
+                    Document List
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div class="search-form">
+                                <input placeholder="Search for..." type="text" class="form-control search-input"
+                                    [(ngModel)]="documentSearchKeyword"><button type="button" class="btn-search"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let documentHeading of documentTable">
+                                                        <strong>{{documentHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let vehicle of vechileDucumentData |  searchFilter: documentSearchKeyword |  paginate : {
+                                          itemsPerPage: tableSize,
+                                          currentPage: page,
+                                          totalItems: count};">
+                                                    <td>{{vehicle?.documenttype}}</td>
+                                                    <td>{{vehicle?.documentNo}}</td>
+                                                    <td>{{vehicle?.registrationDate.slice(0,10)}}</td>
+                                                    <td>{{vehicle?.expiryDate.slice(0,10)}}</td>
+                                                    <td>{{vehicle?.authorityName}}</td>
+                                                    <td>{{vehicle?.uploadDocument}}</td>
+                                                    <td><a (click)="updateDocument(vehicle.doc_Id)" tooltip="Edit"
+                                                            rel="noopener noreferrer"><i class="fa fa-pencil"
+                                                                aria-hidden="true"></i>
+                                                        </a></td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <div class="text-center" style="width: 100%;"
+                                            *ngIf="vechileDucumentData && vechileDucumentData.length == 0 || vechileDucumentData == null && !isloading || !(vechileDucumentData | searchFilter:documentSearchKeyword)?.length">
+                                            No Data
+                                            Available</div>
+                                    </div>
+                                    <div class="pagination-data"
+                                        *ngIf="vechileDucumentData && vechileDucumentData.length > 0 && (vechileDucumentData | searchFilter:documentSearchKeyword)?.length">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Vehicle Master
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div class="search-form">
+                                <input placeholder="Search for..." type="text" class="form-control search-input"
+                                    [(ngModel)]="searchKeyword"><button type="button" class="btn-search"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let vehicle of vechileMaster |  searchFilter: searchKeyword |  paginate : {
+                                          itemsPerPage: tableSize,
+                                          currentPage: page,
+                                          totalItems: count};">
+                                                    <td>{{vehicle?.company_Name}}</td>
+                                                    <td>{{vehicle?.chassis_Number}}</td>
+                                                    <td>{{vehicle?.bus_Number}}</td>
+                                                    <td>{{vehicle?.assest_Type}}</td>
+                                                    <td>{{vehicle?.vendor_Name}}</td>
+                                                    <td>{{vehicle?.owner_Name}}</td>
+                                                    <td>{{vehicle?.rC_Present_Address}}</td>
+                                                    <td>{{vehicle?.status}}</td>
+                                                    <td><a tooltip="Edit" rel="noopener noreferrer"
+                                                            (click)="updateVehicle(vehicle?.id)"><i class="fa fa-pencil"
+                                                                aria-hidden="true"></i>
+                                                        </a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center" style="width: 100%;"
+                                            *ngIf="vechileMaster && vechileMaster.length == 0 || vechileMaster == null && !isloading || !(vechileMaster | searchFilter:searchKeyword)?.length">
+                                            No Data
+                                            Available</div>
+                                    </div>
+                                    <div class="pagination-data" *ngIf="vechileMaster && vechileMaster.length > 0 && (vechileMaster | searchFilter:searchKeyword)?.length">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

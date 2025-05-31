@@ -1,0 +1,116 @@
+$info: #CDE8F6;
+$info-text: #447EAF;
+$warn: #F8F4D5;
+$warn-text: #96722E;
+$error: #ECC8C5;
+$error-text: #B83C37;
+$success: #DDF3D5;
+$success-text: #597151;
+::ng-deep{
+    .close-modal{
+      display: flex;
+      justify-content: space-between;
+      .fa-close{
+        cursor: pointer;
+        padding: 8px;
+        color: #ce0e2d;
+        font-weight: 600;
+        margin-right: 7px;
+      }
+    }
+    .bold-underline {
+      cursor: pointer;
+        font-weight: bold;
+        color: #2c3477 ;
+        text-decoration: underline;
+      }
+
+    .modal-dialog-right {
+      float: right !important;
+      padding: 0px 8px 0px 0px !important;
+      width: 500px !important;
+      .container {
+        overflow: hidden;
+      }
+      .bold-underline {
+        float: left;
+       margin-left: 16px;
+      }
+      .notifictaion{
+        overflow-y: auto;
+        height: 603px;
+      }
+      .right_content_details{
+        padding-bottom: 2px;
+        padding: 0px 3px 4px 11px;
+    
+    
+    
+        :hover{
+        border-radius: 4px;
+        cursor: pointer;
+        }
+        .card{
+            font-weight: 400;
+            font-family: Proxima Nova,Arial,Helvetica,sans-serif;
+            font-size: .875rem;
+            line-height: 1.5;
+            letter-spacing: .45px;
+            color: #555759;
+            padding: 5px 10px;
+            background: #f7f7f7;
+            transition: background .3s ease-out,box-shadow .3s ease-out;
+            margin: 3px;
+            border-left: 3px solid #c8102e;
+            display: flex;
+                justify-content: space-between;
+            .carditem{
+                display: flex;
+                align-items: end;
+                justify-content: space-between;
+                .action{
+                   color: #ce0e2d
+                }
+            
+            }
+        }
+     
+    }
+    
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+    
+      // ::ng-deep{
+      //   .modal-dialog-right{
+       
+      //       float: right !important;
+      //       padding: 0px 8px 0px 0px !important;
+      //       width: 500px !important;
+      //     }
+      //     .modal-content{
+      //     //  border-radius: 10px !important;
+      //     height: 650px !important;
+      //     }
+      // }
+    
+      .custom-scrollbar {
+        overflow-y: scroll; 
+      
+      }
+       
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 10px; 
+      }
+       
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #888; 
+        border-radius: 6px; 
+      }
+       
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background-color: #eee;  
+        border-radius: 6px;     
+      }
+    }
+  }

@@ -1,0 +1,151 @@
+
+
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+          <li><a routerLink="/reports/Duty_Reports"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Duty Report</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">  
+            <div class="row">
+              <div class="col-xs-12 col-12 col-md-3">
+                  <label class="form-label">Date</label>
+                  <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                  bsDatepicker [(ngModel)]="bsValue" name="bsValue" required
+                  #myDateField="ngModel" />
+                <div *ngIf="myDateField.invalid && (myDateField.dirty || myDateField.touched)"
+                  class="text-danger">
+                  Date is required.
+                </div>
+                </div>
+                <div class="col-xs-12 col-12 col-md-3"></div>
+                <div class="col-md-6 col-xl-3">
+                  <br>
+                    <button class="btn btn-success" (click)="getDutyReport()"><i
+                      class="fa fa-eye" aria-hidden="true"></i> 
+                    show
+                  </button>
+                </div>
+                <div class="col-xs-12 col-12 col-md-3">
+                  <br>
+                  <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+                </div>
+             
+          </div>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+                  <div class="p-2 bd-highlight">
+                    <span>Items per page: </span>
+                    <select [(ngModel)]="tableSize" (change)="onTableSizeChange($event)" class="custom-select">
+                      <option *ngFor="let size of tableSizes" [value]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of dutyReportdata | searchFilter: searchKeyword |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count};">
+                          <td>{{vehicle?.date}}</td>
+                          <td>
+                            {{vehicle?.shift}}
+                          </td>
+                           <td>{{vehicle?.route}}</td>
+                          <td>
+                            {{vehicle?.dutyNo}}
+                          </td>
+                           <td>{{vehicle?.driver}}</td>
+                          <td>
+                            {{vehicle?.assetno}}
+                          </td>
+                          <td>{{vehicle?.shiftfrom}}</td>
+                          <td>
+                            {{vehicle?.odometerfrom}}
+                          </td>
+                          <td>{{vehicle?.socoldfrom}}</td>
+                          <td>{{vehicle?.shiftto}}</td>
+                          <td>
+                            {{vehicle?.odometerto}}
+                          </td>
+                          <td>
+                            {{vehicle?.socTo}}
+                          </td>
+                          <td>
+                            {{vehicle?.shiftDuration}}
+                          </td>
+                          <td>
+                            {{vehicle?.gpskm | number: '1.0'}}
+                          </td>
+                          <td>
+                            {{vehicle?.gpskmhandover}}
+                          </td>
+                          <td>
+                            {{vehicle?.odometerto - vehicle?.odometerfrom}}
+                          </td>
+                          <td>
+                            {{vehicle?.reason || 'NA'}}
+                          </td>
+                          <td>
+                            {{vehicle?.remark || 'NA'}}
+                          </td>
+                          <td> <a (click)="editReport(vehicle)" tooltip="Edit" rel="noopener noreferrer"><i class="fa fa-pencil"
+                                aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center" *ngIf="dutyReportdata && dutyReportdata.length == 0 || dutyReportdata == null && !isloading || !(dutyReportdata | searchFilter:searchKeyword)?.length"
+                    style="width: 100%;">No Data Available</div>
+                  <div class="count">
+                    <div class="total-count">
+                        Total Count : {{dutyReportdata?.length > 0  ? dutyReportdata.length : 0 }}
+                    </div>
+                    <div class="pagination-data"
+                    *ngIf="dutyReportdata && dutyReportdata.length > 0 && (dutyReportdata | searchFilter:searchKeyword)?.length">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                            (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                    </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  

@@ -1,0 +1,83 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/registration/RC_Details">Workshop</a></li>
+                <li><a routerLink="/WorkShop/Inter_Warehouse_Spares_Transfer"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Inter Warehouse Spares Transfer </a></li>
+                <li><a routerLink="/WorkShop/add_inter_warehouse_spares_transfer"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add Inter Warehouse Spares Transfer</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Add Inter Warehouse Spares Transfer
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-3">
+                            <label class="form-label">From Warehouse</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option>Select Warehouse</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="exampleInputEmail1" class="form-label">To Warehouse</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option>Select Warehouse</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Transfer Date</label>
+                            <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                                placeholder="MM/dd/YYYY" />
+
+                        </div>
+                        <div class="col-md-3">
+                            <br>
+                            <button class="btn btn-primary" (click)="submit()"><i class="fa fa-plus"
+                                    aria-hidden="true"></i>Add Part
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row row-data">
+                        <div class="col-md-3">
+                            <label class="form-label">Driver & Spares Detail</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Driver & Spares"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Total</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Total"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Created By</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter Created By"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <br>
+                            <button class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

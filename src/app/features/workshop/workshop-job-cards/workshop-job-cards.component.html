@@ -1,0 +1,579 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/WorkShop/workshop_job_card"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    Job Card List </a></li>
+                        <li><a routerLink="/WorkShop/Add_job_card"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                           Add Job Card </a></li>
+            </ol>
+        </div>
+    </div>
+    <form>
+        <div class="row">
+            <div class="col-md-12">
+                <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+                </app-alert>
+                <div class="card">
+                    <div class="card-header card-default">
+                        Add Job Card
+                    </div>
+                    
+                    <div class="card-body">
+                        <form [formGroup]="jobForm">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-label">Serial No</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="serialNo"
+                                            placeholder="Enter Serial" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label">Vehicle No</label>
+                                    <div *ngIf="selectedValue">
+                                        <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                        [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                                        <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                                        <select-filter [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Odometer Reading </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="odometer"
+                                            placeholder="Enter Odometer Reading" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label">Incharge Name </label>                            
+                                    <div *ngIf="selectedIncharge">
+                                        <select-filter [selectedValue]="selectedIncharge"
+                                            [vehicleData]="mechanicList" [type]="'employee'"
+                                            [placeholder]="'Select Employee'"
+                                            (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedIncharge && mechanicList && mechanicList.length > 0 ">
+                                        <select-filter [vehicleData]="mechanicList" [type]="'employee'"
+                                                [placeholder]="'Select Employee'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedIncharge && !mechanicList || mechanicList.length == 0">
+                                        <select-filter [type]="'employee'"
+                                        [placeholder]="'Select Employee'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                               
+                                <div class="col-md-3">
+                                    <label class="form-label">Scheduled Date Time</label>
+                                    <!-- <timepicker formControlName="complaintTime" [showMeridian]="isMeridian"
+                                        [hourStep]="hstep" [minuteStep]="mstep"></timepicker> -->
+                                        <div class="input-group mb-3">
+                                            <input type="text"
+                                            placeholder="MM/dd/yyyy"
+                                            formControlName="scheduledTime"
+                                            class="form-control"
+                                            [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                            bsDatepicker>
+                                        </div>
+                                     
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Delivery Date Time </label>
+                                    <!-- <timepicker formControlName="attendTime" [showMeridian]="isMeridian"
+                                        [hourStep]="hstep" [minuteStep]="mstep"></timepicker> -->
+                                        <div class="input-group mb-3">
+                                            <input type="text"
+                                            placeholder="MM/dd/yyyy"
+                                            formControlName="deliveryTime"
+                                            class="form-control"
+                                            [bsConfig]="{withTimepicker: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                            bsDatepicker>
+                                        </div>
+                                      
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label">Remarks </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="remarks"
+                                            placeholder="Enter Remarks" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label">Service Type</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="serviceType"
+                                            [readOnly]="true" placeholder="Service Type" value="{{vehicleValue}}"
+                                            aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-3">
+                                    <label class="form-label">Types of Complaint </label>                            
+
+                                    <div *ngIf="selectedComplaintValue">
+                                        <select-filter [selectedValue]="selectedComplaintValue"
+                                            [vehicleData]="ComplaintTypeList" [type]="'complaint'"
+                                            [placeholder]="'Select Complaint'"
+                                            (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedComplaintValue && ComplaintTypeList && ComplaintTypeList.length > 0 ">
+                                        <select-filter [vehicleData]="ComplaintTypeList" [type]="'complaint'"
+                                                [placeholder]="'Select Complaint'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedComplaintValue && !ComplaintTypeList || ComplaintTypeList.length == 0">
+                                        <select-filter [type]="'complaint'"
+                                        [placeholder]="'Select Complaint'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                </div> -->
+                              
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-label">Nature of Complaint </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="natureOFCompanit"
+                                            placeholder="Remarks" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Action Taken </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="actionTaken"
+                                            placeholder="Enter Action" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Store Incharge Name</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="StoreIncharege"
+                                            placeholder="Enter Incharge Name" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Name of Mechanical </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="mechinicalName"
+                                            placeholder="Enter Mechanical" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-label">Name of Incharge</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="inchargeName"
+                                            placeholder="Enter Name" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Part Description</label>
+                                    <div *ngIf="selectedpartValue">
+                                        <select-filter [selectedValue]="selectedpartValue"
+                                        [vehicleData]="partdescription" [type]="'part_description'"
+                                        [placeholder]="'Select Part'" (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedpartValue && partdescription && partdescription.length > 0 ">
+                                        <select-filter [vehicleData]="partdescription" [type]="'part_description'"
+                                            [placeholder]="'Select Part'"
+                                            (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                    <div *ngIf="!selectedpartValue && !partdescription || partdescription.length == 0">
+                                        <select-filter  [type]="'part_description'"
+                                        [placeholder]="'Select Part'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Part No.</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="partNo"
+                                            placeholder="Enter Part No" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Cost Unit</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="unit"
+                                            placeholder="Enter Unit" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-label">No of Quantity </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="noOfQuality"
+                                            placeholder="Enter Report Time" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Total Amount</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" formControlName="amount"
+                                            placeholder="Enter Amount" aria-describedby="button-addon2" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-label">Job Card Status</label>
+                                    <select class="form-select" formControlName="status"
+                                        aria-label="Default select example">
+                                        <option value="1">Open</option>
+                                        <option value="2">Close</option>
+                                        <option value="3">Pending</option>
+                                    </select>
+                                </div>
+                            <div class="col-md-3">
+                                <br>
+                                    <button class="btn btn-success" [disabled]="jobForm.value.serialNo == '' || jobForm.value.busNo == '' || jobForm.value.date == '' || jobForm.value.shift == '' || jobForm.value.complaintTime == '' || jobForm.value.attendTime == '' || jobForm.value.complaintType == '' || jobForm.value.partDes == '' || jobForm.value.partNo == ''"
+                                        (click)="submit(jobForm.value)"><i class="fa fa-plus" aria-hidden="true"></i>
+                                        {{button}}
+                                    </button>
+                                </div>
+                            </div> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Job Card List
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div class="search-form">
+                                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                              class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                                aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select (change)="onTableSizeChange($event)" class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>
+                                                            <div [innerHtml]="vehicleHeading?.val"></div>
+                                                        </strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let vehicle of jobData | searchFilter: searchKeyword |  paginate : {
+                                              itemsPerPage: tableSize,
+                                              currentPage: page,
+                                              totalItems: count};let i = index">
+                                                    <td>{{vehicle?.serialNo}}</td>
+                                                    <td>
+                                                        {{vehicle?.jobCardNo}}
+                                                    </td>
+                                                    <td>{{vehicle?.asseT_NO || 'NA'}}</td>
+                                                    <td>{{vehicle?.km || 'NA'}}</td>
+                                                    <td>{{vehicle?.date || 'NA'}}</td>
+                                                    <td>{{vehicle?.shift || 'NA'}}</td>
+                                                    <td>{{vehicle?.complaintReportTime || 'NA'}}</td>
+                                                    <td>{{vehicle?.attendTime || 'NA'}}</td>
+                                                    <td>{{vehicle?.types_OF_Complaint || 'NA'}}</td>
+                                                    <td>{{vehicle?.nature_of_Complaint || 'NA'}}</td>
+                                                    <td>{{vehicle?.actionTaken || 'NA'}}</td>
+                                                    <td>{{vehicle?.store_Incharge_Name || 'NA'}}</td>
+                                                    <td>{{vehicle?.name_of_Mechanical || 'NA'}}</td>
+                                                    <td><a tooltip="Edit" (click)="update(vehicle?.id)"
+                                                            rel="noopener noreferrer"><i class="fa fa-pencil"
+                                                                aria-hidden="true"></i>
+                                                        </a></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="jobData && jobData.length == 0 || jobData == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row" *ngIf="itemType == 'Add'">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                   New Job Card Details
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="addJobForm">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Inspection</label>                            
+                                <div *ngIf="selectedInspection">
+                                    <select-filter [selectedValue]="selectedInspection"
+                                        [vehicleData]="inspectionList" [type]="'inspection'"
+                                        [placeholder]="'Select Inspection'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedInspection && inspectionList && inspectionList.length > 0 ">
+                                    <select-filter [vehicleData]="inspectionList" [type]="'inspection'"
+                                            [placeholder]="'Select Inspection'"
+                                            (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedInspection && !inspectionList || inspectionList.length == 0">
+                                    <select-filter [type]="'inspection'"
+                                    [placeholder]="'Select Inspection'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <label class="form-label">Inspection Category</label>                            
+                                <div *ngIf="selectedInspectionCategory">
+                                    <select-filter [selectedValue]="selectedInspectionCategory"
+                                        [vehicleData]="inspectionChildList" [type]="'ins_category'"
+                                        [placeholder]="'Select Inspection Category'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedInspectionCategory && inspectionChildList && inspectionChildList.length > 0 ">
+                                    <select-filter [vehicleData]="inspectionChildList" [type]="'ins_category'"
+                                            [placeholder]="'Select Inspection Category'"
+                                            (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedInspectionCategory && !inspectionChildList || inspectionChildList.length == 0">
+                                    <select-filter [type]="'ins_category'"
+                                    [placeholder]="'Select Inspection Category'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-md-3">
+                                <label class="form-label">Mechanic Name</label>                            
+                                <div *ngIf="selectedMechanic">
+                                    <select-filter [selectedValue]="selectedMechanic"
+                                        [vehicleData]="mechanicList" [type]="'mechanic'"
+                                        [placeholder]="'Select Mechanic'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedMechanic && mechanicList && mechanicList.length > 0 ">
+                                    <select-filter [vehicleData]="mechanicList" [type]="'mechanic'"
+                                            [placeholder]="'Select Mechanic'"
+                                            (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedMechanic && !mechanicList || mechanicList.length == 0">
+                                    <select-filter [type]="'mechanic'"
+                                    [placeholder]="'Select Mechanic'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div> -->
+                           
+                            <!-- <div class="col-md-3">
+                                <label class="form-label">Customer Notes</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="customer_notes"
+                                        placeholder="Enter Customer Notes" aria-describedby="button-addon2" />
+                                </div>
+                            </div> -->
+
+                        
+                        </div>
+                    </form>
+
+                        <div class="row row-data">
+                            <div class="col-md-12">
+                                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                    <div class="dataTables_scroll">
+                                        <div class="dataTables_scrollBody" id="datascroll"
+                                            [ngClass]="inspectionChildList && inspectionChildList?.length > 2 ? 'job-data' : ''">
+                                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                                <loader [isRunning]="isloading"></loader>
+                                            </div>
+                                            <table id="datatable"
+                                                class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                                role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                                width="100%">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th *ngFor="let vehicleHeading of tableData2">
+                                                            <strong>{{vehicleHeading?.val}}</strong>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+    
+                                                <tbody *ngIf="!isloading">
+                                                    <tr *ngFor="let job of inspectionChildList; let i=index">
+                                                        <td><input class="largeCheckbox" id="myCheckbox" [disabled]="!mechanicIdvalue"  [(ngModel)]="job.isSelected"  type="checkbox" (change)="isAllSelected(i,job)"></td>
+                                                        <td>{{job?.description}}</td>
+                                                        <td>{{job?.jobCategory}}</td>
+                                                        <td>
+                                                            <div>
+                                                                    <div *ngIf="job?.selectedIndex === i">
+                                                                        <select-filter [selectedValue]="job?.selectedMechanic"
+                                                                            [vehicleData]="mechanicList" [type]="'mechanic'"
+                                                                            [placeholder]="'Select Mechanic'"
+                                                                            (onConfirm)="SelectMechanich($event,i)"></select-filter>
+                                                                    </div>
+                                                                    <!-- <div *ngIf="job.selectedIndex !== i">
+                                                                        <select-filter 
+                                                                            [vehicleData]="mechanicList" [type]="'mechanic'"
+                                                                            [placeholder]="'Select Mechanic'"
+                                                                            (onConfirm)="SelectMechanich($event,i)"></select-filter>
+                                                                    </div> -->
+                                                          
+                                                
+                                                                <div *ngIf="!job?.selectedMechanic && mechanicList && mechanicList.length > 0 ">
+                                                                    <select-filter [vehicleData]="mechanicList" [type]="'mechanic'"
+                                                                            [placeholder]="'Select Mechanic'"
+                                                                            (onConfirm)="SelectMechanich($event,i)"></select-filter>
+                                                                </div>
+                                                                <div *ngIf="!job?.selectedMechanic && !mechanicList || mechanicList.length == 0">
+                                                                    <select-filter [type]="'mechanic'"
+                                                                    [placeholder]="'Select Mechanic'"
+                                                                    (onConfirm)="SelectMechanich($event,i)"></select-filter>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    
+                                                    </tr>
+    
+                                                </tbody>
+                                            </table>
+                                            <div class="text-center"  *ngIf="inspectionChildList && inspectionChildList.length == 0 || inspectionChildList == null && !isloading"
+                              style="width: 100%;">No Data Available</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row row-data">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success"
+                            (click)="createItem(addJobForm.value)"><i class="fa fa-plus" aria-hidden="true"></i> Add
+                        </button>
+                            </div>
+                        </div> -->
+
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    <div class="row">
+                        <div class="col-md-3">Job Card List</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"> </div>
+                        <div class="col-md-3"> <a class="add-item" (click)="addItem('Add')"><i class="fa fa-plus"></i> Add Job</a></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let jobHeading of tableData">
+                                                        <strong>{{jobHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let job of checkedList;let i=index">
+                                                    
+                                                    <td>
+                                                        {{job?.inspectionName}}
+                                                    </td>
+                                                    <td>
+                                                        {{job?.inspectionCategory}}
+                                                    </td>
+                                                    <td>
+                                                        {{job?.mechanicName}}
+                                                    </td>
+                                                
+                                                    <td><a tooltip="Delete" (click)="delete(job, i)" rel="noopener noreferrer"><i class="fa fa-trash"
+                                                        aria-hidden="true"></i></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="checkedList && checkedList.length == 0 || checkedList == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class="btn btn-success" (click)="submit()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>  {{button}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

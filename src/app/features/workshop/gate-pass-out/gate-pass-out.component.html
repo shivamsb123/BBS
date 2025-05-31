@@ -1,0 +1,131 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/WorkShop/In">WorkShop</a></li>
+                <li><a routerLink="/WorkShop/In"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Gate Pass List</a></li>
+                        <li><a routerLink="/WorkShop/create_gate_pass_in"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                     Gate Pass Out </a></li>
+                
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">Gate Pass Out</div>
+                <div class="card-body">
+                    <form [formGroup]="getOutForm">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                        [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label"> Out Time</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="out_time"
+                                        placeholder="MM/dd/yyyy"
+                                        [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, HH:mm:ss', dateInputFormat: 'MMMM Do YYYY, HH:mm:ss'}"
+                                        #dp="bsDatepicker" bsDatepicker />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success" (click)="GatePassOut(getOutForm.value)" ><i class="fa fa-plus" aria-hidden="true" ></i>
+                                  Mark Out
+                                </button>
+                            </div>
+
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-danger" (click)="cancel()">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                          <div class="search-form">
+                            <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                              class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                                aria-hidden="true"></i></button>
+                          </div>
+                          <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                            <div class="p-2 bd-highlight">
+                              <span>Items per page: </span>
+                              <select (change)="onTableSizeChange($event)" class="custom-select">
+                                  <option *ngFor="let size of tableSizes" [value]="size">
+                                      {{ size }}
+                                  </option>
+                              </select>
+                          </div>
+                            <div class="dataTables_scroll">
+                              <div class="dataTables_scrollBody">
+                                <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                  <loader [isRunning]="isloading"></loader>
+                                </div>
+                                <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+                                  aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                  <thead>
+                                    <tr role="row">
+                                      <th *ngFor="let attendanceHeading of tableData">
+                                        <strong>{{attendanceHeading?.val}}</strong>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody *ngIf="!isloading">
+                                    <tr *ngFor="let vehicle of getPassInList | searchFilter : searchKeyword |  paginate : {
+                                                      itemsPerPage: tableSize,
+                                                      currentPage: page,
+                                                      totalItems: count};">
+                                                     
+                                                      <td>{{vehicle?.busNumber}}</td>
+                                                      <td>{{vehicle?.serviceType}}</td>
+                                                      <td>{{vehicle?.keeperName}}</td>
+                                                      <td>{{vehicle?.inTime}}</td>
+                                                      <td>{{vehicle?.outTime}}</td>
+                                                      <!-- <td> <a  tooltip="Edit" (click)="createGatePassIn('/WorkShop/create_gate_pass_in/id', vehicle?.gatePassID)"
+                                                        rel="noopener noreferrer"><i class="fa fa-pencil"
+                                                            aria-hidden="true"></i>
+                                                    </a></td> -->
+                                                      
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="text-center" style="width: 100%;" *ngIf=" getPassInList && getPassInList.length == 0 || getPassInList == null  && !isloading || !(getPassInList | searchFilter: searchKeyword)?.length"
+                              >No Data Available</div>
+                              <div class="pagination-data" *ngIf=" getPassInList && getPassInList.length > 0 && (getPassInList | searchFilter: searchKeyword)?.length">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

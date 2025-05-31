@@ -1,0 +1,144 @@
+.mr-2.btn-icon.btn-icon-only.btn.btn-primary {
+  margin-top: 30px;
+}
+.search-form {
+  float: right;
+}
+.search-input {
+  border-color: #2F387C !important;
+}
+.search-form .btn-search {
+  color: #2F387C;
+}
+.fa.fa-pencil {
+  margin-right: 10px;
+}
+h3.selected-route {
+  font-size: 16px;
+  font-weight: 500;
+}
+.dataTables_scrollBody.rpf-data {
+  height: 500px;
+}
+::ng-deep .google_map_container {
+  width: 100%;
+  display: block;
+  .map-container {
+    width: 100% !important;
+    height: 567px !important;
+    border-radius: 4px !important;
+  }
+}
+::ng-deep .tablerow {
+  tr {
+    color: red;
+  }
+}
+input.form-control.search-input.address {
+  border-radius: 25px;
+}
+/* Style for the container div */
+.items1 {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+/* Style for the container div */
+.items1 {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+/* Style for each card */
+.cards {
+  background-color: #F8F8F8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 8px;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: grab;
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  /* Ensure the cardss are above the lines */
+}
+/* Add a hover effect */
+.cards:hover {
+  background-color: #EAEAEA;
+}
+/* Styling for the dragged item */
+.cards.sortable-chosen {
+  background-color: #fff;
+  transform: scale(1.05);
+}
+/* Styling for the placeholder when an item is dragged */
+.cards.sortable-ghost {
+  opacity: 0.8;
+  border: 2px dashed #ddd;
+}
+/* Style for the SVG arrows */
+.arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  /* Allow interactions with the cardss underneath */
+}
+/* Style for the arrow connecting cardss horizontally */
+line {
+  stroke: #ddd;
+  stroke-width: 2;
+}
+agm-map {
+  height: 500px;
+}
+.controls {
+  display: flex;
+  // justify-content: space-between;
+  a {
+    color: darkblue;
+  }
+  .controls {
+    position: absolute;
+    z-index: 999;
+    top: 120px;
+    right: 20px;
+  }
+  button {
+    font-size: 14px;
+    background: blue;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 38px;
+  }
+  .visited {
+    background-color: #00FF00;
+    /* Change to your desired color */
+  }
+  button:hover,
+  button:focus {
+    background: red;
+  }
+  .active {
+    background: red;
+  }
+  .hidden {
+    display: none;
+  }
+  span {
+    color: red;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+.logo {
+  max-width: 30%;
+}
+#tableColumn {
+  color: blue !important;
+  cursor: pointer;
+}

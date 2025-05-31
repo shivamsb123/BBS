@@ -1,0 +1,137 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">
+            {{tittle}}
+        </h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <div class="row" *ngIf="!subId">
+            <div class="col-md-4">
+                <label class="form-label">Product List</label>
+                <div *ngIf="selectedValue">
+                    <select-filter [selectedValue]="selectedValue" [vehicleData]="productlist"
+                        [type]="'Product'" [placeholder]="'Select Product'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && productlist && productlist.length > 0">
+                    <select-filter [vehicleData]="productlist" [type]="'Product'"
+                        [placeholder]="'Select Product'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !productlist || productlist.length == 0">
+                    <select-filter [vehicleData]="productlist" [type]="'Product'"
+                        [placeholder]="'Select Product'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                    <label class="form-label">Quantity</label>
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control" [(ngModel)]="quantity"
+                            placeholder="Enter Qty" aria-describedby="button-addon2" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <br>
+                <button (click)="addProduct()" [disabled]="!productId || !quantity" class="mr-2 btn-icon btn-icon-only btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>
+                Issue Material
+              </button>
+            </div>
+        </div>
+
+        <div class="row row-data" *ngIf="!subId">
+            <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                        <div class="dataTables_scrollBody"
+                            [ngClass]="itemList && itemList?.length > 5 ? 'child-data' : ''">
+                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                <loader [isRunning]="isloading"></loader>
+                            </div>
+
+                            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th *ngFor="let vehicleHeading of childTable">
+                                            <strong>{{vehicleHeading?.val}}</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!isloading">
+                                    <tr *ngFor="let child of itemList;  let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{child?.proName}}</td>
+                                        <td>{{child?.qty}}</td>
+                                        <td><a tooltip="Delete" (click)="delete(i)" rel="noopener noreferrer"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center"
+                            *ngIf=" itemList && itemList.length == 0 || itemList == null  && !isloading"
+                            style="width: 100%;">No Data Available</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-data" *ngIf="subId">
+            <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                        <div class="dataTables_scrollBody"
+                            [ngClass]="productchildList && productchildList?.length > 5 ? 'child-data' : ''">
+                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                <loader [isRunning]="isloading"></loader>
+                            </div>
+
+                            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th *ngFor="let vehicleHeading of table">
+                                            <strong>{{vehicleHeading?.val}}</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!isloading">
+                                    <tr *ngFor="let child of productchildList;  let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{child?.productName}}</td>
+                                        <td>
+                                            <p *ngIf="editQuantity != i">{{child?.qty}}</p>
+                                            <p *ngIf="editQuantity == i"><input type="text"
+                                                    placeholder="Enter Qty"
+                                                    [(ngModel)]="child.qty"> </p>
+                                        </td>
+                                        <td>
+                                            <a *ngIf="editQuantity != i" tooltip="Edit" (click)="editProduct(i)"
+                                                rel="noopener noreferrer"><i class="fa fa-pencil"
+                                                    aria-hidden="true"></i>
+                                            </a>
+                                            <button *ngIf="editQuantity == i" class="btn btn-success"
+                                                (click)="updateProduct(child)"> <i
+                                                    class="fa fa-plus"></i>Update</button>
+                                        </td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center"
+                            *ngIf=" productchildList && productchildList.length == 0 || productchildList == null  && !isloading"
+                            style="width: 100%;">No Data Available</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

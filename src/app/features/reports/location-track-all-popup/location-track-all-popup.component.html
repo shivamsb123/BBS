@@ -1,0 +1,19 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+      <h4 class="modal-title f-w w-100">All Address</h4>
+      <div class="close-modal">
+        <i class="fa fa-close" (click)="cancel()"></i>
+      </div>
+    </div>
+    <div class="modal-body p-30">
+        <agm-map 
+        style="height: 500px;"
+        [streetViewControl]="true"
+        [latitude]="centerLatitude" [longitude]="centerLongitude"
+        [fullscreenControl]='true' [mapTypeControl]='true'
+        (mapReady)="onMapReady($event)">
+        
+      </agm-map>
+    </div>
+  </div>
+  

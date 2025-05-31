@@ -1,0 +1,62 @@
+
+.mat-form-field-infix.ng-tns-c130-3 {
+    width: 100% !important;
+    border-bottom: 1px solid !important;
+  }
+
+
+  .w-no-padding {
+    box-shadow: none !important;
+  }
+
+  .mat-elevation-z8 {
+    box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08) !important;
+    margin-top: 20px;
+    overflow-x: scroll;
+    scrollbar-width: thin;
+  }
+
+  .form-control.search {
+    border: none;
+    background: none;
+    position: relative;
+    border-bottom: 1px solid #2f387c;
+
+    :focus{
+      background: none;
+    }
+  }
+
+  .vehicle-information {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    border-radius: 0px !important;
+    box-shadow: 0px 1px 3px 0px rgba(69, 65, 78, 0.08) !important;
+    .header {
+      text-align: center;
+      border-bottom: 1px solid #171b3d;
+      padding-bottom: 7px;
+    }
+
+  }
+  .btn-primary {
+    margin-top: 20px;
+  }
+
+  .search-form {
+    float: right;
+  }
+
+  .search-input {
+    border-color:#2f387c !important;
+  }
+
+  .search-form .btn-search {
+    color: #2f387c;
+  }
+
+  .search-form {
+    margin-top: -5px;
+    margin-bottom: 11px;
+  }

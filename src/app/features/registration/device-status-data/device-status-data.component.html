@@ -1,0 +1,273 @@
+<section class="main-content">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-lg-12 align-self-center">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+            <li><a routerLink="/Dashboard/on_trip_status"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                All Trip Status Data</a></li>
+          </ol>
+        </div>
+      </div>  
+    </div>  
+    <tabset responsiveTabs [justified]="true" #staticTabs>
+      <tab  (selectTab)="onTablValue('1')">
+        <ng-template tabHeading>Vehicle</ng-template>
+       <!-- <app-vehicle-master [requestType]="'vehicle'"></app-vehicle-master> -->
+       <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-default">
+              Vehicle Master
+            </div>
+            <div class="card-body">
+              <div class="row row-data">
+                <div class="col-md-12">
+                  <div class="search-form">
+                    <input placeholder="Search for..." type="text" class="form-control search-input" [(ngModel)]="searchKeyword"><button
+                        type="button" class="btn-search" ><i class="fa fa-search"
+                            aria-hidden="true"></i></button>
+                </div>
+                  <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                      <div class="p-2 bd-highlight">
+                        <span>Items per page: </span>
+                        <select id="foo1" (change)="onTableSizeChange($event)" class="custom-select">
+                          <option *ngFor="let size of tableSizes" [value]="size">
+                            {{ size }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="dataTables_scrollHead">
+                      </div>
+                      <div class="dataTables_scrollBody">
+                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                          <loader [isRunning]="isloading"></loader>
+                        </div>
+
+
+                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let vehicle of vechileMaster |  searchFilter: searchKeyword |  paginate : {
+                                                  id:'foo1',
+                                          itemsPerPage: tableSize,
+                                          currentPage: page,
+                                          totalItems: count};">
+                                          <td>{{vehicle?.company_Name}}</td>
+                                          <td>{{vehicle?.chassis_Number}}</td>
+                                          <td>{{vehicle?.bus_Number}}</td>
+                                          <td>{{vehicle?.assest_Type}}</td>
+                                          <td>{{vehicle?.vendor_Name}}</td>
+                                          <td>{{vehicle?.owner_Name}}</td>
+                                          <td>{{vehicle?.rC_Present_Address}}</td>
+                                          <td>{{vehicle?.status}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center" style="width: 100%;" *ngIf="vechileMaster && vechileMaster.length == 0 || vechileMaster == null && !isloading || !(vechileMaster | searchFilter:searchKeyword)?.length">No Data
+                                            Available</div>
+
+
+                      </div>
+                      <div class="pagination-data" *ngIf="vechileMaster && vechileMaster.length > 0" >
+                        <pagination-controls id="foo1" previousLabel="Prev" nextLabel="Next"
+                          (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      </tab>
+      <tab  (selectTab)="onTablValue('2')">
+        <ng-template tabHeading>OBU</ng-template>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">
+                OBU
+              </div>
+              <div class="card-body">
+                <div class="row row-data">
+                  <div class="col-md-12">
+                    <!-- <div class="search-form">
+                      <input class="form-control search-input" type="search" [(ngModel)]="searchKeyword"
+                        placeholder="Search for..." /> <button class="btn-search" type="button"><i *ngIf="!searchKeyword"
+                          class="fa fa-search"></i> <i *ngIf="searchKeyword" (click)="clearSearchField()" class="fa fa-times"
+                          aria-hidden="true"></i></button>
+                    </div> -->
+                    <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                      <div class="dataTables_scroll">
+                        <div class="p-2 bd-highlight">
+                          <span>Items per page: </span>
+                          <select id="foo" (change)="onTableSizeChange($event)" class="custom-select">
+                            <option *ngFor="let size of obuData.tableSizes" [value]="size">
+                              {{ size }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="dataTables_scrollHead">
+                        </div>
+                        <div class="dataTables_scrollBody">
+                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                              <loader [isRunning]="isloading"></loader>
+                            </div>
+                          <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                            aria-describedby="datatable_info" style="width: 100%" width="100%">
+                            <thead>
+                              <tr role="row" >
+                                <th *ngFor="let vehicleHeading of tableData1">
+                                  <strong>{{vehicleHeading?.val}}</strong>
+                                </th>
+                              </tr>
+                            </thead>
+                          
+                            <tbody *ngIf="!isloading">
+                              <tr *ngFor="let vehicle of obuList |  paginate : {
+                                id: 'foo',
+                                itemsPerPage: tableSize,
+                                currentPage: page,
+                                totalItems: count};">
+                                <td>{{vehicle?.sn}}</td>
+                                <td>
+                                  {{vehicle?.device || 'NA'}}
+                                </td>
+                                <td>{{vehicle?.asseT_NO || 'NA'}}</td>
+                                <td>{{vehicle?.timeg || 'NA'}}</td>
+                                <td>{{vehicle?.place || 'NA'}}</td>
+                                <td>{{vehicle?.soc || 'NA'}}</td>
+                                <td>{{vehicle?.milage || 'NA'}}</td>            
+                                <td>
+                                  {{vehicle?.charging_Status || 'NA'}}
+                                </td>                                     
+                                <td >{{vehicle?.total_Voltage || 'NA'}}</td>
+                                <td>{{vehicle?.total_Current || 'NA'}}</td>
+                               
+                                <td>
+                                  {{vehicle?.battery1_Temp}},{{vehicle?.battery2_Temp}},{{vehicle?.battery3_Temp}},{{vehicle?.battery4_Temp}}
+                                </td>
+                                <td>
+                                  {{vehicle?.battery5_Temp}},{{vehicle?.battery6_Temp}},{{vehicle?.battery7_Temp}},{{vehicle?.battery8_Temp}}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="text-center" *ngIf="obuList == null && !isloading"
+                            style="width: 100%;">No Data Available</div>
+                        </div>
+                        <div class="pagination-data"  *ngIf="obuList && obuList.length > 0">
+                          <pagination-controls id="foo" previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                          </pagination-controls>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+  
+      </tab>
+      <tab  (selectTab)="onTablValue('3')">
+        <ng-template tabHeading>RFID</ng-template>
+        <under-development></under-development>    
+      </tab>
+      <tab  (selectTab)="onTablValue('4')">
+        <ng-template tabHeading>GPS</ng-template>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-default">
+               GPS
+              </div>
+              <div class="card-body">
+                <div class="row row-data">
+                  <div class="col-md-12">
+                    <!-- <div class="search-form">
+                      <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                        class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                          aria-hidden="true"></i></button>
+                    </div> -->
+                    <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                      <div class="dataTables_scroll">
+                        <div class="p-2 bd-highlight">
+                          <span>Items per page: </span>
+                          <select id='foo3' (change)="onTableSizeChange($event)" class="custom-select">
+                            <option *ngFor="let size of tableSizes" [value]="size">
+                              {{ size }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="dataTables_scrollBody">
+                          <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                            <loader [isRunning]="isloading"></loader>
+                          </div>
+                          <table id="datatable"  class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                            aria-describedby="datatable_info" style="width: 100%" width="100%">
+                            <thead>
+                              <tr role="row" >
+                                <th *ngFor="let vehicleHeading of tableData3">
+                                  <strong>{{vehicleHeading?.val}}</strong>
+                                </th>
+                              </tr>
+                            </thead>
+
+                            <tbody *ngIf="!isloading">
+                              <tr *ngFor="let vehicle of gpsList | searchFilter: searchKeyword |  paginate : {
+                                id:'foo3',
+                                itemsPerPage: tableSize,
+                                currentPage: page,
+                                totalItems: count};">
+                                <td>{{vehicle?.sn}}</td>
+                                <td>
+                                  {{vehicle?.device || 'NA'}}
+                                </td>
+                                <td>{{vehicle?.asseT_NO || 'NA'}}</td>
+                                <td>{{vehicle?.speed || 'NA'}}</td>
+                                <td>{{vehicle?.place || 'NA'}}</td>
+                                <td>{{vehicle?.timeu || 'NA'}}</td>                              
+                                <td>{{vehicle?.timeg || 'NA'}}</td>                                                     
+                                <td>{{vehicle?.obU_ASSET_NO || 'NA'}}</td>                             
+                                <td>{{vehicle?.milage}}</td>
+                                <td>{{vehicle?.charging_Status}}</td>
+                                <td>{{vehicle?.total_Voltage}}</td>
+                                <td>{{vehicle?.total_Current}}</td>
+                                <td>{{vehicle?.battery1_Temp}},{{vehicle?.battery2_Temp}},{{vehicle?.battery3_Temp}},{{vehicle?.battery4_Temp}} <br/>
+                                  {{vehicle?.battery5_Temp}},{{vehicle?.battery6_Temp}},{{vehicle?.battery7_Temp}},{{vehicle?.battery8_Temp}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="text-center" *ngIf="gpsList == null && !isloading"
+                          style="width: 100%;">No Data Available</div>
+                        <div class="pagination-data"  *ngIf="gpsList && gpsList.length > 0">
+                          <pagination-controls id='foo3' previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)" >
+                          </pagination-controls>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>  
+    </tabset>  
+  </section>

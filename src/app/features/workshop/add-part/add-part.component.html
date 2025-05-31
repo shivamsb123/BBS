@@ -1,0 +1,72 @@
+
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">
+            Spares 
+        </h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label">Search Part</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search Part"
+                        aria-describedby="button-addon2" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Select Part</label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option>Select Part</option>
+                    </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Warehouse Balance</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Warehouse Balance"
+                        aria-describedby="button-addon2" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Qty</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control"  placeholder="Qty"
+                        aria-describedby="button-addon2" />
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label">Rate</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Rate"
+                        aria-describedby="button-addon2" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Amount</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Amount" aria-describedby="button-addon2" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <br>
+                <button class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i>Add</button>
+            </div>
+            <div class="col-md-3">
+                <br>
+                <button class=" btn btn-danger" (click)="cancel()"><i class="fa fa-times" aria-hidden="true"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

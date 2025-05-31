@@ -1,0 +1,67 @@
+<spinner-loader *ngIf="isloading"></spinner-loader>
+<section class="main-content" *ngIf="!isloading">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/SupplyChain/SubCategoryMaster_List"> <i class="fa fa-long-arrow-right"
+              aria-hidden="true"></i>
+            SubCategory Master </a></li>
+        <li><a routerLink="/SupplyChain/Add-Subcategory"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Add SubCategory Master </a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert>
+      <div class="card">
+        <div class="card-header card-default">
+          Add Subcategory
+        </div>
+        <div class="card-body">
+          <form [formGroup]="subform">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">Category</label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="categoryData"
+                  [type]="'category'" [placeholder]="'Select category'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!selectedValue && categoryData && categoryData.length > 0 ">
+                  <select-filter [vehicleData]="categoryData"
+                  [type]="'category'" [placeholder]="'Select category'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!selectedValue && !categoryData || categoryData.length == 0">
+                  <select-filter
+                  [type]="'category'" [placeholder]="'Select category'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Sub Category Name</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" formControlName="sub_cat" placeholder="Enter SubCategory Name"
+                    aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-success" (click)="submit(subform.value)">
+                  <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                </button>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-danger" (click)="cancel()">
+                  <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

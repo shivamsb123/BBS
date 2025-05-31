@@ -1,0 +1,664 @@
+.container1 {
+  background-color: lightblue;
+  padding: 10px;
+}
+
+.container2 {
+  background-color: lightgreen;
+  padding: 10px;
+}
+
+.vehcileList {
+  // display: flex;
+  justify-content: space-between;
+}
+
+.main-content {
+  padding: 0px !important;
+}
+
+.transition-div {
+  background-color: blue;
+  transition: height 0.3s ease;
+
+}
+
+.cancontainer {
+  .tab-content {
+    font-size: 0.813rem;
+    width: 100%;
+    background-image: url(/assets/img/corner_offline.svg) !important;
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: top right !important;
+
+  }
+
+  .detail {
+    color: rgb(0, 37, 64) !important;
+    font-size: 1.25rem !important;
+  }
+
+  .label {
+    font-size: 0.625rem !important;
+    color: #4d6679;
+    font-weight: 600 !important;
+  }
+
+  .item-label {
+    font-size: 0.625rem !important;
+    color: #4d6679;
+    font-weight: 600 !important;
+  }
+
+  .align-items-center {
+    -ms-flex-align: center !important;
+    align-items: center !important;
+  }
+
+  .selected-device-sidebar .device-state-icon {
+    margin-right: 10px !important;
+    width: 50px;
+    height: 50px;
+  }
+
+  .device-status {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .device-status {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .device_con {
+    height: 15px;
+    float: right;
+    padding-right: 2px;
+  }
+
+  .device_speed {
+    font-size: 24px;
+    line-height: 26px;
+    font-weight: 700;
+    align-content: center;
+    text-align: center;
+    display: block;
+  }
+
+  .device_speed_subs {
+    font-size: 10px;
+    align-content: center;
+    text-align: center;
+    display: block;
+    line-height: 12px;
+    font-weight: 300;
+  }
+
+  .description {
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .sensor {
+    text-align: center;
+    margin: 1.5px 1.5px 1.5px 1.5px !important;
+    width: 3.5rem !important;
+    max-width: 3.5rem !important;
+    height: 3.5rem !important;
+    border: 0.5px solid #8092a0;
+    border-radius: 4px;
+  }
+
+  .sensor_icon {
+    display: block;
+    /* height: 25px; */
+    /* border: 1px solid #ccd3d9; */
+    margin-bottom: 5px;
+
+    /* box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px; */
+    img {
+      height: 18px;
+    }
+  }
+
+  .sensor_value {
+    /* font-size: 12px; */
+    font-size: 0.75rem !important;
+    color: #4d6679;
+    font-weight: 600 !important;
+    text-transform: capitalize;
+    margin-top: -12px;
+  }
+
+  .device_speed_subs {
+    font-size: 10px;
+    align-content: center;
+    text-align: center;
+    display: block;
+    line-height: 12px;
+    font-weight: 300;
+  }
+
+  .flex-wrap {
+    -ms-flex-wrap: wrap !important;
+    flex-wrap: wrap !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .mr-1,
+  .mx-1 {
+    margin-right: 0.25rem !important;
+  }
+
+  .flex-column {
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+  }
+
+  .d-flex {
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+
+  .other-stat-value {
+    font-weight: 600;
+  }
+
+  .stat-title {
+    font-size: 0.625rem !important;
+    color: #4d6679;
+    font-weight: 600 !important;
+    text-transform: capitalize;
+    margin-top: -6px;
+  }
+}
+
+.vehcileList {
+  .device-simple-view {
+    overflow-y: auto;
+    height: calc(100vh - 417px);
+  }
+
+  .device_panel {
+    background-color: white;
+    margin: 5px 2px 8px 2px;
+    padding: 7px;
+    height: 50px;
+    cursor: pointer;
+  }
+
+  .device_panel.vehicle {
+    background-color: white;
+    margin: 5px 2px 8px 2px;
+    padding: 7px;
+    height: 50px;
+    cursor: pointer;
+  }
+
+  .device_panel.active {
+    border-radius: 5px;
+    background-color: #002540;
+    color: white;
+  }
+
+  .device_image {
+    padding-right: 5px;
+    float: left;
+  }
+
+  .device_name {
+    display: block;
+    font-weight: 500;
+    line-height: 12px;
+    font-size: 14px !important;
+  }
+
+  .device_subscript {
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 300;
+  }
+
+  .device_address {
+    margin-top: 3px;
+    display: block;
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+  .justify-content-center {
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+  }
+
+  .flex-column {
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+  }
+
+  .d-flex {
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+
+  .device_speed {
+    font-size: 24px;
+    line-height: 26px;
+    font-weight: 700;
+    align-content: center;
+    text-align: center;
+    display: block;
+  }
+
+  .device_speed_subs {
+    font-size: 10px;
+    align-content: center;
+    text-align: center;
+    display: block;
+    line-height: 12px;
+    font-weight: 300;
+  }
+
+  .device_icon {
+    height: 13px;
+    float: right;
+  }
+}
+
+.device_panel.data {
+  background-color: #2c3477 !important;
+
+  .device_name {
+    color: white;
+  }
+
+  .device_subscript {
+    color: white;
+  }
+
+  .device_address {
+    color: white;
+  }
+
+  .device_speed {
+    color: white;
+  }
+
+  .device_speed_subs {
+    color: white;
+  }
+}
+
+.item-label {
+  margin-bottom: 0px !important;
+}
+
+.arrow-container {
+  /* cubic-bezier-easing = sine / mehr Beispiele: https://easings.net/ */
+  animation: bounce 1600ms infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  cursor: pointer;
+  padding-top: 10px;
+  width: 50px;
+  height: 50px;
+}
+
+.up-logo {
+  width: 100%;
+}
+
+.arrow-down {
+  height: 6px;
+  background: black;
+  transform: rotate(45deg);
+  transform-origin: 0% 0%;
+  border-radius: 5px;
+}
+
+.arrow-down:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 100%;
+  border-radius: 5px;
+  background: black;
+  transform: rotate(-90deg);
+  transform-origin: 0% 100%;
+}
+
+.arrow-up {
+  height: 6px;
+  background: black;
+  transform: rotate(225deg);
+  transform-origin: 0% 0%;
+  border-radius: 5px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    left: 100%;
+    border-radius: 5px;
+    background: black;
+    transform: rotate(-90deg);
+    transform-origin: 0% 100%;
+
+  }
+}
+
+
+@keyframes bounce {
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.form-check {
+  display: block;
+  min-height: 1.5rem;
+  padding-left: 1.5em;
+  margin-bottom: 0.125rem;
+  margin-right: 24px !important;
+}
+
+.form-check-label {
+  padding-left: 0 !important;
+  margin-bottom: 0
+}
+
+::ng-deep {
+
+  button.btn.btn-link {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: black;
+  }
+}
+
+
+/* TIMELINE
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.timeline {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.timeline ol {
+  font-size: 0;
+  width: 100vw;
+  padding: 193px 0;
+  transition: all 1s;
+  overflow: auto;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.timeline ol li {
+  position: relative;
+  display: inline-block;
+  list-style-type: none;
+  // width: 116px;
+  width: 28px;
+  height: 3px;
+  background: #fff;
+  flex: 0 0 auto;
+}
+
+.timeline ol li:first-child {
+  // width: 280px;
+  width: 50px;
+  margin-right: 100px;
+}
+
+.timeline ol li {
+  margin-left: 14px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(100% - 6px);
+    bottom: 0;
+    width: 24px;
+    height: 23px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: url('../../.././../assets/images/location.png') no-repeat;
+  }
+}
+
+.timeline ol li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + -7px);
+  bottom: 0;
+  width: 24px;
+  height: 23px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: url('../../.././../assets/images/trip-stop.png') no-repeat;
+
+}
+
+.timeline ol li:first-child {
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(100% + -7px);
+    bottom: 0;
+    width: 24px;
+    height: 23px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: url('../../.././../assets/images/last-flag.png') no-repeat;
+  }
+}
+
+.timeline ol li div {
+  position: absolute;
+  left: calc(100% + -47px);
+  width: 170px;
+  // padding: 7px;
+  font-size: 1rem;
+  white-space: normal;
+  color: black;
+  // background: white;
+  // transform: rotate(5deg);
+}
+
+.timeline ol li div::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+// .timeline ol li:nth-child(odd) div {
+//   top: -16px;
+//   transform: translateY(-100%);
+//   font-size: 12px;
+// }
+
+
+
+.timeline ol li:nth-child(odd) div {
+  top: -115px;
+  transform: translateY(-100%);
+  font-size: 12px;
+  transform: rotate(305deg);
+}
+
+.timeline ol li:nth-child(odd) div::before {
+  top: 100%;
+  border-width: 8px 8px 0 0;
+  border-color: #ad3636 transparent transparent transparent;
+}
+
+// .timeline ol li:nth-child(even) div {
+//   top: calc(100% + 16px);
+//   font-size: 12px;
+// }
+
+.timeline ol li:nth-child(even) div {
+  top: calc(100% + 72px);
+  font-size: 12px;
+  transform: rotate(45deg);
+  left: -13px;
+}
+
+.timeline ol li:nth-child(even) div::before {
+  top: -8px;
+  border-width: 8px 0 0 8px;
+  border-color: transparent transparent transparent #ad3636;
+}
+
+.timeline time {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* TIMELINE ARROWS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.timeline .arrows {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.timeline .arrows .arrow__prev {
+  margin-right: 20px;
+}
+
+.timeline .disabled {
+  opacity: 0.5;
+}
+
+.timeline .arrows img {
+  width: 45px;
+  height: 45px;
+}
+
+/* GENERAL MEDIA QUERIES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media screen and (max-width: 599px) {
+
+  .timeline ol,
+  .timeline ol li {
+    width: auto;
+  }
+
+  .timeline ol {
+    padding: 0;
+    transform: none !important;
+    display: flex;
+    flex-direction: row-reverse;
+
+    li {
+      flex: 0 0 auto;
+    }
+  }
+
+
+
+  .timeline ol li {
+    display: block;
+    height: auto;
+    background: transparent;
+  }
+
+  .timeline ol li:first-child {
+    margin-top: 25px;
+  }
+
+  .timeline ol li:not(:first-child) {
+    margin-left: auto;
+  }
+
+  .timeline ol li div {
+    position: static;
+    width: 94%;
+    height: auto !important;
+    margin: 0 auto 25px;
+  }
+
+  .timeline ol li:nth-child(odd) div {
+    transform: none;
+  }
+
+  .timeline ol li:nth-child(odd) div::before,
+  .timeline ol li:nth-child(even) div::before {
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    border: none;
+    border-left: 1px solid white;
+    height: 25px;
+  }
+
+  .timeline ol li:last-child,
+  .timeline ol li:nth-last-child(2) div::before,
+  .timeline ol li:not(:last-child)::after,
+  .timeline .arrows {
+    display: none;
+  }
+}
+
+/* FOOTER STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-footer {
+  position: fixed;
+  right: 0;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  color: black;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.page-footer a {
+  display: flex;
+  margin-left: 4px;
+}
+
+
+.stop-name.bus-green {
+  color: green !important;
+
+}
+
+.stop-name.bus-reached {
+  // background: #fff !important;
+  color: #130404 !important;
+}
+
+.stop-name {
+  // background: #f10c0c !important;
+  color: #f10c0c !important;
+  font-weight: 700;
+
+}
+
+.device-simple-view {
+  height: 400px;
+  overflow: auto;
+}

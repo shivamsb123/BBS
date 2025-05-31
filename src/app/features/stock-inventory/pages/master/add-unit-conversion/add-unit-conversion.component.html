@@ -1,0 +1,82 @@
+<spinner-loader *ngIf="isloading"></spinner-loader>
+<section class="main-content" *ngIf="!isloading">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+          <li><a routerLink="/SupplyChain/Master_Unit_Conversion_List"> <i class="fa fa-long-arrow-right"
+                aria-hidden="true"></i>
+               Unit Conversion  </a></li>
+               <li><a routerLink="/SupplyChain/Add-Unit-Conversion"> <i class="fa fa-long-arrow-right"
+                aria-hidden="true"></i>
+               Add Conversion  </a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <div class="card">
+          <div class="card-header card-default">
+            Add Conversion       
+          </div>
+          <div class="card-body">
+            <form [formGroup]="unitConversionform">
+              <div class="row">
+                  <div class="col-md-3">
+                      <label class="form-label">Base Unit Name</label>
+
+                    <div *ngIf="selectedValue">
+                      <select-filter [selectedValue]="selectedValue" [vehicleData]="unitData" [type]="'baseUnit'" [placeholder]="'Select Base Unit Name'"
+                      (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                  <div *ngIf="!selectedValue && unitData && unitData.length > 0 ">
+                    <select-filter [vehicleData]="unitData" [type]="'baseUnit'" [placeholder]="'Select Base Unit Name'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                  <div *ngIf="!selectedValue && !unitData || unitData.length == 0">
+                      <select-filter [type]="'baseUnit'" [placeholder]="'Select Base Unit Name'"
+                      (onConfirm)="confirm($event)"></select-filter>
+                  </div>
+                  </div>
+                  <div class="col-md-3">
+                      <label class="form-label">Sub Unit Name</label>
+                      <!-- <div *ngIf="unitData && unitData.length>0">
+                        <select-filter [vehicleData]="unitData" [type]="'subbaseUnit'" [placeholder]="'Select Sub Unit Name'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                      </div> -->
+                      <input type="text" class="form-control" formControlName="subUnitName" placeholder="Enter SubUnit Name"
+                      aria-describedby="button-addon2" />
+                  </div>  
+                  <div class="col-md-3">
+                      <label class="form-label">Conversion Factor</label>
+                      <div class="input-group mb-3">
+                          <input type="text" class="form-control" formControlName="conversionFactor" placeholder="Conversion Factor"
+                              aria-describedby="button-addon2" />
+                      </div>
+                  </div>                         
+              </div>  
+              <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3">
+                      <button class="btn btn-success" (click)="submit(unitConversionform.value)">
+                        <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                      </button>
+                  </div>
+                  <div class="col-md-3">
+                      <button class="btn btn-danger"  (click)="cancel()" >
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                      </button>
+                  </div>
+              </div>    
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  </section>

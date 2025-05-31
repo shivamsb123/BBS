@@ -1,0 +1,82 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/rTracking/Tracking_Live">Tracking</a></li>
+                <li><a routerLink="/Tracking/Tracking_History"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        History - Vehicle wise</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <form [formGroup]="historyVehicleForm">
+                <div class="row">
+                        <div class="col-md-2">
+                            <label for="exampleInputEmail1" class="form-label">Vehicle</label>
+                            <div *ngIf="vehicleData && vehicleData.length > 0">
+                                <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"                                   [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="exampleInputEmail1" class="form-label">From Date</label>
+                            <input type="text" formControlName="fromDate" placeholder="Select from date" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="exampleInputEmail1" class="form-label">To Date</label>
+                            <input type="text" formControlName="toDate" placeholder="Select to date" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" />
+                        </div>
+                        <div class="col-md-2">
+                            <label for="exampleInputEmail1" class="form-label">Select Speed</label>
+                            <select class="form-select mb-3" aria-label="Default select example"
+                            formControlName="status">
+                            <option value="">Fast</option>
+                            <option value="1">Medium</option>
+                            <option value="0">Fastest</option>
+                        </select>
+                        </div>
+                        <div class="col-md-4 mt-4">
+                        
+                            <button class="mt-2 btn-icon btn-icon-only btn btn-primary" (click)="submit(historyVehicleForm.value)">
+                                Play Now
+                              </button>
+                        </div>
+                </div>
+                </form>
+
+                <div class="row row-data">
+                    <div class="col-md-12">
+                        <div class="mb-3 card">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                    History Vehicle wise tracking
+                                </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane fade active show" id="tab-eg-55">
+                                    <div class="widget-chart p-3">
+                                        <div class="map-container">
+                                            <div id="map" style="width: 100%; height: 600px;"></div>
+
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

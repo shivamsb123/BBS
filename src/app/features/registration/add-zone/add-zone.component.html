@@ -1,0 +1,131 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/registration/RC_Details">Registration</a></li>
+        <li><a routerLink="/Registration/Add_Department"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Add Department</a></li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+      </app-alert>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="addZone">
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Department</label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="department" [type]="'Department'"
+                    [placeholder]="'Select Department'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && department && department.length > 0">
+                  <select-filter [vehicleData]="department" [type]="'Department'" [placeholder]="'Select Department'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !department || department.length == 0">
+                  <select-filter [type]="'Department'" [placeholder]="'Select Department'"
+                    (onConfirm)="confirm($event)"></select-filter>
+
+                </div>
+              </div>
+
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Zone Code</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Enter Zone Code" aria-describedby="button-addon2"
+                    formControlName="dept_code" />
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-3">
+                <label for="exampleInputEmail1" class="form-label">Zone Name</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Enter Zone Name" aria-describedby="button-addon2"
+                    formControlName="dept_name" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <br>
+                    <button class="btn btn-success" [disabled]="!addZone.valid" (click)="submit(addZone.value)"
+                     ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{button}}
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <br>
+                    <button (click)="cancel()" class="btn btn-danger">
+                      <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+          <div class="row">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="p-2 bd-highlight">
+                  <span>Items per page: </span>
+                  <select (change)="onTableSizeChange($event)" class="custom-select">
+                    <option *ngFor="let size of tableSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="dataTables_scroll">
+                  <div class="dataTables_scrollHead">
+                  </div>
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.value}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let user of zoneList |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count};">
+                          <td>{{user?.depT_NAME}}</td>
+                          <td>{{user?.zone_Code}}</td>
+                          <td>{{user?.zonE_NAME}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center" *ngIf="zoneList && zoneList.length == 0 || zoneList == null && !isloading"
+                      style="width: 100%;">No Data Available</div>
+                  </div>
+
+                </div>
+                <div class="pagination-data" *ngIf="zoneList && zoneList.length > 0">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                  </pagination-controls>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <ng-template #deleteZoneTemplate>
+    <confirmation-popup [modalRef]='deleteZoneData' [message]='message' (onConfirm)="confirmDelete($event)">
+    </confirmation-popup>
+  </ng-template> -->

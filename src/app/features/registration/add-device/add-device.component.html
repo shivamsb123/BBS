@@ -1,0 +1,416 @@
+<section class="main-content" id="content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a routerLink="/registration/RC_Details">Registration</a>
+        </li>
+        <li>
+          <a routerLink="/dms/Add_Device">
+            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Device Master</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+  <form [formGroup]="addDevice">
+    <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger">
+    </app-alert>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">Device details</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">IMEI Number</label>
+                <div class="input-group mb-3">
+                  <input type="text"  class="form-control" placeholder="IMEI Number"
+                    formControlName="imei" aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Device Id</label>
+                <div class="input-group mb-3">
+                  <input type="text"  class="form-control" placeholder="Device Id"
+                    formControlName="deviceId" aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Vendor</label>
+                <div class="input-group mb-3">
+                  <input type="text"  class="form-control" placeholder="Vendor"
+                    aria-describedby="button-addon2" formControlName="deviceVendor" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Model</label>
+                <div class="input-group mb-3">
+                  <input type="text"  class="form-control" placeholder="Model"
+                    aria-describedby="button-addon2" formControlName="deviceModel" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">Asset details</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">Assets Number</label>
+                <div class="input-group mb-3">
+                  <input type="text"  formControlName="assetsNo" class="form-control"
+                    placeholder="Assets Number" aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Asset Type</label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="subVehicleTypeList"
+                    [type]="'Asset_Type'" [placeholder]="'Select Asset Type'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && subVehicleTypeList && subVehicleTypeList?.length > 0 ">
+                  <select-filter [vehicleData]="subVehicleTypeList" [type]="'Asset_Type'"
+                    [placeholder]="'Select Asset Type'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !subVehicleTypeList || subVehicleTypeList?.length == 0">
+                  <select-filter [type]="'Asset_Type'" [placeholder]="'Select Asset Type'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Vendor</label>
+                <div class="input-group mb-3">
+                  <input type="text"  formControlName="assetsVendor" class="form-control"
+                    placeholder="Vendor" aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Model</label>
+                <div class="input-group mb-3">
+                  <input type="text"  formControlName="assetsModel" class="form-control"
+                    placeholder="Model" aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">Communication settings</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">IP Address/URL </label>
+                <div class="input-group mb-3">
+                  <input type="text"  formControlName="ipAdd" class="form-control"
+                    placeholder="IP Address/URL " aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Port No </label>
+                <div class="input-group mb-3">
+                  <input type="number"  formControlName="portno" class="form-control"
+                    placeholder="Port No " aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Polling Interval </label>
+                <div class="input-group mb-3">
+                  <input type="number"  formControlName="poll_interval" class="form-control"
+                    placeholder="Polling Interval " aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Communication Password </label>
+                <div class="input-group mb-3">
+                  <input type="password"  formControlName="com_pwd" class="form-control"
+                    placeholder="Communication Password" aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">Sim details</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">Mobile Number </label>
+                <div class="input-group mb-3">
+                  <input type="number"  formControlName="phn" class="form-control"
+                    placeholder="Mobile Number " aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Sim Vendor </label>
+                <div class="input-group mb-3">
+                  <input type="text"  formControlName="simVendor" class="form-control"
+                    placeholder="Sim Vendor " aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Sim Number </label>
+                <div class="input-group mb-3">
+                  <input type="text"  formControlName="simNumber" class="form-control"
+                    placeholder="Sim Number " aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">APN </label>
+                <div class="input-group mb-3">
+                  <input type="text"  formControlName="apn" class="form-control" placeholder="APN"
+                    aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">GMT Corrections</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">Hour</label>
+                <div class="input-group mb-3">
+                  <input type="number"  formControlName="hour" class="form-control"
+                    placeholder="Hour" aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Minute </label>
+                <div class="input-group mb-3">
+                  <input type="number"  formControlName="minute" class="form-control"
+                    placeholder="Minute " aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Speed Correction </label>
+                <div class="input-group mb-3">
+                  <input type="number"  class="form-control" placeholder="Speed Correction "
+                    formControlName="speed_corr" aria-describedby="button-addon2" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-default">Device Status</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" aria-label="Default select example" formControlName="status">
+                  <option value="">Select Status</option>
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Sim No2</label>
+                <div class="input-group mb-3">
+                  <input type="text"  class="form-control" placeholder="Sim No2"
+                    aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">IMSI No</label>
+                <div class="input-group mb-3">
+                  <input type="number"  class="form-control" placeholder="IMSI No"
+                    aria-describedby="button-addon2" />
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                <label class="form-label">Device Type</label>
+                <div class="input-group mb-3">
+                  <input type="number" id="myInput update-rc" class="form-control" placeholder="Device Type"
+                    aria-describedby="button-addon2" />
+                </div>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                <button class="mr-2 btn-icon btn-icon-only btn btn-success" [disabled]="!addDevice.value.imei || !addDevice.value.deviceId || !addDevice.value.deviceVendor || !addDevice.value.portno"
+                  (click)="submit(addDevice.value)"><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{button}}
+                </button>
+              </div>
+              <div class="col-md-3">
+                <button (click)="cancel()" class="mr-2 btn-icon btn-icon-only btn btn-danger">
+                  <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-default">Device Lists</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="p-2 bd-highlight">
+                <span>Items per page: </span>
+                <select (change)="onTableSizeChange($event)" class="custom-select">
+                  <option *ngFor="let size of tableSizes" [value]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+              <div class="search-form">
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                  class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <!-- <button class="btn btn-primary" (click)="redirectTo()"><i class="fa fa-plus"></i> Add Device</button> -->
+              <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+
+            </div>
+          </div>
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid" #TABLE
+                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.value}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="
+                    let complain of deviceList
+                      | searchFilter : searchKeyword
+                      | paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count
+                          }
+                  ">
+                          <td>{{ complain?.department || "NA" }}</td>
+                          <td>
+                            <ng-template [ngIf]="complain?.status == 1">
+                              Active
+                            </ng-template>
+                            <ng-template [ngIf]="complain?.status == 0">
+                              Inactive
+                            </ng-template>
+                          </td>
+                          <td>{{ complain?.imei || "NA" }}</td>
+                          <td>{{ complain?.asseT_NO || "NA" }}</td>
+                          <td>{{ complain?.gmT_HOUR || "NA" }}</td>
+                          <td>{{ complain?.gmT_MNT || "NA" }}</td>
+                          <td>{{ complain?.speeD_CORRECTION || "NA" }}</td>
+                          <td>{{ complain?.ip || "NA" }}</td>
+                          <td>{{ complain?.port || "NA" }}</td>
+                          <td>{{ complain?.devicE_VENDOR || "NA" }}</td>
+                          <td>{{ complain?.devicE_MODEL || "NA" }}</td>
+                          <td>{{ complain?.siM_NO || "NA" }}</td>
+                          <td>{{ complain?.siM_VENDOR || "NA" }}</td>
+                          <td>{{ complain?.apn || "NA" }}</td>
+                          <td>
+                            <ng-template [ngIf]="complain?.asseT_SUB_ID == 2">
+                              BUS
+                            </ng-template>
+                            <ng-template [ngIf]="complain?.asseT_SUB_ID == 3">
+                              CAR
+                            </ng-template>
+                            <ng-template [ngIf]="complain?.asseT_SUB_ID == 8">
+                              Cell ID Terminal
+                            </ng-template>
+                            <ng-template [ngIf]="complain?.asseT_SUB_ID == 5">
+                              Fixed Device
+                            </ng-template>
+                            <ng-template [ngIf]="complain?.asseT_SUB_ID == 6">
+                              Mobile
+                            </ng-template>
+                            <ng-template [ngIf]="complain?.asseT_SUB_ID == 9">
+                              OBU
+                            </ng-template>
+                            <ng-template [ngIf]="complain?.asseT_SUB_ID == 4">
+                              TRUCK
+                            </ng-template>
+                          </td>
+                          <td>{{ complain?.asseT_VENDOR }}</td>
+                          <td>{{ complain?.asseT_MODEL || "NA" }}</td>
+                          <td>{{ complain?.gprS_INTERVAL || "NA" }}</td>
+                          <td>{{ complain?.current_Password || "NA" }}</td>
+                          <td>
+                            <a style="cursor: pointer;" (click)="
+                    update(
+                      complain.asseT_SUB_ID,
+                      complain.id,
+                      complain.asseT_NO,
+                      complain.imei
+                    )
+                  " rel="noopener noreferrer"><i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center"
+                    *ngIf="deviceList && deviceList.length == 0 || deviceList == null && !isloading || !(deviceList | searchFilter:searchKeyword)?.length"
+                    style="width: 100%;">No Data Available</div>
+                  <div class="pagination-data" *ngIf="deviceList && deviceList.length > 0 && (deviceList | searchFilter:searchKeyword)?.length">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

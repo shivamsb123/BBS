@@ -1,0 +1,57 @@
+<!-- route-wise-map.component.html -->
+
+<div class="" >
+  <div class="modal-header text-center up">
+    <div class="headersetup">
+      <div>
+        <h6 class="modal-title w-100">
+          vehicle Number : {{ selectedvehicleData?.asseT_NO }}
+        </h6>
+      </div>
+      <div class="updown">
+        <div>
+          <h6 class="modal-title w-100">
+            Route Name : {{ modify(selectedvehicleData?.route) }}
+          </h6>
+        </div>
+
+        <div>
+          <div class="arrow-container" *ngIf="!directionUpValue">
+            <img class="up-logo" src="assets/images/up-icon.png" alt="" />
+          </div>
+          <div class="arrow-container" *ngIf="directionUpValue">
+            <img
+              class="up-logo"
+              style="transform: rotate(180deg)"
+              src="assets/images/up-icon.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="badge badge-success" (click)="showRoute()">
+          Show Route Only
+        </button>
+        <button class="badge badge-info" (click)="locateBus()">
+          Locate my bus
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="location-data">
+          <div id="map" style="height: 500px"></div>
+          <div class="obu-data" (click)="redirectTo()">
+            <img src="assets/images/bus-trip.png"/> OBU
+          </div>
+          <!-- <video #videoPlayer controls></video> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,170 @@
+<section class="main-content">
+    <div class="row">
+      <div class="col-lg-12 align-self-center">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/tyre-management/tyre_master">Tyre Management</a></li>
+          <li><a routerLink="/Maintenance/TyreMaster"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Tyre Master</a></li>
+            <li><a routerLink="/Maintenance/Add_Tyre_Master"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              Add Tyre Master</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="tyreForm">
+            <div class="row">
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Type</label>
+                <select class="form-select" aria-label="Default select example" formControlName="tyre_type">
+                  <option value="Radial">Radial</option>
+                  <option value="Nylon">Nylon</option>
+                  <option value="Tubeless">Tubeless</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre No</label>
+                <div class="input-group mb-3">
+                   <input type="text" class="form-control" formControlName="tyre_number" placeholder="Enter Tyre Number" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Make</label>
+                <select class="form-select" aria-label="Default select example" formControlName="tyre_make">
+                  <option value="MRF">MRF</option>
+                  <option value="CEAT">CEAT</option>
+                  <option value="Apollo">Apollo</option>
+                  <option value="JK Tyre">JK Tyre</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Warranty</label>
+                <select class="form-select" aria-label="Default select example" formControlName="Warranty">
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">           
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tyre Category</label>
+                <select class="form-select" aria-label="Default select example" formControlName="tyre_category">
+                  <option value="1">Retreading Tyre</option>
+                  <option value="2">New TYRE</option>
+                  <option value="3">Stepeny Tyre</option>
+                  <option value="4">Old Tyre</option>
+                </select>
+              </div>
+  
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" aria-label="Default select example" formControlName="status">
+                  <option value="0">Active</option>
+                  <option value="1">De-Active</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Invoice No</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Enter Invoice Number" formControlName="invoice_number" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Invoice Date</label>
+                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker  formControlName="invoice_date">
+              </div>
+            </div>
+            <div class="row">              
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Cost</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Cost sale.." formControlName="cost" />
+                </div>
+              </div>
+  
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Nsd(O)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(O)" formControlName="Nsd_O" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">                
+                <label class="form-label">Nsd(M)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(M)" formControlName="Nsd_M" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Nsd(I)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(I)" formControlName="Nsd_I" />
+                </div>
+  
+              </div>
+            </div>
+            <div class="row">              
+              <div class="col-md-6 col-lg-3">
+                <label class="form-label">Nsd(MM)</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Nsd(MM)" formControlName="Nsd_MM" />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3"></div>
+  
+              <div class="col-md-6 col-lg-3">
+                <br>
+                <button class="btn btn-success" [disabled]="!tyreForm.valid" (click)="submit(tyreForm.value)">
+                  <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                </button>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <br>
+                <button class="btn btn-danger" (click)="cancel()">
+                  <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                </button>
+              </div>
+             
+              <!-- <div class="col-md-6 col-lg-3">
+                <label class="form-label">Tag No</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Tag No.." formControlName="tag_no" />
+                </div>
+              </div> -->
+              <!-- <div class="col-md-6 col-lg-3">
+                <label class="form-label">Choose File</label>
+                <div class="input-group mb-3">
+                  <input class="form-control" type="file" id="formFile" formControlName="image">
+                </div>
+              </div> -->
+            </div>
+            <!-- <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                <button class="btn btn-success" [disabled]="!tyreForm.valid" (click)="submit(tyreForm.value)">
+                  <i class="fa fa-plus" aria-hidden="true"></i> Save
+                </button>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-danger" (click)="cancel()">
+                  <i class="fa fa-times" aria-hidden="true"></i>Cancel
+                </button>
+              </div>
+            </div> -->
+          </form>       
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+  
+  <!-- <ng-template #TyreDetails>
+    <tyre-details [modalRef]="tyreDetailsModalRef" [type]="'TYRE_MASTER'">
+    </tyre-details>
+  </ng-template> -->

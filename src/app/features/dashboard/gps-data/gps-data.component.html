@@ -1,0 +1,175 @@
+<section class="main-content">
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/Dashboard/FleetStatus_DMS"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Dynamic Status</a></li>
+        <li><a routerLink="/Dashboard/Dashboard_Can"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            GPS-data</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-6" *ngFor="let vehicleTrack of vehiclelistData.trackList">
+          <div class="widget" (click)="selectedMapList(vehicleTrack?.fs_value)">
+            <div class="row row-table" >
+              <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                <p class="margin-b-5">{{vehicleTrack['ts_status']}}</p>
+                <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{vehicleTrack['total']}}
+                </h2>
+                <span class="float-right text widget-r-m"><img class="logo-obu" [src]="vehicleTrack?.img"></span>
+
+                <div class="last-update">
+                  <span class="last-update-data">Last 1 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="spin-loader" [ngClass]="vehiclelistData.isloading ? 'loader': ''">
+            <loader [isRunning]="vehiclelistData.isloading"></loader>
+          </div>
+          <div *ngIf="!vehiclelistData.isloading">
+            <ngx-charts-pie-chart [view]="[300,230]" [results]="gpsdata" [gradient]="gradient" [legend]="showLegend">
+            </ngx-charts-pie-chart>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="widget">
+            <div class="row row-table ">
+              <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                <p class="margin-b-5">Total Vehicle</p>
+                <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{mapList?.length  ? mapList?.length : 0}}
+                </h2>
+                <span class="float-right text widget-r-m"><img class="logo" 
+                    src="../../../../../assets/images/obu-device.png"></span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="widget">
+            <div class="row row-table ">
+              <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                <p class="margin-b-5">Total Driver</p>
+                <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{driverCount?.length  ? driverCount?.length : 0}}
+                </h2>
+                <span class="float-right text widget-r-m"><img class="logo"
+                    src="../../../../../assets/images/driver-vehicle.png"></span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="widget">
+            <div class="row row-table ">
+              <div class="margin-b-30" style="margin-bottom: 0px !important;">
+                <p class="margin-b-5">Total Routes</p>
+                <h2 class="text-muted" style="margin-bottom: 5px !important;"> {{routeCount.length  ? routeCount.length : 0}}
+                </h2>
+                <span class="float-right text widget-r-m"><img class="logo"
+                    src="../../../../../assets/images/ITMS ICON-09.png"></span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="p-2 bd-highlight">
+                <span>Items per page: </span>
+                <select (change)="onTableSizeChange($event)" class="custom-select">
+                  <option *ngFor="let size of vehiclelistData.tableSizes" [value]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+
+              <div class="search-form">
+                <input placeholder="Search for..." type="text" [(ngModel)]="searchKeyword" class="form-control search-input"><button type="button"
+                  class="btn-search"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-primary" (click)="ExportTOExcel()">Export</button>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+              <div class="dataTables_scroll">
+                <div class="dataTables_scrollBody">
+                  <div class="spin-loader" [ngClass]="vehiclelistData.isloading ? 'loader': ''">
+                    <loader [isRunning]="vehiclelistData.isloading"></loader>
+                  </div>
+                  <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                    #TABLE aria-describedby="datatable_info" style="width: 100%" width="100%">
+                    <thead>
+                      <tr role="row">
+                        <th *ngFor="let vehicleHeading of tableData">
+                          <strong>{{vehicleHeading?.val}}</strong>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody *ngIf="!vehiclelistData.isloading">
+                      <tr *ngFor="let vehicle of mapList | searchFilter: searchKeyword | paginate : {
+                                      itemsPerPage: vehiclelistData.tableSize,
+                                      currentPage: vehiclelistData.page,
+                                      totalItems: vehiclelistData.count};">
+                        <td>{{vehicle?.sn}}</td>
+                        <td>{{vehicle?.asseT_NO || 'NA'}}</td>
+                        <td>{{vehicle?.driver || 'NA'}}</td>
+                        <td>{{vehicle?.speed || 'NA'}}</td>
+                        <td>{{vehicle?.place || 'NA'}}</td>
+                        <td>{{vehicle?.timeu || 'NA'}}</td>
+                        <td>{{vehicle?.lat || 'NA'}}</td>
+                        <td>{{vehicle?.lon || 'NA'}}</td>
+                        <td><a style="color: blue;cursor: pointer;">{{vehicle?.route}}</a> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="text-center" style="width: 100%;">No Data Available</div>
+                <!-- <div class="pagination-data" *ngIf="mapList && mapList.length > 0">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)" *ngIf=" mapList && mapList.length > 0">
+                                </pagination-controls>
+                              </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

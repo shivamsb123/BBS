@@ -1,0 +1,371 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/Contact_Master_List"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Vendor List </a></li>
+                <li><a routerLink="/SupplyChain/Add-Contact"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        {{button}} Vendor </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <form [formGroup]="contactform">
+                <div class="card">
+                    <div class="card-header card-default">
+                        <div class="row">
+                            <div class="col-md-3"> {{button}} Vendor</div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"> </div>
+                            <div class="col-md-3">
+                                <a class="add-item" *ngIf="addressForm.value.vendorAdd.length < 1"
+                                    (click)="addVendorAdd()"><i class="fa fa-plus"></i>Add New Address</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Vendor Type</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="Contact_Type">
+                                    <option value="1">Retailer</option>
+                                    <option value="3">Wholesaler</option>
+                                    <option value="2">Manufacture</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Vendor Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="con_name" class="form-control"
+                                        placeholder="Enter Contact Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Contact No</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="con_no" class="form-control"
+                                        placeholder="Enter Contact No" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Landline/Office No</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="Office" class="form-control"
+                                        placeholder="Enter Landline/Office No" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Email ID</label>
+                                <div class="input-group mb-3">
+                                    <input type="email" class="form-control" formControlName="email"
+                                        placeholder="Enter Email ID" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">GSTIN No</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="GSTIN_no"
+                                        placeholder="Enter GSTIN No" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Country</label>
+                                <div *ngIf="selectedCountry">
+                                    <select-filter [selectedValue]="selectedCountry" [vehicleData]="countryData"
+                                        [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountry && countryData && countryData.length > 0">
+                                    <select-filter [vehicleData]="countryData" [type]="'country'"
+                                        [placeholder]="'Select Country'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountry && !countryData || countryData.length == 0">
+                                    <select-filter [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">State</label>
+                                <div *ngIf="selectedState">
+                                    <select-filter [selectedValue]="selectedState" [vehicleData]="stateData"
+                                        [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedState && stateData && stateData.length > 0">
+                                    <select-filter [vehicleData]="stateData" [type]="'state'"
+                                        [placeholder]="'Select State'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedState && !stateData || stateData.length == 0">
+                                    <select-filter [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">District</label>
+                                <div *ngIf="selectedDistrict">
+                                    <select-filter [selectedValue]="selectedDistrict" [vehicleData]="districtData"
+                                        [type]="'district'" [placeholder]="'Select District'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDistrict && districtData && districtData.length > 0">
+                                    <select-filter [vehicleData]="districtData" [type]="'district'"
+                                        [placeholder]="'Select District'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDistrict && !districtData || districtData.length == 0">
+                                    <select-filter [type]="'district'" [placeholder]="'Select District'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Pin Code</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="pin"
+                                        placeholder="Enter State" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Address</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="Add"
+                                        placeholder="Enter Address" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Description</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="description"
+                                        placeholder="Enter Description" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Credit Line</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="credit_line"
+                                        placeholder="Enter Credit Line" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Credit Period</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="credit_period"
+                                        placeholder="Enter Credit Period" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Payment Mode</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="payment_mode">
+                                    <option value="1">Case On Delivery </option>
+                                    <option value="3">Debit Card</option>
+                                    <option value="2">Credit Card</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-default">
+                            Bank Details
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Bank Type</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="bank_type">
+                                    <option value="1">State Bank Of India</option>
+                                    <option value="2">Bank Of Baroda</option>
+                                    <option value="3">Punjab National Bank</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Account Holder Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="acct_h_name"
+                                        placeholder="Enter Account Holder Name" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Account Number</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="acct_number"
+                                        placeholder="Enter Account Number" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">IFSC Code</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" formControlName="ifsc_code"
+                                        placeholder="Enter IFSC Code" aria-describedby="button-addon2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="addressForm">
+                <div formArrayName="vendorAdd">
+                    <div *ngFor="let data of vendorAddArray().controls; let i = index">
+                        <div class="card">
+                            <div class="card-header card-default">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"> </div>
+                                    <div class="col-md-3">
+                                        <a class="add" *ngIf="this.addressForm.value.vendorAdd.length - 1 == i"
+                                            (click)="addVendorAdd()"><i class="fa fa-plus"></i>Add New Address</a>
+                                        <a class="add-item" (click)="removeAdd(i)"><i class="fa fa-times"></i>
+                                            Remove</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+                                <div [formGroupName]="i">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Vendor Name</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" formControlName="CusName" class="form-control"
+                                                    placeholder="Enter Contact Name" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Country</label>
+                                            <div *ngIf="selectedCountry">
+                                                <select-filter [selectedValue]="selectedCountry"
+                                                    [vehicleData]="countryData" [type]="'newCountry'"
+                                                    [placeholder]="'Select Country'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                            <div *ngIf="!selectedCountry && countryData && countryData.length > 0">
+                                                <select-filter [vehicleData]="countryData" [type]="'newCountry'"
+                                                    [placeholder]="'Select Country'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                            <div *ngIf="!selectedCountry && !countryData || countryData.length == 0">
+                                                <select-filter [type]="'newCountry'" [placeholder]="'Select Country'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="form-label">State</label>
+                                            <div *ngIf="selectedState">
+                                                <select-filter [selectedValue]="selectedState" [vehicleData]="stateData"
+                                                    [type]="'newState'" [placeholder]="'Select State'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                            <div *ngIf="!selectedState && stateData && stateData.length > 0">
+                                                <select-filter [vehicleData]="stateData" [type]="'newState'"
+                                                    [placeholder]="'Select State'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                            <div *ngIf="!selectedState && !stateData || stateData.length == 0">
+                                                <select-filter [type]="'newState'" [placeholder]="'Select State'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">District</label>
+                                            <div *ngIf="selectedDistrict">
+                                                <select-filter [selectedValue]="selectedDistrict"
+                                                    [vehicleData]="districtData" [type]="'newDistrict'"
+                                                    [placeholder]="'Select District'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                            <div *ngIf="!selectedDistrict && districtData && districtData.length > 0">
+                                                <select-filter [vehicleData]="districtData" [type]="'newDistrict'"
+                                                    [placeholder]="'Select District'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                            <div *ngIf="!selectedDistrict && !districtData || districtData.length == 0">
+                                                <select-filter [type]="'newDistrict'" [placeholder]="'Select District'"
+                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Pin Code</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="PinCode"
+                                                    placeholder="Enter Pincode" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Address</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="Address"
+                                                    placeholder="Enter Address" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Description</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="Descrtion"
+                                                    placeholder="Enter Description" aria-describedby="button-addon2" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <br>
+                    <button class="btn btn-success" [disabled]="!contactform.valid" (click)="submit(contactform.value)">
+                        <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <br>
+                    <button (click)="resetForm()" class="btn btn-danger">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

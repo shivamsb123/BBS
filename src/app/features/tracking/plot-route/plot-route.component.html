@@ -1,0 +1,61 @@
+<!-- <spinner-loader *ngIf="isloading"></spinner-loader> -->
+<section class="main-content" #busSection>
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/rTracking/Tracking_Live">Tracking</a></li>
+                <li><a routerLink="/Tracking/Tracking_History"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Plot route on map</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                        <label for="exampleInputEmail1" class="form-label">Route </label>                        
+                          <div *ngIf="route && route.length > 0">
+                            <select-filter [vehicleData]="route" [type]="'route'"
+                                [placeholder]="'Select Route'"
+                                (onConfirm)="confirm($event)"></select-filter>
+                        </div>
+                       
+                    </div>  
+                </div>
+              <div class="row row-data">
+              </div>
+              <div class="row row-data">
+                <div class="col-md-12">
+                    <div class="mb-3 card">
+                        <div class="card-header-tab card-header">
+                            <div class="card-header-title">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                Live Vehicle wise tracking
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="tab-eg-55">
+                                <div class="widget-chart p-3">
+                                    <div class="map-container" >
+                                        <div class="row">
+                                            <div class="col-md-12" >
+                                                <div id="googleMap" class="map-container"></div>
+
+                                            </div>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>

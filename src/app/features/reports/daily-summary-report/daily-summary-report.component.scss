@@ -1,0 +1,67 @@
+.margin-b-30 {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.widget h2 {
+  width: 100%;
+  padding-top: 18px;
+}
+
+.ani-image {
+  width: 100%;
+  text-align: -webkit-right;
+  // position: relative;
+}
+
+ng-lottie {
+  position: relative;
+  top: -17px;
+  left: 15px;
+}
+
+.card-data {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.status-data {
+  position: relative;
+  top: -24px;
+
+  ul {
+    li {
+      line-height: 1.7;
+
+      a.status {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+.widget {
+  margin-bottom: 0px !important;
+}
+
+.card-value {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  /* Remove extra margin */
+}
+
+.widget {
+  flex-grow: 1;
+}
+
+.highLightText {
+  color: rgb(181, 36, 36);
+}
+.highLight{
+  color: green;
+}

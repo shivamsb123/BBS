@@ -1,0 +1,48 @@
+.fa-close{
+    cursor: pointer;
+    font-size: 25px;
+    color: white;
+}
+.badge{
+    font-weight: 700;
+}
+.footer{
+    display: flex;
+    justify-content: center;
+}
+/* Add this CSS to your component's style file or global stylesheet */
+.video-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust as needed */
+  }
+  
+  .flv-player {
+    width: calc(50% - 10px); /* Adjust width and margins as needed */
+    margin-bottom: 20px; /* Adjust margin between videos as needed */
+  }
+  /* Add this CSS to your component's style file or global stylesheet */
+.flv-player {
+    position: relative; /* Set position to relative for positioning the close icon */
+  }
+  
+  .flv-player .video-container {
+    position: relative; /* Set position to relative for positioning the close icon */
+  }
+  
+  .flv-player video {
+    width: 320px; /* Adjust video width as needed */
+    height: 240px; /* Adjust video height as needed */
+    display: block; /* Ensure video is displayed as a block element */
+  }
+  
+  .flv-player .fa-times-circle {
+    position: absolute; /* Set position to absolute for positioning the close icon */
+    top: 19px;
+    right: 44px; /* Adjust right position as needed */
+    font-size: 24px; /* Adjust font size as needed */
+    cursor: pointer; /* Set cursor to pointer for indicating clickable element */
+    color: red; /* Adjust color as needed */
+    z-index: 1; /* Set z-index to appear above the video */
+  }
+  

@@ -1,0 +1,27 @@
+#select-map{
+    color: blue !important;
+    cursor: pointer;
+  }
+  .search-form {
+    float: right;
+  }
+  
+  .search-input {
+    border-color:#2f387c !important;
+  }
+  
+  .search-form .btn-search {
+    color: #2f387c;
+  }
+  #showMap {
+    display: inline-block;
+    // /* width: auto; */
+    // /* font-size: 10px; */
+   font-weight: 700;
+    line-height: 27px;
+    /* padding: 0.25em 0.6em; */
+}
+.p-2{
+  display: flex;
+  justify-content: space-between;
+} 

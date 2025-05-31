@@ -1,0 +1,201 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/management/change_password">Management</a></li>
+                <li><a routerLink="/Management/attendance_"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Attendance</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="attendanceForm">
+                        <div class="row">
+                            <div class="col-md-6 col-xl-3">
+                                <label for="exampleInputEmail1" class="form-label">Select Company</label>
+                                <div *ngIf="company && company.length > 0">
+                                    <select-filter [vehicleData]="company" [type]="'company'"
+                                        [placeholder]="'Select Company'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!company || company.length == 0">
+                                    <select-filter [type]="'company'" [placeholder]="'Select Company'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label for="exampleInputEmail1" class="form-label">Role</label>
+                                <div *ngIf="roleList && roleList.length > 0">
+                                    <select-filter [vehicleData]="roleList" [type]="'Role'"
+                                        [placeholder]="'Select Role'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!roleList || roleList.length == 0">
+                                    <select-filter [type]="'Role'" [placeholder]="'Select Role'"></select-filter>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" placeholder="Enter User Name"
+                                    formControlName="userName" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary"
+                                    (click)="submit(attendanceForm.value)">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row row-data" *ngIf="empId">
+                        <div class="col-md-3">
+                            <label class="form-label">Date</label>
+                            <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                bsDatepicker [(ngModel)]="bsValue" [disabled]="isDisabled" />
+                        </div>
+                        <div class="col-md-3">
+                            <timepicker [(ngModel)]="mytime" [showMeridian]="isMeridian" [hourStep]="hstep"
+                                [minuteStep]="mstep"></timepicker>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="mr-2 btn-icon btn-icon-only btn btn-outline-primary" (click)="checkIn()">
+                                CheckIn
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollHead">
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let complain of attendanceListData | paginate : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count};">
+                                                    <td>{{complain?.roleName}}</td>
+                                                    <td>{{complain?.userName}}</td>
+                                                    <td>
+                                                        <div *ngIf="complain?.status == 1">Active</div>
+                                                        <div *ngIf="complain?.status == 0">Inactive</div>
+                                                    </td>
+                                                    <td>{{complain?.firstName}}</td>
+                                                    <td>{{complain?.lastName}}</td>
+                                                    <td>{{complain?.contactNo}}</td>
+                                                    <td>{{complain?.email}}</td>
+                                                    <td>{{complain?.emP_CODE}}</td>
+                                                    <td>{{complain?.iD_NUMBER_1}}</td>
+                                                    <td>{{complain?.iD_NUMBER_2}}</td>
+                                                    <td>{{complain?.dL_NO}}</td>
+                                                    <td>
+                                                        <a class="select-roster" rel="noopener noreferrer"
+                                                            (click)="update(complain)">Select</a>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="attendanceListData && attendanceListData.length == 0 || attendanceListData == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                                <div class="pagination-data">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="onTableDataChange($event)">
+                                    </pagination-controls>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="empId">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollHead">
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData2">
+                                                        <strong>{{vehicleHeading?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let complain of checkStatusList | paginate : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count};">
+                                                    <td>{{complain?.action}}</td>
+                                                    <td>{{complain?.DATE_TIME}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- <div class="text-center"
+                                            *ngIf="attendanceListData && attendanceListData.length == 0 || attendanceListData == null && !isloading"
+                                            style="width: 100%;">No Data Available</div> -->
+                                    </div>
+
+                                </div>
+                                <div class="pagination-data">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="onTableDataChange($event)">
+                                    </pagination-controls>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
