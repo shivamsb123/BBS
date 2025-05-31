@@ -20,6 +20,8 @@ import { ContactListComponent } from './contact-list/contact-list.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { SupplierAddressComponent } from './supplier-address/supplier-address.component';
 import { CountryMasterComponent } from './country-master/country-master.component';
+import { StateMasterComponent } from './state-master/state-master.component';
+import { DistrictMasterComponent } from './district-master/district-master.component';
 
 
 const routes: Routes = [
@@ -108,7 +110,13 @@ const routes: Routes = [
     path: 'supplier-address/:id', component: SupplierAddressComponent
   },
   {
-    path:'Country_Master_List',component:CountryMasterComponent
+    path:'Country_Master_List',component:CountryMasterComponent,
+  },
+   {
+    path:'State_Master_List',component:StateMasterComponent
+  },
+   {
+    path:'District_Master_List',component:DistrictMasterComponent
   }
 ];
 

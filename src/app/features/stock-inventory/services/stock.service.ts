@@ -63,14 +63,14 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   itemList(payload: any): Observable<any> {
+  itemList(payload: any): Observable<any> {
     let url = API_CONSTANTS.itemList
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   deleteItem(payload: any): Observable<any> {
+  deleteItem(payload: any): Observable<any> {
     let url = API_CONSTANTS.deleteItem
     return this.apiService
       .post(url, payload)
@@ -134,14 +134,14 @@ export class StockService {
   }
 
   stateList(countryId: any): Observable<any> {
-    let url = API_CONSTANTS.stateListData.replace("{countryId}",countryId)
+    let url = API_CONSTANTS.stateListData.replace("{countryId}", countryId)
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
   districtList(districtId: any): Observable<any> {
-    let url = API_CONSTANTS.cityListData.replace("{districtId}",districtId)
+    let url = API_CONSTANTS.cityListData.replace("{districtId}", districtId)
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
@@ -182,14 +182,14 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-    updateSupplier(payload: any): Observable<any> {
+  updateSupplier(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateSupplier
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   addSupplierAddress(payload: any): Observable<any> {
+  addSupplierAddress(payload: any): Observable<any> {
     let url = API_CONSTANTS.addSupplierAddress
     return this.apiService
       .post(url, payload)
@@ -203,7 +203,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   deleteSupplier(payload: any): Observable<any> {
+  deleteSupplier(payload: any): Observable<any> {
     let url = API_CONSTANTS.deleteSupplier
     return this.apiService
       .post(url, payload)
@@ -259,14 +259,14 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-    deleteSubcategory(payload: any): Observable<any> {
+  deleteSubcategory(payload: any): Observable<any> {
     let url = API_CONSTANTS.deleteSubategory
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   deleteCategory(payload: any): Observable<any> {
+  deleteCategory(payload: any): Observable<any> {
     let url = API_CONSTANTS.deleteCategory
     return this.apiService
       .post(url, payload)
@@ -323,7 +323,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   updateProduct(payload: any): Observable<any> {
+  updateProduct(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateProduct
     return this.apiService
       .post(url, payload)
@@ -344,7 +344,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   updateBrand(payload: any): Observable<any> {
+  updateBrand(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateBrand
     return this.apiService
       .post(url, payload)
@@ -505,7 +505,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-    updateCategory(payload: any): Observable<any> {
+  updateCategory(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateCategoryData
     return this.apiService
       .post(url, payload)
@@ -525,7 +525,7 @@ export class StockService {
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
-  
+
   updateSubCategory(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateSubCategory
     return this.apiService
@@ -533,28 +533,28 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   getCategoryDD(): Observable<any> {
+  getCategoryDD(): Observable<any> {
     let url = API_CONSTANTS.categoryDropdown
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-  getSubCategoryDD(catId:any): Observable<any> {
-    let url = API_CONSTANTS.subCategoryDropdown.replace("{id}",catId)
+  getSubCategoryDD(catId: any): Observable<any> {
+    let url = API_CONSTANTS.subCategoryDropdown.replace("{id}", catId)
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   getUnitDD(): Observable<any> {
+  getUnitDD(): Observable<any> {
     let url = API_CONSTANTS.unitDropdown
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   getHsnDD(): Observable<any> {
+  getHsnDD(): Observable<any> {
     let url = API_CONSTANTS.hsnDropdown
     return this.apiService
       .get(url)
@@ -568,14 +568,14 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   getBillingforDD(): Observable<any> {
+  getBillingforDD(): Observable<any> {
     let url = API_CONSTANTS.billingForDropdown
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
-  
-    getBillingCategoryDD(): Observable<any> {
+
+  getBillingCategoryDD(): Observable<any> {
     let url = API_CONSTANTS.billingCategoryDropdown
     return this.apiService
       .get(url)
@@ -589,26 +589,81 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   createCountry(payload: any): Observable<any> {
+  createCountry(payload: any): Observable<any> {
     let url = API_CONSTANTS.createCountry
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   updateCountry(payload: any): Observable<any> {
+  updateCountry(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateCountry
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
- deleteCountry(payload: any): Observable<any> {
+  deleteCountry(payload: any): Observable<any> {
     let url = API_CONSTANTS.deleteCountry
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
-  
+
+  stateListData(payload: any): Observable<any> {
+    let url = API_CONSTANTS.stateMasterList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createState(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createState
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateState(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateState
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deleteState(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteState
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  districtListData(payload: any): Observable<any> {
+    let url = API_CONSTANTS.districtMasterList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createDistrict(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createDistrict
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateDistrict(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateDistrict
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deleteDistrict(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteDistrict
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
 
 }

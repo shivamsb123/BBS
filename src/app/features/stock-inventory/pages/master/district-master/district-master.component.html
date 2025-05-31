@@ -1,0 +1,167 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/District_Master_List"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        District Master </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="districtForm">
+                        <div class="row  mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Country</label>
+                                <div *ngIf="selectedCountryValue">
+                                    <select-filter [selectedValue]="selectedCountryValue" [vehicleData]="countryList"
+                                        [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountryValue && countryList && countryList.length > 0 ">
+                                    <select-filter [vehicleData]="countryList" [type]="'country'"
+                                        [placeholder]="'Select Country'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountryValue && !countryList || countryList.length == 0">
+                                    <select-filter [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                 <div *ngIf="districtForm.get('country')?.invalid && (districtForm.get('country')?.dirty || districtForm.get('country')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="districtForm.get('country')?.errors?.['required']">Country is
+                                        required</span>
+                                </div>
+                            </div>
+                          <div class="col-md-3">
+                                <label class="form-label">State</label>
+                                <div *ngIf="selectedStateValue">
+                                    <select-filter [selectedValue]="selectedStateValue" [vehicleData]="stateList"
+                                        [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedStateValue && stateList && stateList.length > 0 ">
+                                    <select-filter [vehicleData]="stateList" [type]="'state'"
+                                        [placeholder]="'Select State'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedStateValue && !stateList || stateList.length == 0">
+                                    <select-filter [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                 <div *ngIf="districtForm.get('state')?.invalid && (districtForm.get('state')?.dirty || districtForm.get('state')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="districtForm.get('state')?.errors?.['required']">State is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">District Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter District Name"
+                                        aria-describedby="button-addon2" formControlName="districtName" />
+                                </div>
+                                <div *ngIf="districtForm.get('districtName')?.invalid && (districtForm.get('districtName')?.dirty || districtForm.get('districtName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="districtForm.get('districtName')?.errors?.['required']">District Name is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <br>
+                                        <button class="btn btn-success" (click)="submit(districtForm.value)"><i
+                                                class="fa fa-plus" aria-hidden="true"></i>
+                                            {{button}}
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <br>
+                                        <button class="btn btn-danger" (click)="cancel()">
+                                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollHead">
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let val of tableData">
+                                                        <strong>{{val?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let item of districtList |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count}; let i = index">
+                                                    <td>{{ (page - 1) * tableSize + i + 1 }}</td>
+
+                                                    <td>{{item?.state_name}}</td>
+                                                    <td>{{item?.district_name}}</td>
+                                                    <td>
+                                                        <a style="cursor: pointer;" tooltip="Edit"
+                                                            (click)="update(item)" rel="noopener noreferrer">
+                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a (click)="deleteDistrict(item)" tooltip="Delete"
+                                                            rel="noopener noreferrer"><i
+                                                                class="fa fa-trash text-danger cursor-pointer"
+                                                                style="cursor: pointer; margin-left: 10px;"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="districtList && districtList.length == 0 || districtList == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                                <div class="pagination-data" *ngIf="districtList && districtList.length > 0">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="onTableDataChange($event)">
+                                    </pagination-controls>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

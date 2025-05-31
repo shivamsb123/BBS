@@ -261,6 +261,14 @@ export const API_CONSTANTS: any = {
     createCountry:'api/Location/CountryAdd',
     updateCountry:'api/Location/CountryEdit',
     deleteCountry:'api/Location/CountryDelete',
+    stateMasterList:'api/Location/StateList',
+    createState:'api/Location/StateAdd',
+    updateState:'api/Location/StateEdit',
+    deleteState:'api/Location/StateDelete',
+    districtMasterList:'api/Location/DistrictList',
+    createDistrict:'api/Location/DistrictAdd',
+    updateDistrict:'api/Location/DistrictEdit',
+    deleteDistrict:'api/Location/DistrictDelete',
     
     /**
      * tyre part api 
