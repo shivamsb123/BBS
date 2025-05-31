@@ -34,7 +34,8 @@ export class ApiService {
      //const formatedURl = 'http://103.89.44.153/orscitmsapi/' + url
       // const formatedURl = 'http://103.89.44.153/skyitmsapi/' + url
       // const formatedURl = 'http://103.89.44.60/skydmsapi/' + url
-      const formatedURl = 'http://103.89.45.88/skyitmsapi/' + url
+      // const formatedURl = 'http://103.89.45.88/skyitmsapi/' + url
+      const formatedURl = 'https://skyitmsapi.panthergps.com/' + url
       
     return formatedURl;
   }

@@ -22,7 +22,7 @@ export class AddHSNComponent implements OnInit {
   alertTrigger: any = false;
   alertMessage = 'Added';
   button = 'Add';
-   submitted: boolean = true;
+  submitted: boolean = true;
   constructor(
     private stockService: StockService,
     private fb: FormBuilder,
@@ -46,7 +46,9 @@ export class AddHSNComponent implements OnInit {
       cgst: ['', [Validators.required, Validators.max(100)]],
       igst: ['', [Validators.required, Validators.max(100)]],
       sgst: ['', [Validators.required, Validators.max(100)]],
-    
+      tax: ['', [Validators.required, Validators.max(100)]],
+      cess: ['', [Validators.required, Validators.max(100)]],
+
     })
 
   }
@@ -55,20 +57,20 @@ export class AddHSNComponent implements OnInit {
   getHSNListById() {
     this.isloading = true;
     let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": parseInt(this.id)
+      "pk_hsn_id": Number(this.id)
     }
     this.stockService.hsnList(payload).subscribe((res: any) => {
       this.hsnData = res?.body?.data;
       this.hsnData.forEach((val: any) => {
         this.hsnForm = this.fb.group({
-          hsnCode: [val?.hsn, [Validators.required, Validators.pattern('')]],
-          Description: [val?.description, [Validators.required, Validators.pattern('')]],
-          cgst: [val?.cgstRate, [Validators.required, Validators.max(100)]],
-          igst: [val?.igstRate, [Validators.required, Validators.max(100)]],
-          sgst: [val?.sgstRate, [Validators.required, Validators.max(100)]],
- 
+          hsnCode: [val?.hsn_code, [Validators.required, Validators.pattern('')]],
+          Description: [val?.hsn_description, [Validators.required, Validators.pattern('')]],
+          cgst: [val?.cgst_per, [Validators.required, Validators.max(100)]],
+          sgst: [val?.sgst_per, [Validators.required, Validators.max(100)]],
+          igst: [val?.igst_per, [Validators.required, Validators.max(100)]],
+          tax: [val?.tax_per, [Validators.required, Validators.max(100)]],
+          cess: [val?.cess_per, [Validators.required, Validators.max(100)]],
+
         })
       })
 
@@ -84,26 +86,32 @@ export class AddHSNComponent implements OnInit {
   }
 
   submit(formValue: any) {
+      if (this.hsnForm.invalid) {
+      this.hsnForm.markAllAsTouched();
+      return;
+    };
     this.submitted = true;
-    if(formValue.cgst > 100 && formValue.cgst > 100 && formValue.cgst > 100) return;
-
+    if (formValue.cgst > 100 && formValue.cgst > 100 && formValue.cgst > 100) return;
+    let service: any
     let payload = {
-      "HsnID": "",
-      "HSN": formValue?.hsnCode,
-      "Description": formValue?.Description,
-      "IsActive": 1,
-      "cgst": formValue?.cgst,
-      "sgst": formValue?.sgst,
-      "igst": parseInt(formValue?.igst) ,
-      "Mode": "INSERT"
+      "hsn_code": formValue?.hsnCode,
+      "hsn_description": formValue?.Description,
+      "tax_per": parseFloat(formValue?.tax),
+      "cgst_per": parseFloat(formValue?.cgst),
+      "sgst_per": parseFloat(formValue?.sgst),
+      "igst_per": parseFloat(formValue?.igst),
+      "cess_per": parseFloat(formValue?.cess),
+      "created_by": parseInt(localStorage.getItem('user_Id') || '')
     }
-    if(this.id){
-      payload['HsnID'] = (this.id);
-      payload['Mode'] = "UPDATE"
+    if (this.id) {
+      payload['pk_hsn_id'] = Number(this.id);
+      service = this.stockService.updateHSN(payload)
+    } else {
+      service = this.stockService.addHSN(payload)
     }
-        
-    this.stockService.addHSN(payload).subscribe((res: any) => {
-      if (res?.body?.status == 'Success') {
+
+    service.subscribe((res: any) => {      
+      if (res?.body?.status == 'success') {
         this.alertData = {
           message: res?.body?.alert
         };
@@ -113,10 +121,10 @@ export class AddHSNComponent implements OnInit {
         this.hsnForm.reset();
         setTimeout(() => {
           this.router.navigateByUrl('/SupplyChain/HSNMaster_List')
-        },2000)
+        }, 2000)
       } else {
         this.alertData = {
-          message: `Data not ${this.alertMessage}`,
+          message: res?.body?.alert,
         };
         this.alertType = "danger";
         this.alertTrigger = true;

@@ -59,23 +59,17 @@ export class AddContactComponent implements OnInit {
 
   getVendorFormData(): FormGroup {
     return new FormGroup({
-      Id: new FormControl(0),
-      Supid: new FormControl(''),
-      CusName: new FormControl(''),
-      CountryId: new FormControl(0),
-      CountryName: new FormControl(''),
-      StateId: new FormControl(0),
-      StateName: new FormControl(''),
-      DistrictId: new FormControl(0),
-      DistrictName: new FormControl(''),
-      PinCode: new FormControl(''),
-      Address: new FormControl(''),
-      Status: new FormControl(1),
-      Descrtion: new FormControl('')
+      address_1: new FormControl(''),
+      address_2: new FormControl(''),
+      address_3: new FormControl(''),
+      pin_code: new FormControl(''),
+      fk_district_id: new FormControl(0),
+      fk_state_id: new FormControl(0),
+      fk_country_id: new FormControl(0),
     })
   }
 
-  vendorAddArray(): FormArray  {
+  vendorAddArray(): FormArray {
     return this.addressForm.get('vendorAdd') as FormArray
   }
 
@@ -89,14 +83,16 @@ export class AddContactComponent implements OnInit {
 
   setInitialValue() {
     this.contactform = this.fb.group({
-      Contact_Type: ['1', [Validators.required, Validators.pattern('')]],
+      buisness: ['', [Validators.required, Validators.pattern('')]],
       con_name: ['', [Validators.required, Validators.pattern('')]],
+      contactPerson: ['', [Validators.required, Validators.pattern('')]],
       con_no: ['', [Validators.required, Validators.pattern('')]],
-      Office: ['', [Validators.required, Validators.pattern('')]],
+      panNo: ['', [Validators.required, Validators.pattern('')]],
       email: ['', [Validators.required, Validators.pattern('')]],
       GSTIN_no: ['', [Validators.required, Validators.pattern('')]],
-      Add: ['', [Validators.required, Validators.pattern('')]],
-      description: ['', [Validators.required, Validators.pattern('')]],
+      Address_1: ['', [Validators.required, Validators.pattern('')]],
+      Address_2: ['', [Validators.required, Validators.pattern('')]],
+      Address_3: ['', [Validators.required, Validators.pattern('')]],
       dist: ['', [Validators.required, Validators.pattern('')]],
       country: ['', [Validators.required, Validators.pattern('')]],
       pin: ['', [Validators.required, Validators.pattern('')]],
@@ -104,7 +100,7 @@ export class AddContactComponent implements OnInit {
       credit_line: ['', [Validators.required, Validators.pattern('')]],
       credit_period: ['', [Validators.required, Validators.pattern('')]],
       payment_mode: ['1', [Validators.required, Validators.pattern('')]],
-      bank_type: ['1', [Validators.required, Validators.pattern('')]],
+      bank_type: ['', [Validators.required, Validators.pattern('')]],
       acct_h_name: ['', [Validators.required, Validators.pattern('')]],
       acct_number: ['', [Validators.required, Validators.pattern('')]],
       ifsc_code: ['', [Validators.required, Validators.pattern('')]],
@@ -115,45 +111,44 @@ export class AddContactComponent implements OnInit {
 
   getContactData() {
     let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": parseInt(this.id)
+      "pk_supplier_id": parseInt(this.id)
     };
     this.stockService.contactList(payload).subscribe((res: any) => {
       this.contactData = res?.body?.data;
       this.contactData.forEach((val: any) => {
-        if (val?.id == this.id) {
+        if (val?.pk_supplier_id == this.id) {
 
-          let newCountryValue = this.countryData?.filter((ele: any) => ele?.text == val?.size26);
-          newCountryValue?.forEach((data: any) => {
-            this.selectedCountry = data
-          });
+          // let newCountryValue = this.countryData?.filter((ele: any) => ele?.text == val?.size26);
+          // newCountryValue?.forEach((data: any) => {
+          //   this.selectedCountry = data
+          // });
 
-          let newStateValue = this.stateData?.filter((ele:any)=>ele?.text == val?.size27);
-          newStateValue.forEach((data:any) => {
-            this.selectedState = data
-          })
+          // let newStateValue = this.stateData?.filter((ele: any) => ele?.text == val?.size27);
+          // newStateValue.forEach((data: any) => {
+          //   this.selectedState = data
+          // })
 
-          let newDistrctValue = this.districtData?.filter((ele:any)=>ele?.text == val?.size28);
-          newDistrctValue.forEach((data:any) => {
-            this.selectedState = data
-          })
+          // let newDistrctValue = this.districtData?.filter((ele: any) => ele?.text == val?.size28);
+          // newDistrctValue.forEach((data: any) => {
+          //   this.selectedState = data
+          // })
 
           this.selectvendor = val
           this.contactform = this.fb.group({
-            Contact_Type: [val?.cusType, [Validators.required, Validators.pattern('')]],
-            con_name: [val?.cusName, [Validators.required, Validators.pattern('')]],
-            con_no: [val?.contact, [Validators.required, Validators.pattern('')]],
-            Office: [val?.office, [Validators.required, Validators.pattern('')]],
-            email: [val?.email, [Validators.required, Validators.pattern('')]],
-            GSTIN_no: [val?.gstinNo, [Validators.required, Validators.pattern('')]],
-            Add: [val?.address, [Validators.required, Validators.pattern('')]],
-            description: [val?.description, [Validators.required, Validators.pattern('')]],
-            country: ['', [Validators.required, Validators.pattern('')]],
-            state: ['', [Validators.required, Validators.pattern('')]],
-            dist: ['', [Validators.required, Validators.pattern('')]],
-            pin: ['', [Validators.required, Validators.pattern('')]],
-            address: ['', [Validators.required, Validators.pattern('')]],
+            buisness: [val?.business_name, [Validators.required, Validators.pattern('')]],
+            con_name: [val?.supplier_name, [Validators.required, Validators.pattern('')]],
+            contactPerson: [val?.contact_person, [Validators.required, Validators.pattern('')]],
+            con_no: [val?.mobile_no, [Validators.required, Validators.pattern('')]],
+            panNo: [val?.pan_no, [Validators.required, Validators.pattern('')]],
+            email: [val?.email_address, [Validators.required, Validators.pattern('')]],
+            GSTIN_no: [val?.gst_no, [Validators.required, Validators.pattern('')]],
+            credit_line: [val?.credit_line, [Validators.required, Validators.pattern('')]],
+            credit_period: [val?.credit_period_indays, [Validators.required, Validators.pattern('')]],
+            payment_mode: [val?.fk_payment_mode_id, [Validators.required, Validators.pattern('')]],
+            bank_type: [val?.bank_name, [Validators.required, Validators.pattern('')]],
+            acct_h_name: [val?.account_name, [Validators.required, Validators.pattern('')]],
+            acct_number: [val?.account_no, [Validators.required, Validators.pattern('')]],
+            ifsc_code: [val?.ifsc_code, [Validators.required, Validators.pattern('')]],
           })
         }
       });
@@ -172,144 +167,114 @@ export class AddContactComponent implements OnInit {
       text: ''
     }
 
-    let payload = {
-      "Result": "",
-      "Mode": 0
-    }
-    this.stockService.countryList(payload).subscribe((res: any) => {
+    this.stockService.countryList().subscribe((res: any) => {
       let data = res?.body?.data
       this.countryData = data.map((val: any) =>
         newData = {
-          value: val?.c_Id,
+          value: val?.countryId,
           text: val?.countryName
 
         });
     })
   }
 
-  getState() {
-    let newData = {
-      value: '',
-      text: ''
-    }
+  stateDataList: { [key: number]: any[] } = {};
 
-    let payload = {
-      "Result": "",
-      "Mode": 0,
-      "C_Id": parseInt(this.contactform.value.country)
-    }
-    this.stockService.stateList(payload).subscribe((res: any) => {
-      let data = res?.body?.data
-      this.stateData = data.map((val: any) =>
-        newData = {
-          value: val?.s_Id,
-          text: val?.stateName
-        });
-    })
+  getState(countryId: any, index: number | null) {
+    this.stockService.stateList(countryId).subscribe((res: any) => {
+      const data = res?.body?.data || [];
+      if (index !== null && index !== undefined) {
+        this.stateDataList[index] = data.map((val: any) => ({
+          value: val.stateId,
+          text: val.stateName
+        }));
+      } else {
+        this.stateData = data.map((val: any) => ({
+          value: val.stateId,
+          text: val.stateName
+        }));
+      }
+    });
   }
 
-  getDistrct() {
-    let newData = {
-      value: '',
-      text: ''
-    }
+  districtDataList: { [key: number]: any[] } = {};
+  getDistrict(stateId: any, index: number | null): void {
+    this.stockService.districtList(stateId).subscribe((res: any) => {
+      const data = res?.body?.data || [];
 
-    let payload = {
-      "Result": "",
-      "Mode": 0,
-      "S_Id": parseInt(this.contactform.value.state)
-
-    }
-    this.stockService.districtList(payload).subscribe((res: any) => {
-      let data = res?.body?.data
-      this.districtData = data.map((val) =>
-        newData = {
-          value: val?.id,
-          text: val?.cityName
-        });
-    })
+      if (index !== null && index !== undefined) {
+        this.districtDataList[index] = data.map((val: any) => ({
+          value: val?.districtId,
+          text: val?.districtName
+        }));
+      } else {
+        this.districtData = data.map((val: any) => ({
+          value: val?.districtId,
+          text: val?.districtName
+        }));
+      }
+    });
   }
+
 
   submit(formValue: any) {
-    let payload = {
-      "MODE": 0,
-      "ID": 0,
-      "Supid": "",
-      "CusName": formValue?.con_name,
-      "CusType": formValue?.Contact_Type ? parseInt(formValue?.Contact_Type) : 0,
-      "ContactPerson": "",
-      "Email": formValue?.email,
-      "Email1": "",
-      "Contact": formValue?.con_no,
-      "HomePhone": "",
-      "Office": formValue?.Office,
-      "Address": formValue?.Add,
-      "description": formValue?.description,
-      "Balance": 0,
-      "BraID": "",
-      "Status": 1,
-      "Invoices": "",
-      "Size1": "",
-      "Size2": "",
-      "Size3": "",
-      "Size4": "",
-      "Size5": "",
-      "Size6": "",
-      "Size7": "",
-      "Size8": "",
-      "Size9": "",
-      "Size10": "",
-      "Size11": "",
-      "Size12": "",
-      "Size13": "",
-      "Size14": "",
-      "Size15": "",
-      "Size16": "",
-      "Size17": "",
-      "Size18": "",
-      "Size19": "",
-      "Size20": "",
-      "Size21": "",
-      "Size22": "",
-      "Size23": "",
-      "Size24": "",
-      "Size25": "",
-      "Size26": this.countryName ? this.countryName : '',
-      "Size27": this.stateName ? this.stateName : '',
-      "Size28": this.disName ? this.disName : '',
-      "Size29": formValue.dist ? formValue.dist.toString() : '',
-      "Size30": formValue?.pin,
-      "Flag": 1,
-      "GSTINNo": formValue?.GSTIN_no,
-      "IsB2B": 1,
-      "CountryId": formValue.country ? parseInt(formValue.country) : 0,
-      "StateId": formValue.state ?  parseInt(formValue.state) : 0,
-      "IsLoginPermission": 0,
-      "UserId": parseInt(localStorage.getItem('user_Id')),
-      "CreditLine": formValue.credit_line,
-      "CreditPeriod": formValue.credit_period,
-      "BankDetails":"",
-      "BankName": formValue.bank_type,
-      "IFFCCODE": formValue.ifsc_code,
-      "AccountNo": formValue.acct_number,
-      "Accountholder": formValue.acct_h_name,
-      "PaymentMode": formValue.payment_mode,
-      "RESULT": "",
-      "listmultipleAddress": this.vendorAddArray().value
-    }
-
+    let service: any
+    let payload: any
     if (this.id) {
-      payload['ID'] = Number(this.id)
-      payload['MODE'] = 1
-      payload['Supid'] = this.selectvendor?.supid
+      payload = {
+        "pk_supplier_id": Number(this.id),
+        "supplier_name": formValue?.con_name,
+        "business_name": formValue?.buisness,
+        "pan_no": formValue?.panNo,
+        "gst_no": formValue?.GSTIN_no,
+        "mobile_no": formValue?.con_no,
+        "email_address": formValue?.email,
+        "contact_person": formValue?.contactPerson,
+        "bank_name": formValue?.bank_type,
+        "account_name": formValue?.acct_h_name,
+        "account_no": formValue?.acct_number,
+        "ifsc_code": formValue?.ifsc_code,
+        "credit_line": formValue.credit_line,
+        "credit_period_indays": formValue.credit_period,
+        "fk_payment_mode_id": Number(formValue.payment_mode),
+        "Logged_by": parseInt(localStorage.getItem('user_Id') || '')
+      }
+      service = this.stockService.updateSupplier(payload)
+    } else {
+      payload = {
+        "supplier_name": formValue?.con_name,
+        "business_name": formValue?.buisness,
+        "pan_no": formValue?.panNo,
+        "gst_no": formValue?.GSTIN_no,
+        "mobile_no": formValue?.con_no,
+        "email_address": formValue?.email,
+        "contact_person": formValue?.contactPerson,
+        "bank_name": formValue?.bank_type,
+        "account_name": formValue?.acct_h_name,
+        "account_no": formValue?.acct_number,
+        "ifsc_code": formValue?.ifsc_code,
+        "credit_line": formValue.credit_line,
+        "credit_period_indays": formValue.credit_period,
+        "fk_payment_mode_id": Number(formValue.payment_mode),
+        "Logged_by": parseInt(localStorage.getItem('user_Id') || ''),
+        "address_1": formValue.Address_1,
+        "address_2": formValue.Address_2,
+        "address_3": formValue.Address_3,
+        "pin_code": formValue?.pin,
+        "fk_district_id": formValue.dist ? Number(formValue.dist) : '',
+        "fk_state_id": formValue.state ? parseInt(formValue.state) : 0,
+        "fk_country_id": formValue.country ? parseInt(formValue.country) : 0,
+        "other_addresses": this.vendorAddArray().value
+      }
+      service = this.stockService.addSupplier(payload)
     }
 
-    this.stockService.addvendor(payload).subscribe((res: any) => {
+   service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
-      if (res?.body?.status == 'Success') {
+      if (res?.body?.status == 'success') {
         this.alertData = {
           message: res?.body?.alert
         };
@@ -321,7 +286,7 @@ export class AddContactComponent implements OnInit {
         }, 2000);
       } else {
         this.alertData = {
-          message: `Data not ${this.alertMessage}`,
+          message: res?.body?.alert,
         };
         this.alertType = "danger";
         this.alertTrigger = true;
@@ -350,27 +315,63 @@ export class AddContactComponent implements OnInit {
   }
 
   confirm(event: any) {
-    if (event.selectType == 'country') {      
+    console.log('event', event);
+
+    if (event.selectType == 'country') {
       this.contactform.controls['country'].setValue(event.id)
       this.countryName = event.assets_no
-      this.getState()
+      this.getState(event.id, null)
     } else if (event.selectType == 'state') {
       this.contactform.controls['state'].setValue(event.id);
       this.stateName = event.assets_no
-      this.getDistrct()
+      this.getDistrict(event.id, null)
     } else if (event.selectType == 'district') {
       this.contactform.controls['dist'].setValue(event.id);
       this.disName = event.assets_no
-    }  else if(event.selectType == 'newCountry') { 
-      (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["CountryId"].setValue(event.id);
-      (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["CountryName"].setValue(event.assets_no);      
-    } else if(event.selectType == 'newState') {
-      (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["StateId"].setValue(event.id);
-      (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["StateName"].setValue(event.assets_no);
-    } else if(event.selectType == 'newDistrict') {
-      (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["DistrictId"].setValue(event.id);
-      (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["DistrictName"].setValue(event.assets_no);
+    }
+    // else if (event.selectType == 'newCountry') {
+    //   (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["CountryId"].setValue(event.id);
+    //   (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["CountryName"].setValue(event.assets_no);
+    // } else if (event.selectType == 'newState') {
+    //   (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["StateId"].setValue(event.id);
+    //   (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["StateName"].setValue(event.assets_no);
+    // } else if (event.selectType == 'newDistrict') {
+    //   (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["DistrictId"].setValue(event.id);
+    //   (<FormGroup>(<FormArray>this.addressForm.get('vendorAdd'))?.controls[0])?.controls["DistrictName"].setValue(event.assets_no);
+    // }
+  }
+
+  onAddressSelect(event: any, index: number) {
+    const control = (this.addressForm.get('vendorAdd') as FormArray).at(index) as FormGroup;
+
+    switch (event.selectType) {
+      case 'newCountry':
+        control.get('fk_country_id')?.setValue(event.id);
+        // control.get('CountryName')?.setValue(event.assets_no);
+
+        // Reset state and district values on country change
+        control.get('fk_state_id')?.reset();
+        control.get('fk_district_id')?.reset();
+        this.getState(event.id, index);
+        break;
+
+      case 'newState':
+        control.get('fk_state_id')?.setValue(event.id);
+        this.getDistrict(event.id, index);
+        // Reset district on state change
+        control.get('fk_district_id')?.reset();
+        break;
+
+      case 'newDistrict':
+        control.get('fk_district_id')?.setValue(event.id);
+        break;
+
+      default:
+        console.warn('Unknown selectType:', event.selectType);
     }
   }
+
+
+
 
 }

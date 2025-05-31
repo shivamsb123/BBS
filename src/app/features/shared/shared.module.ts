@@ -51,6 +51,7 @@ import { NotificationPopupComponent } from './components/notification-popup/noti
 import { LottieModule } from 'ngx-lottie';
 import player from "lottie-web";
 import { OperationStatisticsComponent } from './user/operation-statistics/operation-statistics.component';
+import { DeleteConfirmationComponent } from './components/delete-confirmation/delete-confirmation.component';
 
 export function playerFactory() {
   return player;
@@ -85,7 +86,8 @@ export function playerFactory() {
     ChartViewComponent,
     AlertPopupComponent,
     NotificationPopupComponent,
-    OperationStatisticsComponent
+    OperationStatisticsComponent,
+    DeleteConfirmationComponent
 
   ],
   imports: [
@@ -146,7 +148,8 @@ export function playerFactory() {
     SortablejsModule,
     ChartViewComponent,
     AlertPopupComponent,
-    LottieModule
+    LottieModule,
+    DeleteConfirmationComponent
 
 
 

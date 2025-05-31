@@ -18,6 +18,8 @@ import { ManufacturerComponent } from './manufacturer/manufacturer.component';
 import { AddManufacturerComponent } from './add-manufacturer/add-manufacturer.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
+import { SupplierAddressComponent } from './supplier-address/supplier-address.component';
+import { CountryMasterComponent } from './country-master/country-master.component';
 
 
 const routes: Routes = [
@@ -55,7 +57,7 @@ const routes: Routes = [
     path: 'Add-Subcategory', component: AddSubCategoryComponent
   },
   {
-    path: 'Add-Subcategory/:id', component: AddSubCategoryComponent
+    path: 'Add-Subcategory/:id/:catId', component: AddSubCategoryComponent
   },
   {
     path: 'ProductMaster_Unit_List', component: UnitListComponent
@@ -102,6 +104,12 @@ const routes: Routes = [
   {
     path: 'Add-Contact/:id', component: AddContactComponent
   },
+   {
+    path: 'supplier-address/:id', component: SupplierAddressComponent
+  },
+  {
+    path:'Country_Master_List',component:CountryMasterComponent
+  }
 ];
 
 @NgModule({

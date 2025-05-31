@@ -47,17 +47,15 @@ export class AddBrandComponent implements OnInit {
 
   getBrandData() {
     let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": parseInt(this.id)
+      "pk_brand_id": Number(this.id)
     }
     this.stockService.brandList(payload).subscribe((res: any) => {
       this.brandData = res?.body?.data;
       this.brandData.forEach((val: any) => {
-        if(val?.id == this.id) {
+        if (val?.pk_brand_id == this.id) {
           this.selectedBrand = val
           this.brandForm = this.fb.group({
-            name: [val?.description, [Validators.required, Validators.pattern('')]],
+            name: [val?.brand_name, [Validators.required, Validators.pattern('')]],
           })
         }
       })
@@ -71,29 +69,24 @@ export class AddBrandComponent implements OnInit {
   }
 
   submit(formValue: any) {
+    let service:any
     let payload = {
-      "Brand_Name": formValue.name,
-      "Modify_Date": "",
-      "Created_date": "",
-      "NewEmpID": localStorage.getItem('user_Id'),
-      "PreFix": "",
-      "P_ID": 0,
-      "Mode": "INSERT"
+      "brand_name": formValue.name,
+      "Logged_by": Number(localStorage.getItem('user_Id'))
     }
 
-    if(this.id) {
-      payload['Mode'] = "UPDATE"
-      let formatDateValue = this.selectedBrand?.date_Created.slice(0, 10).split("-").reverse().join('-');
-      let formatTimeValue = this.selectedBrand?.date_Created.slice(11, 20);
-      payload['Created_date'] = `${formatDateValue}  ${formatTimeValue}`;
-      payload['Modify_Date'] = formatDate(new Date() , 'yyyy-MM-dd hh:mm:ss', 'en-US')
+    if (this.id) {
+      payload['pk_brand_id'] = Number(this.id)
+      service = this.stockService.updateBrand(payload)
+    }else{
+      service = this.stockService.addBrand(payload)
     }
-    this.stockService.addBrand(payload).subscribe((res:any) => {
+    service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
-      if (res?.body?.status == 'Success') {
+      if (res?.body?.status == 'success') {
         this.alertData = {
           message: res?.body?.alert
         };
@@ -105,7 +98,7 @@ export class AddBrandComponent implements OnInit {
         }, 3000);
       } else {
         this.alertData = {
-          message: `Data no ${this.alertMessage}`,
+          message: res?.body?.alert,
         };
         this.alertType = "danger";
         this.alertTrigger = true;
@@ -113,7 +106,7 @@ export class AddBrandComponent implements OnInit {
       }
     })
   }
-cancel(){
-  this.brandForm.reset()
-}
+  cancel() {
+    this.brandForm.reset()
+  }
 }

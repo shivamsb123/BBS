@@ -11,6 +11,8 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+         <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
         <div class="card">
           <div class="card-header card-default">
             Category List        
@@ -67,11 +69,12 @@
                                       {{i+1}}
                                     </td>
                             <td>
-                              {{vehicle?.catname || 'NA'}}
+                              {{vehicle?.category_name || 'NA'}}
                             </td>
-                            <td>{{vehicle?.status || 'NA'}}</td>
-                            <td> <a tooltip="Edit" (click)="redirectTo(vehicle?.id)" rel="noopener noreferrer"><i class="fa fa-pencil"
+                            <td> <a tooltip="Edit" (click)="redirectTo(vehicle?.pk_category_id)" rel="noopener noreferrer"><i class="fa fa-pencil"
                               aria-hidden="true"></i>
+                          </a>
+                          <a (click)="deleteCategory(vehicle)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer; margin-left: 10px;"></i>
                           </a>
                         </td>
 

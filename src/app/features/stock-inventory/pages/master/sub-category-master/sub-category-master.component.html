@@ -11,16 +11,36 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+         <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
         <div class="card">
           <div class="card-header card-default">
             SubCategory List        
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-3"></div>
+               <div class="col-md-3">
+                <label class="form-label">Category</label>
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="categoryData"
+                  [type]="'category'" [placeholder]="'Select category'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!selectedValue && categoryData && categoryData.length > 0 ">
+                  <select-filter [vehicleData]="categoryData"
+                  [type]="'category'" [placeholder]="'Select category'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              <div *ngIf="!selectedValue && !categoryData || categoryData.length == 0">
+                  <select-filter
+                  [type]="'category'" [placeholder]="'Select category'"
+                  (onConfirm)="confirm($event)"></select-filter>
+              </div>
+              </div>
               <div class="col-md-3"></div>
               <div class="col-md-3"></div>
               <div class="col-md-3">
+                <br>
                 <button class="btn btn-primary" (click)="AddSubCategory('/SupplyChain/Add-Subcategory')">
                   <i class="fa fa-plus"></i>
                   Add Sub Category
@@ -65,12 +85,15 @@
                                     totalItems: count}; let i = index">
                             <td>{{i+1}}</td>
                             <td>
-                              {{subCategory?.subcatname || 'NA'}}
+                              {{subCategory?.subcategory_name || 'NA'}}
                             </td>
-                            <td>{{subCategory?.primary_Group || 'NA'}}</td>
-                            <td><a tooltip="Edit" (click)="redirectTo(subCategory?.id)" rel="noopener noreferrer"><i class="fa fa-pencil"
+                            <td>{{subCategory?.category_name || 'NA'}}</td>
+                            <td><a tooltip="Edit" (click)="redirectTo(subCategory?.pk_subcategory_id)" rel="noopener noreferrer"><i class="fa fa-pencil"
                               aria-hidden="true"></i>
-                          </a> </td> 
+                          </a> 
+                           <a (click)="deleteSubCategory(subCategory)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer; margin-left: 10px;"></i>
+                          </a>
+                        </td> 
                            
                           </tr>
                         </tbody>

@@ -7,309 +7,261 @@
                 <li><a routerLink="/SupplyChain/ProductMaster_List"> <i class="fa fa-long-arrow-right"
                             aria-hidden="true"></i>
                         Product Master </a></li>
-                <li><a routerLink="/SupplyChain/Add-Product"> <i class="fa fa-long-arrow-right"
-                            aria-hidden="true"></i>
+                <li><a routerLink="/SupplyChain/Add-Product"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                         Add Product Master </a></li>
             </ol>
         </div>
     </div>
-    <form [formGroup]="productForm">
-        <div class="row">
-            <div class="col-md-12">
-                <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
-                </app-alert>
-                <div class="card">
-                    <div class="card-header card-default">
-                        Item Information
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label">Item Name</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="name"
-                                        placeholder="Enter Name" aria-describedby="button-addon2" />
-                                </div>
+   <form [formGroup]="productForm">
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger"></app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                    Item Information
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Item Name</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="name"
+                                    placeholder="Enter Name" aria-describedby="button-addon2" />
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Barcode No</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="barcodeNo"
-                                        placeholder="Barcode No" aria-describedby="button-addon2" />
-                                </div>
+                            <div *ngIf="productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('name')?.errors?.['required']">Item Name is required</span>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Category</label>
-                                <div *ngIf="selectedValue">
-                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="categoryData"
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Category</label>
+                            <div *ngIf="selectedValue">
+                                <select-filter [selectedValue]="selectedValue" [vehicleData]="categoryData"
                                     [type]="'category'" [placeholder]="'Select Category'"
                                     (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedValue && categoryData && categoryData.length > 0 ">
-                                    <select-filter [vehicleData]="categoryData"
-                                        [type]="'category'" [placeholder]="'Select Category'"
-                                        (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedValue && !categoryData || categoryData.length == 0">
-                                    <select-filter [type]="'category'"
-                                        [placeholder]="'Select Category'" (onConfirm)="confirm($event)"></select-filter>
-                                </div>
                             </div>
-                            <div class="col-md-3">                                
-                                <label class="form-label">Sub Category</label>
-                                <div *ngIf="selectedSubCatValue">
-                                    <select-filter [selectedValue]="selectedSubCatValue" [vehicleData]="subCateData" [type]="'sub_cat'"
-                                    [placeholder]="'Select Sub Category'"
+                            <div *ngIf="!selectedValue && categoryData && categoryData.length > 0">
+                                <select-filter [vehicleData]="categoryData" [type]="'category'"
+                                    [placeholder]="'Select Category'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedValue && !categoryData || categoryData.length == 0">
+                                <select-filter [type]="'category'" [placeholder]="'Select Category'"
                                     (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedSubCatValue && subCateData && subCateData.length > 0">
-                                    <select-filter [vehicleData]="subCateData" [type]="'sub_cat'"
-                                    [placeholder]="'Select Sub Category'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedSubCatValue && !subCateData || subCateData.length == 0">
-                                    <select-filter  [type]="'sub_cat'"
-                                    [placeholder]="'Select Sub Category'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
+                            </div>
+                            <div *ngIf="productForm.get('Category')?.invalid && (productForm.get('Category')?.dirty || productForm.get('Category')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('Category')?.errors?.['required']">Category is required</span>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label">Select Base Unit</label>
-
-                                <div *ngIf="selectedbaseValue">
-                                    <select-filter [selectedValue]="selectedbaseValue" [vehicleData]="unitData" [type]="'unit'"
-                                    [placeholder]="'Select Base Unit'"
+                        <div class="col-md-3">
+                            <label class="form-label">Sub Category</label>
+                            <div *ngIf="selectedSubCatValue">
+                                <select-filter [selectedValue]="selectedSubCatValue" [vehicleData]="subCateData"
+                                    [type]="'sub_cat'" [placeholder]="'Select Sub Category'"
                                     (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedbaseValue && unitData && unitData.length > 0">
-                                    <select-filter [vehicleData]="unitData" [type]="'unit'"
-                                    [placeholder]="'Select Base Unit'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedbaseValue && !unitData || unitData.length == 0">
-                                    <select-filter [type]="'unit'"
-                                    [placeholder]="'Select Base Unit'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Supplier Name</label>
-
-                                <div *ngIf="selectedSupplierValue">
-                                    <select-filter [selectedValue]="selectedSupplierValue" [vehicleData]="supplierNameData" [type]="'supplier_name'"
-                                    [placeholder]="'Select Supplier Name'"
+                            <div *ngIf="!selectedSubCatValue && subCateData && subCateData.length > 0">
+                                <select-filter [vehicleData]="subCateData" [type]="'sub_cat'"
+                                    [placeholder]="'Select Sub Category'"
                                     (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedSupplierValue && supplierNameData && supplierNameData.length > 0">
-                                    <select-filter [vehicleData]="supplierNameData" [type]="'supplier_name'"
-                                    [placeholder]="'Select Supplier Name'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedSupplierValue && !supplierNameData || supplierNameData.length == 0">
-                                    <select-filter [type]="'supplier_name'"
-                                    [placeholder]="'Select Supplier Name'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">HSN Code</label>
-                                <div *ngIf="selectedHSNValue">
-                                    <select-filter [selectedValue]="selectedHSNValue" [vehicleData]="hsnData" [type]="'hsn'" [placeholder]="'Select HSN'"
+                            <div *ngIf="!selectedSubCatValue && !subCateData || subCateData.length == 0">
+                                <select-filter [type]="'sub_cat'" [placeholder]="'Select Sub Category'"
                                     (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedHSNValue && hsnData && hsnData.length > 0">
-                                    <select-filter [vehicleData]="hsnData" [type]="'hsn'" [placeholder]="'Select HSN'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedHSNValue && !hsnData || hsnData.length == 0">
-                                    <select-filter [type]="'hsn'" [placeholder]="'Select HSN'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Cess Rate in (%)</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="cess"
-                                        placeholder="Enter Cess " aria-describedby="button-addon2" />
-                                </div>
+                             <div *ngIf="productForm.get('Sub_Category')?.invalid && (productForm.get('Sub_Category')?.dirty || productForm.get('Sub_Category')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('Sub_Category')?.errors?.['required']">Sub Category is required</span>
                             </div>
-
                         </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label">Item Long Specification</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="long_item_specification"
-                                        placeholder="Item Long Specification" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Brand Name</label>
-                                <div *ngIf="selectedBrandValue">
-                                    <select-filter [selectedValue]="selectedBrandValue" [vehicleData]="brandData" [type]="'brand'"
-                                    [placeholder]="'Select Brand'" (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedBrandValue && brandData && brandData.length > 0">
-                                    <select-filter [vehicleData]="brandData" [type]="'brand'"
-                                    [placeholder]="'Select Brand'" (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedBrandValue && !brandData || brandData.length == 0">
-                                    <select-filter [type]="'brand'"
-                                    [placeholder]="'Select Brand'" (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Manufacture Name</label>
-                                <div *ngIf="selectedMenufacValue">
-                                    <select-filter [selectedValue]="selectedMenufacValue" [vehicleData]="menufactureData" [type]="'menufacture'"
-                                    [placeholder]="'Select Manufacture'"
+                        <div class="col-md-3">
+                            <label class="form-label">Unit</label>
+                            <div *ngIf="selectedbaseValue">
+                                <select-filter [selectedValue]="selectedbaseValue" [vehicleData]="unitData"
+                                    [type]="'unit'" [placeholder]="'Select Unit'"
                                     (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedMenufacValue && menufactureData && menufactureData.length > 0">
-                                    <select-filter [vehicleData]="menufactureData" [type]="'menufacture'"
-                                    [placeholder]="'Select Manufacture'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedMenufacValue && !menufactureData || menufactureData.length == 0">
-                                    <select-filter [type]="'menufacture'"
-                                    [placeholder]="'Select Manufacture'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
                             </div>
+                            <div *ngIf="!selectedbaseValue && unitData && unitData.length > 0">
+                                <select-filter [vehicleData]="unitData" [type]="'unit'"
+                                    [placeholder]="'Select Unit'" (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedbaseValue && !unitData || unitData.length == 0">
+                                <select-filter [type]="'unit'" [placeholder]="'Select Unit'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                             <div *ngIf="productForm.get('unit')?.invalid && (productForm.get('unit')?.dirty || productForm.get('unit')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('unit')?.errors?.['required']">Unit is required</span>
+                            </div>
+                        </div>
+                    </div>
 
-                            <div class="col-md-3">
-                                <label class="form-label">Manufacture Date</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker formControlName="manufacture_date" />
-                                </div>
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Billing For</label>
+                            <div *ngIf="selectedBillingValue">
+                                <select-filter [selectedValue]="selectedBillingValue" [vehicleData]="billingdata"
+                                    [type]="'billing_for'" [placeholder]="'Select Billing For'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedBillingValue && billingdata && billingdata.length > 0">
+                                <select-filter [vehicleData]="billingdata" [type]="'billing_for'"
+                                    [placeholder]="'Select Billing For'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedBillingValue && !billingdata || billingdata.length == 0">
+                                <select-filter [type]="'billing_for'" [placeholder]="'Select Billing For'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="productForm.get('billingFor')?.invalid && (productForm.get('billingFor')?.dirty || productForm.get('billingFor')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('billingFor')?.errors?.['required']">Billing For is required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Billing Category</label>
+                            <div *ngIf="selectedBillingCategory">
+                                <select-filter [selectedValue]="selectedBillingCategory"
+                                    [vehicleData]="billingCategory" [type]="'billing_category'"
+                                    [placeholder]="'Select Billing category'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedBillingCategory && billingCategory && billingCategory.length > 0">
+                                <select-filter [vehicleData]="billingCategory" [type]="'billing_category'"
+                                    [placeholder]="'Select Billing category'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div
+                                *ngIf="!selectedBillingCategory && !billingCategory || billingCategory.length == 0">
+                                <select-filter [type]="'billing_category'" [placeholder]="'Select Billing category'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                             <div *ngIf="productForm.get('billingCategory')?.invalid && (productForm.get('billingCategory')?.dirty || productForm.get('billingCategory')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('billingCategory')?.errors?.['required']">Billing Category is required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">HSN Code</label>
+                            <div *ngIf="selectedHSNValue">
+                                <select-filter [selectedValue]="selectedHSNValue" [vehicleData]="hsnData"
+                                    [type]="'hsn'" [placeholder]="'Select HSN'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedHSNValue && hsnData && hsnData.length > 0">
+                                <select-filter [vehicleData]="hsnData" [type]="'hsn'" [placeholder]="'Select HSN'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                            <div *ngIf="!selectedHSNValue && !hsnData || hsnData.length == 0">
+                                <select-filter [type]="'hsn'" [placeholder]="'Select HSN'"
+                                    (onConfirm)="confirm($event)"></select-filter>
+                            </div>
+                             <div *ngIf="productForm.get('HSN_Code')?.invalid && (productForm.get('HSN_Code')?.dirty || productForm.get('HSN_Code')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('HSN_Code')?.errors?.['required']">HSN Code is required</span>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label">Expiry Date</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker formControlName="expiry_date" />
-                                </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Brand Name</label>
+                            <div *ngIf="selectedBrandValue">
+                                <select-filter [selectedValue]="selectedBrandValue" [vehicleData]="brandData"
+                                    [type]="'brand'" [placeholder]="'Select Brand'"
+                                    (onConfirm)="confirm($event)"></select-filter>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Consuption Type</label>
-                                <select class="form-select" aria-label="Default select example"
-                                    formControlName="Consuption_Type">
-                                    <option value="1">LIFO</option>
-                                    <option value="2">FIFO</option>
-                                    <option value="3">NONE</option>
-                                </select>
+                            <div *ngIf="!selectedBrandValue && brandData && brandData.length > 0">
+                                <select-filter [vehicleData]="brandData" [type]="'brand'"
+                                    [placeholder]="'Select Brand'" (onConfirm)="confirm($event)"></select-filter>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Followed By</label>
-                                <select class="form-select" aria-label="Default select example"
-                                    formControlName="followed_by">
-                                    <option value="1">Manufacture Date</option>
-                                    <option value="2">Expiry Date</option>
-                                </select>
+                            <div *ngIf="!selectedBrandValue && !brandData || brandData.length == 0">
+                                <select-filter [type]="'brand'" [placeholder]="'Select Brand'"
+                                    (onConfirm)="confirm($event)"></select-filter>
                             </div>
+                            <div *ngIf="productForm.get('brand_name')?.invalid && (productForm.get('brand_name')?.dirty || productForm.get('brand_name')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('brand_name')?.errors?.['required']">Brand Name is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Value</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="itemValue"
+                                    placeholder="Enter Value" aria-describedby="button-addon2" />
+                            </div>
+                            <div *ngIf="productForm.get('itemValue')?.invalid && (productForm.get('itemValue')?.dirty || productForm.get('itemValue')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('itemValue')?.errors?.['required']">Value is required</span>
+                                <span *ngIf="productForm.get('itemValue')?.errors?.['pattern']">Value must be a valid number</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Taxable Value</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="taxableValue"
+                                    placeholder="Enter Taxable Value" aria-describedby="button-addon2" />
+                            </div>
+                            <div *ngIf="productForm.get('taxableValue')?.invalid && (productForm.get('taxableValue')?.dirty || productForm.get('taxableValue')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('taxableValue')?.errors?.['required']">Taxable Value is required</span>
+                                <span *ngIf="productForm.get('taxableValue')?.errors?.['pattern']">Taxable Value must be a valid number</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tax (%)</label>
+                            <div class="input-group ">
+                                <input type="text" class="form-control" formControlName="taxRate"
+                                    placeholder="Enter Tax" aria-describedby="button-addon2" />
+                            </div>
+                            <div *ngIf="productForm.get('taxRate')?.invalid && (productForm.get('taxRate')?.dirty || productForm.get('taxRate')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('taxRate')?.errors?.['required']">Tax Rate is required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Cess Rate in (%)</label>
+                            <div class="input-group ">
+                                <input type="text" class="form-control" formControlName="cess"
+                                    placeholder="Enter Cess" aria-describedby="button-addon2" />
+                            </div>
+                            <div *ngIf="productForm.get('cess')?.invalid && (productForm.get('cess')?.dirty || productForm.get('cess')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('cess')?.errors?.['required']">Cess Rate is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label">Description</label>
+                            <div class="input-group mb-3">
+                                <textarea class="form-control" formControlName="Description"
+                                    id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class="btn btn-success"
+                                (click)="submit(productForm.value)">
+                                <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button (click)="resetForm()" class="btn btn-danger">
+                                <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-default">
-                        Pricing and Inventory
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label">Item Purchase Price</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="purchase_price"
-                                        placeholder="Type Price in tax " aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Item Wholesaler Price</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="Wholesaler_Price"
-                                        placeholder="Type Price" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Item Retailer Price</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="Retailer_Price"
-                                        placeholder="Type Retailer Price" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-default">
-                        Default
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-
-                            <div class="col-md-3">
-                                <label class="form-label">Item Opening Qty</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="Opening_Qty"
-                                        placeholder="Type Opening Qty" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Item Low Level</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="Low_Level"
-                                        placeholder="Type Low Level" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="formFile" class="form-label">Image Upload</label>
-                                <input class="form-control" (change)="changeDocument($event)" formControlName="img" type="file" id="formFile">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Description</label>
-                                <div class="input-group mb-3">
-                                    <textarea class="form-control" formControlName="Description"
-                                        id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3"></div>
-
-                            <div class="col-md-3">
-                                <button class="btn btn-success" [disabled]="!productForm.value.name || !productForm.value.barcodeNo || !productForm.value.Category || !productForm.value.unit || !productForm.value.Opening_Qty" (click)="submit(productForm.value)">
-                                    <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
-                                </button>
-                            </div>
-                            <div class="col-md-3">
-                                <button (click)="resetForm()" class="btn btn-danger">
-                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
-                                </button>
-                            </div>
-                
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    
-
-    </form>
+    </div>
+</form>
 
 </section>

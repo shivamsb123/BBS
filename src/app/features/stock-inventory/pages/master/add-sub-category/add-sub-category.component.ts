@@ -24,6 +24,7 @@ export class AddSubCategoryComponent implements OnInit {
   alertTrigger: any = false;
   alertMessage: string = 'Added';
   selectedsubData: any;
+  categoryId: string;
 
   constructor(
     private stockService: StockService,
@@ -34,8 +35,9 @@ export class AddSubCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.isloading = true;
     this.id = this.route.snapshot.paramMap.get("id");
+    this.categoryId = this.route.snapshot.paramMap.get("catId");
     if (this.id) {
-      setTimeout(() => {      
+      setTimeout(() => {
         this.getSubcategoryData();
       }, 500);
       this.button = 'Update';
@@ -61,14 +63,14 @@ export class AddSubCategoryComponent implements OnInit {
       text: ''
     };
     let payload = {
-      "Result": ""
+      "pk_category_id": 0
     }
     this.stockService.categoryList(payload).subscribe((res: any) => {
       let data = res?.body?.data;
       this.categoryData = data.map((val: any) =>
         newData = {
-          value: val?.catid,
-          text: val?.catname
+          value: val?.pk_category_id,
+          text: val?.category_name
         }
       )
     })
@@ -77,26 +79,26 @@ export class AddSubCategoryComponent implements OnInit {
   getSubcategoryData() {
     this.isloading = true;
     let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": parseInt(this.id)
+      "fk_category_id":Number(this.categoryId),
+     "pk_subcategory_id": Number(this.id)
     };
     this.stockService.subCategoryList(payload).subscribe((res: any) => {
       this.subCategoryData = res?.body?.data;
       this.subCategoryData?.forEach((val: any) => {
-        if (val?.id == this.id) {
+        if (val?.pk_subcategory_id == this.id) {
           this.selectedsubData = val;
           this.category = val?.catid
-          let newSubCatValue = this.categoryData?.filter((ele: any) => ele?.value == val?.catid);
+          let newSubCatValue = this.categoryData?.filter((ele: any) => ele?.value == val?.fk_category_id);
           newSubCatValue?.forEach((data: any) => {
             this.selectedValue = data
           });
 
           this.subform = this.fb.group({
             cat: ['', [Validators.required, Validators.pattern('')]],
-            sub_cat: [val?.subcatname, [Validators.required, Validators.pattern('')]]
+            sub_cat: [val?.subcategory_name, [Validators.required, Validators.pattern('')]]
           })
-          this.subform.controls['cat'].setValue(val?.catid);
+          this.category = val?.fk_category_id
+          // this.subform.controls['cat'].setValue(val?.fk_category_id);
         }
       })
     })
@@ -105,7 +107,7 @@ export class AddSubCategoryComponent implements OnInit {
   }
 
   confirm(event: any) {
-    this.category = event.id;    
+    this.category = event.id;
   }
 
   cancel() {
@@ -116,39 +118,34 @@ export class AddSubCategoryComponent implements OnInit {
     }
   }
 
-  submit(formValue:any) {
+  submit(formValue: any) {
+    let service: any
     let payload = {
-      "MODE": 0,
-      "id": 0,
-      "catid": this.category,
-      "subcatid": "",
-      "subcatname": formValue.sub_cat,
-      "Status": 1,
-      "Primary_Group": "Y",
-      "BranchID": "",
-      "CmpyID": localStorage.getItem('dept_id'),
-      "Flag": 1,
-      "RESULT": ""
+
+      "fk_category_id": Number(this.category),
+      "subcategory_name": formValue.sub_cat,
+      "Logged_by": Number(localStorage.getItem('user_Id'))
     }
-    if(this.id){
-      payload['id'] = Number(this.id);
-      payload['MODE'] = 1
-      payload['catid'] = this.category
+    if (this.id) {
+      payload['pk_subcategory_id'] = Number(this.id);
+      service = this.stockService.updateSubCategory(payload)
+    } else {
+      service = this.stockService.addSubCategory(payload)
     }
 
-    this.stockService.addSubCategory(payload).subscribe((res: any) => {
+    service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
-      if (res?.body?.status == 'Success') {
-         this.alertData = {
+      if (res?.body?.status == 'success') {
+        this.alertData = {
           message: res?.body?.alert
         };
         this.alertType = "success";
         this.alertTrigger = true;
         this.stopAlert();
-        setTimeout(() => {          
+        setTimeout(() => {
           this.router.navigateByUrl('/SupplyChain/SubCategoryMaster_List')
         }, 2000);
       } else {

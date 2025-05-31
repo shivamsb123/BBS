@@ -11,6 +11,8 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+         <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
         <div class="card">
           <div class="card-header card-default">
             HSN List        
@@ -29,6 +31,7 @@
             </div>
             <div class="row row-data">
               <div class="col-md-12">
+                
                 <div class="search-form">
                   <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
                     class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
@@ -64,16 +67,20 @@
                                     currentPage: page,
                                     totalItems: count}; let i = index;">
                             <td>
-                              {{hsn?.hsn || 'NA'}}
+                              {{hsn?.hsn_code || 'NA'}}
                             </td>
-                            <td>{{hsn?.description || 'NA'}}</td>
-                            <td>{{hsn?.cgstRate || 'NA'}}</td>
-                            <td>{{hsn?.sgstRate || 'NA'}}</td>
-                            <td>{{hsn?.igstRate || 'NA'}}</td>                           
-                            <td><a (click)="redirectTo(hsn?.hsnId)" tooltip="Edit" rel="noopener noreferrer"><i class="fa fa-pencil"
+                            <td>{{hsn?.hsn_description || 'NA'}}</td>
+                            <td>{{hsn?.tax_per || 'NA'}}</td>
+                            <td>{{hsn?.cess_per || 'NA'}}</td>
+                            <td>{{hsn?.cgst_per || 'NA'}}</td>
+                            <td>{{hsn?.sgst_per || 'NA'}}</td>
+                            <td>{{hsn?.igst_per || 'NA'}}</td>                           
+                            <td><a (click)="redirectTo(hsn?.pk_hsn_id)" tooltip="Edit" rel="noopener noreferrer"><i class="fa fa-pencil" style="cursor: pointer;"
                               aria-hidden="true"></i>
-                          </a> <a tooltip="Delete" rel="noopener noreferrer">
-                          </a></td> 
+                          </a> 
+                          <a (click)="deleteHsn(hsn)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer;"></i>
+                          </a>
+                        </td> 
                           </tr>
                         </tbody>
                       </table>

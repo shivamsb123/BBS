@@ -66,25 +66,26 @@
 		<nav>
 			<a href="javascript:void(0);" class="mobile-menu-trigger"><i class="fa fa-bars" aria-hidden="true"></i></a>
 			<ul class="menu menu-bar">
-				<li *ngFor="let item of menuList" (click)="showHeader()">
-					<a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true"><i
-							[ngClass]="item.icons" aria-hidden="true"></i>
-						{{item?.moduleName}}
-
+				<li *ngFor="let item of menuList; let i = index">
+					<a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true"
+						(click)="showHeader(i)">
+						<i [ngClass]="item.icons" aria-hidden="true"></i>
+						{{ item?.moduleName }}
 					</a>
-					<ul class="mega-menu mega-menu--flat" *ngIf="isShowHeader">
+
+					<ul class="mega-menu mega-menu--flat" *ngIf="activeMenu === i">
 						<li>
 							<ul class="menu menu-list">
 								<div class="row">
 									<div class="col-md-2" style="float: left;" *ngFor="let submenu of item.listMenus">
-
-										<li
-											*ngIf="submenu?.listSubMenus && submenu?.listSubMenus.length > 0; else elseblock">
+										<li *ngIf="submenu?.listSubMenus?.length > 0; else elseblock">
 											<div>
 												<ul class="menu menu-bar submenu">
 													<li>
 														<a href="javascript:void(0);" class="menu-link menu-bar-link"
-															aria-haspopup="true">{{submenu.menuName}}</a>
+															aria-haspopup="true">
+															{{ submenu.menuName }}
+														</a>
 														<ul class="mega-menu mega-menu--flat">
 															<li>
 																<ul class="menu menu-list">
@@ -92,9 +93,9 @@
 																		<div class="col-md-3" style="float: left;"
 																			*ngFor="let data of submenu?.listSubMenus"
 																			(click)="closeHeader()">
-																			<a routerLink="{{modifyHeaderurl('/'+ item.moduleName +'/'+data[ 'url'])}}"
+																			<a [routerLink]="modifyHeaderurl('/' + item.moduleName + '/' + data['url'])"
 																				class="menu-link menu-list-link">
-																				{{data?.subMenuName}}
+																				{{ data?.subMenuName }}
 																			</a>
 																		</div>
 																	</div>
@@ -107,23 +108,16 @@
 										</li>
 
 										<ng-template #elseblock>
-
 											<li (click)="closeHeader()">
-												<a routerLink="{{	modifyHeaderurl('/'+ item.moduleName +'/'+submenu[ 'url'])}}"
+												<a [routerLink]="modifyHeaderurl('/' + item.moduleName + '/' + submenu['url'])"
 													class="menu-link menu-list-link test">
-													{{submenu.menuName}}
+													{{ submenu.menuName }}
 												</a>
-
 											</li>
-
 										</ng-template>
-
 									</div>
-
-
 								</div>
 							</ul>
-
 						</li>
 
 						<li class="mobile-menu-back-item">

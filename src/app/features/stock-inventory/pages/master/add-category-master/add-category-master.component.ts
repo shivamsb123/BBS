@@ -44,20 +44,15 @@ export class AddCategoryMasterComponent {
 
   getCotegoryById() {
     let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": parseInt(this.id)
+      "pk_category_id": Number(this.id)
 
     }
-    console.log("payload", payload);
-
-    this.stockService.categoryListById(payload).subscribe((res: any) => {
+    this.stockService.categoryList(payload).subscribe((res: any) => {
       this.categoryListById = res?.body?.data
-
       this.categoryListById.forEach((val: any) => {
-        if (val.id == this.id) {
+        if (val.pk_category_id == this.id) {
           this.categoryForm = this.fb.group({
-            category_name: [val?.catname, [Validators.required, Validators.pattern('')]],
+            category_name: [val?.category_name, [Validators.required, Validators.pattern('')]],
           })
         }
       })
@@ -67,28 +62,25 @@ export class AddCategoryMasterComponent {
 
 
   submit(formValue: any) {
+    let service:any
     let payload = {
-      "id": 0,
-      "catid": "",
-      "catname": formValue.category_name,
-      "Status": 1,
-      "MainCatID": "",
-      "Primary_Group": "N",
-      "BranchID": "ADS-B1",
-      "CmpyID": localStorage.getItem('dept_id'),
-      "Mode": "INSERT"
+      "category_name": formValue.category_name,
+      "Logged_by": Number(localStorage.getItem('user_Id'))
     }
+
     if (this.id) {
-      payload['Mode'] = 'UPDATE'
-      payload['id'] = parseInt(this.id)
+      payload['pk_category_id'] = Number(this.id)
+      service = this.stockService.updateCategory(payload)
+    }else{
+      service = this.stockService.addCategory(payload)
     }
   
-    this.stockService.addCategory(payload).subscribe((res: any) => {
+    service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
-      if (res?.body?.status == 'Success') {
+      if (res?.body?.status == 'success') {
         this.alertData = {
           message: res?.body?.alert
         };

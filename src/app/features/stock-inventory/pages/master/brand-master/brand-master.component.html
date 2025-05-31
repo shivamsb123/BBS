@@ -11,6 +11,8 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+         <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
         <div class="card">
           <div class="card-header card-default">
             Brand List       
@@ -64,13 +66,13 @@
                                     currentPage: page,
                                     totalItems: count}; let i = index;">
                             <td>{{i+1}}</td>
-                            <td>
-                              {{brand?.brand_Code || 'NA'}}
-                            </td>
-                            <td>{{brand?.description || 'NA'}}</td>
-                            <td><a tooltip="Edit" (click)="redirectTo(brand?.id)" rel="noopener noreferrer"><i class="fa fa-pencil"
+                            <td>{{brand?.brand_name || 'NA'}}</td>
+                            <td><a tooltip="Edit" (click)="redirectTo(brand?.pk_brand_id)" rel="noopener noreferrer"><i class="fa fa-pencil" style="cursor: pointer;"
                               aria-hidden="true"></i>
-                          </a></td>                         
+                          </a>
+                           <a (click)="deleteBrand(brand)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer; margin-left: 10px;"></i>
+                          </a>
+                        </td>                         
                            
                         </tbody>
                       </table>

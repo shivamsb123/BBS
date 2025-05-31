@@ -11,9 +11,11 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+         <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
         <div class="card">
           <div class="card-header card-default">
-            Vendor List     
+            Supplier List     
           </div>
           <div class="card-body">
             <div class="row">
@@ -23,7 +25,7 @@
               <div class="col-md-3">
                 <button class="btn btn-primary" (click)="AddUnit('/SupplyChain/Add-Contact')">
                   <i class="fa fa-plus"></i>
-                  Add Vendor
+                  Add Supplier
               </button>
               </div>
             </div>
@@ -65,9 +67,9 @@
                                     totalItems: count};let i = index;">
                             <td>{{i+1}}</td>
                             <td>
-                              {{contact?.cusName || 'NA'}}
+                              {{contact?.supplier_name || 'NA'}}
                             </td>
-                            <td>
+                            <!-- <td>
                               <div *ngIf="contact?.cusType == 1">
                                 Retailer
                               </div>
@@ -77,14 +79,23 @@
                               <div *ngIf="contact?.cusType == 3">
                                 Wholesaler
                               </div>
-                            </td>
-                            <td>{{contact?.email || 'NA'}}</td>
-                            <td>{{contact?.office || 'NA'}}</td>
-                            <td>{{contact?.contact || 'NA'}}</td>
-                            <td>{{contact?.balance || 'NA'}}</td>
-                            <td><a tooltip="Edit" (click)="redirectTo(contact?.id)" rel="noopener noreferrer"><i class="fa fa-pencil"
-                              aria-hidden="true"></i>
-                          </a> </td> 
+                            </td> -->
+                            <td>{{contact?.business_name || 'NA'}}</td>
+                            <td>{{contact?.contact_person || 'NA'}}</td>
+                            <td>{{contact?.email_address || 'NA'}}</td>
+                            <td>{{contact?.mobile_no || 'NA'}}</td>
+                            <td>{{contact?.pan_no || 'NA'}}</td>
+                            <td>{{contact?.gst_no || 'NA'}}</td>
+                            <td>
+                              <a tooltip="Edit" (click)="redirectTo('/SupplyChain/Add-Contact/id',contact?.pk_supplier_id)" rel="noopener noreferrer"><i class="fa fa-pencil"
+                              aria-hidden="true" style="cursor: pointer;"></i>
+                          </a>
+                          <a tooltip="View Address" (click)="redirectTo('/SupplyChain/supplier-address/id',contact?.pk_supplier_id)" rel="noopener noreferrer"><i class="fa fa-eye"
+                              aria-hidden="true" style="cursor: pointer;"></i>
+                          </a>
+                          <a (click)="deleteSuppiler(contact)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger" style="cursor: pointer; margin-left: 10px;"></i>
+                          </a>
+                         </td> 
                           </tr>
                         </tbody> 
                       </table>

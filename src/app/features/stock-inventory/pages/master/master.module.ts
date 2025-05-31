@@ -23,6 +23,8 @@ import { AddContactComponent } from './add-contact/add-contact.component';
 import { SharedModule } from 'src/app/features/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { SupplierAddressComponent } from './supplier-address/supplier-address.component';
+import { CountryMasterComponent } from './country-master/country-master.component';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     ManufacturerComponent,
     AddManufacturerComponent,
     ContactListComponent,
-    AddContactComponent
+    AddContactComponent,
+    SupplierAddressComponent,
+    CountryMasterComponent
   ],
   imports: [
     CommonModule,

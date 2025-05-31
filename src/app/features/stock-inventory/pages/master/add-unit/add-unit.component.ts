@@ -39,6 +39,7 @@ export class AddUnitComponent implements OnInit {
 
   setInitialValue() {
     this.unitForm = this.fb.group({
+      code: ['', [Validators.required, Validators.pattern('')]],
       name: ['', [Validators.required, Validators.pattern('')]]
     })
   }
@@ -53,18 +54,15 @@ export class AddUnitComponent implements OnInit {
   getUnitList() {
     this.isloading = true;
     let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": parseInt(this.id)
+      "pk_unit_id": Number(this.id)
     }
 
     this.stockeService.unitList(payload).subscribe((res: any) => {
       this.unitData = res?.body?.data
-
       this.unitData.forEach((val: any) => {
-        this.unitIdData = val?.unitID
         this.unitForm = this.fb.group({
-          name: [val?.unitName, [Validators.required, Validators.pattern('')]]
+          code: [val?.unit_code, [Validators.required, Validators.pattern('')]],
+          name: [val?.unit_name, [Validators.required, Validators.pattern('')]]
         })
       })
       this.isloading = false
@@ -73,37 +71,44 @@ export class AddUnitComponent implements OnInit {
 
 
   submit(formValue: any) {
-    let payload = {
+    let service: any
+    let payload: any
 
-      "UnitID": "",
-      "UnitName": formValue.name,
-      "BraID": "",
-      "Status": 1,
-      "Mode": "INSERT"
-    }
     if (this.id) {
-      payload['Mode'] = 'UPDATE'
-      payload['UnitID'] = this.unitIdData
+      payload = {
+        "pk_unit_id": Number(this.id),
+        "unit_code": formValue?.code,
+        "unit_name": formValue?.name,
+        "updated_by": Number(localStorage.getItem('user_Id') || '')
+      }
+      service = this.stockeService.updateUnit(payload)
+    } else {
+      payload = {
+        "unit_code": formValue?.code,
+        "unit_name": formValue?.name,
+        "created_by": Number(localStorage.getItem('user_Id') || '')
+      }
+      service = this.stockeService.addUnit(payload)
     }
-   
-    this.stockeService.addUnit(payload).subscribe((res: any) => {
+
+    service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
-      if (res?.body?.status == 'Success') {
+      if (res?.body?.status == 'success') {
         this.alertData = {
           message: res?.body?.alert
         };
         this.alertType = "success";
         this.alertTrigger = true;
         this.stopAlert();
-        setTimeout(()=>{
+        setTimeout(() => {
           this.router.navigateByUrl('/SupplyChain/ProductMaster_Unit_List')
-        },3000)
+        }, 3000)
       } else {
         this.alertData = {
-          message: `Data Not ${this.alertMessage}`
+          message: res?.body?.alert
         };
         this.alertType = "danger";
         this.alertTrigger = true;
@@ -113,7 +118,7 @@ export class AddUnitComponent implements OnInit {
     })
   }
 
-  cancel(){
+  cancel() {
     this.unitForm.reset()
   }
 }

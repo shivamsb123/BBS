@@ -29,7 +29,7 @@ export const API_CONSTANTS: any = {
     MarkAttDMS: 'Roster/MarkAttDMS',
     allTripStatus: 'Dashboard/GetDashboardTripStatus',
     operatorData: 'Complaint/GetOperatorList?UserID=75',
-    emissionReport:'LocationMap/GetCarbonReport',
+    emissionReport: 'LocationMap/GetCarbonReport',
 
     /** registartion module */
     Departmentadd: 'Registration/Add_Department',
@@ -79,9 +79,9 @@ export const API_CONSTANTS: any = {
     accidentList: 'Registration/AccidentList',
     userAccess: 'Management/GetMenuListForUser',
     userList: 'ITMS/GetUserListForAccessPerm',
-    addStop:'Registration/AddStops',
-    addRouteMaster:'Registration/AddRouteMaster',
-    routeMasterList:'Registration/RouteMasterGrid',
+    addStop: 'Registration/AddStops',
+    addRouteMaster: 'Registration/AddRouteMaster',
+    routeMasterList: 'Registration/RouteMasterGrid',
 
     /** management module */
     changePassword: 'Account/ChangePassword',
@@ -125,8 +125,8 @@ export const API_CONSTANTS: any = {
     checkInData: 'AddRosterStaff/AttendanceCheckInOut',
     saveCheckIn: 'AddRosterStaff/SaveAttendanceCheckInCheckout',
     adduserAccess: 'Management/AddUserAccess',
-    alertMaster:'Registration/AlertMaster',
-    updateAlertMaster:'Registration/UpdateAlertRemarks',
+    alertMaster: 'Registration/AlertMaster',
+    updateAlertMaster: 'Registration/UpdateAlertRemarks',
 
     /** Tracking/GetTrackingHistory */
 
@@ -144,18 +144,18 @@ export const API_CONSTANTS: any = {
     geoFance: 'Report/GeoFenceReport',
     GetTrackingHistoryReplay: 'Tracking/GetTrackingHistoryReplay',
     dutyReport: 'Report/GetDutyReport',
-    updateDutyReport:'Report/UpdateDutyReport',
+    updateDutyReport: 'Report/UpdateDutyReport',
     LocationStatusReport: 'Report/LocationStatusReport',
     InfractionStatusReport: 'Report/InfractionStatusReport',
     breakdownReport: 'BreakDownComplaint/GetBDCgridReport',
-    missStopDetail:'Report/GetStopStatusofTrip',
-    gpsWiseBilling:'Report/GPSReportDate',
-    overSpeedReport:'Report/OverSpeedReport',
-    driverDutyChangeReport:'Report/DriverDutyChangeReport',
-    routeSurveyDropDwon:'Route/routemasterlist',
-    routeSurveyList:'route/routestopmasterlist',
-    socChangeReport:'Report/Get_stop_duration_report',
-    carbonReport:'LocationMap/GetCarbonReportDayWise',
+    missStopDetail: 'Report/GetStopStatusofTrip',
+    gpsWiseBilling: 'Report/GPSReportDate',
+    overSpeedReport: 'Report/OverSpeedReport',
+    driverDutyChangeReport: 'Report/DriverDutyChangeReport',
+    routeSurveyDropDwon: 'Route/routemasterlist',
+    routeSurveyList: 'route/routestopmasterlist',
+    socChangeReport: 'Report/Get_stop_duration_report',
+    carbonReport: 'LocationMap/GetCarbonReportDayWise',
 
     /** dashboard fleet status */
     dashboardfleetstatus: 'Dashboard/GetFleetStatusOnTrip',
@@ -168,37 +168,33 @@ export const API_CONSTANTS: any = {
     /**
      * stock inventory api start here
      */
-    categoryList: 'ProductMaster/GetCategoryList',
     manufactureList: 'ProductMaster/GetManufacturerList',
-    unitList: 'ProductMaster/GetLatestUnitList',
     supplierList: 'ProductMaster/GetSupplierNameList',
     manufactureNameList: 'ProductMaster/GetManufactureringGrid',
     productList: 'ProductMaster/GetProductListLatest',
-    hsnList: 'ProductMaster/GetHSNList',
-    subCategoryList: 'ProductMaster/GetSubCategoryList',
-    contactList: 'ProductMaster/GetContactList',
-    countryListData: 'ProductMaster/GetCountrylist',
-    stateListData: 'ProductMaster/GetStatelist',
-    cityListData: 'ProductMaster/GetCitylist',
-    addvendor: 'ProductMaster/AddVendorLatest',
-    addUnit: 'ProductMaster/AddUnit',
+    contactList: 'api/Supplier/GetSupplierList',
+    countryListData: 'api/ScComman/GetCountryList',
+    stateListData: 'api/ScComman/GetStateList/{countryId}',
+    cityListData: 'api/ScComman/GetDistrictList/{districtId}',
+    addSupplier: 'api/Supplier/CreateSupplier',
+    updateSupplier: 'api/Supplier/UpdateSupplier',
+    deleteSupplier: 'api/Supplier/DeleteSupplier',
+    updateSupplierAddress: 'api/Supplier/UpdateSupplierAddress',
+    addSupplierAddress: 'api/Supplier/AddOtherAddress',
     addManufacture: 'ProductMaster/AddManufacturer',
     unitConversion: 'ProductMaster/GetUnitConversionList',
     subCateDrop: 'ProductMaster/GetSubCategoryDrop',
-    addHSN: 'ProductMaster/AddHSNNew',
     addunitConversion: 'ProductMaster/AddConversionUnit',
     chargingList: 'Charging/ChargingDetailsList',
     jobCardList: 'Charging/listjobcards',
     addJob: 'Charging/AddjobCards',
     hsnDroplist: 'ProductMaster/GetHSNDropDown',
     addMenufatcure: 'ProductMaster/AddManufacturer',
-    addProduct: 'ProductMaster/AddProductMaster',
+    addProduct: 'api/Item/CreateItem',
+    updateProduct: 'api/Item/UpdateItem',
     addCharging: 'Charging/AddCharging',
-    addBrand: 'ProductMaster/AddBrand',
     vehicleBattery: 'Charging/VehicleBatteryStatus',
     getVendorDetails: 'Quotation/GetVendorDetails',
-    addCategoryData: 'ProductMaster/AddSubCategory',
-    addSubCategory: 'ProductMaster/AddSubCategoryLatest',
     categoryListById: 'ProductMaster/GetLatestCategoryList',
 
     /**
@@ -209,7 +205,6 @@ export const API_CONSTANTS: any = {
     barCodeList: 'PurchaseOrder/GetAutocompleteBarCode',
     productNameList: 'PurchaseOrder/GetAutocompleteProductList',
     detailsFromBarcode: 'PurchaseOrder/GetProductDetailByBarCode',
-    brandList: 'ProductMaster/GetBrandNameList',
     mrnList: 'MRN/GetMRNList',
     mrnChildList: 'Quotation/GetMRNChildDetails',
     quotationMrn: 'Quotation/GetMRNlist',
@@ -218,7 +213,7 @@ export const API_CONSTANTS: any = {
     mrnType: 'ITMS/GetMRNGenerateType',
     RFPGenerate: 'Quotation/RFPGenerate',
     RPFList: 'Quotation/RFPLISTTOTALAMOUNT',
-    rfpChildList:'Quotation/GetRFPChildDetails',
+    rfpChildList: 'Quotation/GetRFPChildDetails',
     mrnCreate: 'MRN/CreateMRN',
     editmrnDetails: 'MRN/GetMRNDetailsForEdit',
     QuotationBaseOnPOList: 'Quotation/QuotationBaseOnPOList',
@@ -241,6 +236,32 @@ export const API_CONSTANTS: any = {
 
     getStopData: 'Tracking/GetStopListByRoute',
 
+    // supplychan master api here
+    hsnList: 'api/HSN/HSNList',
+    addHSN: 'api/HSN/CreateHSN',
+    updateHsn: 'api/HSN/UpdateHSN',
+    deleteHsn: 'api/HSN/DeleteHSN',
+    unitList: 'api/Unit/UnitList',
+    addUnit: 'api/Unit/CreateUnit',
+    updateUnit: 'api/Unit/UpdateUnit',
+    deleteUnit: 'api/Unit/DeleteUnit',
+    brandList: 'api/Brand/BrandList',
+    addBrand: 'api/Brand/CreateBrand',
+    updateBrand: 'api/Brand/UpdateBrand',
+    deleteBrand: 'api/Brand/DeleteBrand',
+    categoryList: 'api/Category/CategoryList',
+    addCategoryData: 'api/Category/CreateCategory',
+    updateCategoryData: 'api/Category/UpdateCategory',
+    deleteCategory: 'api/Category/DeleteCategory',
+    subCategoryList: 'api/SubCategory/SubCategoryList',
+    addSubCategory: 'api/SubCategory/CreateSubCategory',
+    updateSubCategory: 'api/SubCategory/UpdateSubCategory',
+    deleteSubategory: 'api/SubCategory/DeleteSubCategory',
+    countryMasterList:'api/Location/CountryList',
+    createCountry:'api/Location/CountryAdd',
+    updateCountry:'api/Location/CountryEdit',
+    deleteCountry:'api/Location/CountryDelete',
+    
     /**
      * tyre part api 
      */
@@ -250,10 +271,10 @@ export const API_CONSTANTS: any = {
     recievedTyreList: 'Tyre/ReceivedTyreStockList',
     addStoreReceived: 'Tyre/AddStoreReceived',
     addDamageTyre: 'Tyre/AddDamageTyre',
-    tyreNumberLIst:'Tyre/GetTyreNo',
-    tyreNoVehicleWise:'Tyre/VehicleNoWise',
-    damageTyreList:'Tyre/DamageTyreGrid',
-    linkingReportList:'Tyre/TyreLinkingReport',
+    tyreNumberLIst: 'Tyre/GetTyreNo',
+    tyreNoVehicleWise: 'Tyre/VehicleNoWise',
+    damageTyreList: 'Tyre/DamageTyreGrid',
+    linkingReportList: 'Tyre/TyreLinkingReport',
 
     /**
      * operational
@@ -261,7 +282,7 @@ export const API_CONSTANTS: any = {
 
     addMarkAtt: 'Roster/MarkAttDMS',
     gpsStatusData: 'Roster/GetLastGPSStatus',
-    obuStatusData : 'Roster/GetGPSOBUDetails?VehicleID=id',
+    obuStatusData: 'Roster/GetGPSOBUDetails?VehicleID=id',
     markShiftOn: 'Roster/MarkShiftOn',
     onOffRoadVehicle: 'ITMS/FillOnOffRoadVehicles',
     onOffRoadKms: 'Management/GetOnOffRoadKms',
@@ -306,67 +327,80 @@ export const API_CONSTANTS: any = {
     // billing report api here
 
     billingReport: 'Report/BillingReportV1',
-    odometerreport:'Report/OdometerReportlatest',
-stopreportintervalwise :'Report/StopReportIntervalWise',
+    odometerreport: 'Report/OdometerReportlatest',
+    stopreportintervalwise: 'Report/StopReportIntervalWise',
     //charging station part api here
-    distancereport :'Report/DurDistTravelled',
+    distancereport: 'Report/DurDistTravelled',
     //driver wise trip report api here
-    DriverWiseTripReport:'Report/DriverWiseTripReport',
-//biilingreport 
-    BillingReportDateWise :'Report/BillingReportDateWise',
+    DriverWiseTripReport: 'Report/DriverWiseTripReport',
+    //biilingreport 
+    BillingReportDateWise: 'Report/BillingReportDateWise',
 
     totalDevice: 'getDeviceState',
 
-     //in actual infraction report
+    //in actual infraction report
     InfractionReport: 'Report/InfractionReport',
-    missStopReason :'Registration/MissStopReason27',
-    getstoopagedata :'Report/StoppageReport',
+    missStopReason: 'Registration/MissStopReason27',
+    getstoopagedata: 'Report/StoppageReport',
 
     // attendance api
-    showAttendance:'Attendancev2/AttendanceReport',
+    showAttendance: 'Attendancev2/AttendanceReport',
 
     //vehiclewise Shift
-    vehicleshift:'Report/GetVehicleShiftstatus',
-    dailySummaryReport:'Dashboard/GetDailySummaryReport',
+    vehicleshift: 'Report/GetVehicleShiftstatus',
+    dailySummaryReport: 'Dashboard/GetDailySummaryReport',
 
     //charging report api
     // chargingReport:'Charging/ChargingSOCReport',
-    chargingReport:'Report/ShiftWiseVehicleSOCReport_v1',
+    chargingReport: 'Report/ShiftWiseVehicleSOCReport_v1',
     reportManualVsGPS: 'Report/BillingReportManualVsGPS',
     routeFance: 'Registration/CreateRouteFencing',
-    vehicleList:'Report/DriverBus',
-    alertCall :'Registration/AlertDashboards',
+    vehicleList: 'Report/DriverBus',
+    alertCall: 'Registration/AlertDashboards',
     fencingList: 'Registration/GetRouteFencingList',
 
     // workshop Module Api
-    addInspection:'WorkShop/PostInspectionMaster',
-    getInspection:'WorkShop/GetInspectionMaster',
-    InspectionChild:'workshop/Getjobcategoryoninspection',
-    getServiceType:'WorkShop/GetServiceTypeMaster',
-    getPassInData:'WorkShop/GetAllGatePasses',
-    createGatePass:'WorkShop/PostGatePass',
-    MechanicData:'WorkShop/GetMechanicList',
-    createJob:'WorkShop/CreateJobCard',
-    jobCardData:'WorkShop/GetJobCardList',
-    jobCardChildData:'WorkShop/GetJobCardJobDetails?RequestID=id',
+    addInspection: 'WorkShop/PostInspectionMaster',
+    getInspection: 'WorkShop/GetInspectionMaster',
+    InspectionChild: 'workshop/Getjobcategoryoninspection',
+    getServiceType: 'WorkShop/GetServiceTypeMaster',
+    getPassInData: 'WorkShop/GetAllGatePasses',
+    createGatePass: 'WorkShop/PostGatePass',
+    MechanicData: 'WorkShop/GetMechanicList',
+    createJob: 'WorkShop/CreateJobCard',
+    jobCardData: 'WorkShop/GetJobCardList',
+    jobCardChildData: 'WorkShop/GetJobCardJobDetails?RequestID=id',
     complaintReport: 'Report/GetComplaintReport',
     issueMaterial: 'WorkShop/PostMaterialIssue',
-    productChild:'WorkShop/GetMaterialIssued',
+    productChild: 'WorkShop/GetMaterialIssued',
     addNewRoute: 'Registration/CreateRoute',
-    updateRouteDetails : 'Registration/UpdateRoute',
-    routeDetailsForEdit : 'Registration/GetRouteDetailsForEdit',
-    allCanData : 'MapView/GetFleetStatusBasedOnCANData',
-    chargingData:'MapView/GetVehicleChargingStatus',
-    deviceHealth : 'Report/GetDeviceHealthReport',
-    dorReport :'Report/DORReport',
-    driverTripReport : 'TripComplaint/GetDriverTripInfo',
-    moduleList : 'User/GetModuleList',
-    menu : 'User/GetMenuList',
-    addMenu : 'User/PostMenuEntry',
+    updateRouteDetails: 'Registration/UpdateRoute',
+    routeDetailsForEdit: 'Registration/GetRouteDetailsForEdit',
+    allCanData: 'MapView/GetFleetStatusBasedOnCANData',
+    chargingData: 'MapView/GetVehicleChargingStatus',
+    deviceHealth: 'Report/GetDeviceHealthReport',
+    dorReport: 'Report/DORReport',
+    driverTripReport: 'TripComplaint/GetDriverTripInfo',
+    moduleList: 'User/GetModuleList',
+    menu: 'User/GetMenuList',
+    addMenu: 'User/PostMenuEntry',
     accessList: 'User/GetMenuAccessList',
-    postMenuAccess:'User/PostMenuAccess',
-    operationStat : 'Route/GetCarbonData'
+    postMenuAccess: 'User/PostMenuAccess',
+    operationStat: 'Route/GetCarbonData',
+
+    // product master new api and dropdown
+    itemList: 'api/Item/ItemList',
+    deleteItem: 'api/Item/DeleteItem',
+    categoryDropdown:'api/ScComman/GetCategoryList',
+    subCategoryDropdown:'api/ScComman/GetSubCategoryList/{id}',
+    unitDropdown:'api/ScComman/GetUnitList',
+    hsnDropdown:'api/ScComman/GetHsnList',
+    brandDropdown:'api/ScComman/GetBrandList',
+    billingForDropdown:'api/ScComman/GetBillingForList',
+    billingCategoryDropdown:'api/ScComman/GetBillingCategoryList',
 };
+
+
 export const chargingBaseUrl = 'https://platform.kazam.in/';
 
 export const LAT = 20.29573;

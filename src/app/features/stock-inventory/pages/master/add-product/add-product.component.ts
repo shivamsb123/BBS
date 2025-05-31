@@ -14,8 +14,8 @@ export class AddProductComponent implements OnInit {
   productForm!: FormGroup;
   unitData: any;
   categoryData: any;
-  supplierNameData: any;
-  menufactureData: any;
+  billingdata: any;
+  billingCategory: any;
   hsnData: any;
   subCateData: any;
   brandData: any;
@@ -29,15 +29,16 @@ export class AddProductComponent implements OnInit {
   selectedValue: any;
   selectedSubCatValue: any;
   selectedbaseValue: any;
-  selectedSupplierValue: any;
+  selectedBillingValue: any;
   selectedHSNValue: any;
   selectedBrandValue: any;
-  selectedMenufacValue: any;
+  selectedBillingCategory: any;
   button: string = 'Add';
   alertMessage = 'Added';
-  catename:any;
+  catename: any;
   isloading: boolean = false;
   formData!: FormData;
+  categoryId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -58,10 +59,9 @@ export class AddProductComponent implements OnInit {
     this.setInitialValue();
     this.getUnit();
     this.getCategoryList();
-    this.supplierNameList();
-    this.getManufactureList();
+    this.getBillingFor();
+    this.getBillingCategoryList();
     this.getHSNList();
-    this.getSubcategoryData();
     this.getBrandData();
     setTimeout(() => {
       this.isloading = false
@@ -70,102 +70,67 @@ export class AddProductComponent implements OnInit {
 
   setInitialValue() {
     this.productForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('')]],
-      barcodeNo: ['', [Validators.required, Validators.pattern('')]],
-      Category: ['', [Validators.required, Validators.pattern('')]],
-      Sub_Category: ['', [Validators.required, Validators.pattern('')]],
-      unit: ['', [Validators.required, Validators.pattern('')]],
-      Supplier_Name: ['', [Validators.required, Validators.pattern('')]],
-      HSN_Code: ['', [Validators.required, Validators.pattern('')]],
-      cess: ['', [Validators.required, Validators.pattern('')]],
-      long_item_specification: ['', [Validators.required, Validators.pattern('')]],
-      brand_name: ['', [Validators.required, Validators.pattern('')]],
-      manufacture_name: ['', [Validators.required, Validators.pattern('')]],
-      purchase_price: ['', [Validators.required, Validators.pattern('')]],
-      Wholesaler_Price: ['', [Validators.required, Validators.pattern('')]],
-      Retailer_Price: ['', [Validators.required, Validators.pattern('')]],
-      Opening_Qty: ['', [Validators.required, Validators.pattern('')]],
-      Low_Level: ['', [Validators.required, Validators.pattern('')]],
-      img: ['', [Validators.required, Validators.pattern('')]],
-      Description: ['', [Validators.required, Validators.pattern('')]],
-      manufacture_date: [new Date(), [Validators.required, Validators.pattern('')]],
-      expiry_date: [new Date(), [Validators.required, Validators.pattern('')]],
-      Consuption_Type: ['1', [Validators.required, Validators.pattern('')]],
-      followed_by: ['1', [Validators.required, Validators.pattern('')]],
-    })
+      name: ['', [Validators.required]],
+      Category: ['', [Validators.required]],
+      Sub_Category: ['', [Validators.required]],
+      unit: ['', [Validators.required]],
+      billingFor: ['', [Validators.required]],
+      HSN_Code: ['', [Validators.required]],
+      cess: ['', [Validators.required]],
+      brand_name: ['', [Validators.required]],
+      billingCategory: ['', [Validators.required]],
+      itemValue: ['', [Validators.required]],
+      taxableValue: ['', [Validators.required]],
+      taxRate: ['', [Validators.required]],
+      Description: [''],
+    });
   }
-
-
   getProductList() {
     this.isloading = true;
-    let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": parseInt(this.id)
-    }
-    this.stockService.productList(payload).subscribe((res: any) => {
+    const payload = {
+      PageNumber: 1,
+      PageSize: 25,
+      SearchTerm: ''
+    };
+
+    this.stockService.itemList(payload).subscribe((res: any) => {
       this.productList = res?.body?.data;
+
       this.productList.forEach((val: any) => {
+        if (val?.pk_item_id == this.id) {
+          console.log('val', val);
 
-        let newcatValue = this.categoryData?.filter((ele: any) => ele?.value == val?.catid);        
-        newcatValue?.forEach((data: any) => {
-          this.selectedValue = data
-        });
+          this.selectedValue = this.categoryData?.find((ele: any) => ele?.value === val?.fk_category_id);
+          this.productForm.controls['Category'].setValue(val?.fk_category_id);
 
-        let newSubCatevalue = this.subCateData?.filter((ele: any) => ele?.value == val?.subCatID);
-        newSubCatevalue?.forEach((data: any) => {
-          this.selectedSubCatValue = data
-        });
+          this.getSubcategoryData(val?.fk_subcategory_id);
 
-        let newBaseUnitvalue = this.unitData?.filter((ele: any) => ele?.value == val?.baseUnitID);
-        newBaseUnitvalue?.forEach((data: any) => {
-          this.selectedbaseValue = data
-        });
+          this.selectedbaseValue = this.unitData?.find((ele: any) => ele?.value == val?.fk_unit_id);
+          this.selectedHSNValue = this.hsnData?.find((ele: any) => ele?.value == val?.fk_hsn_id);
+          this.selectedBrandValue = this.brandData?.find((ele: any) => ele?.value == val?.fk_brand_id);
+          this.selectedBillingCategory = this.billingCategory?.find((ele: any) => ele?.value == val?.fk_item_category_id);
+          this.selectedBillingValue = this.billingdata?.find((ele: any) => ele?.value == val?.fk_item_category_id);
 
-        let newSuppliervalue = this.supplierNameData?.filter((ele: any) => ele?.text == val?.supName
-         );
-        newSuppliervalue?.forEach((data: any) => {
-          this.selectedSupplierValue = data
-        });
+          this.productForm = this.fb.group({
+            name: [val?.item_name, [Validators.required]],
+            Description: [val?.item_description],
+            Category: [this.selectedValue.value, [Validators.required]],
+            Sub_Category: [null, [Validators.required]],  // Temporarily null
+            unit: [this.selectedbaseValue.value, [Validators.required]],
+            HSN_Code: [this.selectedHSNValue.value, [Validators.required]],
+            brand_name: [this.selectedBrandValue.value, [Validators.required]],
+            cess: [val?.item_cess, [Validators.required]],
+            billingFor: [this.selectedBillingValue.value, [Validators.required]],
+            billingCategory: [this.selectedBillingCategory.value, [Validators.required]],
+            itemValue: [val?.item_value, [Validators.required]],
+            taxableValue: [val?.item_taxable_value, [Validators.required]],
+            taxRate: [val?.item_tax_rate, [Validators.required]],
+          });
+        }
+      });
 
-        let newhsnvalue = this.hsnData?.filter((ele: any) => ele?.value == val?.hsnId);
-        newhsnvalue?.forEach((data: any) => {
-          this.selectedHSNValue = data
-        });
-
-        let newBrandvalue = this.brandData?.filter((ele: any) => ele?.value == val?.brandID);
-        newBrandvalue?.forEach((data: any) => {
-          this.selectedBrandValue = data
-        });
-
-        let newmenufacturevalue = this.menufactureData?.filter((ele: any) => ele?.value == val?.manufacturerID);
-        newmenufacturevalue?.forEach((data: any) => {
-          this.selectedMenufacValue = data
-        });
-
-        this.productForm = this.fb.group({
-          name: [val?.productName, [Validators.required, Validators.pattern('')]],
-          barcodeNo: [val?.barcodeid, [Validators.required, Validators.pattern('')]],
-          Category: ['', [Validators.required, Validators.pattern('')]],
-          Sub_Category: ['', [Validators.required, Validators.pattern('')]],
-          unit: ['', [Validators.required, Validators.pattern('')]],
-          Supplier_Name: ['', [Validators.required, Validators.pattern('')]],
-          HSN_Code: ['', [Validators.required, Validators.pattern('')]],
-          cess: [val?.cessRate, [Validators.required, Validators.pattern('')]],
-          long_item_specification: [val?.itemLongDesc, [Validators.required, Validators.pattern('')]],
-          brand_name: ['', [Validators.required, Validators.pattern('')]],
-          manufacture_name: ['', [Validators.required, Validators.pattern('')]],
-          purchase_price: [val?.amount, [Validators.required, Validators.pattern('')]],
-          Wholesaler_Price: [val?.wholeSalePrice, [Validators.required, Validators.pattern('')]],
-          Retailer_Price: [val?.sellprice, [Validators.required, Validators.pattern('')]],
-          Opening_Qty: [val?.qty, [Validators.required, Validators.pattern('')]],
-          Low_Level: [val?.lowLevel, [Validators.required, Validators.pattern('')]],
-          img: ['', [Validators.required, Validators.pattern('')]],
-          Description: [val?.description, [Validators.required, Validators.pattern('')]],
-        })
-      })
       this.isloading = false;
-    })
+    });
   }
 
 
@@ -174,15 +139,11 @@ export class AddProductComponent implements OnInit {
       value: '',
       text: ''
     };
-    let payload = {
-      "BraID": "ADS-B1",
-      "Mode": "SELECT"
-    }
-    this.stockService.unitList(payload).subscribe((res: any) => {
+    this.stockService.getUnitDD().subscribe((res: any) => {
       let data = res?.body?.data;
       this.unitData = data.map((val: any) =>
         newData = {
-          value: val?.unitID,
+          value: val?.unitId,
           text: val?.unitName
         }
       )
@@ -195,57 +156,46 @@ export class AddProductComponent implements OnInit {
       value: '',
       text: ''
     };
-    let payload = {
-      "Result": ""
-    }
-    this.stockService.categoryList(payload).subscribe((res: any) => {
+    this.stockService.getCategoryDD().subscribe((res: any) => {
       let data = res?.body?.data;
       this.categoryData = data.map((val: any) =>
         newData = {
-          value: val?.catid,
-          text: val?.catname
+          value: val?.categoryId,
+          text: val?.categoryName
         }
       )
     })
   }
 
-  supplierNameList() {
+  getBillingFor() {
     let newData = {
       value: '',
       text: ''
     }
-    let payload = {
-      "Supid":"",
-      "BraID":"",
-    "Result":""
-    }
-    this.stockService.supplierList(payload).subscribe((res: any) => {
+
+    this.stockService.getBillingforDD().subscribe((res: any) => {
       let data = res?.body?.data;
-      this.supplierNameData = data.map((val: any) =>
+      this.billingdata = data.map((val: any) =>
         newData = {
-          value: val?.supid,
-          text: val?.cusName
+          value: val?.billingForId,
+          text: val?.billingForName
         }
       )
 
     })
   }
 
-  getManufactureList() {
+  getBillingCategoryList() {
     let newData = {
       value: '',
       text: ''
     }
-    let payload = {
-      "BraID": "",
-      "Result": ""
-    }
-    this.stockService.manufactureNameList(payload).subscribe((res: any) => {
+    this.stockService.getBillingCategoryDD().subscribe((res: any) => {
       let data = res?.body?.data;
-      this.menufactureData = data.map((val: any) =>
+      this.billingCategory = data.map((val: any) =>
         newData = {
-          value: val?.manuID,
-          text: val?.manuName
+          value: val?.billingCategoryId,
+          text: val?.billingCategoryName
         }
       )
     })
@@ -256,56 +206,50 @@ export class AddProductComponent implements OnInit {
       value: '',
       text: ''
     }
-    let payload = {
-      "Result": ""
-    }
-    this.stockService.hsnDroplist(payload).subscribe((res: any) => {
+    this.stockService.getHsnDD().subscribe((res: any) => {
       let data = res?.body?.data;
       this.hsnData = data.map((val: any) =>
         newData = {
           value: val?.hsnId,
-          text: val?.hsn
+          text: val?.hsnName
         }
       )
     })
   }
 
-  getSubcategoryData() {
-    let newData = {
-      value: '',
-      text: ''
-    }
-    let payload = {
-      "Result": ""
-    };
-    this.stockService.subCateDrop(payload).subscribe((res: any) => {
-      let data = res?.body?.data;
-      this.subCateData = data.map((val: any) =>
-        newData = {
-          value: val?.catid,
-          text: val?.catname
-        }
-      )
-    })
+  getSubcategoryData(selectedSubCategoryId?: any) {
+    const categoryId = this.productForm.value.Category;
+
+    if (!categoryId) return;
+
+    this.stockService.getSubCategoryDD(categoryId).subscribe((res: any) => {
+      const data = res?.body?.data || [];
+
+      this.subCateData = data.map((val: any) => ({
+        value: val?.subCategoryId,
+        text: val?.subCategoryName
+      }));
+
+      // Auto-select subcategory if provided
+      if (selectedSubCategoryId) {
+        this.selectedSubCatValue = this.subCateData.find((ele: any) => ele?.value === selectedSubCategoryId);
+        this.productForm.controls['Sub_Category'].setValue(this.selectedSubCatValue);
+      }
+    });
   }
+
 
   getBrandData() {
     let newData = {
       value: '',
       text: ''
     }
-    let payload = {
-      "PageNO": 1,
-      "PageSize": 100,
-      "Sno": 0
-    }
-
-    this.stockService.brandList(payload).subscribe((res: any) => {
+    this.stockService.getBrandDD().subscribe((res: any) => {
       let data = res?.body?.data;
       this.brandData = data.map((val: any) =>
         newData = {
-          value: val?.brand_Code,
-          text: val?.description
+          value: val?.brandId,
+          text: val?.brandName
         }
       )
 
@@ -320,20 +264,22 @@ export class AddProductComponent implements OnInit {
 
   confirm(event: any) {
     if (event.selectType == 'category') {
+      this.selectedSubCatValue = null
       this.productForm.controls['Category'].setValue(event.id)
+      this.getSubcategoryData();
       this.catename = event.assets_no
     } else if (event.selectType == 'sub_cat') {
       this.productForm.controls['Sub_Category'].setValue(event.id)
     } else if (event.selectType == 'unit') {
       this.productForm.controls['unit'].setValue(event.id)
-    } else if (event.selectType == 'supplier_name') {
-      this.productForm.controls['Supplier_Name'].setValue(event.id)
+    } else if (event.selectType == 'billing_for') {
+      this.productForm.controls['billingFor'].setValue(event.id)
     } else if (event.selectType == 'hsn') {
       this.productForm.controls['HSN_Code'].setValue(event.id)
     } else if (event.selectType == 'brand') {
       this.productForm.controls['brand_name'].setValue(event.id)
-    } else if (event.selectType == 'menufacture') {
-      this.productForm.controls['manufacture_name'].setValue(event.id)
+    } else if (event.selectType == 'billing_category') {
+      this.productForm.controls['billingCategory'].setValue(event.id)
     }
   }
 
@@ -344,62 +290,41 @@ export class AddProductComponent implements OnInit {
 
 
   submit(formValue: any) {
-    let payload: any;
-    payload = {
-      "proid": "",
-      "ProductName": formValue?.name,
-      "Color": "",
-      "catid": formValue?.Category,
-      "subcatid": formValue?.Sub_Category,
-      "CatName": this.catename,
-      "supid": formValue.Supplier_Name,
-      "priceintex": 0,
-      "sellprice": formValue?.Retailer_Price ? parseInt(formValue?.Retailer_Price) : 0,
-      "promoprice": 0,
-      "qty": formValue?.Opening_Qty ? parseInt(formValue?.Opening_Qty) : 0,
-      "amount": formValue?.purchase_price ? parseInt(formValue?.purchase_price) : 0,
-      "barcode": "",
-      "barcodeid": formValue?.barcodeNo,
-      "description": formValue?.Description,
-      "ItemLongDesc": formValue.long_item_specification,
-      "UOMID": 0,
-      "dated": "",
-      "LowLevel": formValue?.Low_Level ? parseInt(formValue?.Low_Level || '') : 0,
-      "Status": 1,
-      "BraID": "ADS-B1",
-      "BarCodePath": "",
-      "ReqNo": "",
-      "Typeof": 1,
-      "StyleCode": "",
-      "WholesalePrice": formValue?.Wholesaler_Price ? parseInt(formValue?.Wholesaler_Price) : 0,
-      "proid1": "",
-      "ProductType": "",
-      "ImageUpload": formValue?.img,
-      "BaseUnitID": formValue?.unit,
-      "Exp_Date": "",
-      "HsnId": formValue?.HSN_Code ? parseInt(formValue?.HSN_Code) : 0,
-      "CessRate": formValue?.cess ? parseInt(formValue?.cess) : 0,
-      "Mode": "INSERT",
-      "BrandID": formValue?.brand_name,
-      "ManufacturerID": formValue?.manufacture_name,
-      "ManufactureDate": formValue.manufacture_date? formatDate(formValue.manufacture_date,'yyyy-MM-dd hh:mm:ss', 'en-US'  ) : '',
-      "ExpiryDate": formValue.expiry_date? formatDate(formValue.expiry_date,'yyyy-MM-dd hh:mm:ss', 'en-US'  ) : '',
-      "ConsuptionType":formValue.Consuption_Type,
-      "FollowedBy": formValue.followed_by,
-      "RS_ICode": ""
+    if (this.productForm.invalid) {
+      this.productForm.markAllAsTouched();
+      return;
+    };
+    let service: any
+
+    let payload = {
+      "fk_category_id": Number(formValue.Category),
+      "fk_subcategory_id": Number(formValue.Sub_Category),
+      "fk_unit_id": Number(formValue.unit),
+      "fk_hsn_id": Number(formValue.HSN_Code),
+      "fk_brand_id": Number(formValue.brand_name),
+      "item_name": formValue.name,
+      "item_description": formValue.Description,
+      "item_value": parseFloat(formValue.itemValue),
+      "item_taxable_value": parseFloat(formValue.taxableValue),
+      "item_tax_rate": parseFloat(formValue.taxRate),
+      "item_cess": parseFloat(formValue.cess),
+      "fk_item_category_id": Number(formValue.billingCategory),
+      "fk_typeofgoods_id": Number(formValue.billingFor),
+      "Logged_by": Number(localStorage.getItem('user_Id'))
     }
     if (this.id) {
-      payload.id = parseInt(this.id);
-      payload.Mode = 'UPDATE'
+      payload['pk_item_id'] = Number(this.id);
+      service = this.stockService.updateProduct(payload)
+    } else {
+      service = this.stockService.addProduct(payload)
     }
-
-
-    this.stockService.addProduct(payload).subscribe((res: any) => {
+    console.log("payload", payload);
+    service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
-      if (res?.body?.status == 'Success') {
+      if (res?.body?.status == 'success') {
         this.alertData = {
           message: res?.body?.alert
         };
@@ -407,7 +332,7 @@ export class AddProductComponent implements OnInit {
         this.alertTrigger = true;
         this.stopAlert();
         this.button = 'Add';
-        setTimeout(() => {      
+        setTimeout(() => {
           this.router.navigateByUrl('/SupplyChain/ProductMaster_List')
         }, 3000);
       } else {
@@ -423,7 +348,7 @@ export class AddProductComponent implements OnInit {
     this.productForm.reset()
 
   }
-  resetForm(){
+  resetForm() {
     this.productForm.reset()
     this.selectedValue = {
       value: '',
@@ -437,7 +362,7 @@ export class AddProductComponent implements OnInit {
       value: '',
       text: ''
     }
-    this.selectedSupplierValue = {
+    this.selectedBillingValue = {
       value: '',
       text: ''
     }
@@ -449,7 +374,7 @@ export class AddProductComponent implements OnInit {
       value: '',
       text: ''
     }
-    this.selectedMenufacValue = {
+    this.selectedBillingCategory = {
       value: '',
       text: ''
     }

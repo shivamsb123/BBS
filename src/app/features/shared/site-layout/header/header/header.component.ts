@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
   isShowHeader: boolean = false;
   userType: string;
   isloading: boolean = false;
-
+activeMenu:any
 
   constructor(
     private Location:Location,
@@ -61,13 +61,16 @@ export class HeaderComponent implements OnInit {
  
   }
 
-  showHeader() {
-    this.isShowHeader = true;
+  showHeader(index: any) {
+    // this.isShowHeader = true;
+      this.activeMenu = this.activeMenu === index ? null : index;
+
     
   }
 
   closeHeader() {
-    this.isShowHeader = false;
+    // this.isShowHeader = false;
+     this.activeMenu = null;
   }
 
   /**

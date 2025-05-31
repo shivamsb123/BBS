@@ -11,6 +11,8 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+          <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
         <div class="card">
           <div class="card-header card-default">
             Unit List        
@@ -63,13 +65,15 @@
                                       itemsPerPage: tableSize,
                                       currentPage: page,
                                       totalItems: count};">
-                            <td>{{vehicle?.unitID}}</td>
+                            <td>{{vehicle?.unit_code}}</td>
                             <td>
-                              {{vehicle?.unitName || 'NA'}}
+                              {{vehicle?.unit_name || 'NA'}}
                             </td>
-                            <td> <a tooltip="Edit" rel="noopener noreferrer" (click)="redirectTo(vehicle?.id)"><i class="fa fa-pencil"
+                            <td> <a tooltip="Edit" rel="noopener noreferrer" (click)="redirectTo(vehicle?.pk_unit_id)"><i class="fa fa-pencil" tyle="cursor: pointer;"
                                   aria-hidden="true"></i>
                               </a>
+                               <a (click)="deleteUnit(vehicle)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer;"></i>
+                          </a>
                             </td>
                           </tr>
                         </tbody>

@@ -18,59 +18,82 @@
             <form [formGroup]="contactform">
                 <div class="card">
                     <div class="card-header card-default">
-                        <div class="row">
-                            <div class="col-md-3"> {{button}} Vendor</div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3"> </div>
-                            <div class="col-md-3">
-                                <a class="add-item" *ngIf="addressForm.value.vendorAdd.length < 1"
-                                    (click)="addVendorAdd()"><i class="fa fa-plus"></i>Add New Address</a>
-                            </div>
-                        </div>
+                       Basic Details
 
                     </div>
                     <div class="card-body">
 
                         <div class="row">
+
                             <div class="col-md-3">
-                                <label class="form-label">Vendor Type</label>
-                                <select class="form-select" aria-label="Default select example"
-                                    formControlName="Contact_Type">
-                                    <option value="1">Retailer</option>
-                                    <option value="3">Wholesaler</option>
-                                    <option value="2">Manufacture</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Vendor Name</label>
+                                <label class="form-label">Supplier Name</label>
                                 <div class="input-group mb-3">
                                     <input type="text" formControlName="con_name" class="form-control"
-                                        placeholder="Enter Contact Name" aria-describedby="button-addon2" />
+                                        placeholder="Enter Supplier Name" aria-describedby="button-addon2" />
                                 </div>
+                                <span class="text-danger"
+                                    *ngIf="addressForm.get('con_name')?.invalid && addressForm.get('con_name')?.touched">
+                                    Supplier Name is required
+                                </span>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label">Contact No</label>
+                                <label class="form-label">Buisness Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="buisness" class="form-control"
+                                        placeholder="Enter Buisness Name" aria-describedby="button-addon2" />
+                                </div>
+                                <span class="text-danger"
+                                    *ngIf="addressForm.get('buisness')?.invalid && addressForm.get('buisness')?.touched">
+                                    Business Name is required
+                                </span>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Contact Person Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="contactPerson" class="form-control"
+                                        placeholder="Enter Contact Person Name" aria-describedby="button-addon2" />
+                                </div>
+                                <span class="text-danger"
+                                    *ngIf="addressForm.get('contactPerson')?.invalid && addressForm.get('contactPerson')?.touched">
+                                    Contact Person Name is required
+                                </span>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Mobile No</label>
                                 <div class="input-group mb-3">
                                     <input type="text" formControlName="con_no" class="form-control"
-                                        placeholder="Enter Contact No" aria-describedby="button-addon2" />
+                                        placeholder="Enter Mobile No" aria-describedby="button-addon2" />
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Landline/Office No</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" formControlName="Office" class="form-control"
-                                        placeholder="Enter Landline/Office No" aria-describedby="button-addon2" />
-                                </div>
+                                <span class="text-danger"
+                                    *ngIf="addressForm.get('con_no')?.invalid && addressForm.get('con_no')?.touched">
+                                    Mobile No is required
+                                </span>
                             </div>
 
                         </div>
                         <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Pan No</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" formControlName="panNo" class="form-control"
+                                        placeholder="Enter Pan No" aria-describedby="button-addon2" />
+                                </div>
+                                <span class="text-danger"
+                                    *ngIf="addressForm.get('panNo')?.invalid && addressForm.get('panNo')?.touched">
+                                   Pan No is required
+                                </span>
+                            </div>
+
                             <div class="col-md-3">
                                 <label class="form-label">Email ID</label>
                                 <div class="input-group mb-3">
                                     <input type="email" class="form-control" formControlName="email"
                                         placeholder="Enter Email ID" aria-describedby="button-addon2" />
                                 </div>
+                                 <span class="text-danger"
+                                    *ngIf="addressForm.get('email')?.invalid && addressForm.get('email')?.touched">
+                                    Email ID is required
+                                </span>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">GSTIN No</label>
@@ -78,97 +101,35 @@
                                     <input type="text" class="form-control" formControlName="GSTIN_no"
                                         placeholder="Enter GSTIN No" aria-describedby="button-addon2" />
                                 </div>
+                                <span class="text-danger"
+                                    *ngIf="addressForm.get('GSTIN_no')?.invalid && addressForm.get('GSTIN_no')?.touched">
+                                    GSTIN No is required
+                                </span>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Country</label>
-                                <div *ngIf="selectedCountry">
-                                    <select-filter [selectedValue]="selectedCountry" [vehicleData]="countryData"
-                                        [type]="'country'" [placeholder]="'Select Country'"
-                                        (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedCountry && countryData && countryData.length > 0">
-                                    <select-filter [vehicleData]="countryData" [type]="'country'"
-                                        [placeholder]="'Select Country'" (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedCountry && !countryData || countryData.length == 0">
-                                    <select-filter [type]="'country'" [placeholder]="'Select Country'"
-                                        (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label">State</label>
-                                <div *ngIf="selectedState">
-                                    <select-filter [selectedValue]="selectedState" [vehicleData]="stateData"
-                                        [type]="'state'" [placeholder]="'Select State'"
-                                        (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedState && stateData && stateData.length > 0">
-                                    <select-filter [vehicleData]="stateData" [type]="'state'"
-                                        [placeholder]="'Select State'" (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedState && !stateData || stateData.length == 0">
-                                    <select-filter [type]="'state'" [placeholder]="'Select State'"
-                                        (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label">District</label>
-                                <div *ngIf="selectedDistrict">
-                                    <select-filter [selectedValue]="selectedDistrict" [vehicleData]="districtData"
-                                        [type]="'district'" [placeholder]="'Select District'"
-                                        (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedDistrict && districtData && districtData.length > 0">
-                                    <select-filter [vehicleData]="districtData" [type]="'district'"
-                                        [placeholder]="'Select District'" (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                <div *ngIf="!selectedDistrict && !districtData || districtData.length == 0">
-                                    <select-filter [type]="'district'" [placeholder]="'Select District'"
-                                        (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Pin Code</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="pin"
-                                        placeholder="Enter State" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Address</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="Add"
-                                        placeholder="Enter Address" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Description</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="description"
-                                        placeholder="Enter Description" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-3">
                                 <label class="form-label">Credit Line</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" formControlName="credit_line"
                                         placeholder="Enter Credit Line" aria-describedby="button-addon2" />
                                 </div>
+                                 <span class="text-danger"
+                                    *ngIf="addressForm.get('credit_line')?.invalid && addressForm.get('credit_line')?.touched">
+                                    Credit Line is required
+                                </span>
                             </div>
+                        </div>
 
+                        <div class="row">
                             <div class="col-md-3">
                                 <label class="form-label">Credit Period</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="credit_period"
+                                    <input type="number" class="form-control" formControlName="credit_period"
                                         placeholder="Enter Credit Period" aria-describedby="button-addon2" />
                                 </div>
+                                 <span class="text-danger"
+                                    *ngIf="addressForm.get('credit_period')?.invalid && addressForm.get('credit_period')?.touched">
+                                    Credit Period is required
+                                </span>
                             </div>
 
                             <div class="col-md-3">
@@ -179,58 +140,166 @@
                                     <option value="3">Debit Card</option>
                                     <option value="2">Credit Card</option>
                                 </select>
+                                <span class="text-danger"
+                                    *ngIf="addressForm.get('payment_mode')?.invalid && addressForm.get('payment_mode')?.touched">
+                                    Payment Mode is required
+                                </span>
                             </div>
                         </div>
 
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header card-default">
-                            Bank Details
+                        <div class="card">
+                            <div class="card-header card-default">
+                                Bank Details
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Bank Name</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="bank_type"
+                                                placeholder="Enter Bank Name" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label">Account Holder Name</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="acct_h_name"
+                                                placeholder="Enter Account Holder Name"
+                                                aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label">Account Number</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="acct_number"
+                                                placeholder="Enter Account Number" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label">IFSC Code</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="ifsc_code"
+                                                placeholder="Enter IFSC Code" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label">Bank Type</label>
-                                <select class="form-select" aria-label="Default select example"
-                                    formControlName="bank_type">
-                                    <option value="1">State Bank Of India</option>
-                                    <option value="2">Bank Of Baroda</option>
-                                    <option value="3">Punjab National Bank</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label">Account Holder Name</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="acct_h_name"
-                                        placeholder="Enter Account Holder Name" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label">Account Number</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="acct_number"
-                                        placeholder="Enter Account Number" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="form-label">IFSC Code</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" formControlName="ifsc_code"
-                                        placeholder="Enter IFSC Code" aria-describedby="button-addon2" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
                     </div>
                 </div>
+                <div class="row" *ngIf="!id">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                               <div class="row">
+                            <div class="col-md-3"> Primary Address</div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"> </div>
+                            <div class="col-md-3">
+                                <a class="add-item" *ngIf="addressForm.value.vendorAdd.length < 1"
+                                    (click)="addVendorAdd()"><i class="fa fa-plus"></i> &nbsp;Add Secondry Address</a>
+                            </div>
+                        </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Country</label>
+                                        <div *ngIf="selectedCountry">
+                                            <select-filter [selectedValue]="selectedCountry" [vehicleData]="countryData"
+                                                [type]="'country'" [placeholder]="'Select Country'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                        <div *ngIf="!selectedCountry && countryData && countryData.length > 0">
+                                            <select-filter [vehicleData]="countryData" [type]="'country'"
+                                                [placeholder]="'Select Country'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                        <div *ngIf="!selectedCountry && !countryData || countryData.length == 0">
+                                            <select-filter [type]="'country'" [placeholder]="'Select Country'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">State</label>
+                                        <div *ngIf="selectedState">
+                                            <select-filter [selectedValue]="selectedState" [vehicleData]="stateData"
+                                                [type]="'state'" [placeholder]="'Select State'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                        <div *ngIf="!selectedState && stateData && stateData.length > 0">
+                                            <select-filter [vehicleData]="stateData" [type]="'state'"
+                                                [placeholder]="'Select State'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                        <div *ngIf="!selectedState && !stateData || stateData.length == 0">
+                                            <select-filter [type]="'state'" [placeholder]="'Select State'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">District</label>
+                                        <div *ngIf="selectedDistrict">
+                                            <select-filter [selectedValue]="selectedDistrict"
+                                                [vehicleData]="districtData" [type]="'district'"
+                                                [placeholder]="'Select District'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                        <div *ngIf="!selectedDistrict && districtData && districtData.length > 0">
+                                            <select-filter [vehicleData]="districtData" [type]="'district'"
+                                                [placeholder]="'Select District'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                        <div *ngIf="!selectedDistrict && !districtData || districtData.length == 0">
+                                            <select-filter [type]="'district'" [placeholder]="'Select District'"
+                                                (onConfirm)="confirm($event)"></select-filter>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Pin Code</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="pin"
+                                                placeholder="Enter State" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Address 1</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="Address_1"
+                                                placeholder="Enter Address 1" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Address 2</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="Address_2"
+                                                placeholder="Enter Address 2" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label">Address 3</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="Address_3"
+                                                placeholder="Enter Address 3" aria-describedby="button-addon2" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
             </form>
 
             <form [formGroup]="addressForm">
@@ -244,7 +313,8 @@
                                     <div class="col-md-3"> </div>
                                     <div class="col-md-3">
                                         <a class="add" *ngIf="this.addressForm.value.vendorAdd.length - 1 == i"
-                                            (click)="addVendorAdd()"><i class="fa fa-plus"></i>Add New Address</a>
+                                            (click)="addVendorAdd()"><i class="fa fa-plus"></i> &nbsp;Add Secondry
+                                            Address</a>
                                         <a class="add-item" (click)="removeAdd(i)"><i class="fa fa-times"></i>
                                             Remove</a>
                                     </div>
@@ -254,89 +324,105 @@
                             <div class="card-body">
                                 <div [formGroupName]="i">
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <label class="form-label">Vendor Name</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" formControlName="CusName" class="form-control"
-                                                    placeholder="Enter Contact Name" aria-describedby="button-addon2" />
-                                            </div>
-                                        </div>
+
                                         <div class="col-md-3">
                                             <label class="form-label">Country</label>
                                             <div *ngIf="selectedCountry">
                                                 <select-filter [selectedValue]="selectedCountry"
                                                     [vehicleData]="countryData" [type]="'newCountry'"
                                                     [placeholder]="'Select Country'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                                    (onConfirm)="onAddressSelect($event, i)"></select-filter>
                                             </div>
                                             <div *ngIf="!selectedCountry && countryData && countryData.length > 0">
                                                 <select-filter [vehicleData]="countryData" [type]="'newCountry'"
                                                     [placeholder]="'Select Country'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                                    (onConfirm)="onAddressSelect($event, i)"></select-filter>
                                             </div>
                                             <div *ngIf="!selectedCountry && !countryData || countryData.length == 0">
                                                 <select-filter [type]="'newCountry'" [placeholder]="'Select Country'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                                    (onConfirm)="onAddressSelect($event, i)"></select-filter>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <label class="form-label">State</label>
+
                                             <div *ngIf="selectedState">
-                                                <select-filter [selectedValue]="selectedState" [vehicleData]="stateData"
-                                                    [type]="'newState'" [placeholder]="'Select State'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
-                                            </div>
-                                            <div *ngIf="!selectedState && stateData && stateData.length > 0">
-                                                <select-filter [vehicleData]="stateData" [type]="'newState'"
+                                                <select-filter [selectedValue]="selectedState"
+                                                    [vehicleData]="stateDataList[i]" [type]="'newState'"
                                                     [placeholder]="'Select State'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                                    (onConfirm)="onAddressSelect($event, i)">
+                                                </select-filter>
                                             </div>
-                                            <div *ngIf="!selectedState && !stateData || stateData.length == 0">
+
+                                            <div
+                                                *ngIf="!selectedState && stateDataList[i] && stateDataList[i].length > 0">
+                                                <select-filter [vehicleData]="stateDataList[i]" [type]="'newState'"
+                                                    [placeholder]="'Select State'"
+                                                    (onConfirm)="onAddressSelect($event, i)">
+                                                </select-filter>
+                                            </div>
+
+                                            <div
+                                                *ngIf="!selectedState && (!stateDataList[i] || stateDataList[i].length === 0)">
                                                 <select-filter [type]="'newState'" [placeholder]="'Select State'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                                    (onConfirm)="onAddressSelect($event, i)">
+                                                </select-filter>
                                             </div>
                                         </div>
+
                                         <div class="col-md-3">
                                             <label class="form-label">District</label>
                                             <div *ngIf="selectedDistrict">
                                                 <select-filter [selectedValue]="selectedDistrict"
-                                                    [vehicleData]="districtData" [type]="'newDistrict'"
+                                                    [vehicleData]="districtDataList[i]" [type]="'newDistrict'"
                                                     [placeholder]="'Select District'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                                    (onConfirm)="onAddressSelect($event, i)"></select-filter>
                                             </div>
-                                            <div *ngIf="!selectedDistrict && districtData && districtData.length > 0">
-                                                <select-filter [vehicleData]="districtData" [type]="'newDistrict'"
-                                                    [placeholder]="'Select District'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                            <div
+                                                *ngIf="!selectedDistrict && districtDataList[i] && districtDataList[i].length > 0">
+                                                <select-filter [vehicleData]="districtDataList[i]"
+                                                    [type]="'newDistrict'" [placeholder]="'Select District'"
+                                                    (onConfirm)="onAddressSelect($event, i)"></select-filter>
                                             </div>
-                                            <div *ngIf="!selectedDistrict && !districtData || districtData.length == 0">
+                                            <div
+                                                *ngIf="!selectedDistrict && (!districtDataList[i] || districtDataList[i].length == 0)">
                                                 <select-filter [type]="'newDistrict'" [placeholder]="'Select District'"
-                                                    (onConfirm)="confirm($event)"></select-filter>
+                                                    (onConfirm)="onAddressSelect($event, i)"></select-filter>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Pin Code</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" formControlName="pin_code"
+                                                    placeholder="Enter Pincode" aria-describedby="button-addon2" />
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="row">
+
                                         <div class="col-md-3">
-                                            <label class="form-label">Pin Code</label>
+                                            <label class="form-label">Address 1</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" formControlName="PinCode"
-                                                    placeholder="Enter Pincode" aria-describedby="button-addon2" />
+                                                <input type="text" class="form-control" formControlName="address_1"
+                                                    placeholder="Enter Address 1" aria-describedby="button-addon2" />
                                             </div>
                                         </div>
+
                                         <div class="col-md-3">
-                                            <label class="form-label">Address</label>
+                                            <label class="form-label">Address 2</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" formControlName="Address"
-                                                    placeholder="Enter Address" aria-describedby="button-addon2" />
+                                                <input type="text" class="form-control" formControlName="address_2"
+                                                    placeholder="Enter Address 2" aria-describedby="button-addon2" />
                                             </div>
                                         </div>
+
                                         <div class="col-md-3">
-                                            <label class="form-label">Description</label>
+                                            <label class="form-label">Address 3</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" formControlName="Descrtion"
-                                                    placeholder="Enter Description" aria-describedby="button-addon2" />
+                                                <input type="text" class="form-control" formControlName="address_3"
+                                                    placeholder="Enter Address 3" aria-describedby="button-addon2" />
                                             </div>
                                         </div>
 
@@ -350,7 +436,7 @@
                 </div>
             </form>
 
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-md-3"></div>
                 <div class="col-md-3"></div>
                 <div class="col-md-3">

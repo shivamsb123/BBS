@@ -10,6 +10,8 @@
   </div>
   <div class="row">
     <div class="col-md-12">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
       <div class="card">
         <div class="card-header card-default">
           Product List
@@ -30,7 +32,7 @@
             <div class="col-md-12">
               <!-- <img id="myimage" [src]='imgValue' /> -->
               <div class="search-form">
-                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text" (input)="searchItem()"
                   class="form-control search-input"><button type="button" class="btn-search"><i class="fa fa-search"
                     aria-hidden="true"></i></button>
               </div>
@@ -59,20 +61,27 @@
                       </thead>
 
                       <tbody *ngIf="!isloading">
-                        <tr *ngFor="let product of productList | searchFilter: searchKeyword |  paginate : {
+                        <tr *ngFor="let product of productList |  paginate : {
                                   itemsPerPage: tableSize,
                                   currentPage: page,
                                   totalItems: count}; let i = index;">
-                          <td>{{product?.barcodeid || 'NA'}}</td>
-                          <td>{{product?.productName || 'NA'}}</td>
-                          <td>{{product?.catName || 'NA'}}</td>
-                          <td>{{product?.lowLevel || 'NA'}}</td>
-                          <td>{{product?.manufacturerID || 'NA'}}</td>
-                          <td>{{product?.hsnId}}</td>
-                          <td><a tooltip="Edit" (click)="AddProduct('/SupplyChain/Edit-Product/id', product?.id)"
+                          <td>{{product?.item_name || 'NA'}}</td>
+                          <td>{{product?.category_name || 'NA'}}</td>
+                          <td>{{product?.subcategory_name || 'NA'}}</td>
+                          <td>{{product?.brand_name || 'NA'}}</td>
+                          <td>{{product?.hsn_name || 'NA'}}</td>
+                          <td>{{product?.billing_for}}</td>
+                          <td>{{product?.billing_category_name}}</td>
+                          <td>{{product?.unit_name}}</td>
+                          <td>{{product?.item_taxable_value}}</td>
+                          <td>{{product?.item_tax_rate}}</td>
+                          <td>{{product?.item_value}}</td>
+                          <td>{{product?.item_description}}</td>
+                          <td><a tooltip="Edit" (click)="AddProduct('/SupplyChain/Edit-Product/id', product?.pk_item_id)"
                               rel="noopener noreferrer"><i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
-                              <!-- <a rel="noopener noreferrer" (click)="view(product)"><i class="fa fa-eye" aria-hidden="true"></i></a> -->
+                            <a (click)="deleteItem(product)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger" style="cursor: pointer; margin-left: 10px;"></i>
+                          </a>
                           </td>
                            
                         </tr>
