@@ -32,13 +32,13 @@
                                     <select-filter [type]="'country'" [placeholder]="'Select Country'"
                                         (onConfirm)="confirm($event)"></select-filter>
                                 </div>
-                                 <div *ngIf="districtForm.get('country')?.invalid && (districtForm.get('country')?.dirty || districtForm.get('country')?.touched )"
+                                <div *ngIf="districtForm.get('country')?.invalid && (districtForm.get('country')?.dirty || districtForm.get('country')?.touched )"
                                     class="text-danger">
                                     <span *ngIf="districtForm.get('country')?.errors?.['required']">Country is
                                         required</span>
                                 </div>
                             </div>
-                          <div class="col-md-3">
+                            <div class="col-md-3">
                                 <label class="form-label">State</label>
                                 <div *ngIf="selectedStateValue">
                                     <select-filter [selectedValue]="selectedStateValue" [vehicleData]="stateList"
@@ -53,7 +53,7 @@
                                     <select-filter [type]="'state'" [placeholder]="'Select State'"
                                         (onConfirm)="confirm($event)"></select-filter>
                                 </div>
-                                 <div *ngIf="districtForm.get('state')?.invalid && (districtForm.get('state')?.dirty || districtForm.get('state')?.touched )"
+                                <div *ngIf="districtForm.get('state')?.invalid && (districtForm.get('state')?.dirty || districtForm.get('state')?.touched )"
                                     class="text-danger">
                                     <span *ngIf="districtForm.get('state')?.errors?.['required']">State is
                                         required</span>
@@ -67,7 +67,8 @@
                                 </div>
                                 <div *ngIf="districtForm.get('districtName')?.invalid && (districtForm.get('districtName')?.dirty || districtForm.get('districtName')?.touched )"
                                     class="text-danger">
-                                    <span *ngIf="districtForm.get('districtName')?.errors?.['required']">District Name is
+                                    <span *ngIf="districtForm.get('districtName')?.errors?.['required']">District Name
+                                        is
                                         required</span>
                                 </div>
                             </div>

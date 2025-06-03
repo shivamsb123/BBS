@@ -269,7 +269,9 @@ export const API_CONSTANTS: any = {
     createDistrict:'api/Location/DistrictAdd',
     updateDistrict:'api/Location/DistrictEdit',
     deleteDistrict:'api/Location/DistrictDelete',
-    
+    itemMappigList:'api/Supplier/SupplierItemMappingList',
+    linkItemMapping:'api/Supplier/SupplierItemMapping',
+    deLinkItemMapping:'api/Supplier/SupplierItemMappingDelink',
     /**
      * tyre part api 
      */

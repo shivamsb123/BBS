@@ -666,4 +666,25 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+  getMappingList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.itemMappigList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+    linkItem(payload: any): Observable<any> {
+    let url = API_CONSTANTS.linkItemMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deLinkItemMapping(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deLinkItemMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
 }

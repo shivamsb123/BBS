@@ -27,7 +27,7 @@ import { SupplierAddressComponent } from './supplier-address/supplier-address.co
 import { CountryMasterComponent } from './country-master/country-master.component';
 import { StateMasterComponent } from './state-master/state-master.component';
 import { DistrictMasterComponent } from './district-master/district-master.component';
-
+import { ItemMappingComponent } from './item-mapping/item-mapping.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,8 @@ import { DistrictMasterComponent } from './district-master/district-master.compo
     SupplierAddressComponent,
     CountryMasterComponent,
     StateMasterComponent,
-    DistrictMasterComponent
+    DistrictMasterComponent,
+    ItemMappingComponent
   ],
   imports: [
     CommonModule,
@@ -61,6 +62,7 @@ import { DistrictMasterComponent } from './district-master/district-master.compo
     FormsModule,
     ReactiveFormsModule,
     TimepickerModule.forRoot(),
+    
 
   ]
 })

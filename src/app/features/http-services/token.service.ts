@@ -102,16 +102,23 @@ export class TokenService {
       const userDetail = res.body.data;
       if (res.body?.flag == '1') {
         // this.router.navigateByUrl('Dashboard/DashboardDMS');
-        window.location.href ='Dashboard/DashboardDMS'
+        // window.location.href ='Dashboard/DashboardDMS'
         console.log('token looking =======>', userDetail.jwtToken);
         sessionStorage.setItem('token', userDetail.jwtToken);
         localStorage.setItem('token', userDetail.jwtToken);
         sessionStorage.setItem('refresh_token', userDetail.refreshToken);
         localStorage.setItem('user_Id', userDetail.userID);
+        localStorage.setItem('sup_id', userDetail?.supId);
         localStorage.setItem('dept_id', userDetail.dept_ID);
         localStorage.setItem('userType','user')
         this.storageService.setItem('userDetail', res.userDetail);
         this.NotificationService.showSuccess('Login Successfully')
+        if(userDetail.role == 151){
+          this.router.navigateByUrl('vendordashboard/homepage');
+        }else{
+        window.location.href ='Dashboard/DashboardDMS'
+
+        }
 
         return userDetail.jwtToken;
       } else {
