@@ -69,6 +69,10 @@ export class AddBrandComponent implements OnInit {
   }
 
   submit(formValue: any) {
+     if (this.brandForm.invalid) {
+      this.brandForm.markAllAsTouched();
+      return;
+    };
     let service:any
     let payload = {
       "brand_name": formValue.name,

@@ -25,8 +25,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { SupplierAddressComponent } from './supplier-address/supplier-address.component';
 import { CountryMasterComponent } from './country-master/country-master.component';
-
-
+import { StateMasterComponent } from './state-master/state-master.component';
+import { DistrictMasterComponent } from './district-master/district-master.component';
+import { ItemMappingComponent } from './item-mapping/item-mapping.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LevelMasterComponent } from './level-master/level-master.component';
 @NgModule({
   declarations: [
     ProductMasterComponent,
@@ -48,7 +53,11 @@ import { CountryMasterComponent } from './country-master/country-master.componen
     ContactListComponent,
     AddContactComponent,
     SupplierAddressComponent,
-    CountryMasterComponent
+    CountryMasterComponent,
+    StateMasterComponent,
+    DistrictMasterComponent,
+    ItemMappingComponent,
+    LevelMasterComponent
   ],
   imports: [
     CommonModule,
@@ -57,6 +66,10 @@ import { CountryMasterComponent } from './country-master/country-master.componen
     FormsModule,
     ReactiveFormsModule,
     TimepickerModule.forRoot(),
+     MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    
 
   ]
 })

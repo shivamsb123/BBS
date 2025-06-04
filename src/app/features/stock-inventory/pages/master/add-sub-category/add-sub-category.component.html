@@ -40,13 +40,23 @@
                   [type]="'category'" [placeholder]="'Select category'"
                   (onConfirm)="confirm($event)"></select-filter>
               </div>
+              <div *ngIf="subform.get('cat')?.invalid && (subform.get('cat')?.dirty || subform.get('cat')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="subform.get('cat')?.errors?.['required']">Category is
+                                        required</span>
+                                </div>
               </div>
               <div class="col-md-3">
                 <label class="form-label">Sub Category Name</label>
-                <div class="input-group mb-3">
+                <div class="input-group">
                   <input type="text" class="form-control" formControlName="sub_cat" placeholder="Enter SubCategory Name"
                     aria-describedby="button-addon2" />
                 </div>
+                <div *ngIf="subform.get('sub_cat')?.invalid && (subform.get('sub_cat')?.dirty || subform.get('sub_cat')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="subform.get('sub_cat')?.errors?.['required']">Sub Category Name is
+                                        required</span>
+                                </div>
               </div>
               <div class="col-md-3">
                 <button class="btn btn-success" (click)="submit(subform.value)">

@@ -1,0 +1,257 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/ProductMaster_List"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Item Mapping List </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <!-- <div class="card"> -->
+        <div class="row mt-3 mb-3">
+            <div class="col-md-3 ">
+                <div *ngIf="selectedSupplier">
+                    <select-filter [selectedValue]="selectedSupplier" [vehicleData]="supplierList" [type]="'supplier'"
+                        [placeholder]="'Select Supplier'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedSupplier && supplierList && supplierList.length > 0">
+                    <select-filter [vehicleData]="supplierList" [type]="'supplier'" [placeholder]="'Select Supplier'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedSupplier && !supplierList || supplierList.length == 0">
+                    <select-filter [type]="'supplier'" [placeholder]="'Select Supplier'"
+                        (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!itemId" class="text-danger">
+                    <span>Supplier is required</span>
+                </div>
+            </div>
+            <div class="col-md-9"></div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-default">
+                        Item List
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="row">
+                            <div class="col-md-3">
+                                <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select (change)="onTableSizeChange($event)" class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+
+                                <div class="search-form">
+                                    <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                                        class="form-control search-input"><button type="button" class="btn-search"><i
+                                            class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3 mt-3">
+                                <button class="btn btn-primary btn-sm" (click)="linkAllItems()">Add All</button>
+
+                            </div>
+                        </div> -->
+                        <div class="row row-data">
+                            <div class="col-md-12">
+                                <!-- <img id="myimage" [src]='imgValue' /> -->
+                                <div class="search-form mb-2">
+                                    <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                                        class="form-control search-input"><button type="button" class="btn-search"><i
+                                            class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                    <div class="dataTables_scroll">
+
+                                        <div class="dataTables_scrollBody">
+                                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                                <loader [isRunning]="isloading"></loader>
+                                            </div>
+                                            <table id="datatable"
+                                                class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                                role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                                width="100%">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th *ngFor="let vehicleHeading of tableData; let i = index"
+                                                            [ngClass]="{'text-center': i === 0 || i === 2}">
+                                                            <strong>{{vehicleHeading?.val}}</strong>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody *ngIf="!isloading">
+                                                    <tr *ngFor="let item of itemList | searchFilter: searchKeyword |  paginate : {
+                                  itemsPerPage: tableSize,
+                                  currentPage: page,
+                                  totalItems: count}; let i = index;">
+                                                        <td class="text-center">{{ (page - 1) * tableSize + i + 1 }}
+                                                        </td>
+                                                        <td>{{item?.item_name || 'NA'}}</td>
+                                                        <td class="text-center">
+
+                                                            <!-- <a tooltip="Add" (click)="linkitem(item)"
+                                                                rel="noopener noreferrer"><i class="fa fa-plus"
+                                                                    aria-hidden="true"></i>
+                                                            </a> -->
+                                                            <button (click)="linkitem(item)"
+                                                                class="btn btn-sm btn-success action-btn"
+                                                                style="width: 60% !important">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>Add
+                                                            </button>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="itemList && itemList.length == 0 || itemList == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                        <div class="pagination-data" *ngIf="itemList && itemList.length > 0">
+                                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                (pageChange)="onTableDataChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-default">
+                        Item Mapping List
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="row">
+                            <div class="col-md-3">
+                                <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select (change)="onTableSizeChange($event)" class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-md-3"></div>
+
+                            <div class="col-md-2">
+
+                                <div class="search-form">
+                                    <input placeholder="Search for..." [(ngModel)]="mappingListSearch" type="text"
+                                        class="form-control search-input"><button type="button" class="btn-search"><i
+                                            class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mt-3">
+                                <div *ngIf="selectedSupplier">
+                                    <select-filter [selectedValue]="selectedSupplier" [vehicleData]="supplierList"
+                                        [type]="'supplier'" [placeholder]="'Select Supplier'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedSupplier && supplierList && supplierList.length > 0">
+                                    <select-filter [vehicleData]="supplierList" [type]="'supplier'"
+                                        [placeholder]="'Select Supplier'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedSupplier && !supplierList || supplierList.length == 0">
+                                    <select-filter [type]="'supplier'" [placeholder]="'Select Supplier'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                            </div>
+
+                        </div> -->
+                        <div class="row row-data">
+                            <div class="col-md-12">
+                                <!-- <img id="myimage" [src]='imgValue' /> -->
+                                <div class="search-form mb-2">
+                                    <input placeholder="Search for..." [(ngModel)]="mappingListSearch" type="text"
+                                        class="form-control search-input"><button type="button" class="btn-search"><i
+                                            class="fa fa-search" aria-hidden="true"></i></button>
+                                </div>
+                                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                    <div class="dataTables_scroll">
+
+                                        <div class="dataTables_scrollBody">
+                                            <div class="spin-loader" [ngClass]="isMappingLoading ? 'loader': ''">
+                                                <loader [isRunning]="isMappingLoading"></loader>
+                                            </div>
+                                            <table id="datatable"
+                                                class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                                role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                                width="100%">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th *ngFor="let vehicleHeading of tableData2">
+                                                            <strong>{{vehicleHeading?.val}}</strong>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody *ngIf="!isMappingLoading">
+                                                    <tr *ngFor="let item of itemMappingList | searchFilter: mappingListSearch |  paginate : {
+                                  itemsPerPage: tableSize,
+                                  currentPage: page,
+                                  totalItems: count}; let i = index;">
+                                                        <td>{{ (page - 1) * tableSize + i + 1 }}</td>
+                                                        <td>{{item?.fk_item_name || 'NA'}}</td>
+                                                        <td>{{item?.fk_supplier_name || 'NA'}}</td>
+                                                        <td>
+                                                            <button *ngIf="item.deleted" (click)="deLinkitem(item)"
+                                                                class="btn btn-sm btn-info action-btn"
+                                                                style="width: 100%;">
+                                                                Active
+                                                            </button>
+
+                                                            <button *ngIf="!item.deleted" (click)="deLinkitem(item)"
+                                                                class="btn btn-sm btn-danger action-btn">
+                                                                In-Active
+                                                            </button>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-center"
+                                            *ngIf="itemMappingList && itemMappingList.length == 0 || itemMappingList == null && !isMappingLoading"
+                                            style="width: 100%;">No Data Available</div>
+                                        <div class="pagination-data"
+                                            *ngIf="itemMappingList && itemMappingList.length > 0">
+                                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                (pageChange)="onTableDataChange($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+
+    </div>
+</section>
