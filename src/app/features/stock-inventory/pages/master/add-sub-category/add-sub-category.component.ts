@@ -79,8 +79,8 @@ export class AddSubCategoryComponent implements OnInit {
   getSubcategoryData() {
     this.isloading = true;
     let payload = {
-      "fk_category_id":Number(this.categoryId),
-     "pk_subcategory_id": Number(this.id)
+      "fk_category_id": Number(this.categoryId),
+      "pk_subcategory_id": Number(this.id)
     };
     this.stockService.subCategoryList(payload).subscribe((res: any) => {
       this.subCategoryData = res?.body?.data;
@@ -108,6 +108,8 @@ export class AddSubCategoryComponent implements OnInit {
 
   confirm(event: any) {
     this.category = event.id;
+    this.subform.controls['cat'].setValue(event.id)
+
   }
 
   cancel() {
@@ -119,6 +121,10 @@ export class AddSubCategoryComponent implements OnInit {
   }
 
   submit(formValue: any) {
+    if (this.subform.invalid) {
+      this.subform.markAllAsTouched();
+      return;
+    };
     let service: any
     let payload = {
 

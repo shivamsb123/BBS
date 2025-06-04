@@ -29,6 +29,11 @@
                           <input type="text"  class="form-control" formControlName="code"
                               placeholder="Enter Unit Code"  aria-describedby="button-addon2" />
                       </div>
+                       <div *ngIf="unitForm.get('code')?.invalid && (unitForm.get('code')?.dirty || unitForm.get('code')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="unitForm.get('code')?.errors?.['required']">Unit Code is
+                                        required</span>
+                                </div>
                   </div>
                   <div class="col-md-3">
                   <label class="form-label">Unit Name</label>
@@ -36,6 +41,11 @@
                           <input type="text"  class="form-control" formControlName="name"
                               placeholder="Enter Unit Name"  aria-describedby="button-addon2" />
                       </div>
+                       <div *ngIf="unitForm.get('name')?.invalid && (unitForm.get('name')?.dirty || unitForm.get('name')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="unitForm.get('name')?.errors?.['required']">Unit Name is
+                                        required</span>
+                                </div>
                   </div>          
                   <div class="col-md-3">
                       <button class="btn btn-success" (click)="submit(unitForm.value)">

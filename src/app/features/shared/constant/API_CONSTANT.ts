@@ -272,6 +272,12 @@ export const API_CONSTANTS: any = {
     itemMappigList:'api/Supplier/SupplierItemMappingList',
     linkItemMapping:'api/Supplier/SupplierItemMapping',
     deLinkItemMapping:'api/Supplier/SupplierItemMappingDelink',
+    supplierLogin:'api/Supplier/GenerateSupplierLogin',
+    resetSupplierLogin:'api/Supplier/ResetSupplierLogin',
+    levelList:'api/Level/LevelList',
+    createLevel:'api/Level/CreateLevel',
+    updateLevel:'api/Level/UpdateLevel',
+    deleteLevel:'api/Level/DeleteLevel',
     /**
      * tyre part api 
      */

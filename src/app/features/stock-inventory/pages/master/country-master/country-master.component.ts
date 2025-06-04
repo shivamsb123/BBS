@@ -124,6 +124,7 @@ export class CountryMasterComponent {
         this.alertTrigger = true;
         this.stopAlert();
         this.getCoutryList();
+        this.countryId = null
         this.button = 'Add'
       } else {
         this.alertData = {

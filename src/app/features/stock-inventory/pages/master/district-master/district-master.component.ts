@@ -200,6 +200,7 @@ export class DistrictMasterComponent {
         this.alertTrigger = true;
         this.stopAlert();
         this.getStateList();
+        this.districtId = null
         this.button = 'Add'
       } else {
         this.alertData = {

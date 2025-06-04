@@ -62,6 +62,10 @@ export class AddCategoryMasterComponent {
 
 
   submit(formValue: any) {
+      if (this.categoryForm.invalid) {
+      this.categoryForm.markAllAsTouched();
+      return;
+    };
     let service:any
     let payload = {
       "category_name": formValue.category_name,

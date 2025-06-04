@@ -687,4 +687,45 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+  generateSupplierLogin(payload: any): Observable<any> {
+    let url = API_CONSTANTS.supplierLogin
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   resetSupplierLogin(payload: any): Observable<any> {
+    let url = API_CONSTANTS.resetSupplierLogin
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   levelList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.levelList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createLevel(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createLevel
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateLevel(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateLevel
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deleteLevel(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteLevel
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
 }

@@ -71,6 +71,10 @@ export class AddUnitComponent implements OnInit {
 
 
   submit(formValue: any) {
+     if (this.unitForm.invalid) {
+      this.unitForm.markAllAsTouched();
+      return;
+    };
     let service: any
     let payload: any
 

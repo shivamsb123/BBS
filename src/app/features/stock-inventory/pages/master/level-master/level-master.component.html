@@ -3,9 +3,9 @@
         <div class="col-lg-12 align-self-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
-                <li><a routerLink="/SupplyChain/Country_Master_List"> <i class="fa fa-long-arrow-right"
+                <li><a routerLink="/SupplyChain/Level_Master"> <i class="fa fa-long-arrow-right"
                             aria-hidden="true"></i>
-                        Country Master </a></li>
+                        Level Master </a></li>
             </ol>
         </div>
     </div>
@@ -15,25 +15,37 @@
             </app-alert>
             <div class="card">
                 <div class="card-body">
-                    <form [formGroup]="countryForm">
+                    <form [formGroup]="levelForm">
                         <div class="row  mb-3">
 
-                            <div class="col-md-3">
-                                <label for="exampleInputEmail1" class="form-label">Country Name</label>
+                        
+                             <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Level Name</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter Country Name"
-                                        aria-describedby="button-addon2" formControlName="countryName" />
+                                    <input type="text" class="form-control" placeholder="Enter Level Name"
+                                        aria-describedby="button-addon2" formControlName="levelName" />
                                 </div>
-                                <div *ngIf="countryForm.get('countryName')?.invalid && (countryForm.get('countryName')?.dirty || countryForm.get('countryName')?.touched )"
+                                <div *ngIf="levelForm.get('levelName')?.invalid && (levelForm.get('levelName')?.dirty || levelForm.get('levelName')?.touched )"
                                     class="text-danger">
-                                    <span *ngIf="countryForm.get('countryName')?.errors?.['required']">Country Name is
+                                    <span *ngIf="levelForm.get('levelName')?.errors?.['required']">Level Name is
                                         required</span>
                                 </div>
                             </div>
-                            <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Sequence</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Sequence"
+                                        aria-describedby="button-addon2" formControlName="sequence" />
+                                </div>
+                                <div *ngIf="levelForm.get('sequence')?.invalid && (levelForm.get('sequence')?.dirty || levelForm.get('sequence')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="levelForm.get('sequence')?.errors?.['required']">Sequence is
+                                        required</span>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <br>
-                                 <button class="btn btn-success" (click)="submit(countryForm.value)"
+                                 <button class="btn btn-success" (click)="submit(levelForm.value)"
                                             ><i class="fa fa-plus"
                                                 aria-hidden="true"></i>
                                             {{button}}
@@ -73,37 +85,38 @@
 
                                             <thead>
                                                 <tr role="row">
-                                                    <th *ngFor="let country of tableData">
-                                                        <strong>{{country?.value}}</strong>
+                                                    <th *ngFor="let tab of tableData">
+                                                        <strong>{{tab?.value}}</strong>
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody *ngIf="!isloading">
-                                                <tr *ngFor="let item of countryList |  paginate : {
+                                                <tr *ngFor="let item of levelList |  paginate : {
                                     itemsPerPage: tableSize,
                                     currentPage: page,
                                     totalItems: count}; let i = index">
                                                     <td>{{ (page - 1) * tableSize + i + 1 }}</td>
 
-                                                    <td>{{item?.country_name}}</td>
+                                                    <td>{{item?.level_name}}</td>
+                                                    <td>{{item?.level_seq}}</td>
                                                     <td>
                                                         <a style="cursor: pointer;" tooltip="Edit"
                                                             (click)="update(item)" rel="noopener noreferrer">
                                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                                         </a>
-                                                        <a (click)="deleteCountry(item)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer; margin-left: 10px;"></i>
+                                                        <a (click)="deleteLevel(item)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer; margin-left: 10px;"></i>
                           </a>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <div class="text-center"
-                                            *ngIf="countryList && countryList.length == 0 || countryList == null && !isloading"
+                                            *ngIf="levelList && levelList.length == 0 || levelList == null && !isloading"
                                             style="width: 100%;">No Data Available</div>
                                     </div>
 
                                 </div>
-                                <div class="pagination-data" *ngIf="countryList && countryList.length > 0">
+                                <div class="pagination-data" *ngIf="levelList && levelList.length > 0">
                                     <pagination-controls previousLabel="Prev" nextLabel="Next"
                                         (pageChange)="onTableDataChange($event)">
                                     </pagination-controls>

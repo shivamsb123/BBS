@@ -28,7 +28,10 @@ import { CountryMasterComponent } from './country-master/country-master.componen
 import { StateMasterComponent } from './state-master/state-master.component';
 import { DistrictMasterComponent } from './district-master/district-master.component';
 import { ItemMappingComponent } from './item-mapping/item-mapping.component';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LevelMasterComponent } from './level-master/level-master.component';
 @NgModule({
   declarations: [
     ProductMasterComponent,
@@ -53,7 +56,8 @@ import { ItemMappingComponent } from './item-mapping/item-mapping.component';
     CountryMasterComponent,
     StateMasterComponent,
     DistrictMasterComponent,
-    ItemMappingComponent
+    ItemMappingComponent,
+    LevelMasterComponent
   ],
   imports: [
     CommonModule,
@@ -62,6 +66,9 @@ import { ItemMappingComponent } from './item-mapping/item-mapping.component';
     FormsModule,
     ReactiveFormsModule,
     TimepickerModule.forRoot(),
+     MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
     
 
   ]

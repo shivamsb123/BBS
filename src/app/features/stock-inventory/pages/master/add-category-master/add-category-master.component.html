@@ -29,6 +29,11 @@
                         <input type="text"  class="form-control" formControlName="category_name"
                             placeholder="Enter Category Name"  aria-describedby="button-addon2" />
                     </div>
+                     <div *ngIf="categoryForm.get('category_name')?.invalid && (categoryForm.get('category_name')?.dirty || categoryForm.get('category_name')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="categoryForm.get('category_name')?.errors?.['required']">Category Name is
+                                        required</span>
+                                </div>
                 </div>
                 <div class="col-md-3">
                 

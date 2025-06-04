@@ -29,13 +29,18 @@
                           <input type="text"  class="form-control" formControlName="name"
                               placeholder="Enter Brand Name"  aria-describedby="button-addon2" />
                       </div>
+                       <div *ngIf="brandForm.get('name')?.invalid && (brandForm.get('name')?.dirty || brandForm.get('name')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="brandForm.get('name')?.errors?.['required']">Brand Name is
+                                        required</span>
+                                </div>
                   </div>
                   <div class="col-md-3">
                   
                   </div>          
                   <div class="col-md-3">
                     <br>
-                      <button class="btn btn-success" [disabled]="!brandForm.valid" (click)="submit(brandForm.value)">
+                      <button class="btn btn-success" (click)="submit(brandForm.value)">
                         <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
                       </button>
                   </div>
