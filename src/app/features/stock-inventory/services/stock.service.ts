@@ -799,4 +799,12 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+   itemLocationList(): Observable<any> {
+    let url = API_CONSTANTS.itemLocation
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+
 }

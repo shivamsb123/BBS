@@ -41,6 +41,7 @@ export class ProductMasterComponent implements OnInit {
   }
   initialTable() {
     this.tableData = [
+      { key: 'keyValue', val: 'Item Location' },
       { key: 'keyValue', val: 'Item Name' },
       { key: 'keyValue', val: 'Category' },
       { key: 'keyValue', val: 'Sub Category' },

@@ -178,9 +178,8 @@ export class DmsDashbaordComponent {
     });
   }
 
-  convertToDate(dateString: string): Date | null {
-    const [day, month, year, time] = dateString.split(/[\s-]/);
-    return new Date(`${year}-${month}-${day}T${time}`);
+  convertToDate(dateString: string): Date | null {   
+    return new Date(dateString);
   }
 
   navigateUrl(id: any) {

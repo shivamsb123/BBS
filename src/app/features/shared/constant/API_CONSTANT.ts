@@ -289,6 +289,7 @@ export const API_CONSTANTS: any = {
     deleteLevelMapping:'api/level/DeleteLevelMapping',
     deptByRollList:'api/ScComman/GetDeptRoleList/{deptid}',
     rollListByemp:'api/ScComman/GetRoleEmployeeList/{roleid}',
+    itemLocation:'api/ScComman/GetItemLocationList',
     
     /**
      * tyre part api 

@@ -3,8 +3,7 @@
         <div class="col-lg-12 align-self-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
-                <li><a routerLink="/SupplyChain/Level_Master"> <i class="fa fa-long-arrow-right"
-                            aria-hidden="true"></i>
+                <li><a routerLink="/SupplyChain/Level_Master"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                         Level Master </a></li>
             </ol>
         </div>
@@ -18,8 +17,8 @@
                     <form [formGroup]="levelForm">
                         <div class="row  mb-3">
 
-                        
-                             <div class="col-md-3">
+
+                            <div class="col-md-3">
                                 <label for="exampleInputEmail1" class="form-label">Level Name</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Enter Level Name"
@@ -31,7 +30,19 @@
                                         required</span>
                                 </div>
                             </div>
-                                <div class="col-md-3">
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Amount</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="Enter Amount"
+                                        aria-describedby="button-addon2" formControlName="amount" />
+                                </div>
+                                <div *ngIf="levelForm.get('amount')?.invalid && (levelForm.get('amount')?.dirty || levelForm.get('amount')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="levelForm.get('amount')?.errors?.['required']">Amount is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <label for="exampleInputEmail1" class="form-label">Sequence</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Enter Sequence"
@@ -45,17 +56,20 @@
                             </div>
                             <div class="col-md-3">
                                 <br>
-                                 <button class="btn btn-success" (click)="submit(levelForm.value)"
-                                            ><i class="fa fa-plus"
-                                                aria-hidden="true"></i>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-success" (click)="submit(levelForm.value)"><i
+                                                class="fa fa-plus" aria-hidden="true"></i>
                                             {{button}}
                                         </button>
-                            </div>
-                            <div class="col-md-3">
-                               <br>
-                                <button class="btn btn-danger" (click)="cancel()">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-danger" (click)="cancel()">
                                             <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                         </button>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -98,14 +112,18 @@
                                                     <td>{{ (page - 1) * tableSize + i + 1 }}</td>
 
                                                     <td>{{item?.level_name}}</td>
+                                                    <td>{{item?.min_order_amount}}</td>
                                                     <td>{{item?.level_seq}}</td>
                                                     <td>
                                                         <a style="cursor: pointer;" tooltip="Edit"
                                                             (click)="update(item)" rel="noopener noreferrer">
                                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                                         </a>
-                                                        <a (click)="deleteLevel(item)" tooltip="Delete" rel="noopener noreferrer"><i class="fa fa-trash text-danger cursor-pointer" style="cursor: pointer; margin-left: 10px;"></i>
-                          </a>
+                                                        <a (click)="deleteLevel(item)" tooltip="Delete"
+                                                            rel="noopener noreferrer"><i
+                                                                class="fa fa-trash text-danger cursor-pointer"
+                                                                style="cursor: pointer; margin-left: 10px;"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </tbody>
