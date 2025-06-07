@@ -42,7 +42,7 @@ export class HSNCodeComponent implements OnInit {
       { key: 'keyValue', val: 'HSN' },
       { key: 'keyValue', val: 'Description' },
       { key: 'keyValue', val: 'Tax(%)' },
-      { key: 'keyValue', val: 'Cess(%)' },
+      // { key: 'keyValue', val: 'Cess(%)' },
       { key: 'keyValue', val: 'Cgst(%)' },
       { key: 'keyValue', val: 'Sgst(%)' },
       { key: 'keyValue', val: 'Igst(%)' },

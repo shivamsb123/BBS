@@ -43,11 +43,11 @@ export class AddHSNComponent implements OnInit {
     this.hsnForm = this.fb.group({
       hsnCode: ['', [Validators.required, Validators.pattern('')]],
       Description: ['', [Validators.required, Validators.pattern('')]],
-      cgst: ['', [Validators.required, Validators.max(100)]],
-      igst: ['', [Validators.required, Validators.max(100)]],
-      sgst: ['', [Validators.required, Validators.max(100)]],
-      tax: ['', [Validators.required, Validators.max(100)]],
-      cess: ['', [Validators.required, Validators.max(100)]],
+      cgst: [0.00, [Validators.required, Validators.max(100)]],
+      igst: [0.00, [Validators.required, Validators.max(100)]],
+      sgst: [0.00, [Validators.required, Validators.max(100)]],
+      tax: [0.00, [Validators.required, Validators.max(100)]],
+      cess: [''],
 
     })
 
@@ -69,7 +69,7 @@ export class AddHSNComponent implements OnInit {
           sgst: [val?.sgst_per, [Validators.required, Validators.max(100)]],
           igst: [val?.igst_per, [Validators.required, Validators.max(100)]],
           tax: [val?.tax_per, [Validators.required, Validators.max(100)]],
-          cess: [val?.cess_per, [Validators.required, Validators.max(100)]],
+          cess: [''],
 
         })
       })
@@ -100,7 +100,7 @@ export class AddHSNComponent implements OnInit {
       "cgst_per": parseFloat(formValue?.cgst),
       "sgst_per": parseFloat(formValue?.sgst),
       "igst_per": parseFloat(formValue?.igst),
-      "cess_per": parseFloat(formValue?.cess),
+      "cess_per": 0,
       "created_by": parseInt(localStorage.getItem('user_Id') || '')
     }
     if (this.id) {

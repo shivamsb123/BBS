@@ -85,7 +85,7 @@ const routes: Routes = [
     path: 'Add-Unit-Conversion/:id', component: AddUnitConversionComponent
   },
   {
-    path: 'Brand_Master_List', component: BrandMasterComponent
+    path: 'Manufacture_Master_List', component: BrandMasterComponent
   },
   {
     path: 'Add-Brand', component: AddBrandComponent

@@ -1,99 +1,65 @@
-import { Injectable } from "@angular/core";
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpHeaders,
-  HttpInterceptor,
-  HttpRequest,
-} from "@angular/common/http";
-import { Router } from "@angular/router";
-import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
-import { SessionService } from "./session.service";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { catchError, Observable, throwError } from "rxjs";
 import { TokenService } from "./token.service";
-
+import { Router } from "@angular/router";
+import { Injectable } from "@angular/core";
+import { SessionService } from "./session.service";
+ 
 @Injectable({
   providedIn: "root",
 })
 export class HttpInterceptorsService implements HttpInterceptor {
   constructor(
-    private router: Router,
     private tokenService: TokenService,
-    private sessionService: SessionService
-  ) {}
-
-  invalidTokenError(error: any): boolean {
-    let errorsArray = error.error.errors;
-    if (errorsArray === undefined) return false;
-    return errorsArray.some(
-      (object: any) => object.type === "InvalidTokenError"
-    );
-  }
-
-  unAuthorizedError(error: any): boolean {
-    let errorsArray = error.error.errors;
-    if (errorsArray === undefined) return false;
-    return errorsArray.some(
-      (object: any) => object.type === "UnauthorizedError"
-    );
-  }
-
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-   
-    if (request.url.startsWith("https://maps.google.com/maps/api/geocode/json")) {
-      return next.handle(request);
+    private router: Router,
+    private SessionService : SessionService
+  ) { }
+ 
+  intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Skip interception for these URLs
+    if (httpRequest.url.startsWith("https://maps.google.com/maps/api/geocode/json")) {
+      return next.handle(httpRequest);
     }
-    if (request.url.startsWith("https://maps.googleapis.com/maps/api/geocode/json")) {
-      return next.handle(request);
+    if (httpRequest.url.startsWith("https://maps.googleapis.com/maps/api/geocode/json")) {
+      return next.handle(httpRequest);
     }
-    if (localStorage.getItem('chargingtoken')) {
-      return next
-        .handle(
-          request.clone({
-            setHeaders: {
-              Authorization: "Bearer " + localStorage.getItem('chargingtoken'),
-            },
-          })
-        )
-        .pipe(
-          catchError((error: any) => {
-            if (this.invalidTokenError(error)) {
-              this.sessionService.redirectToLogin(this.router.url);
-            }
-            if (this.unAuthorizedError(error)){
-              this.sessionService.redirectToLogin(this.router.url);
-            }
-            return throwError(error);
-          })
-        );
-    }
-
+    // Add authorization header if token exists
     if (this.tokenService.hasToken()) {
-      localStorage.removeItem('chargingtoken');
-      return next
-        .handle(
-          request.clone({
-            setHeaders: {
-              Authorization: "Bearer " + this.tokenService.getToken(),
-            },
-          })
-        )
-        .pipe(
-          catchError((error: any) => {
-            if (this.invalidTokenError(error)) {
-              this.sessionService.redirectToLogin(this.router.url);
-            }
-            if (this.unAuthorizedError(error)){
-              this.sessionService.redirectToLogin(this.router.url);
-            }
-            return throwError(error);
-          })
-        );
+      const token = this.tokenService.getToken();
+      const authReq = httpRequest.clone({
+        setHeaders: {
+          Authorization: token ? `Bearer ${token}` : ""
+        }
+      });
+ 
+      return next.handle(authReq).pipe(
+        catchError((error: any) => {
+          if (error.status === 401) {
+             this.SessionService.logout();
+            this.router.navigate(['/login']);
+          }
+         
+          if (this.invalidTokenError(error) || this.unAuthorizedError(error)) {
+             this.SessionService.logout();
+            this.router.navigate(['/login']);
+          }
+          return throwError(() => error);
+        })
+      );
     }
-
-    return next.handle(request);
+ 
+    // For requests without token
+    return next.handle(httpRequest);
+  }
+ 
+ 
+  private invalidTokenError(error: any): boolean {
+    const errorsArray = error.error?.errors;
+    return errorsArray?.some((object: any) => object.type === "InvalidTokenError") ?? false;
+  }
+ 
+  private unAuthorizedError(error: any): boolean {
+    const errorsArray = error.error?.errors;
+    return errorsArray?.some((object: any) => object.type === "UnauthorizedError") ?? false;
   }
 }

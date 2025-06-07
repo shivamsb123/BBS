@@ -43,6 +43,7 @@ export class LevelMasterComponent {
     this.tableData = [
       { key: '', value: 'S. No.' },
       { key: '', value: 'Level Name' },
+      { key: '', value: 'Amount' },
       { key: '', value: 'Sequence' },
       { key: '', value: 'Action' },
     ]
@@ -52,6 +53,7 @@ export class LevelMasterComponent {
     this.levelForm = this.fb.group({
       sequence: ['', [Validators.required, Validators.pattern('')]],
       levelName: ['', [Validators.required, Validators.pattern('')]],
+      amount: ['', [Validators.required, Validators.pattern('')]],
     })
   }
 
@@ -86,6 +88,7 @@ export class LevelMasterComponent {
     this.levelForm = this.fb.group({
       sequence: [level?.level_seq, [Validators.required, Validators.pattern('')]],
       levelName: [level?.level_name, [Validators.required, Validators.pattern('')]],
+      amount: [level?.min_order_amount, [Validators.required, Validators.pattern('')]],
     })
     this.button = 'Update';
     this.alertMessage = 'Updated'
@@ -106,6 +109,7 @@ export class LevelMasterComponent {
     let payload = {
       "level_seq": Number(formvalue?.sequence),
       "level_name": formvalue?.levelName,
+      "min_order_amount": formvalue?.amount,
       "Logged_by": Number(localStorage.getItem('user_Id') || '')
     }
     if (this.levelId) {

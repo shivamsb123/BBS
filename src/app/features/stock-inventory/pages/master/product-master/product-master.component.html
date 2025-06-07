@@ -4,7 +4,7 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
         <li><a routerLink="/SupplyChain/ProductMaster_List"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-            Product Master </a></li>
+            Item Master </a></li>
       </ol>
     </div>
   </div>
@@ -14,7 +14,7 @@
         </app-alert>
       <div class="card">
         <div class="card-header card-default">
-          Product List
+          Item List
         </div>
         <div class="card-body">
           <div class="row">
@@ -24,7 +24,7 @@
             <div class="col-md-3">
               <button class="btn btn-primary" (click)="AddProduct('/SupplyChain/Add-Product', '')">
                 <i class="fa fa-plus"></i>
-                Add Product
+                Add Item
               </button>
             </div>
           </div>
@@ -65,6 +65,7 @@
                                   itemsPerPage: tableSize,
                                   currentPage: page,
                                   totalItems: count}; let i = index;">
+                          <td>{{product?.item_location_name || 'NA'}}</td>
                           <td>{{product?.item_name || 'NA'}}</td>
                           <td>{{product?.category_name || 'NA'}}</td>
                           <td>{{product?.subcategory_name || 'NA'}}</td>

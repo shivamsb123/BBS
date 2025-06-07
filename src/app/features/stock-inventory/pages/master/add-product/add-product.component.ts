@@ -39,6 +39,7 @@ export class AddProductComponent implements OnInit {
   isloading: boolean = false;
   formData!: FormData;
   categoryId: any;
+  itemLocationList: any;
 
   constructor(
     private fb: FormBuilder,
@@ -63,6 +64,7 @@ export class AddProductComponent implements OnInit {
     this.getBillingCategoryList();
     this.getHSNList();
     this.getBrandData();
+    this.getItemLocation()
     setTimeout(() => {
       this.isloading = false
     }, 500);
@@ -76,18 +78,25 @@ export class AddProductComponent implements OnInit {
       unit: ['', [Validators.required]],
       billingFor: ['', [Validators.required]],
       HSN_Code: ['', [Validators.required]],
-      cess: ['', [Validators.required]],
+      itemFor: ['', [Validators.required]],
       brand_name: ['', [Validators.required]],
       billingCategory: ['', [Validators.required]],
-      itemValue: ['', [Validators.required]],
-      taxableValue: ['', [Validators.required]],
-      taxRate: ['', [Validators.required]],
+      itemValue: [0, [Validators.required]],
+      taxableValue: [0, [Validators.required]],
+      taxRate: [0.00, [Validators.required]],
       itemNameAlias: ['', [Validators.required]],
-      minAlertValue: ['', [Validators.required]],
-      minOrderValue: ['', [Validators.required]],
+      minAlertValue: [0, [Validators.required]],
+      minOrderValue: [0, [Validators.required]],
       Description: ['',[Validators.required]],
     });
   }
+
+  getItemLocation(){
+    this.stockService.itemLocationList().subscribe((res:any) => {
+      this.itemLocationList = res?.body?.data      
+    })
+  }
+
   getProductList() {
     this.isloading = true;
     const payload = {
@@ -120,7 +129,7 @@ export class AddProductComponent implements OnInit {
             unit: [this.selectedbaseValue.value, [Validators.required]],
             HSN_Code: [this.selectedHSNValue.value, [Validators.required]],
             brand_name: [this.selectedBrandValue.value, [Validators.required]],
-            cess: [val?.item_cess, [Validators.required]],
+            itemFor: [val?.fk_item_location_id, [Validators.required]],
             billingFor: [this.selectedBillingValue.value, [Validators.required]],
             billingCategory: [this.selectedBillingCategory.value, [Validators.required]],
             itemValue: [val?.item_value, [Validators.required]],
@@ -237,7 +246,7 @@ export class AddProductComponent implements OnInit {
       // Auto-select subcategory if provided
       if (selectedSubCategoryId) {
         this.selectedSubCatValue = this.subCateData.find((ele: any) => ele?.value === selectedSubCategoryId);
-        this.productForm.controls['Sub_Category'].setValue(this.selectedSubCatValue);
+        this.productForm.controls['Sub_Category'].setValue(this.selectedSubCatValue.value);
       }
     });
   }
@@ -294,6 +303,7 @@ export class AddProductComponent implements OnInit {
 
 
   submit(formValue: any) {    
+    console.log('formValue',formValue);
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
@@ -302,7 +312,7 @@ export class AddProductComponent implements OnInit {
 
     let payload = {
       "fk_category_id": Number(formValue.Category),
-      "fk_subcategory_id": Number(formValue.Sub_Category.value),
+      "fk_subcategory_id": formValue.Sub_Category,
       "fk_unit_id": Number(formValue.unit),
       "fk_hsn_id": Number(formValue.HSN_Code),
       "fk_brand_id": Number(formValue.brand_name),
@@ -311,14 +321,16 @@ export class AddProductComponent implements OnInit {
       "item_value": parseFloat(formValue.itemValue),
       "item_taxable_value": parseFloat(formValue.taxableValue),
       "item_tax_rate": parseFloat(formValue.taxRate),
-      "item_cess": parseFloat(formValue.cess),
+      "item_cess": 0,
       "fk_item_category_id": Number(formValue.billingCategory),
       "fk_typeofgoods_id": Number(formValue.billingFor),
       "item_name_alias": formValue?.itemNameAlias,
       "min_alert_value": Number(formValue?.minAlertValue),
       "min_order_value": Number(formValue?.minOrderValue),
-      "Logged_by": Number(localStorage.getItem('user_Id'))
+      "Logged_by": Number(localStorage.getItem('user_Id')),
+      "fk_item_location_id": Number(formValue.itemFor)
     }
+    console.log('payload',payload);
     if (this.id) {
       payload['pk_item_id'] = Number(this.id);
       service = this.stockService.updateProduct(payload)
