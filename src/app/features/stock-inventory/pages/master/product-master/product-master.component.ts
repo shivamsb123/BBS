@@ -52,6 +52,9 @@ export class ProductMasterComponent implements OnInit {
       { key: 'keyValue', val: 'Amount' },
       { key: 'keyValue', val: 'Tax (%)' },
       { key: 'keyValue', val: 'Net Amount' },
+      { key: 'keyValue', val: 'Item Alias' },
+      { key: 'keyValue', val: 'Min Alert Value' },
+      { key: 'keyValue', val: 'Min Order Value' },
       { key: 'keyValue', val: 'Description' },
       { key: 'keyValue', val: 'Action' },
     ]

@@ -233,12 +233,50 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
+                           <div class="col-md-3">
+                            <label class="form-label">Item Name Alias</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="itemNameAlias"
+                                    placeholder="Enter Item Name Alias" aria-describedby="button-addon2" />
+                            </div>
+                            <div *ngIf="productForm.get('itemNameAlias')?.invalid && (productForm.get('itemNameAlias')?.dirty || productForm.get('itemNameAlias')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('itemNameAlias')?.errors?.['required']">Item Name Alias is required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Min Alert Value</label>
+                            <div class="input-group ">
+                                <input type="text" class="form-control" formControlName="minAlertValue"
+                                    placeholder="Enter Min Alert Value" aria-describedby="button-addon2" />
+                            </div>
+                            <div *ngIf="productForm.get('minAlertValue')?.invalid && (productForm.get('minAlertValue')?.dirty || productForm.get('minAlertValue')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('minAlertValue')?.errors?.['required']">Min Alert Value is required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Min Order Value</label>
+                            <div class="input-group ">
+                                <input type="text" class="form-control" formControlName="minOrderValue"
+                                    placeholder="Enter Min Order Value" aria-describedby="button-addon2" />
+                            </div>
+                            <div *ngIf="productForm.get('minOrderValue')?.invalid && (productForm.get('minOrderValue')?.dirty || productForm.get('minOrderValue')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('minOrderValue')?.errors?.['required']">Min Order Value is required</span>
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <label class="form-label">Description</label>
-                            <div class="input-group mb-3">
-                                <textarea class="form-control" formControlName="Description"
+                            <div class="input-group">
+                                <textarea class="form-control" formControlName="Description" placeholder="Description"
                                     id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+
+                             <div *ngIf="productForm.get('Description')?.invalid && (productForm.get('Description')?.dirty || productForm.get('Description')?.touched )"
+                                class="text-danger">
+                                <span *ngIf="productForm.get('Description')?.errors?.['required']">Description is required</span>
                             </div>
                         </div>
                     </div>

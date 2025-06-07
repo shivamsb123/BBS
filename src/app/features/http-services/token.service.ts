@@ -96,6 +96,8 @@ export class TokenService {
     let payload = {
       UserName: username,
       Password: password,
+      AppId: 3,
+      MenuVersion: 'v1',
     };
     console.log('payload check =====>', payload);
     this.userService.userLogin(payload).subscribe((res: any) => {
@@ -112,6 +114,7 @@ export class TokenService {
         localStorage.setItem('dept_id', userDetail.dept_ID);
         localStorage.setItem('userType','user')
         this.storageService.setItem('userDetail', res.userDetail);
+        this.storageService.setItem('menuData', res?.body?.menudata);
         this.NotificationService.showSuccess('Login Successfully')
         if(userDetail.role == 151){
           this.router.navigateByUrl('vendordashboard/homepage');

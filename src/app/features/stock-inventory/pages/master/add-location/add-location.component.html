@@ -1,0 +1,199 @@
+<section class="main-content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/Location_Master_List"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Location Master </a></li>
+                <li><a routerLink="/SupplyChain/Add-location"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Add Location Master </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                    Add Location
+                </div>
+                <div class="card-body" *ngIf="!isloading">
+                    <form [formGroup]="locationForm">
+
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Location Name</label>
+                                <div class="input-group ">
+                                    <input type="text" class="form-control" formControlName="locationName"
+                                        placeholder="Enter Location Name" aria-describedby="button-addon2" required />
+                                </div>
+                                <div *ngIf="locationForm.get('locationName')?.invalid && (locationForm.get('locationName')?.dirty || locationForm.get('locationName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('locationName')?.errors?.['required']">Location Name
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Country</label>
+                                <div *ngIf="selectedCountry">
+                                    <select-filter [selectedValue]="selectedCountry" [vehicleData]="countryData"
+                                        [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountry && countryData && countryData.length > 0">
+                                    <select-filter [vehicleData]="countryData" [type]="'country'"
+                                        [placeholder]="'Select Country'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountry && !countryData || countryData.length == 0">
+                                    <select-filter [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="locationForm.get('country')?.invalid && (locationForm.get('country')?.dirty || locationForm.get('country')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('country')?.errors?.['required']">Country
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">State</label>
+                                <div *ngIf="selectedState">
+                                    <select-filter [selectedValue]="selectedState" [vehicleData]="stateData"
+                                        [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedState && stateData && stateData.length > 0">
+                                    <select-filter [vehicleData]="stateData" [type]="'state'"
+                                        [placeholder]="'Select State'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedState && !stateData || stateData.length == 0">
+                                    <select-filter [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="locationForm.get('state')?.invalid && (locationForm.get('state')?.dirty || locationForm.get('state')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('state')?.errors?.['required']">State
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">District</label>
+                                <div *ngIf="selectedDistrict">
+                                    <select-filter [selectedValue]="selectedDistrict" [vehicleData]="districtData"
+                                        [type]="'district'" [placeholder]="'Select District'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDistrict && districtData && districtData.length > 0">
+                                    <select-filter [vehicleData]="districtData" [type]="'district'"
+                                        [placeholder]="'Select District'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDistrict && !districtData || districtData.length == 0">
+                                    <select-filter [type]="'district'" [placeholder]="'Select District'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="locationForm.get('district')?.invalid && (locationForm.get('district')?.dirty || locationForm.get('district')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('district')?.errors?.['required']">District
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Pin Code</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="pincode"
+                                        placeholder="Enter Pin Code" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="locationForm.get('pincode')?.invalid && (locationForm.get('pincode')?.dirty || locationForm.get('pincode')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('pincode')?.errors?.['required']">Pin Code
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Address 1</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="Address_1"
+                                        placeholder="Enter Address 1" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="locationForm.get('Address_1')?.invalid && (locationForm.get('Address_1')?.dirty || locationForm.get('Address_1')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('Address_1')?.errors?.['required']">Address 1
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Address 2</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="Address_2"
+                                        placeholder="Enter Address 2" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="locationForm.get('Address_2')?.invalid && (locationForm.get('Address_2')?.dirty || locationForm.get('Address_2')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('Address_2')?.errors?.['required']">Address 2
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Address 3</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="Address_3"
+                                        placeholder="Enter Address 3" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="locationForm.get('Address_3')?.invalid && (locationForm.get('Address_3')?.dirty || locationForm.get('Address_3')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('Address_3')?.errors?.['required']">Address 3
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Description</label>
+                                <div class="input-group">
+                                    <textarea class="form-control" formControlName="description"
+                                        placeholder="Description" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+
+                                <div *ngIf="locationForm.get('description')?.invalid && (locationForm.get('description')?.dirty || locationForm.get('description')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="locationForm.get('description')?.errors?.['required']">Description
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success" (click)="submit(locationForm.value)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                        <button (click)="resetForm()" class="btn btn-danger">
+                                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                        </button>
+                                    </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

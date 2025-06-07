@@ -32,6 +32,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LevelMasterComponent } from './level-master/level-master.component';
+import { LocationListComponent } from './location-list/location-list.component';
+import { AddLocationComponent } from './add-location/add-location.component';
+import { LevelMappingComponent } from './level-mapping/level-mapping.component';
 @NgModule({
   declarations: [
     ProductMasterComponent,
@@ -57,7 +60,10 @@ import { LevelMasterComponent } from './level-master/level-master.component';
     StateMasterComponent,
     DistrictMasterComponent,
     ItemMappingComponent,
-    LevelMasterComponent
+    LevelMasterComponent,
+    LocationListComponent,
+    AddLocationComponent,
+    LevelMappingComponent
   ],
   imports: [
     CommonModule,
