@@ -22,15 +22,19 @@ export class MenuMasterComponent {
   isloading: boolean = false;
   selectedValue: any;
   menuform!: FormGroup;
-  selectedMenuData:any;
-  selectedModule :any
+  selectedMenuData: any;
+  selectedModule: any
   mainModuleList: any;
-
-
+  selectedModuleMenu: any
+  moduleMenuList: any;
+  selectMenuId: any;
+  moduleSubmenuList: any;
+  selectedSubmenu: any
+  button: any = 'Add'
   constructor(
     private managementService: ManagementService,
     private fb: FormBuilder,
-    private notification : NotificationService
+    private notification: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +47,7 @@ export class MenuMasterComponent {
   initializeForm() {
     this.menuform = this.fb.group({
       module: [null, [Validators.required]],
+      moduleSubMenu: [null],
       menuName: ['', [Validators.required]],
       url: ['', [Validators.required, Validators.pattern('.*\\.aspx$')]],
       order: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
@@ -83,6 +88,7 @@ export class MenuMasterComponent {
           text: this.moduleList[0]?.text
         }
         this.selectModuleId = this.selectedValue.value;
+        this.getMoudleMenuList(this.selectModuleId)
         if (this.selectModuleId) {
           this.getMenuList()
         }
@@ -103,17 +109,63 @@ export class MenuMasterComponent {
           value: val?.module_ID,
           text: val?.module_Name
         });
+      if (this.selectedMenuData) {
+        this.getSubmenuList(this.selectedMenuData?.menuId)
+      }
+    })
+  }
+
+  getMoudleMenuList(moduleId: any) {
+    let newData = {
+      value: "",
+      text: ""
+    }
+    this.managementService.moduleMenuList(moduleId).subscribe((res: any) => {
+      let data = res?.body?.data;
+      this.moduleMenuList = data?.map((val: any) =>
+        newData = {
+          value: val?.moduleMenuId,
+          text: val?.moduleMenuName
+        });
+    })
+  }
+  getSubmenuList(moduleId: any) {
+    let newData = {
+      value: "",
+      text: ""
+    }
+    this.managementService.moduleMenuList(moduleId).subscribe((res: any) => {
+      let data = res?.body?.data;
+      this.moduleSubmenuList = data?.map((val: any) =>
+        newData = {
+          value: val?.moduleMenuId,
+          text: val?.moduleMenuName
+        });
+      this.selectedSubmenu = this.moduleSubmenuList?.find((val: any) => val?.value === this.selectedMenuData?.subMenuId);
     })
   }
 
   confirm(event: any) {
     if (event.selectType == "Module") {
       this.selectModuleId = event?.id;
+      this.getMoudleMenuList(event?.id)
       this.getMenuList()
+      this.selectedMenuData = null
+      this.menuform.reset();
+      this.button = 'Add'
     } else if (event.selectType == "addModule") {
       this.menuform.get('module').patchValue(event.id);
+      this.getSubmenuList(event.id)
+    } else if (event.selectType == "Module-menu") {
+      this.selectMenuId = event?.id;
+      this.getMenuList()
+      this.selectedMenuData = null
+      this.menuform.reset();
+      this.button = 'Add'
+    } else if (event.selectType == "Module-sub-menu") {
+      this.menuform.get('moduleSubMenu').patchValue(event.id);
     } else {
-      this.menuList = [];
+      this.selectedMenuData = null
     }
 
   }
@@ -121,12 +173,13 @@ export class MenuMasterComponent {
   getMenuList() {
     this.isloading = true;
     let payload = {
-      "Module_ID": this.selectModuleId
+      "ModuleId": Number(this.selectModuleId),
+      "MenuId": this.selectMenuId ? Number(this.selectMenuId) : 0
     }
     this.page = 1
     this.managementService.menuList(payload).subscribe((res: any) => {
       this.isloading = false
-      this.menuList = res?.body;
+      this.menuList = res?.body?.data;
     })
   }
 
@@ -145,23 +198,40 @@ export class MenuMasterComponent {
 
   submit(formvalue: any) {
     if (this.menuform.valid) {
-      let message = 'Menu Added Successfully';
-      let errorMessage = 'Menu Not Added'
-      let payload = {
-        "Menu_ID": 0,
-        "Module_ID": formvalue?.module ? parseInt(formvalue?.module) : 0,
-        "Menu_Name": formvalue?.menuName,
-        "Status": parseInt(formvalue?.status),
-        "Url": formvalue?.url,
-        "Display_Order": parseInt(formvalue?.order)
-      }
-      if(this.selectedMenuData?.menu_ID) {
-        payload['Menu_ID'] = this.selectedMenuData?.menu_ID;
+      let message: any;
+      let errorMessage: any;
+      let payload: any;
+      let service: any;
+
+      if (this.selectedMenuData?.menuId) {
+        payload = {
+          "MenuId": Number(this.selectedMenuData?.menuId),
+          "SubMenuId": Number(this.selectedMenuData?.subMenuId),
+          "Menu_Name": formvalue?.menuName,
+          "URL": formvalue?.url,
+          "DisplayOrder": parseInt(formvalue?.order),
+          "status": Number(formvalue?.status)
+        }
+        service = this.managementService.updateMenu(payload)
         message = 'Menu Updted Successfully'
         errorMessage = 'Menu Not Updted'
-      };      
-      this.managementService.addMenu(payload).subscribe((res:any) => {
-        if(res?.status == 200) {
+        this.button = 'Update'
+      } else {
+        payload = {
+          "ModuleId": formvalue?.module ? parseInt(formvalue?.module) : 0,
+          "MenuId": formvalue?.moduleSubMenu ? parseInt(formvalue?.moduleSubMenu) : 0,
+          "Menu_Name": formvalue?.menuName,
+          "URL": formvalue?.url,
+          "DisplayOrder": parseInt(formvalue?.order),
+          "status": Number(formvalue?.status)
+        }
+        service = this.managementService.addMenu(payload)
+        message = 'Menu Added Successfully'
+        errorMessage = 'Menu Not Added'
+        this.button = 'Add'
+      }
+      service.subscribe((res: any) => {
+        if (res?.status == 200) {
           this.notification.showSuccess(message)
           this.cancel();
           this.getMenuList()
@@ -174,26 +244,35 @@ export class MenuMasterComponent {
     }
   }
 
-  onEdit(data:any) {
-    this.getMainmoudleList()
+  onEdit(data: any) {
+    this.button = 'Update'
     this.selectedMenuData = data;
-    
-    this.selectedModule = this.mainModuleList?.find((val: any) => val?.value === this.selectedMenuData?.module_ID);  
+    this.getMainmoudleList()
+    this.selectedModule = this.mainModuleList?.find((val: any) => val?.value === this.selectedMenuData?.menuId);
 
     this.menuform = this.fb.group({
-      module: [this.selectedModule, [Validators.required]],
-      menuName: [ this.selectedMenuData?.menu_Name, [Validators.required]],
+      module: [this.selectedModule],
+      moduleSubMenu: [this.selectedSubmenu],
+      menuName: [this.selectedMenuData?.subMenuName, [Validators.required]],
       url: [this.selectedMenuData?.url, [Validators.required, , Validators.pattern('.*\\.aspx$')]],
-      order: [this.selectedMenuData?.display_Order, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      order: [this.selectedMenuData?.displayOrder, [Validators.required, Validators.pattern('^[0-9]*$')]],
       status: [this.selectedMenuData?.status, Validators.required]
     });
-    this.menuform.get('module').patchValue(this.selectedMenuData?.module_ID);
+    this.menuform.get('module').patchValue(this.selectedMenuData?.menuId);
+    this.menuform.get('moduleSubMenu').patchValue(this.selectedMenuData?.subMenuId);
+    this.menuform.get('module')?.disable();
+    this.menuform.get('moduleSubMenu')?.disable();
+  }
+
+  get isEditMode(): boolean {
+    return !!this.selectedMenuData;
   }
 
   cancel() {
     this.getMainmoudleList()
     this.menuform.reset();
     this.selectedModule = null;
+    this.selectedSubmenu = null
     this.menuform.get('status').patchValue('');
   }
 }

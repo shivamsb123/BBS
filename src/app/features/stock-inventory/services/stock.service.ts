@@ -728,4 +728,75 @@ export class StockService {
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
+
+   locationList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.locationListData
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createLocation(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createLocation
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateLocation(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateLocation
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deleteLocation(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteLocation
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   levelMappingList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.levelMappingList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createLevelMapping(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createLevelMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateLevelMapping(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateLevelMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deleteLevelMapping(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteLevelMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  depyByRollList(deptId: any): Observable<any> {
+    let url = API_CONSTANTS.deptByRollList.replace('{deptid}',deptId)
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   rollListByemployee(roleId:any): Observable<any> {
+    let url = API_CONSTANTS.rollListByemp.replace('{roleid}',roleId)
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
 }

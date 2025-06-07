@@ -482,6 +482,13 @@ updateAlertMaster(payload: any): Observable<any> {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+    moduleMenuList(moduleId:any): Observable<any> {
+    let url = API_CONSTANTS.moduleMenuList.replace('{moduleId}',moduleId)
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
   menuList(payload: any): Observable<any> {
     let url = API_CONSTANTS.menu
     return this.apiService
@@ -491,6 +498,13 @@ updateAlertMaster(payload: any): Observable<any> {
 
   addMenu(payload: any): Observable<any> {
     let url = API_CONSTANTS.addMenu
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   updateMenu(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateMenu
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));

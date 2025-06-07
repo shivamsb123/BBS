@@ -1,208 +1,229 @@
 <section class="main-content">
-    <div class="row">
-        <div class="col-lg-12 align-self-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
-                <li><a routerLink="/Management/Menu_Master"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                        Menu Master</a></li>
-            </ol>
-        </div>
+  <div class="row">
+    <div class="col-lg-12 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+        <li><a routerLink="/Management/Menu_Master"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Menu Master</a></li>
+      </ol>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    Menu Master
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          Menu Master
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Module <span style="color: red;">*</span></label>
+
+                <div *ngIf="selectedValue">
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="moduleList" [type]="'Module'"
+                    [placeholder]="'Select Module'" (onConfirm)="confirm($event)"></select-filter>
                 </div>
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label for="exampleInputEmail1" class="form-label">Module <span
-                                        style="color: red;">*</span></label>
+                <div *ngIf="!selectedValue && moduleList && moduleList?.length > 0 ">
+                  <select-filter [vehicleData]="moduleList" [type]="'Module'" [placeholder]="'Select Module'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !moduleList || moduleList?.length == 0 || moduleList == null">
+                  <select-filter [type]="'Module'" [placeholder]="'Select Module'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
 
-                                <div *ngIf="selectedValue">
-                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="moduleList" [type]="'Module'"
-                                    [placeholder]="'Select Module'"
-                                    (onConfirm)="confirm($event)"></select-filter>
-                                </div>
-                                  <div *ngIf="!selectedValue && moduleList && moduleList?.length > 0 ">
-                                      <select-filter [vehicleData]="moduleList" [type]="'Module'"
-                                          [placeholder]="'Select Module'"
-                                          (onConfirm)="confirm($event)"></select-filter>
-                                  </div>
-                                  <div *ngIf="!selectedValue && !moduleList || moduleList?.length == 0 || moduleList == null">
-                                      <select-filter  [type]="'Module'"
-                                      [placeholder]="'Select Module'"
-                                      (onConfirm)="confirm($event)"></select-filter>
-                                  </div>
-                            </div>
-                        </div>
-                    </form>
+              <div class="col-md-3">
+                <label for="exampleInputEmail1" class="form-label">Module Menu <span
+                    style="color: red;">*</span></label>
 
-                    <div class="row row-data">
-                        <div class="col-md-12">
-                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
-                                <div class="dataTables_scroll">
+                <div *ngIf="selectedModuleMenu">
+                  <select-filter [selectedValue]="selectedModuleMenu" [vehicleData]="moduleMenuList"
+                    [type]="'Module-menu'" [placeholder]="'Select Module Menu'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedModuleMenu && moduleMenuList && moduleMenuList?.length > 0 ">
+                  <select-filter [vehicleData]="moduleMenuList" [type]="'Module-menu'"
+                    [placeholder]="'Select Module Menu'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div
+                  *ngIf="!selectedModuleMenu && !moduleMenuList || moduleMenuList?.length == 0 || moduleMenuList == null">
+                  <select-filter [type]="'Module-menu'" [placeholder]="'Select Module Menu'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+            </div>
+          </form>
 
-                                    <div class="dataTables_scrollBody">
-                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
-                                            <loader [isRunning]="isloading"></loader>
-                                        </div>
-                                        <table id="datatable"
-                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
-                                            role="grid" #TABLE aria-describedby="datatable_info" style="width: 100%"
-                                            width="100%">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th *ngFor="let vehicleHeading of tableData">
-                                                        <strong>{{vehicleHeading?.val}}</strong>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody *ngIf="!isloading">
-                                                <tr *ngFor="let vehicle of menuList | searchFilter: searchKeyword  |  paginate : {
+          <div class="row row-data">
+            <div class="col-md-12">
+              <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                <div class="dataTables_scroll">
+
+                  <div class="dataTables_scrollBody">
+                    <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                      <loader [isRunning]="isloading"></loader>
+                    </div>
+                    <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
+                      #TABLE aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      <thead>
+                        <tr role="row">
+                          <th *ngFor="let vehicleHeading of tableData">
+                            <strong>{{vehicleHeading?.val}}</strong>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="!isloading">
+                        <tr *ngFor="let vehicle of menuList | searchFilter: searchKeyword  |  paginate : {
                             itemsPerPage: tableSize,
                             currentPage: page,
                             totalItems: count};">
-                                                    <td>{{vehicle?.module_Name}}</td>
-                                                    <td>{{vehicle?.menu_Name}}</td>
-                                                    <td>{{vehicle?.display_Order}}</td>
-                                                    <td>{{vehicle?.status == 1 ? 'Active' : 'Inactive'}}</td>
-                                                    <td><i class="fa fa-edit" style="cursor: pointer;" (click)="onEdit(vehicle)"></i></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="text-center"
-                                        *ngIf="menuList && menuList.length == 0 || menuList == null && !isloading || !(menuList | searchFilter:searchKeyword)?.length"
-                                        style="width: 100%;">No Data Available</div>
+                          <td>{{vehicle?.menuName}}</td>
+                          <td>{{vehicle?.subMenuName}}</td>
+                          <td>{{vehicle?.displayOrder}}</td>
+                          <td>{{vehicle?.status == 1 ? 'Active' : 'Inactive'}}</td>
+                          <td><i class="fa fa-edit" style="cursor: pointer;" (click)="onEdit(vehicle)"></i></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center"
+                    *ngIf="menuList && menuList.length == 0 || menuList == null && !isloading || !(menuList | searchFilter:searchKeyword)?.length"
+                    style="width: 100%;">No Data Available</div>
 
 
-                                    <div class="count">
-                                        <div class="total-count">
-                                            Total Count : {{menuList?.length > 0 ? menuList.length : 0
-                                            }}
-                                        </div>
-                                        <div class="pagination-data"
-                                            *ngIf="menuList && menuList.length > 0 && (menuList | searchFilter:searchKeyword)?.length">
-                                            <pagination-controls previousLabel="Prev" nextLabel="Next"
-                                                (pageChange)="onTableDataChange($event)">
-                                            </pagination-controls>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                  <div class="count">
+                    <div class="total-count">
+                      Total Count : {{menuList?.length > 0 ? menuList.length : 0
+                      }}
                     </div>
+                    <div class="pagination-data"
+                      *ngIf="menuList && menuList.length > 0 && (menuList | searchFilter:searchKeyword)?.length">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next"
+                        (pageChange)="onTableDataChange($event)">
+                      </pagination-controls>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Add Menu
-                </div>
-                <div class="card-body">
-                    <form [formGroup]="menuform">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <label for="module" class="form-label">Module <span class="text-danger">*</span></label>
-
-                            <div *ngIf="selectedModule ">
-                                <select-filter 
-                                [vehicleData]="mainModuleList" 
-                                [type]="'addModule'" 
-                                [placeholder]="'Select Module'" 
-                                [selectedValue]="selectedModule"
-                                (onConfirm)="confirm($event)">
-                              </select-filter>
-                            </div>
-                            <div *ngIf="!selectedModule && mainModuleList && mainModuleList?.length > 0">
-                                <select-filter 
-                                [vehicleData]="mainModuleList" 
-                                [type]="'addModule'" 
-                                [placeholder]="'Select Module'" 
-                                (onConfirm)="confirm($event)">
-                              </select-filter>
-                                
-                            </div>
-                            <div *ngIf="!selectedModule && !mainModuleList || mainModuleList.length == 0">
-                              <select-filter 
-                              [type]="'addModule'" 
-                              [placeholder]="'Select Module'" 
-                              (onConfirm)="confirm($event)">
-                            </select-filter>
-                            </div>
-                            <div *ngIf="hasError('module', 'required')" class="text-danger">
-                              Module is required.
-                            </div>
-                          </div>
-                          
-                          <div class="col-md-12 mt-2">
-                            <label for="menuName">Menu Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" formControlName="menuName" placeholder="Enter Menu Name" />
-                            <div *ngIf="hasError('menuName', 'required')" class="text-danger">
-                              Menu name is required.
-                            </div>
-                          </div>
-                          
-                          <div class="col-md-12 mt-2">
-                            <label for="url">URL <span class="text-danger">*</span></label>
-                            <input 
-                              type="text" 
-                              class="form-control" 
-                              formControlName="url" 
-                              placeholder="example.aspx" />
-                            <div *ngIf="hasError('url', 'required')" class="text-danger">
-                              URL is required.
-                            </div>
-                            <div *ngIf="hasError('url', 'pattern')" class="text-danger">
-                              URL must end with .aspx
-                            </div>
-                          </div>
-                          
-                          <div class="col-md-12 mt-2">
-                            <label for="order">Display Order <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" formControlName="order" placeholder="Enter Display Order" />
-                            <div *ngIf="hasError('order', 'required')" class="text-danger">
-                              Display order is required.
-                            </div>
-                            <div *ngIf="hasError('order', 'pattern')" class="text-danger">
-                              Display order must be a numeric value.
-                            </div>
-                          </div>
-                          
-                          <div class="col-md-12 mt-2">
-                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                            <select class="form-select" formControlName="status">
-                              <option value="">Select Status</option>
-                              <option value="1">Active</option>
-                              <option value="0">Inactive</option>
-                            </select>
-                            <div *ngIf="hasError('status', 'required')" class="text-danger">
-                              Status is required.
-                            </div>
-                          </div>
-                          
-                          <div class="col-md-6 mt-4">
-                            <button class="btn btn-success" (click)="submit(menuform.value)" [disabled]="menuform.invalid">
-                              <i class="fa fa-plus" aria-hidden="true"></i> Add
-                            </button>
-                          </div>
-                          
-                          <div class="col-md-6 mt-4">
-                            <button class="btn btn-danger" type="button" (click)="cancel()">
-                              <i class="fa fa-times" aria-hidden="true"></i> Cancel
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-                      
-                      
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          {{button}} Menu
+        </div>
+        <div class="card-body">
+          <form [formGroup]="menuform">
+            <div class="row">
+              <div class="col-md-12" *ngIf="!selectedMenuData || !selectMenuId">
+                <label for="module" class="form-label">Module <span class="text-danger">*</span></label>
+
+                <div *ngIf="selectedModule ">
+                  <select-filter [vehicleData]="mainModuleList" [type]="'addModule'" [placeholder]="'Select Module'" 
+                    [selectedValue]="selectedModule" (onConfirm)="confirm($event)">
+                  </select-filter>
+                </div>
+                <div *ngIf="!selectedModule && mainModuleList && mainModuleList?.length > 0">
+                  <select-filter [vehicleData]="mainModuleList" [type]="'addModule'" [placeholder]="'Select Module'"
+                    (onConfirm)="confirm($event)">
+                  </select-filter>
+
+                </div>
+                <div *ngIf="!selectedModule && !mainModuleList || mainModuleList.length == 0">
+                  <select-filter [type]="'addModule'" [placeholder]="'Select Module'" (onConfirm)="confirm($event)">
+                  </select-filter>
+                </div>
+                <div *ngIf="hasError('module', 'required')" class="text-danger">
+                  Module is required.
+                </div>
+              </div>
+
+              <div class="col-md-12 mt-2" *ngIf="!selectedMenuData || !selectMenuId"
+>
+                <label for="exampleInputEmail1" class="form-label">Module Sub Menu <span
+                    style="color: red;">*</span></label>
+
+                <div *ngIf="selectedSubmenu">
+                  <select-filter [selectedValue]="selectedSubmenu" [vehicleData]="moduleSubmenuList"
+                    [type]="'Module-sub-menu'" [placeholder]="'Select Sub Menu'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedSubmenu && moduleSubmenuList && moduleSubmenuList?.length > 0 ">
+                  <select-filter [vehicleData]="moduleSubmenuList" [type]="'Module-sub-menu'"
+                    [placeholder]="'Select Sub Menu'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div
+                  *ngIf="!selectedSubmenu && !moduleSubmenuList || moduleSubmenuList?.length == 0 || moduleSubmenuList == null">
+                  <select-filter [type]="'Module-sub-menu'" [placeholder]="'Select Sub Menu'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+              </div>
+
+              <div class="col-md-12 mt-2">
+                <label for="menuName">Menu Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="menuName" placeholder="Enter Menu Name" />
+                <div *ngIf="hasError('menuName', 'required')" class="text-danger">
+                  Menu name is required.
+                </div>
+              </div>
+
+              <div class="col-md-12 mt-2">
+                <label for="url">URL <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="url" placeholder="example.aspx" />
+                <div *ngIf="hasError('url', 'required')" class="text-danger">
+                  URL is required.
+                </div>
+                <div *ngIf="hasError('url', 'pattern')" class="text-danger">
+                  URL must end with .aspx
+                </div>
+              </div>
+
+              <div class="col-md-12 mt-2">
+                <label for="order">Display Order <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="order" placeholder="Enter Display Order" />
+                <div *ngIf="hasError('order', 'required')" class="text-danger">
+                  Display order is required.
+                </div>
+                <div *ngIf="hasError('order', 'pattern')" class="text-danger">
+                  Display order must be a numeric value.
+                </div>
+              </div>
+
+              <div class="col-md-12 mt-2">
+                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="status">
+                  <option value="">Select Status</option>
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+                <div *ngIf="hasError('status', 'required')" class="text-danger">
+                  Status is required.
+                </div>
+              </div>
+
+              <div class="col-md-6 mt-4">
+                <button class="btn btn-success" (click)="submit(menuform.value)" [disabled]="menuform.invalid">
+                  <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                </button>
+              </div>
+
+              <div class="col-md-6 mt-4">
+                <button class="btn btn-danger" type="button" (click)="cancel()">
+                  <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

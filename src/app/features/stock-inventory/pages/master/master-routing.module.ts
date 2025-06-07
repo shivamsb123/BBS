@@ -24,6 +24,9 @@ import { StateMasterComponent } from './state-master/state-master.component';
 import { DistrictMasterComponent } from './district-master/district-master.component';
 import { ItemMappingComponent } from './item-mapping/item-mapping.component';
 import { LevelMasterComponent } from './level-master/level-master.component';
+import { LocationListComponent } from './location-list/location-list.component';
+import { AddLocationComponent } from './add-location/add-location.component';
+import { LevelMappingComponent } from './level-mapping/level-mapping.component';
 
 
 const routes: Routes = [
@@ -126,8 +129,20 @@ const routes: Routes = [
     path:'Supplier_Item_Mapping_List',component:ItemMappingComponent
   },
    {
-    path:'Level_Master',component:LevelMasterComponent
-  }
+    path:'Level_Master',component:LevelMasterComponent,
+  },
+   {
+    path:'Location_Master_List',component:LocationListComponent
+  },
+  {
+    path: 'Add-location', component: AddLocationComponent
+  },
+  {
+    path: 'Add-location/:id', component: AddLocationComponent
+  },
+  {
+    path: 'Level_Mapping_List', component: LevelMappingComponent
+  },
 ];
 
 @NgModule({

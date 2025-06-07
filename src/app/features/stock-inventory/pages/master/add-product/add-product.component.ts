@@ -82,7 +82,10 @@ export class AddProductComponent implements OnInit {
       itemValue: ['', [Validators.required]],
       taxableValue: ['', [Validators.required]],
       taxRate: ['', [Validators.required]],
-      Description: [''],
+      itemNameAlias: ['', [Validators.required]],
+      minAlertValue: ['', [Validators.required]],
+      minOrderValue: ['', [Validators.required]],
+      Description: ['',[Validators.required]],
     });
   }
   getProductList() {
@@ -98,8 +101,6 @@ export class AddProductComponent implements OnInit {
 
       this.productList.forEach((val: any) => {
         if (val?.pk_item_id == this.id) {
-          console.log('val', val);
-
           this.selectedValue = this.categoryData?.find((ele: any) => ele?.value === val?.fk_category_id);
           this.productForm.controls['Category'].setValue(val?.fk_category_id);
 
@@ -113,7 +114,7 @@ export class AddProductComponent implements OnInit {
 
           this.productForm = this.fb.group({
             name: [val?.item_name, [Validators.required]],
-            Description: [val?.item_description],
+            Description: [val?.item_description,[Validators.required]],
             Category: [this.selectedValue.value, [Validators.required]],
             Sub_Category: [null, [Validators.required]],  // Temporarily null
             unit: [this.selectedbaseValue.value, [Validators.required]],
@@ -125,6 +126,9 @@ export class AddProductComponent implements OnInit {
             itemValue: [val?.item_value, [Validators.required]],
             taxableValue: [val?.item_taxable_value, [Validators.required]],
             taxRate: [val?.item_tax_rate, [Validators.required]],
+            itemNameAlias: [val?.item_name_alias, [Validators.required]],
+            minAlertValue: [val?.min_alert_value, [Validators.required]],
+            minOrderValue: [val?.min_order_value, [Validators.required]],
           });
         }
       });
@@ -289,7 +293,7 @@ export class AddProductComponent implements OnInit {
   }
 
 
-  submit(formValue: any) {
+  submit(formValue: any) {    
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
@@ -298,7 +302,7 @@ export class AddProductComponent implements OnInit {
 
     let payload = {
       "fk_category_id": Number(formValue.Category),
-      "fk_subcategory_id": Number(formValue.Sub_Category),
+      "fk_subcategory_id": Number(formValue.Sub_Category.value),
       "fk_unit_id": Number(formValue.unit),
       "fk_hsn_id": Number(formValue.HSN_Code),
       "fk_brand_id": Number(formValue.brand_name),
@@ -310,6 +314,9 @@ export class AddProductComponent implements OnInit {
       "item_cess": parseFloat(formValue.cess),
       "fk_item_category_id": Number(formValue.billingCategory),
       "fk_typeofgoods_id": Number(formValue.billingFor),
+      "item_name_alias": formValue?.itemNameAlias,
+      "min_alert_value": Number(formValue?.minAlertValue),
+      "min_order_value": Number(formValue?.minOrderValue),
       "Logged_by": Number(localStorage.getItem('user_Id'))
     }
     if (this.id) {
@@ -318,7 +325,6 @@ export class AddProductComponent implements OnInit {
     } else {
       service = this.stockService.addProduct(payload)
     }
-    console.log("payload", payload);
     service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
@@ -330,6 +336,7 @@ export class AddProductComponent implements OnInit {
         };
         this.alertType = "success";
         this.alertTrigger = true;
+            this.productForm.reset()
         this.stopAlert();
         this.button = 'Add';
         setTimeout(() => {
@@ -345,7 +352,6 @@ export class AddProductComponent implements OnInit {
       }
     }
     )
-    this.productForm.reset()
 
   }
   resetForm() {

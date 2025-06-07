@@ -127,6 +127,7 @@ export const API_CONSTANTS: any = {
     adduserAccess: 'Management/AddUserAccess',
     alertMaster: 'Registration/AlertMaster',
     updateAlertMaster: 'Registration/UpdateAlertRemarks',
+    moduleMenuList:'api/ScComman/GetModuleMenuList/{moduleId}',
 
     /** Tracking/GetTrackingHistory */
 
@@ -278,6 +279,17 @@ export const API_CONSTANTS: any = {
     createLevel:'api/Level/CreateLevel',
     updateLevel:'api/Level/UpdateLevel',
     deleteLevel:'api/Level/DeleteLevel',
+     locationListData:'api/WorkLocation/LocationList',
+    createLocation:'api/WorkLocation/CreateLocation',
+    updateLocation:'api/WorkLocation/ModifyLocation',
+    deleteLocation:'api/WorkLocation/DeleteLocation',
+    levelMappingList:'api/level/LevelMappingList',
+    createLevelMapping:'api/level/CreateLevelMapping',
+    updateLevelMapping:'api/level/UpdateLevelMapping',
+    deleteLevelMapping:'api/level/DeleteLevelMapping',
+    deptByRollList:'api/ScComman/GetDeptRoleList/{deptid}',
+    rollListByemp:'api/ScComman/GetRoleEmployeeList/{roleid}',
+    
     /**
      * tyre part api 
      */
@@ -398,8 +410,9 @@ export const API_CONSTANTS: any = {
     dorReport: 'Report/DORReport',
     driverTripReport: 'TripComplaint/GetDriverTripInfo',
     moduleList: 'User/GetModuleList',
-    menu: 'User/GetMenuList',
-    addMenu: 'User/PostMenuEntry',
+    menu: 'Management/GetModuleMenuList',
+    addMenu: 'Management/AddMenuMaster',
+    updateMenu: 'Management/EditMenuMaster',
     accessList: 'User/GetMenuAccessList',
     postMenuAccess: 'User/PostMenuAccess',
     operationStat: 'Route/GetCarbonData',

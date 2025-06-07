@@ -112,37 +112,7 @@ export class SupplierAddressComponent {
     })
   }
 
-  // getState() {
-  //   let newData = {
-  //     value: '',
-  //     text: ''
-  //   }
-
-  //   this.stockService.stateList(this.contactform.value.country).subscribe((res: any) => {
-  //     let data = res?.body?.data
-  //     this.stateData = data.map((val: any) =>
-  //       newData = {
-  //         value: val?.stateId,
-  //         text: val?.stateName
-  //       });
-  //   })
-  // }
-
-  // getDistrct() {
-  //   let newData = {
-  //     value: '',
-  //     text: ''
-  //   }
-  //   this.stockService.districtList(this.contactform.value.state).subscribe((res: any) => {
-  //     let data = res?.body?.data
-  //     this.districtData = data.map((val) =>
-  //       newData = {
-  //         value: val?.id,
-  //         text: val?.cityName
-  //       });
-  //   })
-  // }
-
+ 
   async updateAddress(item: any) {
     this.button = 'Update'
     window.scrollTo({

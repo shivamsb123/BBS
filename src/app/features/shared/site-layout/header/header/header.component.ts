@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { SearchComponentComponent } from '../../../components/search-component/search-component.component';
 import { CountdownService } from 'src/app/features/http-services/countdown.service';
 import { NotificationPopupComponent } from '../../../components/notification-popup/notification-popup.component';
+import { StorageService } from 'src/app/features/http-services/storage.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
   isShowSabmenu: boolean = false;
   bsModalRef?: BsModalRef;
   showCurrentPath = {
-    menu:'',
+    menu: '',
     sabmenu: ''
   }
   menuList: any;
@@ -32,45 +33,52 @@ export class HeaderComponent implements OnInit {
   isShowHeader: boolean = false;
   userType: string;
   isloading: boolean = false;
-activeMenu:any
+  activeMenu: any
 
   constructor(
-    private Location:Location,
-    private sharedService : SharedService,
-    private userService : UserService,
-    private sessionService : SessionService,
+    private Location: Location,
+    private sharedService: SharedService,
+    private userService: UserService,
+    private sessionService: SessionService,
     private modalService: BsModalService,
     private route: Router,
-    private countDownservice : CountdownService,
-    private shardService : SharedService
+    private countDownservice: CountdownService,
+    private shardService: SharedService,
+    private storageService: StorageService
+
   ) { }
 
   ngOnInit(): void {
-    this.userType =  localStorage.getItem('userType')
-      let payload = {
-        UserID:parseInt(localStorage.getItem('user_Id') || ''),
-        AppId: 3,
-        MenuVersion: 'v1',
-      };
-      this.userService.getMenuList(payload).subscribe((res: any) => {
-        if(!res) {
-          this.route.navigateByUrl('/login')
-        }
-        this.menuList  = res?.body?.data       
-      });
- 
+    this.userType = localStorage.getItem('userType')
+    // let payload = {
+    //   UserID:parseInt(localStorage.getItem('user_Id') || ''),
+    //   AppId: 3,
+    //   MenuVersion: 'v1',
+    // };
+    // this.userService.getMenuList(payload).subscribe((res: any) => {
+    //   if(!res) {
+    //     this.route.navigateByUrl('/login')
+    //   }
+    //   this.menuList  = res?.body?.data       
+    // });
+
+    this.storageService.getItem('menuData').subscribe((res: any) => {
+      this.menuList = res
+    })
+
+
   }
 
   showHeader(index: any) {
     // this.isShowHeader = true;
-      this.activeMenu = this.activeMenu === index ? null : index;
+    this.activeMenu = this.activeMenu === index ? null : index;
 
-    
+
   }
 
   closeHeader() {
     // this.isShowHeader = false;
-     this.activeMenu = null;
+    this.activeMenu = null;
   }
 
   /**
@@ -83,13 +91,13 @@ activeMenu:any
   /**
    * admin logout method
    */
-  logout(){
+  logout() {
     this.sessionService.logout();
     this.countDownservice.stopTimer();
-    
+
   }
 
-  removeSidebar() {    
+  removeSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
     this.onConfirm.emit(this.isSidebarOpen);
   }
@@ -98,21 +106,21 @@ activeMenu:any
     this.isShowSabmenu = !this.isShowSabmenu
   }
 
-  modifyHeaderurl(value : any){
+  modifyHeaderurl(value: any) {
     const url = value;
-    const modifiedUrl = url.replace(/\.aspx$/, "");   
-     
+    const modifiedUrl = url.replace(/\.aspx$/, "");
+
     return modifiedUrl
   }
 
   showSubmenu() {
-    this.isShowSubmenu = true; 
+    this.isShowSubmenu = true;
   }
 
-  openSearchModal(){
+  openSearchModal() {
     const initialState: ModalOptions = {
       initialState: {
-       
+
 
       },
     };
@@ -122,12 +130,12 @@ activeMenu:any
     );
   }
 
-  openNotification(){
+  openNotification() {
     this.isloading = true
     let payload = {
-      "TimeRecorded":this.shardService.formatedTime(new Date()) 
+      "TimeRecorded": this.shardService.formatedTime(new Date())
     }
-    this.userService.alertcall(payload).subscribe((res: any) => {     
+    this.userService.alertcall(payload).subscribe((res: any) => {
       this.isloading = false
       const initialState: ModalOptions = {
         initialState: {
@@ -138,7 +146,7 @@ activeMenu:any
         NotificationPopupComponent,
         Object.assign(initialState, { class: "modal-dialog-right" })
       );
-    }) 
-  
+    })
+
   }
 }

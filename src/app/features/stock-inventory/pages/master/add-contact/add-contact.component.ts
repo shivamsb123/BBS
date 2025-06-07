@@ -217,10 +217,10 @@ export class AddContactComponent implements OnInit {
   }
 
   getDynamicAddressLabel(): string {
-  const currentCount = this.addressForm.value.vendorAdd?.length || 0;
-  const labelNumber = currentCount + 2;
-  return `Add Address ${labelNumber}`;
-}
+    const currentCount = this.addressForm.value.vendorAdd?.length || 0;
+    const labelNumber = currentCount + 2;
+    return `Add Address ${labelNumber}`;
+  }
 
 
   submit(formValue: any) {
@@ -275,7 +275,7 @@ export class AddContactComponent implements OnInit {
       service = this.stockService.addSupplier(payload)
     }
 
-   service.subscribe((res: any) => {
+    service.subscribe((res: any) => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',

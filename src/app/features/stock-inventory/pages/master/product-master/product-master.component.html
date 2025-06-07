@@ -76,6 +76,9 @@
                           <td>{{product?.item_taxable_value}}</td>
                           <td>{{product?.item_tax_rate}}</td>
                           <td>{{product?.item_value}}</td>
+                          <td>{{product?.item_name_alias || 'NA'}}</td>
+                          <td>{{product?.min_alert_value}}</td>
+                          <td>{{product?.min_order_value}}</td>
                           <td>{{product?.item_description}}</td>
                           <td><a tooltip="Edit" (click)="AddProduct('/SupplyChain/Edit-Product/id', product?.pk_item_id)"
                               rel="noopener noreferrer"><i class="fa fa-pencil" aria-hidden="true"></i>
