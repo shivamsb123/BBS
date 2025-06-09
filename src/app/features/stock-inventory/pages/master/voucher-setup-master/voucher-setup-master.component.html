@@ -1,0 +1,178 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/Voucher_Setup_List"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Voucher Setup Master </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header">
+                    {{button}} Voucher Setup
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="voucherForm">
+                        <div class="row  mb-3">
+                              <div class="col-md-3">
+                                <label class="form-label">Session</label>
+                                <div *ngIf="selectedSession">
+                                    <select-filter [selectedValue]="selectedSession" [vehicleData]="sessionList"
+                                        [type]="'Session'" [placeholder]="'Select Session'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedSession && sessionList && sessionList.length > 0">
+                                    <select-filter [vehicleData]="sessionList" [type]="'Session'"
+                                        [placeholder]="'Select Session'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedSession && !sessionList || sessionList.length == 0">
+                                    <select-filter [type]="'Session'" [placeholder]="'Select Session'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                 <div *ngIf="voucherForm.get('session')?.invalid && (voucherForm.get('session')?.dirty || voucherForm.get('session')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="voucherForm.get('session')?.errors?.['required']">Session is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Voucher Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Voucher Name"
+                                        aria-describedby="button-addon2" formControlName="voucherName" />
+                                </div>
+                                <div *ngIf="voucherForm.get('voucherName')?.invalid && (voucherForm.get('voucherName')?.dirty || voucherForm.get('voucherName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="voucherForm.get('voucherName')?.errors?.['required']">Voucher Name is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Short Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Short Name"
+                                        aria-describedby="button-addon2" formControlName="shortName" />
+                                </div>
+                                <div *ngIf="voucherForm.get('shortName')?.invalid && (voucherForm.get('shortName')?.dirty || voucherForm.get('shortName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="voucherForm.get('shortName')?.errors?.['required']">Short Name is
+                                        required</span>
+                                </div>
+                            </div>
+                          <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Serial</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Serial"
+                                        aria-describedby="button-addon2" formControlName="serialStart" />
+                                </div>
+                                <div *ngIf="voucherForm.get('serialStart')?.invalid && (voucherForm.get('serialStart')?.dirty || voucherForm.get('serialStart')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="voucherForm.get('serialStart')?.errors?.['required']">Serial is
+                                        required</span>
+                                </div>
+                            </div>
+
+                           
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success" (click)="submit(voucherForm.value)"><i
+                                        class="fa fa-plus" aria-hidden="true"></i>
+                                    {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-danger" (click)="cancel()">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Voucher Setup List
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollHead">
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let tab of tableData">
+                                                        <strong>{{tab?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let item of voucherList |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count}; let i = index">
+                                                    <td>{{ (page - 1) * tableSize + i + 1 }}</td>
+
+                                                    <td>{{item?.sessionName}}</td>
+                                                    <td>{{item?.voucherName}}</td>
+                                                    <td>{{item?.shortName}}</td>
+                                                    <td>{{item?.serialStart}}</td>
+                                                    <td>
+                                                        <a style="cursor: pointer;" tooltip="Edit"
+                                                            (click)="update(item)" rel="noopener noreferrer">
+                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                        </a>
+                                                       
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="voucherList && voucherList.length == 0 || voucherList == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                                <div class="pagination-data" *ngIf="voucherList && voucherList.length > 0">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="onTableDataChange($event)">
+                                    </pagination-controls>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

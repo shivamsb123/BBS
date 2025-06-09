@@ -290,6 +290,17 @@ export const API_CONSTANTS: any = {
     deptByRollList:'api/ScComman/GetDeptRoleList/{deptid}',
     rollListByemp:'api/ScComman/GetRoleEmployeeList/{roleid}',
     itemLocation:'api/ScComman/GetItemLocationList',
+    locationMappingList:'api/WorkLocation/LocationMappingList',
+    createLocationMapping:'api/WorkLocation/CreateLocationMapping',
+    updateLocationMapping:'api/WorkLocation/UpdateLocationMapping',
+    deleteLocationMapping:'api/WorkLocation/DeleteLocationMapping',
+    sessionList:'api/VoucherSetup/VSessionList',
+    createSession:'api/VoucherSetup/CreateVSession',
+    updateSession:'api/VoucherSetup/UpdateVSession',
+    activeInactiveSession:'api/VoucherSetup/ActiveVSession',
+    voucherList:'api/VoucherSetup/VoucherSetupList',
+    createVoucher:'api/VoucherSetup/CreateVoucher',
+    updateVoucher:'api/VoucherSetup/UpdateVoucherSetup',
     
     /**
      * tyre part api 

@@ -27,6 +27,9 @@ import { LevelMasterComponent } from './level-master/level-master.component';
 import { LocationListComponent } from './location-list/location-list.component';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { LevelMappingComponent } from './level-mapping/level-mapping.component';
+import { LocationMappingComponent } from './location-mapping/location-mapping.component';
+import { SessionListComponent } from './session-list/session-list.component';
+import { VoucherSetupMasterComponent } from './voucher-setup-master/voucher-setup-master.component';
 
 
 const routes: Routes = [
@@ -142,6 +145,15 @@ const routes: Routes = [
   },
   {
     path: 'Level_Mapping_List', component: LevelMappingComponent
+  },
+  {
+    path: 'Location_Mapping_List', component: LocationMappingComponent
+  },
+   {
+    path: 'Session_Master_List', component: SessionListComponent
+  },
+  {
+    path: 'Voucher_Setup_List', component: VoucherSetupMasterComponent
   },
 ];
 

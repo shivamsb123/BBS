@@ -806,5 +806,81 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+  locationMappingList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.locationMappingList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createLocationMapping(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createLocationMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateLocationMapping(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateLocationMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deleteLocationlMapping(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteLocationMapping
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   sessionList(): Observable<any> {
+    let url = API_CONSTANTS.sessionList
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createSession(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createSession
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateSession(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateSession
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  activeInactiveSession(payload: any): Observable<any> {
+    let url = API_CONSTANTS.activeInactiveSession
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   voucherList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.voucherList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createVoucher(payload: any): Observable<any> {
+    let url = API_CONSTANTS.createVoucher
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateVoucher(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateVoucher
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
 
 }

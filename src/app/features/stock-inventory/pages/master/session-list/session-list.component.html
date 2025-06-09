@@ -1,0 +1,174 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/Session_Master_List"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Session Master </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header">
+                    {{button}} Session
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="sessionForm">
+                        <div class="row  mb-3">
+
+
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Session Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Session Name"
+                                        aria-describedby="button-addon2" formControlName="sessionName" />
+                                </div>
+                                <div *ngIf="sessionForm.get('sessionName')?.invalid && (sessionForm.get('sessionName')?.dirty || sessionForm.get('sessionName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="sessionForm.get('sessionName')?.errors?.['required']">Session Name is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Prefix Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Prefix Name"
+                                        aria-describedby="button-addon2" formControlName="prefixName" />
+                                </div>
+                                <div *ngIf="sessionForm.get('prefixName')?.invalid && (sessionForm.get('prefixName')?.dirty || sessionForm.get('prefixName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="sessionForm.get('prefixName')?.errors?.['required']">Prefix Name is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="startDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="sessionForm.get('startDate')?.invalid && (sessionForm.get('startDate')?.dirty || sessionForm.get('startDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="sessionForm.get('startDate')?.errors?.['required']">Start Date is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="endDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="sessionForm.get('endDate')?.invalid && (sessionForm.get('endDate')?.dirty || sessionForm.get('endDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="sessionForm.get('endDate')?.errors?.['required']">End Date is
+                                        required</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success" (click)="submit(sessionForm.value)"><i
+                                        class="fa fa-plus" aria-hidden="true"></i>
+                                    {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-danger" (click)="cancel()">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Session List
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollHead">
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let tab of tableData">
+                                                        <strong>{{tab?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let item of sessionList |  paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count}; let i = index">
+                                                    <td>{{ (page - 1) * tableSize + i + 1 }}</td>
+
+                                                    <td>{{item?.sessionName}}</td>
+                                                    <td>{{item?.prefixName}}</td>
+                                                    <td>{{item?.startDate | date:'dd-MM-yyyy'}}</td>
+                                                    <td>{{item?.endDate | date:'dd-MM-yyyy'}}</td>
+                                                    <td>
+                                                        <a style="cursor: pointer; font-size: 20px;" tooltip="Edit"
+                                                            (click)="update(item)" rel="noopener noreferrer">
+                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a (click)="activeInactiveSession(item)" tooltip="{{item.isActive ? 'In Active' : 'Active'}}"
+                                                            rel="noopener noreferrer">
+                                                            <i class="fa"
+                                                                [ngClass]="item.isActive ? 'fa-toggle-on text-success' : 'fa-toggle-off text-secondary'"
+                                                                style="cursor: pointer; margin-left: 10px; font-size: 25px;"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="sessionList && sessionList.length == 0 || sessionList == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                                <div class="pagination-data" *ngIf="sessionList && sessionList.length > 0">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="onTableDataChange($event)">
+                                    </pagination-controls>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

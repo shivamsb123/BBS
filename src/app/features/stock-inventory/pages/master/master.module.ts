@@ -35,6 +35,9 @@ import { LevelMasterComponent } from './level-master/level-master.component';
 import { LocationListComponent } from './location-list/location-list.component';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { LevelMappingComponent } from './level-mapping/level-mapping.component';
+import { LocationMappingComponent } from './location-mapping/location-mapping.component';
+import { SessionListComponent } from './session-list/session-list.component';
+import { VoucherSetupMasterComponent } from './voucher-setup-master/voucher-setup-master.component';
 @NgModule({
   declarations: [
     ProductMasterComponent,
@@ -63,7 +66,10 @@ import { LevelMappingComponent } from './level-mapping/level-mapping.component';
     LevelMasterComponent,
     LocationListComponent,
     AddLocationComponent,
-    LevelMappingComponent
+    LevelMappingComponent,
+    LocationMappingComponent,
+    SessionListComponent,
+    VoucherSetupMasterComponent,
   ],
   imports: [
     CommonModule,

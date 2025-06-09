@@ -70,10 +70,13 @@
           <div class="container-login100-form-btn">
            
             <div class="wrap-login100-form-btn">
-              <button class="btn btn-primary">
-                <i class="fa fa-sign-in"></i>  Login
-              </button>          
-            </div>
+  <button class="btn btn-primary" [disabled]="isLoading">
+    <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+    <i class="fa fa-sign-in" *ngIf="!isLoading"></i>
+    {{ isLoading ? ' Logging in...' : ' Login' }}
+  </button>
+</div>
+
           </div>
           <div class="row mt-2">
             <div class="col-md-12">
@@ -86,7 +89,7 @@
   
             <a class="txt2"> BBS SkyITMS </a>
           </div>
-          <div class="text-center p-t-115" style="font-size: 14px;">Powered & Copyright @ SSIPL</div>
+          <div class="text-center p-t-115" style="font-size: 14px;">Powered &amp; Copyright &#64; SSIPL</div>
          
         </form>
       </div>

@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/features/http-services/token.service';
 import { AuthService } from 'src/app/features/http-services/auth-gaurd.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/features/http-services/notification.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,10 +36,10 @@ export class LoginComponent {
   current = 0;
 
   img_list = [
-   '../../../../../../assets/images/bhuvneshwar-eletric.jpeg',
-   '../../../../../../assets/images/bhuvneshwar-eletric-2.jpeg',
-   '../../../../../../assets/images/bhuvneshwar-eletric-3.jpg',
-   '../../../../../../assets/images/bhuvneshwar-eletric-4.jpg',
+    '../../../../../../assets/images/bhuvneshwar-eletric.jpeg',
+    '../../../../../../assets/images/bhuvneshwar-eletric-2.jpeg',
+    '../../../../../../assets/images/bhuvneshwar-eletric-3.jpg',
+    '../../../../../../assets/images/bhuvneshwar-eletric-4.jpg',
   ];
   isloading: boolean = true;
   constructor(
@@ -50,13 +51,14 @@ export class LoginComponent {
     private NotificationService: NotificationService
   ) { }
   toggleStyle: boolean = false;
+  isLoading = false;
 
   toggleMessage() {
     console.log(this.toggleStyle);
     this.toggleStyle = !this.toggleStyle;
   }
   ngOnInit(): void {
-    
+
     setTimeout(() => {
       this.isloading = false;
     }, 200);
@@ -95,32 +97,24 @@ export class LoginComponent {
     );
   }
   onSubmit(formValue: any) {
-    if (this.toggleStyle) {
-      let payload = {
-        UserName: formValue.username,
-        Password: formValue.password,
-        "logintype": 1
-      };
-      this.userService.userLogin(payload).subscribe((res: any) => {
-        const logindata = res.body;
-        if (logindata.flag == '1') {
-          localStorage.setItem('userType', 'vendor');
-          localStorage.setItem('user_Id', logindata?.data?.userID)
-          localStorage.setItem('dept_id', logindata?.data?.dept_ID);
-          localStorage.setItem('sup_id', logindata?.data?.supId);
-          localStorage.setItem('token', logindata?.data?.jwtToken);
-          this.router.navigateByUrl('vendordashboard/homepage');
-        } else {
-          this.NotificationService.showError(
-            'Please check User Id and Password'
-          );
-        }
+    this.isLoading = true;
+    this.submitted = true;
+
+    this.tokenService.generateToken(formValue.username, formValue.password)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (res: any) => {
+          if (res.body?.flag == '1') {
+            const role = res.body.data.role;
+            if (role == 151) {
+              this.router.navigateByUrl('vendordashboard/homepage');
+            } else {
+              window.location.href = 'Dashboard/DashboardDMS';
+            }
+          }
+        },
+        error: () => this.NotificationService.showError('Login failed. Please try again.')
       });
-    }
-    else {
-      this.submitted = true;
-      this.tokenService.generateToken(formValue.username, formValue.password);
-    }
 
   }
 }

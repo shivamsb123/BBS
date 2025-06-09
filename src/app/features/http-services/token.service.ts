@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, take } from 'rxjs';
+import { BehaviorSubject, map, take, tap } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 // import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
@@ -92,43 +92,35 @@ export class TokenService {
   getTokens(): Observable<string | null> {
     return this.tokenSubject.asObservable();
   }
-  generateToken(username: string, password: string) {
-    let payload = {
-      UserName: username,
-      Password: password,
-      AppId: 3,
-      MenuVersion: 'v1',
-    };
-    console.log('payload check =====>', payload);
-    this.userService.userLogin(payload).subscribe((res: any) => {
+generateToken(username: string, password: string): Observable<any> {
+  const payload = {
+    UserName: username,
+    Password: password,
+    AppId: 3,
+    MenuVersion: 'v1',
+  };
+
+  return this.userService.userLogin(payload).pipe(
+    tap((res: any) => {
       const userDetail = res.body.data;
-      if (res.body?.flag == '1') {
-        // this.router.navigateByUrl('Dashboard/DashboardDMS');
-        // window.location.href ='Dashboard/DashboardDMS'
-        console.log('token looking =======>', userDetail.jwtToken);
+      if (res.body?.flag === '1') {
         sessionStorage.setItem('token', userDetail.jwtToken);
         localStorage.setItem('token', userDetail.jwtToken);
         sessionStorage.setItem('refresh_token', userDetail.refreshToken);
         localStorage.setItem('user_Id', userDetail.userID);
         localStorage.setItem('sup_id', userDetail?.supId);
         localStorage.setItem('dept_id', userDetail.dept_ID);
-        localStorage.setItem('userType','user')
+        localStorage.setItem('userType', 'user');
         this.storageService.setItem('userDetail', res.userDetail);
         this.storageService.setItem('menuData', res?.body?.menudata);
-        this.NotificationService.showSuccess('Login Successfully')
-        if(userDetail.role == 151){
-          this.router.navigateByUrl('vendordashboard/homepage');
-        }else{
-        window.location.href ='Dashboard/DashboardDMS'
-
-        }
-
-        return userDetail.jwtToken;
+        this.NotificationService.showSuccess('Login Successfully');
       } else {
-        this.NotificationService.showError('Please check User Id and Password')
+        this.NotificationService.showError('Please check User Id and Password');
       }
-    });
-  }
+    })
+  );
+}
+
 
   getToken() {
     return localStorage.getItem('token');
