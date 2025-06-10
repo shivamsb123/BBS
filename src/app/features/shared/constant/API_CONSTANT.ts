@@ -301,7 +301,10 @@ export const API_CONSTANTS: any = {
     voucherList:'api/VoucherSetup/VoucherSetupList',
     createVoucher:'api/VoucherSetup/CreateVoucher',
     updateVoucher:'api/VoucherSetup/UpdateVoucherSetup',
-    
+    dashboardRequest:'api/SCRequest/RequestDashboard',
+    deleteRequest:'api/SCRequest/DeleteRequest',
+    updateRequest:'api/SCRequest/UpdateRequest',
+    approveRequest:'api/SCRequest/ApproveRequest',
     /**
      * tyre part api 
      */

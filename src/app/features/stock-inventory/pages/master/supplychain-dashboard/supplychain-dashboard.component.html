@@ -1,0 +1,165 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/SupplyDashboard"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Suuply Chain Dashboard </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <!-- <div class="card shadow-sm border-0"> -->
+            <!-- <div class="card-body"> -->
+            <!-- <div class="dashboard-grid">
+                        <div class="dashboard-card" *ngFor="let item of complaintDashboardItems">
+                            <div class="card-content">
+                                <h2 class="count text-muted mb-2">{{ item.count }}</h2>
+                                <h5 class="label text-secondary mb-3">{{ item.label }}</h5>
+                                <button type="button" class="btn btn-info w-100">
+                                    Show Data <i class="fa fa-arrow-right ms-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card" *ngFor="let item of complaintDashboardItems">
+                    <div class="card-content">
+                        <div class="left-section">
+                            <div class="count text-muted">{{ item.count || 0 }}</div>
+                            <div class="label" [ngStyle]="{ color: item.color }">{{ item.label }}</div>
+                        </div>
+                        <div class="right-section">
+                            <div class="icon-circle" [ngStyle]="{ backgroundColor: item.color, color: '#fff' }"
+                                (click)="showList(item.label)">
+                                <i class="fa fa-list"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card mt-2">
+                <div class="card-header">
+                    {{selectedItem}} List
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class=" btn btn-primary" (click)="generateRequest('/SupplyChain/generate-request')">
+                                <i class="fa fa-plus"></i>
+                                Generate Request
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="search-form mb-2">
+                                <input placeholder="Search for..." [(ngModel)]="searchKeyword" type="text"
+                                    class="form-control search-input"><button type="button" class="btn-search"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="p-2 bd-highlight">
+                                    <span>Items per page: </span>
+                                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollHead">
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let tab of tableData">
+                                                        <strong>{{tab?.value}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let item of requestList?.reqData | searchFilter: searchKeyword | paginate : {
+                                    itemsPerPage: tableSize,
+                                    currentPage: page,
+                                    totalItems: count}; let i = index">
+                                                    <td>{{ (page - 1) * tableSize + i + 1 }}</td>
+
+                                                    <td>{{item?.request_no}}</td>
+                                                    <td>{{item?.request_date | date:'dd-MM-yyyy'}}</td>
+                                                    <td>{{item?.requestByName}}</td>
+                                                    <td>{{item?.request_priority}}</td>
+                                                    <td>{{item?.voucherName}}</td>
+                                                    <td>{{item?.levelName}}</td>
+                                                    <td>{{item?.request_status}}</td>
+                                                    <td>{{item?.request_remarks}}</td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item
+                                                                (click)="onShowChildList(item,'Edit')">
+                                                                <mat-icon>edit</mat-icon>
+                                                                <span>Edit</span>
+                                                            </button>
+
+                                                            <button mat-menu-item
+                                                                (click)="onShowChildList(item,'View')">
+                                                                <mat-icon>visibility</mat-icon>
+                                                                <span>View</span>
+                                                            </button>
+
+                                                            <button mat-menu-item (click)="requestApproved(item)">
+                                                                <mat-icon>settings</mat-icon>
+                                                                <span>Action</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="requestList?.reqData && requestList?.reqData.length == 0 || requestList?.reqData == null && !isloading || !(requestList?.reqData | searchFilter: searchKeyword)?.length"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                                <div class="pagination-data"
+                                    *ngIf="requestList?.reqData && requestList?.reqData.length > 0 && (requestList?.reqData | searchFilter: searchKeyword)?.length">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="onTableDataChange($event)">
+                                    </pagination-controls>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

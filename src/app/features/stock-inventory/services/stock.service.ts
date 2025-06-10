@@ -883,4 +883,32 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+   getDashboardRquestList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.dashboardRequest
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+     updateRequest(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateRequest
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   deleteRequest(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteRequest
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  approveRequest(payload: any): Observable<any> {
+    let url = API_CONSTANTS.approveRequest
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
 }

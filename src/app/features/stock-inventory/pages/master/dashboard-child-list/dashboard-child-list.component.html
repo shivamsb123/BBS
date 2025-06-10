@@ -1,0 +1,69 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">
+            Child List
+        </h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+         <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <div class="row ">
+            <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                        <div class="dataTables_scrollBody">
+                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                <loader [isRunning]="isloading"></loader>
+                            </div>
+                            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th *ngFor="let vehicleHeading of tableData">
+                                            <strong>{{vehicleHeading?.val}}</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!isloading">
+                                    <tr *ngFor="let item of childData; let i = index">
+                                        <td>{{ item?.item_name }}</td>
+                                        <td>{{ item?.item_name_alias }}</td>
+                                        <td>{{ item?.category_name }}</td>
+                                        <td>{{ item?.subcategory_name }}</td>
+                                        <td>{{ item?.unit_name }}</td>
+                                        <td>{{ item?.manufracture_Name }}</td>
+                                        <td *ngIf="Type == 'View'">{{ item?.request_qty }}</td>
+                                        <td *ngIf="Type == 'Edit'">
+                                            <input type="number" [(ngModel)]="item.request_qty" class="form-control"
+                                                style="width: 80px; display: inline-block; margin-right: 5px;" />
+
+                                        </td>
+                                        <td>
+                                            <a  *ngIf="Type == 'Edit'" (click)="updateQuantity(item)" tooltip="Update"
+                                                rel="noopener noreferrer">
+                                                <i class="fa fa-check text-success cursor-pointer"
+                                                    style="cursor: pointer; font-size: 15px;"></i>
+                                            </a>
+                                            <a (click)="deleteRequest(item)" tooltip="Delete" rel="noopener noreferrer">
+                                                <i class="fa fa-trash text-danger cursor-pointer"
+                                                    style="cursor: pointer; margin-left: 10px; font-size: 15px;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center"
+                            *ngIf=" childData && childData.length == 0 || childData == null  && !isloading"
+                            style="width: 100%;">No Data Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">
+            Approve Request
+        </h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+        <form [formGroup]="approvalForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Status</label>
+                    <div *ngIf="selectedValue">
+                        <select-filter [selectedValue]="selectedValue" [vehicleData]="requestStatus" [type]="'Status'"
+                            [placeholder]="'Select Status'" (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedValue && requestStatus && requestStatus.length > 0 ">
+                        <select-filter [vehicleData]="requestStatus" [type]="'Status'" [placeholder]="'Select Status'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="!selectedValue && !requestStatus || requestStatus.length == 0">
+                        <select-filter [type]="'Status'" [placeholder]="'Select Status'"
+                            (onConfirm)="confirm($event)"></select-filter>
+                    </div>
+                    <div *ngIf="approvalForm.get('requestStatus')?.invalid && (approvalForm.get('requestStatus')?.dirty || approvalForm.get('requestStatus')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="approvalForm.get('requestStatus')?.errors?.['required']">Status is
+                            required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Approve Date</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                            bsDatepicker formControlName="approveDate" name="bsValue" required />
+                    </div>
+                    <div *ngIf="approvalForm.get('approveDate')?.invalid && (approvalForm.get('approveDate')?.dirty || approvalForm.get('approveDate')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="approvalForm.get('approveDate')?.errors?.['required']">Approve Date is
+                            required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Remark</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="remarks"
+                            placeholder="Enter Remark" aria-describedby="button-addon2" />
+                    </div>
+                    <div *ngIf="approvalForm.get('remarks')?.invalid && (approvalForm.get('remarks')?.dirty || approvalForm.get('remarks')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="approvalForm.get('remarks')?.errors?.['required']">Remark is
+                            required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+  <button class="btn btn-success" (click)="submit(approvalForm.value)">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add
+                    </button>
+                        </div>
+                        <div class="col-md-6">
+                              <button class="btn btn-danger" (click)="cancel()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </form>
+
+    </div>
+</div>
