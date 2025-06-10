@@ -30,6 +30,8 @@ import { LevelMappingComponent } from './level-mapping/level-mapping.component';
 import { LocationMappingComponent } from './location-mapping/location-mapping.component';
 import { SessionListComponent } from './session-list/session-list.component';
 import { VoucherSetupMasterComponent } from './voucher-setup-master/voucher-setup-master.component';
+import { SupplychainDashboardComponent } from './supplychain-dashboard/supplychain-dashboard.component';
+import { GenerateRequestComponent } from './generate-request/generate-request.component';
 
 
 const routes: Routes = [
@@ -155,6 +157,13 @@ const routes: Routes = [
   {
     path: 'Voucher_Setup_List', component: VoucherSetupMasterComponent
   },
+  {
+    path:'SupplyDashboard',component:SupplychainDashboardComponent
+  },
+
+  {
+    path:'generate-request',component:GenerateRequestComponent
+  }
 ];
 
 @NgModule({

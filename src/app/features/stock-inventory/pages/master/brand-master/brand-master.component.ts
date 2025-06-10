@@ -40,7 +40,7 @@ export class BrandMasterComponent implements OnInit {
   initialTable() {
     this.tableData = [
       { key: 'keyValue', val: 'S NO' },
-      { key: 'keyValue', val: 'Brand Name' },
+      { key: 'keyValue', val: 'Manufacturer Name' },
       { key: 'keyValue', val: 'Action' }
     ]
   }

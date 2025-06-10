@@ -3,12 +3,12 @@
       <div class="col-lg-12 align-self-center">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
-          <li><a routerLink="/SupplyChain/Brand_Master_List"> <i class="fa fa-long-arrow-right"
+          <li><a routerLink="/SupplyChain/Manufacture_Master_List"> <i class="fa fa-long-arrow-right"
                 aria-hidden="true"></i>
-                Brand List </a></li>
+                Manufacturer List </a></li>
                <li><a routerLink="/SupplyChain/Add-Brand"> <i class="fa fa-long-arrow-right"
                 aria-hidden="true"></i>
-               {{button}} Brand </a></li>
+               {{button}} Manufacturer </a></li>
         </ol>
       </div>
     </div>
@@ -18,20 +18,20 @@
         </app-alert>
         <div class="card">
           <div class="card-header card-default">
-           {{button}} Brand        
+           {{button}} Manufacturer        
           </div>
           <div class="card-body">
             <form [formGroup]="brandForm">
               <div class="row">
                   <div class="col-md-3">
-                      <label class="form-label">Brand Name</label>
+                      <label class="form-label">Manufacture Name</label>
                       <div class="input-group mb-3">
                           <input type="text"  class="form-control" formControlName="name"
-                              placeholder="Enter Brand Name"  aria-describedby="button-addon2" />
+                              placeholder="Enter Manufacture Name"  aria-describedby="button-addon2" />
                       </div>
                        <div *ngIf="brandForm.get('name')?.invalid && (brandForm.get('name')?.dirty || brandForm.get('name')?.touched )"
                                     class="text-danger">
-                                    <span *ngIf="brandForm.get('name')?.errors?.['required']">Brand Name is
+                                    <span *ngIf="brandForm.get('name')?.errors?.['required']">Manufacture Name is
                                         required</span>
                                 </div>
                   </div>

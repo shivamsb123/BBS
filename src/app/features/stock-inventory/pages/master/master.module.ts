@@ -38,6 +38,10 @@ import { LevelMappingComponent } from './level-mapping/level-mapping.component';
 import { LocationMappingComponent } from './location-mapping/location-mapping.component';
 import { SessionListComponent } from './session-list/session-list.component';
 import { VoucherSetupMasterComponent } from './voucher-setup-master/voucher-setup-master.component';
+import { SupplychainDashboardComponent } from './supplychain-dashboard/supplychain-dashboard.component';
+import { DashboardChildListComponent } from './dashboard-child-list/dashboard-child-list.component';
+import { ApprovalRequestComponent } from './approval-request/approval-request.component';
+import { GenerateRequestComponent } from './generate-request/generate-request.component';
 @NgModule({
   declarations: [
     ProductMasterComponent,
@@ -70,6 +74,10 @@ import { VoucherSetupMasterComponent } from './voucher-setup-master/voucher-setu
     LocationMappingComponent,
     SessionListComponent,
     VoucherSetupMasterComponent,
+    SupplychainDashboardComponent,
+    DashboardChildListComponent,
+    ApprovalRequestComponent,
+    GenerateRequestComponent,
   ],
   imports: [
     CommonModule,
