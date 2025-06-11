@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <form [formGroup]="levelMappigForm">
                         <div class="row  mb-3">
-<div class="col-md-3">
+                            <div class="col-md-3">
                                 <label class="form-label">Level</label>
                                 <div *ngIf="selectedLevel">
                                     <select-filter [selectedValue]="selectedLevel" [vehicleData]="levelList"
@@ -78,7 +78,7 @@
                                     <select-filter [type]="'Role'" [placeholder]="'Select Role'"
                                         (onConfirm)="confirm($event)"></select-filter>
                                 </div>
-                                 <div *ngIf="levelMappigForm.get('role')?.invalid && (levelMappigForm.get('role')?.dirty || levelMappigForm.get('role')?.touched )"
+                                <div *ngIf="levelMappigForm.get('role')?.invalid && (levelMappigForm.get('role')?.dirty || levelMappigForm.get('role')?.touched )"
                                     class="text-danger">
                                     <span *ngIf="levelMappigForm.get('role')?.errors?.['required']">Role is
                                         required</span>
@@ -99,14 +99,14 @@
                                     <select-filter [type]="'Employee'" [placeholder]="'Select Employee'"
                                         (onConfirm)="confirm($event)"></select-filter>
                                 </div>
-                                 <div *ngIf="levelMappigForm.get('emp')?.invalid && (levelMappigForm.get('emp')?.dirty || levelMappigForm.get('emp')?.touched )"
+                                <div *ngIf="levelMappigForm.get('emp')?.invalid && (levelMappigForm.get('emp')?.dirty || levelMappigForm.get('emp')?.touched )"
                                     class="text-danger">
                                     <span *ngIf="levelMappigForm.get('emp')?.errors?.['required']">Employee is
                                         required</span>
                                 </div>
                             </div>
-                             
-                          
+
+
                         </div>
 
                         <div class="row ">
@@ -114,7 +114,7 @@
                                 <label for="exampleInputEmail1" class="form-label">Email</label>
                                 <div class="form-check mt-2">
                                     <input type="checkbox" class="form-check-input" id="emailCheckbox"
-                                         formControlName="email" />
+                                        formControlName="email" />
                                 </div>
                                 <div *ngIf="levelMappigForm.get('email')?.invalid && (levelMappigForm.get('email')?.dirty || levelMappigForm.get('email')?.touched )"
                                     class="text-danger">
@@ -123,10 +123,10 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                 <label for="exampleInputSms" class="form-label">SMS</label>
+                                <label for="exampleInputSms" class="form-label">SMS</label>
                                 <div class="form-check mt-2">
                                     <input type="checkbox" class="form-check-input" id="smsCheckbox"
-                                         formControlName="sms" />
+                                        formControlName="sms" />
                                 </div>
                                 <div *ngIf="levelMappigForm.get('sms')?.invalid && (levelMappigForm.get('sms')?.dirty || levelMappigForm.get('sms')?.touched )"
                                     class="text-danger">
@@ -135,10 +135,10 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                  <label for="exampleInputWhatsapp" class="form-label">Whatsapp</label>
+                                <label for="exampleInputWhatsapp" class="form-label">Whatsapp</label>
                                 <div class="form-check mt-2">
                                     <input type="checkbox" class="form-check-input" id="whatsappCheckbox"
-                                         formControlName="whatsapp" />
+                                        formControlName="whatsapp" />
                                 </div>
                                 <div *ngIf="levelMappigForm.get('whatsapp')?.invalid && (levelMappigForm.get('whatsapp')?.dirty || levelMappigForm.get('whatsapp')?.touched )"
                                     class="text-danger">
@@ -146,7 +146,7 @@
                                         required</span>
                                 </div>
                             </div>
-                              <div class="col-md-3">
+                            <div class="col-md-3">
                                 <br>
                                 <button class="btn btn-success" (click)="submit(levelMappigForm.value)"><i
                                         class="fa fa-plus" aria-hidden="true"></i>
@@ -162,7 +162,7 @@
                         </div>
 
                     </form>
-             
+
                 </div>
             </div>
             <div class="card">
@@ -170,7 +170,7 @@
                     Level Mapping List
                 </div>
                 <div class="card-body">
-       <div class="row mt-2">
+                    <div class="row mt-2">
                         <div class="col-md-12">
                             <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
                                 <div class="p-2 bd-highlight">

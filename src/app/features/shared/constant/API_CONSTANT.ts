@@ -305,6 +305,10 @@ export const API_CONSTANTS: any = {
     deleteRequest:'api/SCRequest/DeleteRequest',
     updateRequest:'api/SCRequest/UpdateRequest',
     approveRequest:'api/SCRequest/ApproveRequest',
+    requestChild:'api/SCRequest/GetRequestChildData',
+    priorityDropDown:'api/ScComman/GetPriorityList',
+    itemListFilter:'api/Item/ItemListByFilter',
+    generateRequest:'api/SCRequest/GenerateRequest',
     /**
      * tyre part api 
      */

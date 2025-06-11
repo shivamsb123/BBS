@@ -1,1 +1,249 @@
-<p>generate-request works!</p>
+<spinner-loader *ngIf="isloading"></spinner-loader>
+<section class="main-content" *ngIf="!isloading">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/SupplyChain/SupplyDashboard"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Request List </a></li>
+                <li><a routerLink="/SupplyChain/generate-request"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Generate Request </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                    Basic Detail
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="requestForm">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Level</label>
+                                <div *ngIf="selectedLevel">
+                                    <select-filter [selectedValue]="selectedLevel" [vehicleData]="levelList"
+                                        [type]="'Level'" [placeholder]="'Select Level'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedLevel && levelList && levelList.length > 0">
+                                    <select-filter [vehicleData]="levelList" [type]="'Level'"
+                                        [placeholder]="'Select Level'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedLevel && !levelList || levelList.length == 0">
+                                    <select-filter [type]="'Level'" [placeholder]="'Select Level'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="requestForm.get('level')?.invalid && (requestForm.get('level')?.dirty || requestForm.get('level')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="requestForm.get('level')?.errors?.['required']">Level is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Request Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="requestDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="requestForm.get('requestDate')?.invalid && (requestForm.get('requestDate')?.dirty || requestForm.get('requestDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="requestForm.get('requestDate')?.errors?.['required']">Request Date is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="status" class="form-label">Priority</label>
+                                <select class="form-select" formControlName="priority">
+                                    <option value="">Select Priority</option>
+                                    <option *ngFor="let val of priorityDD" [value]="val?.priority_Id">{{val?.priority_Name}}</option>
+                                </select>
+                                <div *ngIf="requestForm.get('priority')?.invalid && (requestForm.get('priority')?.dirty || requestForm.get('priority')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="requestForm.get('priority')?.errors?.['required']">Priority is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Remarks</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="remarks"
+                                        placeholder="Enter Remarks" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="requestForm.get('remarks')?.invalid && (requestForm.get('remarks')?.dirty || requestForm.get('remarks')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="requestForm.get('remarks')?.errors?.['required']">Remarks is
+                                        required</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="itemType == 'Add'">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Item Detail
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="itemCreateform">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label for="status" class="form-label">Item For</label>
+                               <div *ngIf="selectedItemFor">
+                                    <select-filter [selectedValue]="selectedItemFor" [vehicleData]="itemLocationList"
+                                        [type]="'Item-For'" [placeholder]="'Select Item For'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedItemFor && itemLocationList && itemLocationList.length > 0">
+                                    <select-filter [vehicleData]="itemLocationList" [type]="'Item-For'"
+                                        [placeholder]="'Select Item For'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedItemFor && !itemLocationList || itemLocationList.length == 0">
+                                    <select-filter [type]="'Item-For'" [placeholder]="'Select Item For'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+
+
+                                <div *ngIf="itemCreateform.get('itemFor')?.invalid && (itemCreateform.get('itemFor')?.dirty || itemCreateform.get('itemFor')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="itemCreateform.get('itemFor')?.errors?.['required']">Item For is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Item</label>
+                                <div *ngIf="selectedItem">
+                                    <select-filter [selectedValue]="selectedItem" [vehicleData]="itemListData"
+                                        [type]="'Item'" [placeholder]="'Select Item'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedItem && itemListData && itemListData.length > 0">
+                                    <select-filter [vehicleData]="itemListData" [type]="'Item'"
+                                        [placeholder]="'Select Item'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedItem && !itemListData || itemListData.length == 0">
+                                    <select-filter [type]="'Item'" [placeholder]="'Select Item'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="itemCreateform.get('item')?.invalid && (itemCreateform.get('item')?.dirty || itemCreateform.get('item')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="itemCreateform.get('item')?.errors?.['required']">Item is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <label class="form-label">Quantity</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" formControlName="quantity"
+                                        placeholder="Enter Quantity" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="itemCreateform.get('quantity')?.invalid && (itemCreateform.get('quantity')?.dirty || itemCreateform.get('quantity')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="itemCreateform.get('quantity')?.errors?.['required']">Quantity is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success" (click)="createItem(itemCreateform.value)"><i
+                                        class="fa fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    <div class="row">
+                        <div class="col-md-3"> Item List</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"> </div>
+                        <div class="col-md-3"> <a class="add-item" (click)="addItem('Add')"><i
+                                    class="fa fa-plus"></i>Add Item Details</a></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let heading of tableData">
+                                                        <strong>{{heading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let item of itemData;let i=index">
+
+                                                    <td>
+                                                        {{item?.itemName}}
+                                                    </td>
+                                                    <td>
+                                                        {{item?.quantity}}
+                                                    </td>
+
+                                                    <td><a tooltip="Delete" rel="noopener noreferrer"
+                                                            (click)="delete(item, i)"><i class="fa fa-trash"
+                                                                aria-hidden="true"></i></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="itemData && itemData.length == 0 || itemData == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class="btn btn-success" (click)="submit()">
+                                Generate Request
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

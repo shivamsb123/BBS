@@ -673,7 +673,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-    linkItem(payload: any): Observable<any> {
+  linkItem(payload: any): Observable<any> {
     let url = API_CONSTANTS.linkItemMapping
     return this.apiService
       .post(url, payload)
@@ -694,14 +694,14 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   resetSupplierLogin(payload: any): Observable<any> {
+  resetSupplierLogin(payload: any): Observable<any> {
     let url = API_CONSTANTS.resetSupplierLogin
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   levelList(payload: any): Observable<any> {
+  levelList(payload: any): Observable<any> {
     let url = API_CONSTANTS.levelList
     return this.apiService
       .post(url, payload)
@@ -729,7 +729,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   locationList(payload: any): Observable<any> {
+  locationList(payload: any): Observable<any> {
     let url = API_CONSTANTS.locationListData
     return this.apiService
       .post(url, payload)
@@ -757,7 +757,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   levelMappingList(payload: any): Observable<any> {
+  levelMappingList(payload: any): Observable<any> {
     let url = API_CONSTANTS.levelMappingList
     return this.apiService
       .post(url, payload)
@@ -786,20 +786,20 @@ export class StockService {
   }
 
   depyByRollList(deptId: any): Observable<any> {
-    let url = API_CONSTANTS.deptByRollList.replace('{deptid}',deptId)
+    let url = API_CONSTANTS.deptByRollList.replace('{deptid}', deptId)
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   rollListByemployee(roleId:any): Observable<any> {
-    let url = API_CONSTANTS.rollListByemp.replace('{roleid}',roleId)
+  rollListByemployee(roleId: any): Observable<any> {
+    let url = API_CONSTANTS.rollListByemp.replace('{roleid}', roleId)
     return this.apiService
       .get(url)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   itemLocationList(): Observable<any> {
+  itemLocationList(): Observable<any> {
     let url = API_CONSTANTS.itemLocation
     return this.apiService
       .get(url)
@@ -834,7 +834,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   sessionList(): Observable<any> {
+  sessionList(): Observable<any> {
     let url = API_CONSTANTS.sessionList
     return this.apiService
       .get(url)
@@ -862,7 +862,7 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   voucherList(payload: any): Observable<any> {
+  voucherList(payload: any): Observable<any> {
     let url = API_CONSTANTS.voucherList
     return this.apiService
       .post(url, payload)
@@ -883,21 +883,21 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   getDashboardRquestList(payload: any): Observable<any> {
+  getDashboardRquestList(payload: any): Observable<any> {
     let url = API_CONSTANTS.dashboardRequest
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-     updateRequest(payload: any): Observable<any> {
+  updateRequest(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateRequest
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-   deleteRequest(payload: any): Observable<any> {
+  deleteRequest(payload: any): Observable<any> {
     let url = API_CONSTANTS.deleteRequest
     return this.apiService
       .post(url, payload)
@@ -910,5 +910,34 @@ export class StockService {
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
+
+  requestChildList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.requestChild
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  getPriority(): Observable<any> {
+    let url = API_CONSTANTS.priorityDropDown
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  itemFilterList(payload: any): Observable<any> {
+    let url = API_CONSTANTS.itemListFilter
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+    generateRequestDetail(payload: any): Observable<any> {
+    let url = API_CONSTANTS.generateRequest
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
 
 }

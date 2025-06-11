@@ -23,6 +23,7 @@ export class DashboardChildListComponent {
   alertTrigger: any = false;
   alertMessage = 'Deleted';
   bsModalRef!: BsModalRef
+  requestId: any
 
   constructor(
     private modalService: BsModalService,
@@ -31,8 +32,10 @@ export class DashboardChildListComponent {
   ) { }
   ngOnInit() {
     console.log("check route data", this.Type, this.childData);
-
     this.setInitialTable();
+    if (this.requestId) {
+      this.getChildList()
+    }
   }
 
   setInitialTable() {
@@ -46,6 +49,19 @@ export class DashboardChildListComponent {
       { 'key': '', val: 'Quantity' },
       { 'key': '', val: 'Action' },
     ]
+  }
+
+  getChildList() {
+    this.isloading = true
+    let payload = {
+      "fk_request_id": Number(this.requestId),
+    }
+    this.stockService.requestChildList(payload).subscribe((res: any) => {
+      this.isloading = false
+      if (res?.body?.status == 'success') {
+        this.childData = res?.body?.data
+      }
+    })
   }
 
   updateQuantity(item: any) {
@@ -65,8 +81,9 @@ export class DashboardChildListComponent {
         this.alertType = "success";
         this.alertTrigger = true;
         this.stopAlert();
+
         setTimeout(() => {
-          this.modalService.hide();
+          this.getChildList()
         }, 3000);
       } else {
         this.alertData = {
@@ -91,7 +108,7 @@ export class DashboardChildListComponent {
     let url = this.stockService.deleteRequest(payload)
     const initialState: ModalOptions = {
       initialState: {
-        title: item?.location_name,
+        title: item?.item_name,
         content: 'Are you sure you want to delete?',
         primaryActionLabel: 'Delete',
         secondaryActionLabel: 'Cancel',
@@ -117,6 +134,7 @@ export class DashboardChildListComponent {
           };
           this.alertType = "success";
           this.alertTrigger = true;
+          this.getChildList()
           this.stopAlert();
         } else {
           this.alertData = {

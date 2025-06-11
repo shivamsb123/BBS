@@ -30,6 +30,7 @@ export class SupplychainDashboardComponent {
   alertMessage = 'Deleted';
   bsModalRef!: BsModalRef
   statusDropdown: any;
+  approverData: any;
 
   constructor(
     private stockService: StockService,
@@ -67,6 +68,7 @@ export class SupplychainDashboardComponent {
     this.stockService.getDashboardRquestList(payload).subscribe((res: any) => {
       this.isloading = false
       if (res?.body?.status == 'success') {
+        this.approverData = res?.body?.isApprover
         this.requestList = res?.body?.data
         this.statusDropdown = res?.body?.actionList
         this.getCardData(this.requestList)
@@ -103,44 +105,45 @@ export class SupplychainDashboardComponent {
     this.page = event;
   }
 
-  onShowChildList(value:any,type:any) {
-      const initialState: ModalOptions = {
-        initialState: {
-          Type:type,
-          childData:value?.childData
-        },
-      };
-      this.bsModalRef = this.modalService.show(
-        DashboardChildListComponent,
-        Object.assign(initialState, { class: "modal-xl modal-dialog-centered" })
-      );
-    }
+  onShowChildList(value: any, type: any) {
+    const initialState: ModalOptions = {
+      initialState: {
+        requestId: value?.pk_request_id,
+        Type: type,
+        // childData: value?.childData
+      },
+    };
+    this.bsModalRef = this.modalService.show(
+      DashboardChildListComponent,
+      Object.assign(initialState, { class: "modal-xl modal-dialog-centered" })
+    );
+  }
 
-     requestApproved(value:any) {
-      const initialState: ModalOptions = {
-        initialState: {
-          requestId:value?.pk_request_id,
-          statusDropdown:this.statusDropdown
-        },
-      };
-      this.bsModalRef = this.modalService.show(
-        ApprovalRequestComponent,
-        Object.assign(initialState, { class: "modal-md modal-dialog-centered" })
-      );
-        this.bsModalRef?.content.mapdata.subscribe(
-        (value: any) => {
-       this.getDashboardData()
-        }
-      );
-    }
+  requestApproved(value: any) {
+    const initialState: ModalOptions = {
+      initialState: {
+        requestId: value?.pk_request_id,
+        statusDropdown: this.statusDropdown
+      },
+    };
+    this.bsModalRef = this.modalService.show(
+      ApprovalRequestComponent,
+      Object.assign(initialState, { class: "modal-md modal-dialog-centered" })
+    );
+    this.bsModalRef?.content.mapdata.subscribe(
+      (value: any) => {
+        this.getDashboardData()
+      }
+    );
+  }
 
-    stopAlert() {
+  stopAlert() {
     setTimeout(() => {
       this.alertTrigger = false;
     }, 2000);
   }
 
-    generateRequest(path: any) {
+  generateRequest(path: any) {
     this.route.navigateByUrl(path)
   }
 
