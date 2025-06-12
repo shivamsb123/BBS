@@ -1,10 +1,10 @@
 <div class="modal-popup">
-    <div class="modal-header text-center">
+    <div class="modal-header text-center " style="margin-bottom: 0px;">
         <h4 class="modal-title f-w w-100 ">
             Approve Request
         </h4>
         <div class="close-modal">
-            <i class="fa fa-close" (click)="cancel()"></i>
+            <i class="fa fa-close" (click)="cancel()" style="color: white; font-size: 20px;"></i>
         </div>
     </div>
     <div class="modal-body p-20">
@@ -44,7 +44,7 @@
                             required</span>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label">Remark</label>
                     <div class="input-group">
                         <input type="text" class="form-control" formControlName="remarks"
@@ -56,7 +56,7 @@
                             required</span>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <br>
                     <div class="row">
                         <div class="col-md-6">
