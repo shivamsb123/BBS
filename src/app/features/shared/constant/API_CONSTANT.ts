@@ -187,8 +187,8 @@ export const API_CONSTANTS: any = {
     subCateDrop: 'ProductMaster/GetSubCategoryDrop',
     addunitConversion: 'ProductMaster/AddConversionUnit',
     chargingList: 'Charging/ChargingDetailsList',
-    jobCardList: 'Charging/listjobcards',
-    addJob: 'Charging/AddjobCards',
+    jobCardList: 'api/JobCard/JobCardDashboard',
+    addJob: 'api/JobCard/AddUpdateJobCard',
     hsnDroplist: 'ProductMaster/GetHSNDropDown',
     addMenufatcure: 'ProductMaster/AddManufacturer',
     addProduct: 'api/Item/CreateItem',
@@ -309,6 +309,7 @@ export const API_CONSTANTS: any = {
     priorityDropDown:'api/ScComman/GetPriorityList',
     itemListFilter:'api/Item/ItemListByFilter',
     generateRequest:'api/SCRequest/GenerateRequest',
+    deleteJobCard:'api/JobCard/DeleteJobCard',
     /**
      * tyre part api 
      */

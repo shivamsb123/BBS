@@ -11,6 +11,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { MaintenanceAllStatusComponent } from './pages/maintenance-all-status/maintenance-all-status.component';
 import { ComplaintDashboardComponent } from '../dashboard/complaint-dashboard/complaint-dashboard.component';
 import { PassengerComplainStausComponent } from './pages/passenger-complain-staus/passenger-complain-staus.component';
+import { AddNewJobcardComponent } from './pages/add-new-jobcard/add-new-jobcard.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { PassengerComplainStausComponent } from './pages/passenger-complain-stau
     JobCardsComponent,
     MaintenanceAllStatusComponent,
     ComplaintDashboardComponent,
-    PassengerComplainStausComponent
+    PassengerComplainStausComponent,
+    AddNewJobcardComponent
   ],
   imports: [
     CommonModule,

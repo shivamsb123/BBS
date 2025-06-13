@@ -939,5 +939,12 @@ export class StockService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+    deleteJobCards(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteJobCard
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
 
 }

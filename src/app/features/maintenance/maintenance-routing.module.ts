@@ -5,6 +5,7 @@ import { OnRoadOffroadComponent } from '../management/on-road-offroad/on-road-of
 import { ComplaintDashboardComponent } from '../dashboard/complaint-dashboard/complaint-dashboard.component';
 import { MaintenanceAllStatusComponent } from './pages/maintenance-all-status/maintenance-all-status.component';
 import { PassengerComplainStausComponent } from './pages/passenger-complain-staus/passenger-complain-staus.component';
+import { AddNewJobcardComponent } from './pages/add-new-jobcard/add-new-jobcard.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,13 @@ const routes: Routes = [
   },
   {
     path:'maintenance_status/:id', component : MaintenanceAllStatusComponent
+  },
+
+  {
+    path:'add-job-card', component : AddNewJobcardComponent
+  },
+  {
+    path:'add-job-card/:id', component : AddNewJobcardComponent
   },
   {
     path:'passenger_complain_status/:id', component : PassengerComplainStausComponent

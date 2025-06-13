@@ -1,0 +1,245 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Maintenance/JobCard"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Job Card Dashboard </a></li>
+                <li><a routerLink="/Maintenance/add-job-card"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        Add New job Card </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                    Add Job Card
+                </div>
+
+                <div class="card-body">
+                    <form [formGroup]="jobForm">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Bus No</label>
+                                <div *ngIf="selectedValue">
+                                    <select-filter [selectedValue]="selectedValue" [vehicleData]="vehicleData"
+                                        [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && vehicleData && vehicleData.length > 0 ">
+                                    <select-filter [vehicleData]="vehicleData" [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedValue && !vehicleData || vehicleData.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="jobForm.get('busNo')?.invalid && (jobForm.get('busNo')?.dirty || jobForm.get('busNo')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('busNo')?.errors?.['required']">Bus No is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Km </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="km" placeholder="Enter Km"
+                                        aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="jobForm.get('km')?.invalid && (jobForm.get('km')?.dirty || jobForm.get('km')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('km')?.errors?.['required']">Km is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="date"
+                                        placeholder="Select Date" bsDatepicker />
+                                </div>
+                                <div *ngIf="jobForm.get('date')?.invalid && (jobForm.get('date')?.dirty || jobForm.get('date')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('date')?.errors?.['required']">Date is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Shift</label>
+                                <select class="form-select" aria-label="Default select example" formControlName="shift">
+                                    <option value="">Select Shift</option>
+                                    <option value="Day">Day</option>
+                                    <option value="Night">Night</option>
+                                </select>
+                                <div *ngIf="jobForm.get('shift')?.invalid && (jobForm.get('shift')?.dirty || jobForm.get('shift')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('shift')?.errors?.['required']">Shift is
+                                        required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+
+                            <div class="col-md-3">
+                                <label class="form-label">Complaint Report Time</label>
+
+                                <div class="input-group">
+                                    <input type="text" placeholder="Datepicker" formControlName="complaintTime"
+                                        class="form-control"
+                                        [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                        bsDatepicker>
+                                </div>
+                                <div *ngIf="jobForm.get('complaintTime')?.invalid && (jobForm.get('complaintTime')?.dirty || jobForm.get('complaintTime')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('complaintTime')?.errors?.['required']">Complaint Report Time is
+                                        required</span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Attend Time </label>
+
+                                <div class="input-group">
+                                    <input type="text" placeholder="Datepicker" formControlName="attendTime"
+                                        class="form-control"
+                                        [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'MMMM Do YYYY, h:mm:ss a', dateInputFormat: 'MMMM Do YYYY, h:mm:ss a'}"
+                                        bsDatepicker>
+                                </div>
+                                <div *ngIf="jobForm.get('attendTime')?.invalid && (jobForm.get('attendTime')?.dirty || jobForm.get('attendTime')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('attendTime')?.errors?.['required']">Attend Time is
+                                        required</span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Types of Complaint </label>
+
+                                <div *ngIf="selectedComplaintValue">
+                                    <select-filter [selectedValue]="selectedComplaintValue"
+                                        [vehicleData]="ComplaintTypeList" [type]="'complaint'"
+                                        [placeholder]="'Select Complaint'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div
+                                    *ngIf="!selectedComplaintValue && ComplaintTypeList && ComplaintTypeList.length > 0 ">
+                                    <select-filter [vehicleData]="ComplaintTypeList" [type]="'complaint'"
+                                        [placeholder]="'Select Complaint'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div
+                                    *ngIf="!selectedComplaintValue && !ComplaintTypeList || ComplaintTypeList.length == 0">
+                                    <select-filter [type]="'complaint'" [placeholder]="'Select Complaint'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="jobForm.get('complaintType')?.invalid && (jobForm.get('complaintType')?.dirty || jobForm.get('complaintType')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('complaintType')?.errors?.['required']">Types of Complaint is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Nature of Complaint </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="natureOFCompanit"
+                                        placeholder="Remarks" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="jobForm.get('natureOFCompanit')?.invalid && (jobForm.get('natureOFCompanit')?.dirty || jobForm.get('natureOFCompanit')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('natureOFCompanit')?.errors?.['required']">Nature of Complaint is
+                                        required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+
+                            <div class="col-md-3">
+                                <label class="form-label">Action Taken </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="actionTaken"
+                                        placeholder="Enter Action" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="jobForm.get('actionTaken')?.invalid && (jobForm.get('actionTaken')?.dirty || jobForm.get('actionTaken')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('actionTaken')?.errors?.['required']">Action Taken is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Store Incharge Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="StoreIncharege"
+                                        placeholder="Enter Incharge Name" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="jobForm.get('StoreIncharege')?.invalid && (jobForm.get('StoreIncharege')?.dirty || jobForm.get('StoreIncharege')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('StoreIncharege')?.errors?.['required']">Store Incharge Name is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Name of Mechanical </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="mechinicalName"
+                                        placeholder="Enter Mechanical" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="jobForm.get('mechinicalName')?.invalid && (jobForm.get('mechinicalName')?.dirty || jobForm.get('mechinicalName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('mechinicalName')?.errors?.['required']">Name of Mechanical is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Name of Incharge</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="inchargeName"
+                                        placeholder="Enter Name" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="jobForm.get('inchargeName')?.invalid && (jobForm.get('inchargeName')?.dirty || jobForm.get('inchargeName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('inchargeName')?.errors?.['required']">Name of Incharge is
+                                        required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Job Card Status</label>
+                                <select class="form-select" formControlName="jobCardStatus"
+                                    aria-label="Default select example">
+                                    <option value="Open">Open</option>
+                                    <option value="Close">Close</option>
+                                    <option value="Pending">Pending</option>
+                                </select>
+                                <div *ngIf="jobForm.get('jobCardStatus')?.invalid && (jobForm.get('jobCardStatus')?.dirty || jobForm.get('jobCardStatus')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="jobForm.get('jobCardStatus')?.errors?.['required']">Job Card Status is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-success" (click)="submit(jobForm.value)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button class="btn btn-danger" (click)="cancel()">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
