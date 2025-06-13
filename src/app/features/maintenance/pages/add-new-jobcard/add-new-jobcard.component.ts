@@ -43,20 +43,22 @@ export class AddNewJobcardComponent {
     private scrollService: ScrollService,
     private route: ActivatedRoute,
     private router: Router
-  
+
   ) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get("id");
     if (this.id) {
+      this.setInitialValue()
       this.getJobcardList();
       this.button = 'Update';
+       this.alertMesage = 'Updated';
+    } else {
+      this.setInitialValue()
+      this.getVehicleZoneData();
+      this.getComplaintType()
     }
-    this.setInitialValue()
-    this.getJobcardList();
-    this.getVehicleZoneData();
-    this.getComplaintType()
-    this.getPartDescription();
+
   }
 
   setInitialValue() {
@@ -82,29 +84,6 @@ export class AddNewJobcardComponent {
   getVehicleZoneData() {
     this.sharedService.getVehicleZone().subscribe((res: any) => {
       this.vehicleData = res?.body?.data;
-    })
-  }
-
-
-  getPartDescription() {
-    let newData = {
-      value: '',
-      text: ''
-    }
-
-    let payload = {
-      "UserID": parseInt(localStorage.getItem('user_Id') || ''),
-      "RESULT": ""
-    }
-
-    this.managementService.partName(payload).subscribe((res: any) => {
-      let data = res?.body?.data
-      this.partdescription = data.map((val: any) =>
-        newData = {
-          value: val?.pr_id,
-          text: val?.pr_name
-        }
-      )
     })
   }
 
@@ -138,8 +117,8 @@ export class AddNewJobcardComponent {
 
   confirm(event: any) {
     if (event.selectType == 'Vehicle') {
-      console.log('event',event);
-      
+      console.log('event', event);
+
       this.jobForm.controls['busNo'].setValue(event.id)
     } else if (event.selectType == 'complaint') {
       this.jobForm.controls['complaintType'].setValue(event.assets_no)
@@ -150,52 +129,52 @@ export class AddNewJobcardComponent {
   }
 
   getJobcardList() {
+       this.getVehicleZoneData();
+      this.getComplaintType()
     this.isloading = true;
     let payload = {
-      "pk_jobcard_id": Number(this.id)
+      "pk_jobcard_id": Number(this.id),
+      "JobCardStatus": "",
+      "empId": Number(localStorage.getItem('user_Id') || '')
     }
 
     this.stockService.jobCardList(payload).subscribe((res: any) => {
       this.isloading = false;
       this.jobcardListById = res?.body?.data;
-      this.jobcardListById.forEach((val: any) => {
-        if (this.id == val?.id) {
-          let busvalue: any
-          let newVehicleValue = this.vehicleData?.filter((ele: any) => ele?.text == val?.asseT_NO);
+      this.jobcardListById?.reqData?.forEach((val: any) => {
+        console.log('val', val);
 
-          newVehicleValue.forEach((data: any) => {
+        if (this.id == val?.pk_jobcard_id) {
+          let busvalue: any
+          let newVehicleValue = this.vehicleData?.filter((ele: any) => ele?.text == val?.fk_vehicle_no);
+
+          newVehicleValue?.forEach((data: any) => {
             this.selectedValue = data
             busvalue = data?.text
           });
           let newComplaintType = this.ComplaintTypeList?.filter((ele: any) => ele?.text == val?.types_OF_Complaint);
-          newComplaintType.forEach((data: any) => {
+          newComplaintType?.forEach((data: any) => {
             this.selectedComplaintValue = data
           });
 
-          let newPartDescription = this.partdescription?.filter((ele: any) => ele?.text == val?.part_Description);
-          newPartDescription?.forEach((data: any) => {
-            this.selectedpartValue = data
-          });
-
-          let formatDateValue = val.date.slice(0, 10).split("-").reverse().join('-');
+          // let formatDateValue = val.date.slice(0, 10).split("-").reverse().join('-');
           let foratComplaintTime = val.complaintReportTime.slice(11, 16);
           let formatAttendTime = val.attendTime.slice(11, 16);
           let formatComplainDate = val.complaintReportTime.slice(0, 10).split('-').reverse().join('-');
           let formatAttendDate = val.attendTime.slice(0, 10).split('-').reverse().join('-');
 
-          let shiftValue: any;
-          if (val.shift == 'Day') {
-            shiftValue = '1'
-          } else {
-            shiftValue = '2'
-          }
+          // let shiftValue: any;
+          // if (val.shift == 'Day') {
+          //   shiftValue = '1'
+          // } else {
+          //   shiftValue = '2'
+          // }
 
           this.jobForm = this.fb.group({
-            serialNo: [val?.serialNo, [Validators.required, Validators.pattern('')]],
             busNo: [busvalue, [Validators.required, Validators.pattern('')]],
             km: [val?.km, [Validators.required, Validators.pattern('')]],
-            date: [new Date(formatDateValue), [Validators.required, Validators.pattern('')]],
-            shift: [shiftValue, [Validators.required, Validators.pattern('')]],
+            date: [new Date(val?.entryDate), [Validators.required, Validators.pattern('')]],
+            shift: [val?.shift, [Validators.required, Validators.pattern('')]],
             complaintTime: [new Date(`${formatComplainDate} ${foratComplaintTime}`), [Validators.required, Validators.pattern('')]],
             attendTime: [new Date(`${formatAttendDate} ${formatAttendTime}`), [Validators.required, Validators.pattern('')]],
             complaintType: [val?.types_OF_Complaint, [Validators.required, Validators.pattern('')]],
@@ -204,12 +183,7 @@ export class AddNewJobcardComponent {
             StoreIncharege: [val?.store_Incharge_Name, [Validators.required, Validators.pattern('')]],
             mechinicalName: [val?.name_of_Mechanical, [Validators.required, Validators.pattern('')]],
             inchargeName: [val?.name_of_Incharge, [Validators.required, Validators.pattern('')]],
-            partDes: [val?.part_Description, [Validators.required, Validators.pattern('')]],
-            partNo: [val?.part_No, [Validators.required, Validators.pattern('')]],
-            unit: [val?.cost_Unit, [Validators.required, Validators.pattern('')]],
-            noOfQuality: [val?.no_of_Quantity, [Validators.required, Validators.pattern('')]],
-            amount: [val?.total_Amount, [Validators.required, Validators.pattern('')]],
-            status: [val?.status, [Validators.required, Validators.pattern('')]],
+            jobCardStatus: [val?.jobCardStatus, [Validators.required, Validators.pattern('')]],
 
           })
         }
@@ -218,17 +192,20 @@ export class AddNewJobcardComponent {
   }
 
   submit(formvalue: any) {
-    console.log('formvalue',formvalue);
+      if (this.jobForm.invalid) {
+      this.jobForm.markAllAsTouched();
+      return;
+    };
     let payload = {
       "pk_jobcard_id": 0,
       "fk_vehicle_id": Number(formvalue?.busNo),
       "Km": formvalue?.km,
-      "EntryDate":formatDate(formvalue.date, 'yyyy-MM-dd', 'en-US'),
+      "EntryDate": formatDate(formvalue.date, 'yyyy-MM-dd', 'en-US'),
       "Shift": formvalue?.shift,
       "ComplaintReportTime": formatDate(formvalue.complaintTime, 'yyyy-MM-dd', 'en-US'),
       "AttendTime": formatDate(formvalue.attendTime, 'yyyy-MM-dd', 'en-US'),
       "Types_OF_Complaint": formvalue?.complaintType,
-      "Nature_of_Complaint":formvalue?.natureOFCompanit,
+      "Nature_of_Complaint": formvalue?.natureOFCompanit,
       "ActionTaken": formvalue?.actionTaken,
       "Store_Incharge_Name": formvalue?.StoreIncharege,
       "Name_of_Mechanical": formvalue?.mechinicalName,
@@ -238,7 +215,7 @@ export class AddNewJobcardComponent {
 
     };
     if (this.id) {
-        payload['pk_jobcard_id'] = this.id
+      payload['pk_jobcard_id'] = Number(this.id)
     }
 
     this.stockService.addJob(payload).subscribe((res: any) => {
@@ -255,7 +232,7 @@ export class AddNewJobcardComponent {
         this.button = 'Add';
         this.getJobcardList()
         this.stopAlert();
-          setTimeout(() => {
+        setTimeout(() => {
           this.router.navigateByUrl('/Maintenance/JobCard')
         }, 3000);
       } else {
@@ -270,7 +247,7 @@ export class AddNewJobcardComponent {
     })
   }
 
-  cancel(){
+  cancel() {
     this.jobForm.reset()
   }
 

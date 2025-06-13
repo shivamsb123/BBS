@@ -7451,7 +7451,7 @@ agm-map {
 
   .dataTables_scrollHeadInner {
     box-sizing: content-box;
-    width: 986px;
+    // width: 986px;
     padding-right: 17px;
   }
 }
@@ -7516,4 +7516,19 @@ agm-map {
 }
 .btn.btn-primary{
   width: 100% !important;
+}
+
+.action-button {
+  display: flex;
+  gap: 10px;
+}
+
+// .action-button>button {
+//   width: 10% !important;
+//   height: 10% !important;
+// }
+
+.action-button>button>i {
+  display: flex;
+  justify-content: center;
 }

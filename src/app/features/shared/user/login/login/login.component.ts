@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/features/http-services/auth-gaurd.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/features/http-services/notification.service';
 import { finalize } from 'rxjs';
+import { StorageService } from 'src/app/features/http-services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -48,7 +49,8 @@ export class LoginComponent {
     private tokenService: TokenService,
     private _auth: AuthService,
     private router: Router,
-    private NotificationService: NotificationService
+    private NotificationService: NotificationService,
+    private storageService: StorageService,
   ) { }
   toggleStyle: boolean = false;
   isLoading = false;
@@ -96,25 +98,62 @@ export class LoginComponent {
       {}
     );
   }
+  // onSubmit(formValue: any) {
+  //   this.isLoading = true;
+  //   this.submitted = true;
+
+  //   this.tokenService.generateToken(formValue.username, formValue.password)
+  //     .pipe(finalize(() => this.isLoading = false))
+  //     .subscribe({
+  //       next: (res: any) => {
+  //         if (res.body?.flag == '1') {
+  //           const role = res.body.data.role;
+  //           if (role == 151) {
+  //             this.router.navigateByUrl('vendordashboard/homepage');
+  //           } else {
+  //             window.location.href = 'Dashboard/DashboardDMS';
+  //           }
+  //         }
+  //       },
+  //       error: () => this.NotificationService.showError('Login failed. Please try again.')
+  //     });
+
+  // }
+
   onSubmit(formValue: any) {
     this.isLoading = true;
     this.submitted = true;
 
-    this.tokenService.generateToken(formValue.username, formValue.password)
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe({
-        next: (res: any) => {
-          if (res.body?.flag == '1') {
-            const role = res.body.data.role;
-            if (role == 151) {
-              this.router.navigateByUrl('vendordashboard/homepage');
-            } else {
-              window.location.href = 'Dashboard/DashboardDMS';
-            }
-          }
-        },
-        error: () => this.NotificationService.showError('Login failed. Please try again.')
-      });
+    let payload = {
+      "UserName": formValue?.username,
+      "Password": formValue?.password,
+      "AppId": 3,
+      "MenuVersion": 'v1',
+    }
 
+    this.userService.userLogin(payload).subscribe((res: any) => {
+      const userDetail = res.body.data;
+      if (res.body?.flag === '1') {
+        sessionStorage.setItem('token', userDetail.jwtToken);
+        localStorage.setItem('token', userDetail.jwtToken);
+        sessionStorage.setItem('refresh_token', userDetail.refreshToken);
+        localStorage.setItem('user_Id', userDetail.userID);
+        localStorage.setItem('sup_id', userDetail?.supId);
+        localStorage.setItem('dept_id', userDetail.dept_ID);
+        localStorage.setItem('userType', 'user');
+        this.storageService.setItem('userDetail', res.userDetail);
+        this.storageService.setItem('menuData', res?.body?.menudata);
+        this.NotificationService.showSuccess('Login Successfully');
+        const role = res.body.data.role;
+        if (role == 151) {
+          this.router.navigateByUrl('vendordashboard/homepage');
+        } else {
+          // this.router.navigateByUrl('Dashboard/DashboardDMS');
+          window.location.href = 'Dashboard/DashboardDMS';
+        }
+      }
+
+          this.isLoading = false;
+    })
   }
 }

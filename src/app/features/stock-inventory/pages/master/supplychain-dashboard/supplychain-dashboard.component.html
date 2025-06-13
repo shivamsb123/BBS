@@ -11,22 +11,6 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <!-- <div class="card shadow-sm border-0"> -->
-            <!-- <div class="card-body"> -->
-            <!-- <div class="dashboard-grid">
-                        <div class="dashboard-card" *ngFor="let item of complaintDashboardItems">
-                            <div class="card-content">
-                                <h2 class="count text-muted mb-2">{{ item.count }}</h2>
-                                <h5 class="label text-secondary mb-3">{{ item.label }}</h5>
-                                <button type="button" class="btn btn-info w-100">
-                                    Show Data <i class="fa fa-arrow-right ms-1"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div> -->
-            <!-- </div> -->
-            <!-- </div> -->
-
             <div class="dashboard-grid">
                 <div class="dashboard-card" *ngFor="let item of complaintDashboardItems">
                     <div class="card-content">
@@ -112,7 +96,21 @@
                                                     <td>{{item?.levelName}}</td>
                                                     <td>{{item?.request_status}}</td>
                                                     <td>{{item?.request_remarks}}</td>
-                                                    <td>
+                                                     <td>
+                                                        <div class="action-button">
+                                                            <button class="btn btn-success" style="width:10% !important" (click)="onShowChildList(item,'Edit')">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+                                                            <button class="btn btn-info" style="width:10% !important" (click)="onShowChildList(item,'View')">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                             <button class="btn btn-primary" style="width:10% !important" (click)="requestApproved(item)">
+                                                                <i class="fa fa-cog"></i>
+                                                            </button>
+                                                        </div>
+                                                      
+                                                    </td>
+                                                    <!-- <td>
                                                         <button mat-icon-button [matMenuTriggerFor]="menu">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
@@ -135,7 +133,7 @@
                                                                 <span>Action</span>
                                                             </button>
                                                         </mat-menu>
-                                                    </td>
+                                                    </td> -->
                                                 </tr>
                                             </tbody>
                                         </table>

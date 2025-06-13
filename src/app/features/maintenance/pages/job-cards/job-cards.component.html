@@ -10,8 +10,8 @@
     </div>
     <div class="row">
         <div class="col-12">
-              <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
-                </app-alert>
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
             <div class="dashboard-grid">
                 <div class="dashboard-card" *ngFor="let item of complaintDashboardItems">
                     <div class="card-content">
@@ -69,10 +69,10 @@
                                     <div class="dataTables_scrollBody">
                                         <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
                                             <loader [isRunning]="isloading"></loader>
-                                        </div>
+                                        </div>                                   
                                         <table id="datatable"
                                             class="table table-striped nowrap dataTable no-footer dtr-inline"
-                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%; white-space: nowrap;"
                                             width="100%">
 
                                             <thead>
@@ -101,15 +101,16 @@
                                                     <td>{{item?.actionTaken}}</td>
                                                     <td>{{item?.store_Incharge_Name}}</td>
                                                     <td>{{item?.name_of_Mechanical}}</td>
-                                                    <td><a tooltip="Edit" (click)="redirectTo(item?.pk_jobcard_id)"
-                                                            rel="noopener noreferrer"><i class="fa fa-pencil"
-                                                                style="cursor: pointer;" aria-hidden="true"></i>
-                                                        </a>
-                                                        <a (click)="deleteJobCard(item)" tooltip="Delete"
-                                                            rel="noopener noreferrer"><i
-                                                                class="fa fa-trash text-danger cursor-pointer"
-                                                                style="cursor: pointer; margin-left: 10px;"></i>
-                                                        </a>
+                                                    <td>
+                                                        <div class="action-button">
+                                                            <button class="btn btn-success" style="width:10% !important" (click)="redirectTo(item?.pk_jobcard_id)">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+                                                            <button class="btn btn-danger" style="width:10% !important" (click)="deleteJobCard(item)">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                      
                                                     </td>
                                                 </tr>
                                             </tbody>
