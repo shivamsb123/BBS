@@ -47,6 +47,10 @@ import { ShowRouteOnMapComponent } from './show-route-on-map/show-route-on-map.c
 import { AddLocationMapV2Component } from './add-location-map-v2/add-location-map-v2.component';
 import { AddGeoFanceZigZagV2Component } from './add-geo-fance-zig-zag-v2/add-geo-fance-zig-zag-v2.component';
 import { RouteFancingV2Component } from './route-fancing-v2/route-fancing-v2.component';
+import { VehicleMasterV2Component } from './vehicle-master-v2/vehicle-master-v2.component';
+import { AddNewVehicleComponent } from './add-new-vehicle/add-new-vehicle.component';
+import { ViewDocumentDetailComponent } from './view-document-detail/view-document-detail.component';
+import { VehicleMasterInfoComponent } from './vehicle-master-info/vehicle-master-info.component';
 
 
 @NgModule({
@@ -87,6 +91,10 @@ import { RouteFancingV2Component } from './route-fancing-v2/route-fancing-v2.com
     AddLocationMapV2Component,
     AddGeoFanceZigZagV2Component,
     RouteFancingV2Component,
+    VehicleMasterV2Component,
+    AddNewVehicleComponent,
+    ViewDocumentDetailComponent,
+    VehicleMasterInfoComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

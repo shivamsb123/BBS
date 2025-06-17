@@ -118,7 +118,7 @@
 
                                             <thead>
                                                 <tr role="row">
-                                                    <th *ngFor="let val of tableData">
+                                                    <th *ngFor="let val of tableData" [ngClass]="val.class">
                                                         <strong>{{val?.value}}</strong>
                                                     </th>
                                                 </tr>
@@ -133,6 +133,7 @@
                                                     <td>{{item?.state_name}}</td>
                                                     <td>{{item?.district_name}}</td>
                                                     <td>
+                                                        <div class="action-button">
                                                         <a style="cursor: pointer;" tooltip="Edit"
                                                             (click)="update(item)" rel="noopener noreferrer">
                                                             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -142,6 +143,7 @@
                                                                 class="fa fa-trash text-danger cursor-pointer"
                                                                 style="cursor: pointer; margin-left: 10px;"></i>
                                                         </a>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </tbody>

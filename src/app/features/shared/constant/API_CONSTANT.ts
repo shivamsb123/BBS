@@ -310,6 +310,18 @@ export const API_CONSTANTS: any = {
     itemListFilter:'api/Item/ItemListByFilter',
     generateRequest:'api/SCRequest/GenerateRequest',
     deleteJobCard:'api/JobCard/DeleteJobCard',
+    docTypeList:'api/ScComman/GetDocTypeList',
+    vehicleTypeList:'api/ScComman/GetVehicleTypeList',
+    bodyTypeList:'api/ScComman/GetBodyTypeList',
+    fuelTypeList:'api/ScComman/GetFuleTypeList',
+    ownerTypeList:'api/ScComman/GetOwnerTypeList',
+    addVehicleMaster:'api/VehicleRegistration/CreateVehicle',
+    updateVehicleMaster:'api/VehicleRegistration/UpdateVehicle',
+    vechileMasterListDetail:'api/VehicleRegistration/GetVehicleList',
+    deleteVehicleMaster:'api/VehicleRegistration/DeleteVehicle',
+    deleteVehicleDoc:'api/VehicleRegistration/DeleteVehicleDoc',
+    VehicleDocList:'api/VehicleRegistration/GetVehicleDocList',
+    uploadVehicleDoc:'api/VehicleRegistration/UploadVehicleDoc',
     /**
      * tyre part api 
      */

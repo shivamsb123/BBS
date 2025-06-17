@@ -69,11 +69,11 @@
                                     <div class="dataTables_scrollBody">
                                         <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
                                             <loader [isRunning]="isloading"></loader>
-                                        </div>                                   
+                                        </div>
                                         <table id="datatable"
                                             class="table table-striped nowrap dataTable no-footer dtr-inline"
-                                            role="grid" aria-describedby="datatable_info" style="width: 100%; white-space: nowrap;"
-                                            width="100%">
+                                            role="grid" aria-describedby="datatable_info"
+                                            style="width: 100%; white-space: nowrap;" width="100%">
 
                                             <thead>
                                                 <tr role="row">
@@ -101,16 +101,18 @@
                                                     <td>{{item?.actionTaken}}</td>
                                                     <td>{{item?.store_Incharge_Name}}</td>
                                                     <td>{{item?.name_of_Mechanical}}</td>
+                                                    
+
                                                     <td>
-                                                        <div class="action-button">
-                                                            <button class="btn btn-success" style="width:10% !important" (click)="redirectTo(item?.pk_jobcard_id)">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                            <button class="btn btn-danger" style="width:10% !important" (click)="deleteJobCard(item)">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                      
+                                                        <a 
+                                                            (click)="redirectTo(item?.pk_jobcard_id)"
+                                                            rel="noopener noreferrer"><i class="fa fa-pencil" style="cursor: pointer; font-size: 20px;" tooltip="Edit"
+                                                                aria-hidden="true"></i>
+                                                        </a>
+                                                        <a  (click)="deleteJobCard(item)" tooltip="Delete"
+                                                            rel="noopener noreferrer"><i class="fa fa-trash text-danger"
+                                                                style="cursor: pointer; margin-left: 10px;"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </tbody>

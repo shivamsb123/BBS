@@ -1,0 +1,22 @@
+.search-form {
+  float: right;
+}
+
+.search-input {
+  border-color:#2f387c !important;
+}
+
+.search-form .btn-search {
+  color: #2f387c;
+}
+
+.clickable-link {
+  color: #007bff !important;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.clickable-link:hover {
+  color: red !important; 
+  text-decoration: underline !important;
+}

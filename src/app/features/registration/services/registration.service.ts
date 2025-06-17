@@ -470,6 +470,13 @@ export class RegistrationService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
+  vechileMasterListDetail(): Observable<any> {
+    let url = API_CONSTANTS.vechileMasterListDetail
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
   addVehicleMaster(payload: any): Observable<any> {
     let url = API_CONSTANTS.addVehicle
     return this.apiService
@@ -526,7 +533,7 @@ export class RegistrationService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-  
+
   addVehicleDoucment(payload: any): Observable<any> {
     let url = API_CONSTANTS.addVehicleDoucment
     return this.apiService
@@ -541,7 +548,7 @@ export class RegistrationService {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-occupationData(payload: any): Observable<any> {
+  occupationData(payload: any): Observable<any> {
     let url = API_CONSTANTS.occupationList
     return this.apiService
       .post(url, payload)
@@ -583,22 +590,99 @@ occupationData(payload: any): Observable<any> {
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-  fencingList(payload:any): Observable<any> {
+  fencingList(payload: any): Observable<any> {
     let url = API_CONSTANTS.fencingList
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-  addNewRoute(payload:any): Observable<any> {
+  addNewRoute(payload: any): Observable<any> {
     let url = API_CONSTANTS.addNewRoute
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));
   }
 
-  updateRouteDetails(payload:any): Observable<any> {
+  updateRouteDetails(payload: any): Observable<any> {
     let url = API_CONSTANTS.updateRouteDetails
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  getVehicleTypeList(): Observable<any> {
+    let url = API_CONSTANTS.vehicleTypeList
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  getDocTypeList(): Observable<any> {
+    let url = API_CONSTANTS.docTypeList
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  getBodyTypeList(): Observable<any> {
+    let url = API_CONSTANTS.bodyTypeList
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  getFuelTypeList(): Observable<any> {
+    let url = API_CONSTANTS.fuelTypeList
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  getOwnerTypeList(): Observable<any> {
+    let url = API_CONSTANTS.ownerTypeList
+    return this.apiService
+      .get(url)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  createVehicleMaster(payload: any): Observable<any> {
+    let url = API_CONSTANTS.addVehicleMaster
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  updateVehicleMaster(payload: any): Observable<any> {
+    let url = API_CONSTANTS.updateVehicleMaster
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deleteVehicleMaster(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteVehicleMaster
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+  deletevehicleDoc(payload: any): Observable<any> {
+    let url = API_CONSTANTS.deleteVehicleDoc
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   getVehicleDoc(payload: any): Observable<any> {
+    let url = API_CONSTANTS.VehicleDocList
+    return this.apiService
+      .post(url, payload)
+      .pipe(catchError((error: HttpErrorResponse) => of(error)));
+  }
+
+   uploadVehicleDoc(payload: any): Observable<any> {
+    let url = API_CONSTANTS.uploadVehicleDoc
     return this.apiService
       .post(url, payload)
       .pipe(catchError((error: HttpErrorResponse) => of(error)));

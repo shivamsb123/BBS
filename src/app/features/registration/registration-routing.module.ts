@@ -31,6 +31,8 @@ import { NewRouteRegistrationComponent } from './new-route-registration/new-rout
 import { AddLocationMapV2Component } from './add-location-map-v2/add-location-map-v2.component';
 import { AddGeoFanceZigZagV2Component } from './add-geo-fance-zig-zag-v2/add-geo-fance-zig-zag-v2.component';
 import { RouteFancingV2Component } from './route-fancing-v2/route-fancing-v2.component';
+import { AddNewVehicleComponent } from './add-new-vehicle/add-new-vehicle.component';
+import { VehicleMasterV2Component } from './vehicle-master-v2/vehicle-master-v2.component';
 
 const routes: Routes = [
   {
@@ -83,7 +85,7 @@ const routes: Routes = [
     component:AddDriverComponent
   },
   {
-    path:'Vehicle_Master' , component:VehicleMasterComponent
+    path:'Vehicle_Master' , component:VehicleMasterV2Component
   },
   {
     path:'device_status/:id' , component:DeviceStatusDataComponent
@@ -117,6 +119,12 @@ const routes: Routes = [
   },
   {
     path:'Route_Fencing' , component: RouteFancingV2Component
+  },
+  {
+    path:'add-new-vehicle' , component: AddNewVehicleComponent
+  },
+   {
+    path:'add-new-vehicle/:id' , component: AddNewVehicleComponent
   }
 ];
 

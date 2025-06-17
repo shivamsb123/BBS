@@ -49,7 +49,7 @@ export class DistrictMasterComponent {
       { key: '', value: 'S. No.' },
       { key: '', value: 'State Name' },
       { key: '', value: 'District Name' },
-      { key: '', value: 'Action' },
+      { key: '', value: 'Action', class: 'text-center' },
     ]
   }
 
