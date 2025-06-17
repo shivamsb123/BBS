@@ -1,0 +1,68 @@
+<div class="modal-popup">
+   <div class="modal-header text-center bg-primary text-white">
+    <h4 class="modal-title w-100">More Detail</h4>
+    <div class="close-modal">
+      <i class="fa fa-close" (click)="cancel()" style="color: white; font-size: 20px; cursor: pointer;"></i>
+    </div>
+  </div>
+
+
+  <div class="modal-body p-3">
+    <div class="container-fluid">
+      <div class="row g-3">
+        <!-- Vehicle Information Section -->
+        <div class="col-md-6">
+          <div class="card shadow-sm border-0 p-3 h-100">
+            <h5 class="text-primary mb-3">
+              <i class="fa fa-car me-2"></i>Vehicle Information
+            </h5>
+            <ul class="list-unstyled mb-0">
+              <li><strong>Vehicle No:</strong> {{ vehicleDetail?.vehicle_no || 'N/A' }}</li>
+              <li><strong>License Plate:</strong> {{ vehicleDetail?.licenseplate_no }}</li>
+              <li><strong>Chassis No:</strong> {{ vehicleDetail?.chassis_no }}</li>
+              <li><strong>Engine No:</strong> {{ vehicleDetail?.engine_no }}</li>
+              <li><strong>Make & Model:</strong> {{ vehicleDetail?.make_model }}</li>
+              <li><strong>Manufacturing Year:</strong> {{ vehicleDetail?.manufacturing_year }}</li>
+              <li><strong>Body Type:</strong> {{ vehicleDetail?.fk_body_type_name }}</li>
+              <li><strong>Vehicle Type:</strong> {{ vehicleDetail?.fk_vehicle_type_name }}</li>
+              <li><strong>Fuel Type:</strong> {{ vehicleDetail?.fk_fuel_type_name }}</li>
+              <li><strong>Owner Type:</strong> {{ vehicleDetail?.fk_owner_type_name }}</li>
+              <li><strong>Procurement Date:</strong> {{ vehicleDetail?.procurement_date | date:'dd-MM-yyyy' }}</li>
+              <li><strong>Cost:</strong> ₹{{ vehicleDetail?.bus_cost | number }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Contractor & Status Section -->
+        <div class="col-md-6">
+          <div class="card shadow-sm border-0 p-3 h-100">
+            <h5 class="text-primary mb-3">
+              <i class="fa fa-user me-2"></i>Contractor & Location
+            </h5>
+            <ul class="list-unstyled mb-0">
+              <li><strong>Name:</strong> {{ vehicleDetail?.contractor_Name }}</li>
+              <li><strong>Mobile:</strong> {{ vehicleDetail?.contractor_mobile }}</li>
+              <li><strong>Email:</strong> {{ vehicleDetail?.contractor_email }}</li>
+              <li><strong>Address:</strong> {{ vehicleDetail?.contractor_address }}</li>
+              <li><strong>Location:</strong> 
+                {{ vehicleDetail?.fk_state_name }}, 
+                {{ vehicleDetail?.fk_district_name }}, 
+                {{ vehicleDetail?.fk_country_name }}
+              </li>
+              <li><strong>Pincode:</strong> {{ vehicleDetail?.pincode }}</li>
+              <li><strong>Status:</strong> 
+                <span class="badge bg-success" *ngIf="vehicleDetail?.current_status === 'ACTIVE'">
+                  {{ vehicleDetail?.current_status }}
+                </span>
+                <span class="badge bg-secondary" *ngIf="vehicleDetail?.current_status !== 'ACTIVE'">
+                  {{ vehicleDetail?.current_status }}
+                </span>
+              </li>
+              <li><strong>Created On:</strong> {{ vehicleDetail?.created_date | date:'dd-MM-yyyy hh:mm a' }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

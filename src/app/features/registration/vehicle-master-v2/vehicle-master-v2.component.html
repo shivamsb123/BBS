@@ -1,0 +1,149 @@
+<section class="main-content" id="content">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/registration/RC_Details">Registration</a>
+                </li>
+                <li>
+                    <a routerLink="/Registration/Vehicle_Master">
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>Vehicle Master</a>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                    Vehicle Master
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class=" btn btn-primary"
+                                (click)="createNewVehicle('/Registration/add-new-vehicle')">
+                                <i class="fa fa-plus"></i>
+                                Add New Vehicle
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div class="search-form">
+                                <input placeholder="Search for..." type="text" class="form-control search-input"
+                                    [(ngModel)]="searchKeyword"><button type="button" class="btn-search"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="p-2 bd-highlight">
+                                        <span>Items per page: </span>
+                                        <select class="custom-select">
+                                            <option *ngFor="let size of tableSizes" [value]="size">
+                                                {{ size }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let vehicleHeading of tableData">
+                                                        <strong>{{vehicleHeading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let vehicle of vehicleMaterList |  searchFilter: searchKeyword |  paginate : {
+                                          itemsPerPage: tableSize,
+                                          currentPage: page,
+                                          totalItems: count};">
+                                                    <td><a  class="clickable-link" (click)="moreInfo(vehicle)">{{vehicle?.licenseplate_no}}</a> </td>
+                                                    <td>{{vehicle?.chassis_no}}</td>
+                                                    <td>{{vehicle?.engine_no}}</td>
+                                                    <td>{{vehicle?.make_model}}</td>
+                                                    <td>{{vehicle?.manufacturing_year}}</td>
+                                                    <td>{{vehicle?.fk_body_type_name}}</td>
+                                                    <td>{{vehicle?.fk_vehicle_type_name}}</td>
+                                                    <td>{{vehicle?.fk_fuel_type_name}}</td>
+                                                    <td>{{vehicle?.fk_owner_type_name}}</td>
+                                                    <!-- <td>{{vehicle?.procurement_date | date : 'dd-MM-yyyy'}}</td>
+                                                    <td>{{vehicle?.bus_cost}}</td>
+                                                    <td>{{vehicle?.contractor_Name}}</td>
+                                                    <td>{{vehicle?.contractor_email}}</td>
+                                                    <td>{{vehicle?.contractor_mobile}}</td>
+                                                    <td>{{vehicle?.fk_country_name}}</td>
+                                                    <td>{{vehicle?.fk_state_name}}</td>
+                                                    <td>{{vehicle?.fk_district_name}}</td>
+                                                    <td>{{vehicle?.pincode}}</td> -->
+                                                    <td>{{vehicle?.current_status}}</td>
+                                                    <!-- <td>{{vehicle?.contractor_address}}</td> -->
+                                                    <td> 
+                                                        <!-- <a tooltip="Edit"
+                                                            (click)="redirectTo(vehicle?.pk_vehicle_id,vehicle)"
+                                                            rel="noopener noreferrer"><i class="fa fa-pencil"
+                                                                style="cursor: pointer;" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a (click)="deleteVehicle(vehicle)" tooltip="Delete"
+                                                            rel="noopener noreferrer"><i
+                                                                class="fa fa-trash text-danger cursor-pointer"
+                                                                style="cursor: pointer; margin-left: 10px;"></i>
+                                                        </a> -->
+
+                                                        <div class="action-button">
+
+                                                            <a style="cursor: pointer; font-size: 15px;" tooltip="Edit"
+                                                                (click)="redirectTo(vehicle?.pk_vehicle_id,vehicle)"
+                                                                rel="noopener noreferrer">
+                                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                            </a>
+
+                                                            <a style="cursor: pointer; font-size: 15px;" tooltip="View"
+                                                                (click)="onShowDocumentList(vehicle)"
+                                                                rel="noopener noreferrer">
+                                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                            </a>
+
+                                                            <a style="cursor: pointer; font-size: 15px;"
+                                                                (click)="deleteVehicle(vehicle)" tooltip="Delete"
+                                                                rel="noopener noreferrer">
+                                                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                            </a>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center" style="width: 100%;"
+                                            *ngIf="vehicleMaterList && vehicleMaterList.length == 0 || vehicleMaterList == null && !isloading || !(vehicleMaterList | searchFilter:searchKeyword)?.length">
+                                            No Data
+                                            Available</div>
+                                    </div>
+                                    <div class="pagination-data"
+                                        *ngIf="vehicleMaterList && vehicleMaterList.length > 0 && (vehicleMaterList | searchFilter:searchKeyword)?.length">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="onTableDataChange($event)">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

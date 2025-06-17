@@ -1,0 +1,557 @@
+<spinner-loader *ngIf="isloading"></spinner-loader>
+<section class="main-content" *ngIf="!isloading">
+    <div class="row">
+        <div class="col-lg-12 align-self-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/Dashboard/DashboardDMS">Dashboard</a></li>
+                <li><a routerLink="/Registration/Vehicle_Master"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Vehicle Master </a></li>
+                <li><a routerLink="/Registration/add-new-vehicle"> <i class="fa fa-long-arrow-right"
+                            aria-hidden="true"></i>
+                        Add New Vehicle </a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+            </app-alert>
+            <div class="card">
+                <div class="card-header card-default">
+                    Basic Detail
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="vehicleForm">
+                        <div class="row mb-3">
+
+                            <div class="col-md-3">
+                                <label class="form-label">License Plate No</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="license_plate_No"
+                                        placeholder="Enter License Plate No" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('license_plate_No')?.invalid && (vehicleForm.get('license_plate_No')?.dirty || vehicleForm.get('license_plate_No')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('license_plate_No')?.errors?.['required']">License
+                                        Plate No is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Chassis No</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="chassis_No"
+                                        placeholder="Enter Chassis No" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('chassis_No')?.invalid && (vehicleForm.get('chassis_No')?.dirty || vehicleForm.get('chassis_No')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('chassis_No')?.errors?.['required']">Chassis No is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Engine No</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="engine_No"
+                                        placeholder="Enter Engine No" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('engine_No')?.invalid && (vehicleForm.get('engine_No')?.dirty || vehicleForm.get('engine_No')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('engine_No')?.errors?.['required']">Engine No is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Model</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="make_model"
+                                        placeholder="Enter Model" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('make_model')?.invalid && (vehicleForm.get('make_model')?.dirty || vehicleForm.get('make_model')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('make_model')?.errors?.['required']">Model is
+                                        required</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Manufacture Year</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="manufacture_year"
+                                        placeholder="Enter Manufacture Year" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('manufacture_year')?.invalid && (vehicleForm.get('manufacture_year')?.dirty || vehicleForm.get('manufacture_year')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('manufacture_year')?.errors?.['required']">Manufacture
+                                        Year is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Body Type</label>
+                                <div *ngIf="selectedBodyType">
+                                    <select-filter [selectedValue]="selectedBodyType" [vehicleData]="bodyTypeList"
+                                        [type]="'Body'" [placeholder]="'Select Body'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedBodyType && bodyTypeList && bodyTypeList.length > 0">
+                                    <select-filter [vehicleData]="bodyTypeList" [type]="'Body'"
+                                        [placeholder]="'Select Body'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedBodyType && !bodyTypeList || bodyTypeList.length == 0">
+                                    <select-filter [type]="'Body'" [placeholder]="'Select Body'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="vehicleForm.get('body_type')?.invalid && (vehicleForm.get('body_type')?.dirty || vehicleForm.get('body_type')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('body_type')?.errors?.['required']">Body Type is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Vehicle Type</label>
+                                <div *ngIf="selectedVehicleType">
+                                    <select-filter [selectedValue]="selectedVehicleType" [vehicleData]="vehicleTypeList"
+                                        [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedVehicleType && vehicleTypeList && vehicleTypeList.length > 0">
+                                    <select-filter [vehicleData]="vehicleTypeList" [type]="'Vehicle'"
+                                        [placeholder]="'Select Vehicle'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedVehicleType && !vehicleTypeList || vehicleTypeList.length == 0">
+                                    <select-filter [type]="'Vehicle'" [placeholder]="'Select Vehicle'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="vehicleForm.get('vehicle_type')?.invalid && (vehicleForm.get('vehicle_type')?.dirty || vehicleForm.get('vehicle_type')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('vehicle_type')?.errors?.['required']">Vehicle Type is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Fuel Type</label>
+                                <div *ngIf="selectedFuelType">
+                                    <select-filter [selectedValue]="selectedFuelType" [vehicleData]="fuelTypeList"
+                                        [type]="'Fuel'" [placeholder]="'Select Fuel'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedFuelType && fuelTypeList && fuelTypeList.length > 0">
+                                    <select-filter [vehicleData]="fuelTypeList" [type]="'Fuel'"
+                                        [placeholder]="'Select Fuel'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedFuelType && !fuelTypeList || fuelTypeList.length == 0">
+                                    <select-filter [type]="'Fuel'" [placeholder]="'Select Fuel'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="vehicleForm.get('fuel_type')?.invalid && (vehicleForm.get('fuel_type')?.dirty || vehicleForm.get('fuel_type')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('fuel_type')?.errors?.['required']">Fuel Type is
+                                        required</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Owner Type</label>
+                                <div *ngIf="selectedOwnerType">
+                                    <select-filter [selectedValue]="selectedOwnerType" [vehicleData]="ownerTypeList"
+                                        [type]="'Owner'" [placeholder]="'Select Owner'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedOwnerType && ownerTypeList && ownerTypeList.length > 0">
+                                    <select-filter [vehicleData]="ownerTypeList" [type]="'Owner'"
+                                        [placeholder]="'Select Owner'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedOwnerType && !ownerTypeList || ownerTypeList.length == 0">
+                                    <select-filter [type]="'Owner'" [placeholder]="'Select Owner'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="vehicleForm.get('owner_type')?.invalid && (vehicleForm.get('owner_type')?.dirty || vehicleForm.get('owner_type')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('owner_type')?.errors?.['required']">Owner Type is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Procurement Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="procrumentDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="vehicleForm.get('procrumentDate')?.invalid && (vehicleForm.get('procrumentDate')?.dirty || vehicleForm.get('procrumentDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('procrumentDate')?.errors?.['required']">Procurement
+                                        Date is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Bus Cost</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="busCost"
+                                        placeholder="Enter Bus Cost" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('busCost')?.invalid && (vehicleForm.get('busCost')?.dirty || vehicleForm.get('busCost')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('busCost')?.errors?.['required']">Bus Cost is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Contract Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="contract_name"
+                                        placeholder="Enter Contract Name" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('contract_name')?.invalid && (vehicleForm.get('contract_name')?.dirty || vehicleForm.get('contract_name')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('contract_name')?.errors?.['required']">Contract Name
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Mobile No.</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="contract_mobile"
+                                        placeholder="Enter Mobile No." aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('contract_mobile')?.invalid && (vehicleForm.get('contract_mobile')?.dirty || vehicleForm.get('contract_mobile')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('contract_mobile')?.errors?.['required']">Mobile No. is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Email</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="contract_email"
+                                        placeholder="Enter Email" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('contract_email')?.invalid && (vehicleForm.get('contract_email')?.dirty || vehicleForm.get('contract_email')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('contract_email')?.errors?.['required']">Email is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Address</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="contract_address"
+                                        placeholder="Enter Address" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('contract_address')?.invalid && (vehicleForm.get('contract_address')?.dirty || vehicleForm.get('contract_address')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('contract_address')?.errors?.['required']">Address is
+                                        required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Status</label>
+                                <select class="form-select" aria-label="Default select example"
+                                    formControlName="status">
+                                    <!-- <option selected>Select Status</option> -->
+                                    <option value="Active">Active</option>
+                                    <option value="In-Active">In-Active</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+
+                            <div class="col-md-3">
+                                <label class="form-label">Country</label>
+                                <div *ngIf="selectedCountry">
+                                    <select-filter [selectedValue]="selectedCountry" [vehicleData]="countryData"
+                                        [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountry && countryData && countryData.length > 0">
+                                    <select-filter [vehicleData]="countryData" [type]="'country'"
+                                        [placeholder]="'Select Country'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedCountry && !countryData || countryData.length == 0">
+                                    <select-filter [type]="'country'" [placeholder]="'Select Country'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="vehicleForm.get('country')?.invalid && (vehicleForm.get('country')?.dirty || vehicleForm.get('country')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('country')?.errors?.['required']">Country
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">State</label>
+                                <div *ngIf="selectedState">
+                                    <select-filter [selectedValue]="selectedState" [vehicleData]="stateData"
+                                        [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedState && stateData && stateData.length > 0">
+                                    <select-filter [vehicleData]="stateData" [type]="'state'"
+                                        [placeholder]="'Select State'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedState && !stateData || stateData.length == 0">
+                                    <select-filter [type]="'state'" [placeholder]="'Select State'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="vehicleForm.get('state')?.invalid && (vehicleForm.get('state')?.dirty || vehicleForm.get('state')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('state')?.errors?.['required']">State
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">District</label>
+                                <div *ngIf="selectedDistrict">
+                                    <select-filter [selectedValue]="selectedDistrict" [vehicleData]="districtData"
+                                        [type]="'district'" [placeholder]="'Select District'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDistrict && districtData && districtData.length > 0">
+                                    <select-filter [vehicleData]="districtData" [type]="'district'"
+                                        [placeholder]="'Select District'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDistrict && !districtData || districtData.length == 0">
+                                    <select-filter [type]="'district'" [placeholder]="'Select District'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="vehicleForm.get('district')?.invalid && (vehicleForm.get('district')?.dirty || vehicleForm.get('district')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('district')?.errors?.['required']">District
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Pin Code</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="pincode"
+                                        placeholder="Enter Pin Code" aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="vehicleForm.get('pincode')?.invalid && (vehicleForm.get('pincode')?.dirty || vehicleForm.get('pincode')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="vehicleForm.get('pincode')?.errors?.['required']">Pin Code
+                                        is
+                                        required</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row row-data" *ngIf="id">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class="btn btn-success" (click)="submit()">
+                                {{button}}
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="itemType == 'Add'">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    Document Detail
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="documentForm">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label for="status" class="form-label">Doc Type</label>
+                                <div *ngIf="selectedDocType">
+                                    <select-filter [selectedValue]="selectedDocType" [vehicleData]="docTypeList"
+                                        [type]="'Doc-Type'" [placeholder]="'Select Doc Type'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDocType && docTypeList && docTypeList.length > 0">
+                                    <select-filter [vehicleData]="docTypeList" [type]="'Doc-Type'"
+                                        [placeholder]="'Select Doc Type'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDocType && !docTypeList || docTypeList.length == 0">
+                                    <select-filter [type]="'Doc-Type'" [placeholder]="'Select Doc Type'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+
+
+                                <div *ngIf="documentForm.get('docType')?.invalid && (documentForm.get('docType')?.dirty || documentForm.get('docType')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('docType')?.errors?.['required']">Doc Type is
+                                        required</span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+
+                                <label class="form-label">Document No.</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="docNo"
+                                        placeholder="Enter Document No." aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="documentForm.get('docNo')?.invalid && (documentForm.get('docNo')?.dirty || documentForm.get('docNo')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('docNo')?.errors?.['required']">Document No. is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="startDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="documentForm.get('startDate')?.invalid && (documentForm.get('startDate')?.dirty || documentForm.get('startDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('startDate')?.errors?.['required']">Start Date is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="endDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="documentForm.get('endDate')?.invalid && (documentForm.get('endDate')?.dirty || documentForm.get('endDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('endDate')?.errors?.['required']">End Date is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-label">Upload Document</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" (change)="onFileChange($event)"
+                                            placeholder="Enter Document No." aria-describedby="button-addon2" />
+                                    </div>
+                                    <div *ngIf="documentForm.get('imgData')?.invalid && (documentForm.get('imgData')?.dirty || documentForm.get('imgData')?.touched )"
+                                        class="text-danger">
+                                        <span *ngIf="documentForm.get('imgData')?.errors?.['required']">Document is
+                                            required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <br>
+                                    <button class="btn btn-success" (click)="createItem(documentForm.value)"><i
+                                            class="fa fa-plus"></i>
+                                        Add
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="!id">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-default">
+                    <div class="row">
+                        <div class="col-md-3"> Document List</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"> </div>
+                        <div class="col-md-3"> <a class="add-item" (click)="addItem('Add')"><i
+                                    class="fa fa-plus"></i>Add Document Details</a></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row row-data">
+                        <div class="col-md-12">
+                            <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_scroll">
+                                    <div class="dataTables_scrollBody">
+                                        <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                            <loader [isRunning]="isloading"></loader>
+                                        </div>
+                                        <table id="datatable"
+                                            class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                            role="grid" aria-describedby="datatable_info" style="width: 100%"
+                                            width="100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th *ngFor="let heading of tableData">
+                                                        <strong>{{heading?.val}}</strong>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody *ngIf="!isloading">
+                                                <tr *ngFor="let item of itemData;let i=index">
+
+                                                    <td>{{ item?.docTypeName }}</td>
+                                                    <td>{{ item?.docNo }}</td>
+                                                    <td>{{ item?.startdate | date : 'dd-MM-yyyy' }}</td>
+                                                    <td>{{ item?.endDate | date : 'dd-MM-yyyy'}}</td>
+                                                    <td>
+                                                        <img *ngIf="item?.imageData1" [src]="item.imageData1" width="80"
+                                                            height="50" />
+                                                    </td>
+
+                                                    <td><a tooltip="Delete" rel="noopener noreferrer"
+                                                            (click)="delete(item, i)"><i class="fa fa-trash"
+                                                                aria-hidden="true"></i></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-center"
+                                            *ngIf="itemData && itemData.length == 0 || itemData == null && !isloading"
+                                            style="width: 100%;">No Data Available</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-data">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class="btn btn-success" (click)="submit()">
+                                {{button}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -7518,17 +7518,12 @@ agm-map {
   width: 100% !important;
 }
 
-.action-button {
-  display: flex;
-  gap: 10px;
+td {
+  position: relative;
 }
 
-// .action-button>button {
-//   width: 10% !important;
-//   height: 10% !important;
-// }
-
-.action-button>button>i {
+.action-button{
   display: flex;
   justify-content: center;
+  gap: 10px;
 }

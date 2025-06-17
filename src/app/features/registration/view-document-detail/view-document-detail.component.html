@@ -1,0 +1,168 @@
+<div class="modal-popup">
+    <div class="modal-header text-center">
+        <h4 class="modal-title f-w w-100 ">
+            Uoload Document
+        </h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()" style="color: white; font-size: 20px;"></i>
+        </div>
+    </div>
+    <div class="modal-body p-20">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger ">
+        </app-alert>
+         <div class="row mb-3">
+        <div class="col-md-12">
+               <form [formGroup]="documentForm">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label for="status" class="form-label">Doc Type</label>
+                                <div *ngIf="selectedDocType">
+                                    <select-filter [selectedValue]="selectedDocType" [vehicleData]="docTypeList"
+                                        [type]="'Doc-Type'" [placeholder]="'Select Doc Type'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDocType && docTypeList && docTypeList.length > 0">
+                                    <select-filter [vehicleData]="docTypeList" [type]="'Doc-Type'"
+                                        [placeholder]="'Select Doc Type'" (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+                                <div *ngIf="!selectedDocType && !docTypeList || docTypeList.length == 0">
+                                    <select-filter [type]="'Doc-Type'" [placeholder]="'Select Doc Type'"
+                                        (onConfirm)="confirm($event)"></select-filter>
+                                </div>
+
+
+                                <div *ngIf="documentForm.get('docType')?.invalid && (documentForm.get('docType')?.dirty || documentForm.get('docType')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('docType')?.errors?.['required']">Doc Type is
+                                        required</span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+
+                                <label class="form-label">Document No.</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="docNo"
+                                        placeholder="Enter Document No." aria-describedby="button-addon2" />
+                                </div>
+                                <div *ngIf="documentForm.get('docNo')?.invalid && (documentForm.get('docNo')?.dirty || documentForm.get('docNo')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('docNo')?.errors?.['required']">Document No. is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="startDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="documentForm.get('startDate')?.invalid && (documentForm.get('startDate')?.dirty || documentForm.get('startDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('startDate')?.errors?.['required']">Start Date is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1" class="form-label">End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" #dp="bsDatepicker" placeholder="Select Date"
+                                        bsDatepicker formControlName="endDate" name="bsValue" required />
+                                </div>
+                                <div *ngIf="documentForm.get('endDate')?.invalid && (documentForm.get('endDate')?.dirty || documentForm.get('endDate')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="documentForm.get('endDate')?.errors?.['required']">End Date is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Upload Document (.jpg, .jpeg)</label>
+                                    <div class="input-group">
+                                        <input type="file"  accept=".jpeg,.jpg,image/jpeg" class="form-control" (change)="onFileChange($event)"
+                                            placeholder="Enter Document No." aria-describedby="button-addon2" />
+                                    </div>
+                                    <div *ngIf="documentForm.get('imgData')?.invalid && (documentForm.get('imgData')?.dirty || documentForm.get('imgData')?.touched )"
+                                        class="text-danger">
+                                        <span *ngIf="documentForm.get('imgData')?.errors?.['required']">Document is
+                                            required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <br>
+                                    <button class="btn btn-success" (click)="uploadDocument(documentForm.value)"><i
+                                            class="fa fa-plus"></i>
+                                        Add
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+        </div>
+    </div>
+        <div class="row ">
+            <!-- <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <button class=" btn btn-primary"
+                                (click)="addItem('Add')">
+                                <i class="fa fa-plus"></i>
+                                Add New Document
+                            </button>
+                        </div>
+                    </div> -->
+            <div class="col-md-12">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_scroll">
+                        <div class="dataTables_scrollBody">
+                            <div class="spin-loader" [ngClass]="isloading ? 'loader': ''">
+                                <loader [isRunning]="isloading"></loader>
+                            </div>
+                            <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline"
+                                role="grid" aria-describedby="datatable_info" style="width: 100%" width="100%">
+                                <thead>
+                                    <tr role="row">
+                                        <th *ngFor="let vehicleHeading of tableData">
+                                            <strong>{{vehicleHeading?.val}}</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!isloading">
+                                    <tr *ngFor="let item of documentdata; let i = index">
+                                        <td>{{ item?.fk_Doc_type_name }}</td>
+                                        <td>{{ item?.doc_no }}</td>
+                                        <td>{{ item?.start_date | date: 'dd-MM-yyyy'}}</td>
+                                        <td>{{ item?.end_date | date: 'dd-MM-yyyy' }}</td>
+                                        <td>
+                                            <img *ngIf="item?.doc_file_name" [src]="item.doc_file_name" width="80"
+                                                height="50" />
+                                        </td>
+                                       
+                                        <td>
+
+                                            <a (click)="deleteDocument(item)" tooltip="Delete"
+                                                rel="noopener noreferrer">
+                                                <i class="fa fa-trash text-danger cursor-pointer"
+                                                    style="cursor: pointer; margin-left: 10px; font-size: 15px;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center"
+                            *ngIf=" documentdata && documentdata.length == 0 || documentdata == null  && !isloading"
+                            style="width: 100%;">No Data Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

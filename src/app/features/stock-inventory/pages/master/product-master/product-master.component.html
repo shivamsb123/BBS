@@ -51,7 +51,7 @@
                       <loader [isRunning]="isloading"></loader>
                     </div>
                     <table id="datatable" class="table table-striped nowrap dataTable no-footer dtr-inline" role="grid"
-                      aria-describedby="datatable_info" style="width: 100%" width="100%">
+                      aria-describedby="datatable_info" style="width: 100%; white-space: nowrap;" width="100%">
                       <thead>
                         <tr role="row">
                           <th *ngFor="let vehicleHeading of tableData">
@@ -80,7 +80,7 @@
                           <td>{{product?.item_name_alias || 'NA'}}</td>
                           <td>{{product?.min_alert_value}}</td>
                           <td>{{product?.min_order_value}}</td>
-                          <td>{{product?.item_description}}</td>
+                          <!-- <td>{{product?.item_description}}</td> -->
                           <td><a tooltip="Edit" (click)="AddProduct('/SupplyChain/Edit-Product/id', product?.pk_item_id)"
                               rel="noopener noreferrer"><i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>

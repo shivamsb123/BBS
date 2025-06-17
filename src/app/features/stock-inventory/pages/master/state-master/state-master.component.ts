@@ -47,7 +47,7 @@ export class StateMasterComponent {
       { key: '', value: 'Country Name' },
       { key: '', value: 'state Code' },
       { key: '', value: 'State Name' },
-      { key: '', value: 'Action' },
+      { key: '', value: 'Action', class:'text-center' },
     ]
   }
 

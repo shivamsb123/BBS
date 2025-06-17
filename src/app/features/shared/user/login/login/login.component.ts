@@ -152,8 +152,7 @@ export class LoginComponent {
           window.location.href = 'Dashboard/DashboardDMS';
         }
       }
-
-          this.isLoading = false;
+      this.isLoading = false;
     })
   }
 }

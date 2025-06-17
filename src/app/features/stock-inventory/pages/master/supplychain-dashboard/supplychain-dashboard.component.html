@@ -96,19 +96,26 @@
                                                     <td>{{item?.levelName}}</td>
                                                     <td>{{item?.request_status}}</td>
                                                     <td>{{item?.request_remarks}}</td>
-                                                     <td>
+                                                    <td>
                                                         <div class="action-button">
-                                                            <button class="btn btn-success" style="width:10% !important" (click)="onShowChildList(item,'Edit')">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </button>
-                                                            <button class="btn btn-info" style="width:10% !important" (click)="onShowChildList(item,'View')">
-                                                                <i class="fa fa-eye"></i>
-                                                            </button>
-                                                             <button class="btn btn-primary" style="width:10% !important" (click)="requestApproved(item)">
-                                                                <i class="fa fa-cog"></i>
-                                                            </button>
+                                                         
+                                                            <a style="cursor: pointer; font-size: 15px;" tooltip="Edit"
+                                                                (click)="onShowChildList(item,'Edit')" rel="noopener noreferrer">
+                                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                            </a>
+
+                                                             <a style="cursor: pointer; font-size: 15px;" tooltip="View"
+                                                                (click)="onShowChildList(item,'View')" rel="noopener noreferrer">
+                                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                            </a>
+
+                                                             <a style="cursor: pointer; font-size: 15px;" tooltip="Action"
+                                                                (click)="requestApproved(item)" rel="noopener noreferrer">
+                                                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                                            </a>
+                                                          
                                                         </div>
-                                                      
+
                                                     </td>
                                                     <!-- <td>
                                                         <button mat-icon-button [matMenuTriggerFor]="menu">
