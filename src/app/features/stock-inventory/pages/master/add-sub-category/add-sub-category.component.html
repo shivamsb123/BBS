@@ -23,28 +23,49 @@
         <div class="card-body">
           <form [formGroup]="subform">
             <div class="row">
-              <div class="col-md-3">
-                <label class="form-label">Category</label>
+              <div class="col-md-3" *ngIf="!showCategoryInput">
+                <label id="add-label" class="form-label">
+                  Category
+                  <button id="add-button" (click)="toggleButton('category')" type="submit">
+                    <i class="fa fa-plus"></i> Add Category
+                  </button>
+                </label>
                 <div *ngIf="selectedValue">
-                  <select-filter [selectedValue]="selectedValue" [vehicleData]="categoryData"
-                  [type]="'category'" [placeholder]="'Select category'"
-                  (onConfirm)="confirm($event)"></select-filter>
+                  <select-filter [selectedValue]="selectedValue" [vehicleData]="categoryData" [type]="'category'"
+                    [placeholder]="'Select category'" (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && categoryData && categoryData.length > 0 ">
+                  <select-filter [vehicleData]="categoryData" [type]="'category'" [placeholder]="'Select category'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="!selectedValue && !categoryData || categoryData.length == 0">
+                  <select-filter [type]="'category'" [placeholder]="'Select category'"
+                    (onConfirm)="confirm($event)"></select-filter>
+                </div>
+                <div *ngIf="subform.get('cat')?.invalid && (subform.get('cat')?.dirty || subform.get('cat')?.touched )"
+                  class="text-danger">
+                  <span *ngIf="subform.get('cat')?.errors?.['required']">Category is
+                    required</span>
+                </div>
               </div>
-              <div *ngIf="!selectedValue && categoryData && categoryData.length > 0 ">
-                  <select-filter [vehicleData]="categoryData"
-                  [type]="'category'" [placeholder]="'Select category'"
-                  (onConfirm)="confirm($event)"></select-filter>
-              </div>
-              <div *ngIf="!selectedValue && !categoryData || categoryData.length == 0">
-                  <select-filter
-                  [type]="'category'" [placeholder]="'Select category'"
-                  (onConfirm)="confirm($event)"></select-filter>
-              </div>
-              <div *ngIf="subform.get('cat')?.invalid && (subform.get('cat')?.dirty || subform.get('cat')?.touched )"
-                                    class="text-danger">
-                                    <span *ngIf="subform.get('cat')?.errors?.['required']">Category is
-                                        required</span>
-                                </div>
+
+              <div class="col-md-3" *ngIf="showCategoryInput">
+                <label id="add-label" class="form-label">Category <button id="add-button"
+                    (click)="toggleButton('category')" type="submit">
+                    <i class="fa fa-times"></i> Cancel
+                  </button></label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Enter Category" formControlName="category_name"
+                    aria-describedby="button-addon2" />
+                  <button id="master-add" class="btn btn-info" type="submit" (click)="addCategory()">
+                    <i class="fa fa-plus"></i>Add
+                  </button>
+                </div>
+
+                <div class="text-danger" *ngIf="categoryNameError">
+                  <span>Category is required</span>
+                </div>
+
               </div>
               <div class="col-md-3">
                 <label class="form-label">Sub Category Name</label>
@@ -52,18 +73,21 @@
                   <input type="text" class="form-control" formControlName="sub_cat" placeholder="Enter SubCategory Name"
                     aria-describedby="button-addon2" />
                 </div>
-                <div *ngIf="subform.get('sub_cat')?.invalid && (subform.get('sub_cat')?.dirty || subform.get('sub_cat')?.touched )"
-                                    class="text-danger">
-                                    <span *ngIf="subform.get('sub_cat')?.errors?.['required']">Sub Category Name is
-                                        required</span>
-                                </div>
+                <div
+                  *ngIf="subform.get('sub_cat')?.invalid && (subform.get('sub_cat')?.dirty || subform.get('sub_cat')?.touched )"
+                  class="text-danger">
+                  <span *ngIf="subform.get('sub_cat')?.errors?.['required']">Sub Category Name is
+                    required</span>
+                </div>
               </div>
               <div class="col-md-3">
+                <br>
                 <button class="btn btn-success" (click)="submit(subform.value)">
                   <i class="fa fa-plus" aria-hidden="true"></i> {{button}}
                 </button>
               </div>
               <div class="col-md-3">
+                <br>
                 <button class="btn btn-danger" (click)="cancel()">
                   <i class="fa fa-times" aria-hidden="true"></i> Cancel
                 </button>

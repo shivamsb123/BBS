@@ -42,6 +42,9 @@ import { SupplychainDashboardComponent } from './supplychain-dashboard/supplycha
 import { DashboardChildListComponent } from './dashboard-child-list/dashboard-child-list.component';
 import { ApprovalRequestComponent } from './approval-request/approval-request.component';
 import { GenerateRequestComponent } from './generate-request/generate-request.component';
+import { AddUnitPopupComponent } from './master-popup-pages/add-unit-popup/add-unit-popup.component';
+import { AddHsnPopupComponent } from './master-popup-pages/add-hsn-popup/add-hsn-popup.component';
+import { AddLevelPopupComponent } from './master-popup-pages/add-level-popup/add-level-popup.component';
 @NgModule({
   declarations: [
     ProductMasterComponent,
@@ -78,6 +81,9 @@ import { GenerateRequestComponent } from './generate-request/generate-request.co
     DashboardChildListComponent,
     ApprovalRequestComponent,
     GenerateRequestComponent,
+    AddUnitPopupComponent,
+    AddHsnPopupComponent,
+    AddLevelPopupComponent,
   ],
   imports: [
     CommonModule,

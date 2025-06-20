@@ -33,7 +33,9 @@ export class AddContactComponent implements OnInit {
   countryName: any;
   stateName: any;
   disName: any;
-
+ showInput: boolean = false;
+  showCityInput: boolean = false;
+  selectStateData:any
   addressForm: FormGroup = new FormGroup({
     vendorAdd: new FormArray([])
   })
@@ -107,6 +109,17 @@ export class AddContactComponent implements OnInit {
     })
   }
 
+  toggleButton(type: any) {
+    if (type == 'state') {
+      this.showCityInput = false
+      this.selectStateData= null
+      this.contactform.controls['state'].setValue(null)
+      this.showInput = !this.showInput
+    }else if(type == 'city'){
+    this.showCityInput = !this.showCityInput
+    }
+
+  }
 
 
   getContactData() {

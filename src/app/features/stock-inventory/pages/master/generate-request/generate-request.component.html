@@ -25,7 +25,13 @@
                     <form [formGroup]="requestForm">
                         <div class="row">
                             <div class="col-md-3">
-                                <label class="form-label">Level</label>
+                                 <label id="add-label" class="form-label">
+                                    Level
+                                    <button id="add-button" (click)="addLevelCode()" type="submit"
+                                        >
+                                        <i class="fa fa-plus"></i> Add Level
+                                    </button>
+                                </label>
                                 <div *ngIf="selectedLevel">
                                     <select-filter [selectedValue]="selectedLevel" [vehicleData]="levelList"
                                         [type]="'Level'" [placeholder]="'Select Level'"
@@ -63,7 +69,8 @@
                                 <label for="status" class="form-label">Priority</label>
                                 <select class="form-select" formControlName="priority">
                                     <option value="">Select Priority</option>
-                                    <option *ngFor="let val of priorityDD" [value]="val?.priority_Id">{{val?.priority_Name}}</option>
+                                    <option *ngFor="let val of priorityDD" [value]="val?.priority_Id">
+                                        {{val?.priority_Name}}</option>
                                 </select>
                                 <div *ngIf="requestForm.get('priority')?.invalid && (requestForm.get('priority')?.dirty || requestForm.get('priority')?.touched )"
                                     class="text-danger">
@@ -103,7 +110,7 @@
 
                             <div class="col-md-3">
                                 <label for="status" class="form-label">Item For</label>
-                               <div *ngIf="selectedItemFor">
+                                <div *ngIf="selectedItemFor">
                                     <select-filter [selectedValue]="selectedItemFor" [vehicleData]="itemLocationList"
                                         [type]="'Item-For'" [placeholder]="'Select Item For'"
                                         (onConfirm)="confirm($event)"></select-filter>
@@ -147,18 +154,31 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-
                                 <label class="form-label">Quantity</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" formControlName="quantity"
-                                        placeholder="Enter Quantity" aria-describedby="button-addon2" />
+                                <div class="d-flex align-items-center w-100 gap-1">
+                                    <button class="btn btn-outline-secondary btn-sm flex-shrink-0" type="button"
+                                        (click)="decreaseQty()" style="width: 32px;">
+                                        -
+                                    </button>
+
+                                    <input type="number" class="form-control form-control-sm text-center"
+                                        formControlName="quantity" placeholder="Enter Quantity" style="flex: 1;" />
+
+                                    <button class="btn btn-outline-secondary btn-sm flex-shrink-0" type="button"
+                                        (click)="increaseQty()" style="width: 32px;">
+                                        +
+                                    </button>
                                 </div>
-                                <div *ngIf="itemCreateform.get('quantity')?.invalid && (itemCreateform.get('quantity')?.dirty || itemCreateform.get('quantity')?.touched )"
-                                    class="text-danger">
-                                    <span *ngIf="itemCreateform.get('quantity')?.errors?.['required']">Quantity is
-                                        required</span>
+
+                                <div *ngIf="itemCreateform.get('quantity')?.invalid &&
+           (itemCreateform.get('quantity')?.dirty || itemCreateform.get('quantity')?.touched)" class="text-danger mt-1"
+                                    style="font-size: 12px;">
+                                    <span *ngIf="itemCreateform.get('quantity')?.errors?.['required']">
+                                        Quantity is required
+                                    </span>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <br>
                                 <button class="btn btn-success" (click)="createItem(itemCreateform.value)"><i

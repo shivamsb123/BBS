@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StockService } from '../../../services/stock.service';
 import { formatDate } from '@angular/common';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { AddLevelPopupComponent } from '../master-popup-pages/add-level-popup/add-level-popup.component';
 
 @Component({
   selector: 'app-generate-request',
@@ -33,11 +35,13 @@ export class GenerateRequestComponent {
   itemLocationList: any;
   itemName: any;
   selectedItemFor:any
+    bsModalRef!: BsModalRef
   constructor(
     private stockService: StockService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private modalService: BsModalService
   ) { }
   ngOnInit(): void {
     this.isloading = true;
@@ -170,6 +174,23 @@ export class GenerateRequestComponent {
 
   }
 
+   addLevelCode() {
+      const initialState: ModalOptions = {
+        initialState: {
+          // vehicleDetail: value
+        },
+      };
+      this.bsModalRef = this.modalService.show(
+        AddLevelPopupComponent,
+        Object.assign(initialState, { class: "modal-md modal-dialog-centered" })
+      );
+      this.bsModalRef?.content.mapdata.subscribe(
+        (value: any) => {
+          this.getLevelDD()
+        }
+      );
+    }
+
   delete(data: any, i: any) {
     this.itemData.splice(i, 1);
     localStorage.setItem('item', JSON.stringify(this.itemData))
@@ -202,6 +223,19 @@ export class GenerateRequestComponent {
     }
   }
 
+  increaseQty() {
+  const current = this.itemCreateform.get('quantity')?.value || 0;
+  this.itemCreateform.get('quantity')?.setValue(current + 1);
+}
+
+decreaseQty() {
+  const current = this.itemCreateform.get('quantity')?.value || 0;
+  if (current > 0) {
+    this.itemCreateform.get('quantity')?.setValue(current - 1);
+  }
+}
+
+
 
   cancel() {
     this.requestForm.reset();
@@ -222,7 +256,6 @@ export class GenerateRequestComponent {
       fk_item_id: Number(val.itemId),
       request_qty: Number(val.quantity)
     }));
-    let service: any
     let payload = {
 
       "voucherType": "EFR",
@@ -233,8 +266,6 @@ export class GenerateRequestComponent {
       "Logged_by": Number(localStorage.getItem('user_Id')),
       "item_list": requestChild
     }
-console.log('payload',payload);
-
 
     this.stockService.generateRequestDetail(payload).subscribe((res: any) => {
       window.scrollTo({
