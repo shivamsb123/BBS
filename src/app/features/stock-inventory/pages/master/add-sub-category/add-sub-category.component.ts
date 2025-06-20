@@ -25,6 +25,7 @@ export class AddSubCategoryComponent implements OnInit {
   alertMessage: string = 'Added';
   selectedsubData: any;
   categoryId: string;
+  showCategoryInput: boolean = false;
 
   constructor(
     private stockService: StockService,
@@ -48,12 +49,18 @@ export class AddSubCategoryComponent implements OnInit {
     setTimeout(() => {
       this.isloading = false;
     }, 500);
+     this.subform.get('category_name')?.valueChanges.subscribe(val => {
+    if (val && val.trim() !== '') {
+      this.categoryNameError = false;
+    }
+  });
   }
 
   setInitialValue() {
     this.subform = this.fb.group({
       cat: ['', [Validators.required, Validators.pattern('')]],
-      sub_cat: ['', [Validators.required, Validators.pattern('')]]
+      sub_cat: ['', [Validators.required, Validators.pattern('')]],
+      category_name: ['']
     })
   }
 
@@ -118,6 +125,53 @@ export class AddSubCategoryComponent implements OnInit {
       value: '',
       text: ''
     }
+  }
+
+  toggleButton(type: any) {
+    if (type == 'category') {
+      this.subform.controls['cat'].setValue(null)
+      this.subform.controls['category_name'].setValue(null)
+      this.showCategoryInput = !this.showCategoryInput
+    }
+  }
+  categoryNameError = false;
+
+  addCategory() {
+    this.categoryNameError = false;
+
+    if (!this.subform.value.category_name || this.subform.value.category_name.trim() === '') {
+      this.categoryNameError = true;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return; // stop further execution
+    }
+    let payload = {
+      "category_name": this.subform.value.category_name,
+      "Logged_by": Number(localStorage.getItem('user_Id'))
+    }
+    this.stockService.addCategory(payload).subscribe((res: any) => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      if (res?.body?.status == 'success') {
+        this.alertData = {
+          message: res?.body?.alert
+        };
+        this.alertType = "success";
+        this.alertTrigger = true;
+        this.stopAlert();
+        this.getCategoryList()
+        this.showCategoryInput = false
+        this.subform.controls['category_name'].setValue(null)
+      } else {
+        this.alertData = {
+          message: `Data Not ${this.alertMessage}`,
+        };
+        this.alertType = "danger";
+        this.alertTrigger = true;
+        this.stopAlert();
+      }
+    })
   }
 
   submit(formValue: any) {

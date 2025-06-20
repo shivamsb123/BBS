@@ -1,0 +1,70 @@
+<div class="modal-popup">
+   <div class="modal-header text-center bg-primary text-white">
+    <h4 class="modal-title w-100">Add Level</h4>
+    <div class="close-modal">
+      <i class="fa fa-close" (click)="cancel()" style="color: white; font-size: 20px; cursor: pointer;"></i>
+    </div>
+  </div>
+
+
+  <div class="modal-body p-3">
+     <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger"></app-alert>
+            <form [formGroup]="levelForm">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Level Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Level Name"
+                                        aria-describedby="button-addon2" formControlName="levelName" />
+                                </div>
+                                <div *ngIf="levelForm.get('levelName')?.invalid && (levelForm.get('levelName')?.dirty || levelForm.get('levelName')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="levelForm.get('levelName')?.errors?.['required']">Level Name is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Amount</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="Enter Amount"
+                                        aria-describedby="button-addon2" formControlName="amount" />
+                                </div>
+                                <div *ngIf="levelForm.get('amount')?.invalid && (levelForm.get('amount')?.dirty || levelForm.get('amount')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="levelForm.get('amount')?.errors?.['required']">Amount is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Sequence</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Sequence"
+                                        aria-describedby="button-addon2" formControlName="sequence" />
+                                </div>
+                                <div *ngIf="levelForm.get('sequence')?.invalid && (levelForm.get('sequence')?.dirty || levelForm.get('sequence')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="levelForm.get('sequence')?.errors?.['required']">Sequence is
+                                        required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-success" (click)="submit(levelForm.value)"><i
+                                                class="fa fa-plus" aria-hidden="true"></i>
+                                            Add
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-danger" (click)="cancel()">
+                                            <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
+  </div>
+</div>

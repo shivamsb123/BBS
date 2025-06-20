@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StockService } from '../../../services/stock.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { AddUnitPopupComponent } from '../master-popup-pages/add-unit-popup/add-unit-popup.component';
+import { AddHsnPopupComponent } from '../master-popup-pages/add-hsn-popup/add-hsn-popup.component';
 
 @Component({
   selector: 'app-add-product',
@@ -40,12 +43,17 @@ export class AddProductComponent implements OnInit {
   formData!: FormData;
   categoryId: any;
   itemLocationList: any;
-
+  showCategoryInput: boolean = false;
+  showSubCategoryInput: boolean = false;
+  showManufactureInput: boolean = false
+  onSelectSubCategory: any
+  bsModalRef!: BsModalRef
   constructor(
     private fb: FormBuilder,
     private stockService: StockService,
     private activeUrl: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: BsModalService,
   ) { }
   ngOnInit(): void {
     this.isloading = true;
@@ -87,13 +95,16 @@ export class AddProductComponent implements OnInit {
       itemNameAlias: ['', [Validators.required]],
       minAlertValue: [0, [Validators.required]],
       minOrderValue: [0, [Validators.required]],
-      Description: ['',[Validators.required]],
+      Description: ['', [Validators.required]],
+      category_name: [''],
+      Sub_category_name: [''],
+      manufacture_name: [''],
     });
   }
 
-  getItemLocation(){
-    this.stockService.itemLocationList().subscribe((res:any) => {
-      this.itemLocationList = res?.body?.data      
+  getItemLocation() {
+    this.stockService.itemLocationList().subscribe((res: any) => {
+      this.itemLocationList = res?.body?.data
     })
   }
 
@@ -123,7 +134,7 @@ export class AddProductComponent implements OnInit {
 
           this.productForm = this.fb.group({
             name: [val?.item_name, [Validators.required]],
-            Description: [val?.item_description,[Validators.required]],
+            Description: [val?.item_description, [Validators.required]],
             Category: [this.selectedValue.value, [Validators.required]],
             Sub_Category: [null, [Validators.required]],  // Temporarily null
             unit: [this.selectedbaseValue.value, [Validators.required]],
@@ -251,6 +262,26 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  toggleButton(type: any) {
+    if (type == 'category') {
+      this.showSubCategoryInput = false
+      this.onSelectSubCategory = null
+      this.subCateData = []
+      this.productForm.controls['Category'].setValue(null)
+      this.productForm.controls['category_name'].setValue(null)
+      this.showCategoryInput = !this.showCategoryInput
+    } else if (type == 'sub-Category') {
+      this.showCategoryInput = false
+      this.productForm.controls['Sub_Category'].setValue(null)
+      this.productForm.controls['Sub_category_name'].setValue(null)
+      this.showSubCategoryInput = !this.showSubCategoryInput
+    } else if (type == 'manufacture') {
+      this.productForm.controls['brand_name'].setValue(null)
+      this.productForm.controls['manufacture_name'].setValue(null)
+      this.showManufactureInput = !this.showManufactureInput
+
+    }
+  }
 
   getBrandData() {
     let newData = {
@@ -269,6 +300,141 @@ export class AddProductComponent implements OnInit {
     })
   }
 
+  addCategory() {
+    //   if (this.categoryForm.invalid) {
+    //   this.categoryForm.markAllAsTouched();
+    //   return;
+    // };
+    let service: any
+    let payload = {
+      "category_name": this.productForm.value.category_name,
+      "Logged_by": Number(localStorage.getItem('user_Id'))
+    }
+    this.stockService.addCategory(payload).subscribe((res: any) => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      if (res?.body?.status == 'success') {
+        this.alertData = {
+          message: res?.body?.alert
+        };
+        this.alertType = "success";
+        this.alertTrigger = true;
+        this.stopAlert();
+        this.getCategoryList()
+        this.showCategoryInput = false
+        this.productForm.controls['category_name'].setValue(null)
+      } else {
+        this.alertData = {
+          message: `Data Not ${this.alertMessage}`,
+        };
+        this.alertType = "danger";
+        this.alertTrigger = true;
+        this.stopAlert();
+      }
+    })
+  }
+
+  addSubCategory() {
+    let payload = {
+
+      "fk_category_id": Number(this.productForm.value.Category),
+      "subcategory_name": this.productForm.value.Sub_category_name,
+      "Logged_by": Number(localStorage.getItem('user_Id'))
+    }
+    this.stockService.addSubCategory(payload).subscribe((res: any) => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      if (res?.body?.status == 'success') {
+        this.alertData = {
+          message: res?.body?.alert
+        };
+        this.alertType = "success";
+        this.alertTrigger = true;
+        this.stopAlert();
+        this.showSubCategoryInput = false
+        this.productForm.controls['Sub_category_name'].setValue(null)
+        this.getSubcategoryData()
+      } else {
+        this.alertData = {
+          message: `Data Not ${this.alertMessage}`,
+        };
+        this.alertType = "danger";
+        this.alertTrigger = true;
+        this.stopAlert();
+      }
+    })
+  }
+
+  addUnit() {
+    const initialState: ModalOptions = {
+      initialState: {
+        // vehicleDetail: value
+      },
+    };
+    this.bsModalRef = this.modalService.show(
+      AddUnitPopupComponent,
+      Object.assign(initialState, { class: "modal-md modal-dialog-centered" })
+    );
+    this.bsModalRef?.content.mapdata.subscribe(
+      (value: any) => {
+        this.getUnit()
+      }
+    );
+  }
+
+  addHsnCode() {
+    const initialState: ModalOptions = {
+      initialState: {
+        // vehicleDetail: value
+      },
+    };
+    this.bsModalRef = this.modalService.show(
+      AddHsnPopupComponent,
+      Object.assign(initialState, { class: "modal-lg modal-dialog-centered" })
+    );
+    this.bsModalRef?.content.mapdata.subscribe(
+      (value: any) => {
+        this.getHSNList()
+      }
+    );
+  }
+
+  addManufacture() {
+    let payload = {
+      "brand_name": this.productForm.value.manufacture_name,
+      "Logged_by": Number(localStorage.getItem('user_Id'))
+    }
+
+    this.stockService.addBrand(payload).subscribe((res: any) => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      if (res?.body?.status == 'success') {
+        this.alertData = {
+          message: res?.body?.alert
+        };
+        this.alertType = "success";
+        this.alertTrigger = true;
+        this.stopAlert();
+        this.showManufactureInput = false
+        this.productForm.controls['manufacture_name'].setValue(null)
+        this.getBrandData()
+      } else {
+        this.alertData = {
+          message: res?.body?.alert,
+        };
+        this.alertType = "danger";
+        this.alertTrigger = true;
+        this.stopAlert();
+      }
+    })
+  }
+
   stopAlert() {
     setTimeout(() => {
       this.alertTrigger = false;
@@ -278,6 +444,9 @@ export class AddProductComponent implements OnInit {
   confirm(event: any) {
     if (event.selectType == 'category') {
       this.selectedSubCatValue = null
+      this.showSubCategoryInput = false
+      this.subCateData = []
+      this.onSelectSubCategory = event.id
       this.productForm.controls['Category'].setValue(event.id)
       this.getSubcategoryData();
       this.catename = event.assets_no
@@ -302,8 +471,8 @@ export class AddProductComponent implements OnInit {
   }
 
 
-  submit(formValue: any) {    
-    console.log('formValue',formValue);
+  submit(formValue: any) {
+    console.log('formValue', formValue);
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
@@ -328,9 +497,9 @@ export class AddProductComponent implements OnInit {
       "min_alert_value": Number(formValue?.minAlertValue),
       "min_order_value": Number(formValue?.minOrderValue),
       "Logged_by": Number(localStorage.getItem('user_Id')),
-      "fk_item_location_id": Number(formValue.itemFor)
+      "fk_item_location_id": Number(formValue.itemFor),
+      "item_barcode_no": "string"
     }
-    console.log('payload',payload);
     if (this.id) {
       payload['pk_item_id'] = Number(this.id);
       service = this.stockService.updateProduct(payload)
@@ -348,7 +517,7 @@ export class AddProductComponent implements OnInit {
         };
         this.alertType = "success";
         this.alertTrigger = true;
-            this.productForm.reset()
+        this.productForm.reset()
         this.stopAlert();
         this.button = 'Add';
         setTimeout(() => {

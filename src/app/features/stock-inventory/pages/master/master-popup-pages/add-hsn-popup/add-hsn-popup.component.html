@@ -1,0 +1,129 @@
+<div class="modal-popup">
+    <div class="modal-header text-center bg-primary text-white">
+        <h4 class="modal-title w-100">Add HSN</h4>
+        <div class="close-modal">
+            <i class="fa fa-close" (click)="cancel()" style="color: white; font-size: 20px; cursor: pointer;"></i>
+        </div>
+    </div>
+
+
+    <div class="modal-body p-3">
+        <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger"></app-alert>
+        <form [formGroup]="hsnForm">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">HSN Code</label>
+                    <div class="input-group ">
+                        <input type="text" class="form-control" formControlName="hsnCode" placeholder="Enter HSN Code"
+                            aria-describedby="button-addon2" maxlength="12" required />
+                    </div>
+                    <div *ngIf="hsnForm.get('hsnCode')?.invalid && (hsnForm.get('hsnCode')?.dirty || hsnForm.get('hsnCode')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="hsnForm.get('hsnCode')?.errors?.['required']">HSN Code is
+                            required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Description</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="Description"
+                            placeholder="Enter Description" aria-describedby="button-addon2" />
+                    </div>
+                    <div *ngIf="hsnForm.get('Description')?.invalid && (hsnForm.get('Description')?.dirty || hsnForm.get('Description')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="hsnForm.get('Description')?.errors?.['required']">Description is
+                            required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Tax %</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" formControlName="tax" placeholder="Tax %"
+                            aria-describedby="button-addon2" />
+                    </div>
+                    <div *ngIf="hsnForm.get('tax')?.invalid && (hsnForm.get('tax')?.dirty || hsnForm.get('tax')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="hsnForm.get('tax')?.errors?.['required']">Tax is
+                            required</span>
+                    </div>
+                    <div *ngIf="submitted && hsnForm.controls['tax'].touched &&
+                                    hsnForm.controls['tax'].invalid" class="text-danger">
+                        <div *ngIf="hsnForm.controls['tax'].errors?.['max']">Maximum Tax can be 100
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">C GST%</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" formControlName="cgst" placeholder="C GST%"
+                            aria-describedby="button-addon2" />
+                    </div>
+                    <div *ngIf="hsnForm.get('cgst')?.invalid && (hsnForm.get('cgst')?.dirty || hsnForm.get('cgst')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="hsnForm.get('cgst')?.errors?.['required']">C GST is
+                            required</span>
+                    </div>
+                    <div *ngIf="submitted && hsnForm.controls['cgst'].touched &&
+                                    hsnForm.controls['cgst'].invalid" class="text-danger">
+                        <div *ngIf="hsnForm.controls['cgst'].errors?.['max']">Maximum CGST can be 100
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+
+                <div class="col-md-6">
+                    <label class="form-label">S GST%</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" formControlName="sgst" placeholder="S GST%"
+                            aria-describedby="button-addon2" />
+                    </div>
+                    <div *ngIf="hsnForm.get('sgst')?.invalid && (hsnForm.get('sgst')?.dirty || hsnForm.get('sgst')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="hsnForm.get('sgst')?.errors?.['required']">S GST is
+                            required</span>
+                    </div>
+                    <div *ngIf="submitted && hsnForm.controls['sgst'].touched &&
+                                    hsnForm.controls['sgst'].invalid" class="text-danger">
+                        <div *ngIf="hsnForm.controls['sgst'].errors?.['max']">Maximum SGST can be 100
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">I GST%</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" formControlName="igst" placeholder="I GST%"
+                            aria-describedby="button-addon2" />
+                    </div>
+                    <div *ngIf="hsnForm.get('igst')?.invalid && (hsnForm.get('igst')?.dirty || hsnForm.get('igst')?.touched )"
+                        class="text-danger">
+                        <span *ngIf="hsnForm.get('igst')?.errors?.['required']">I GST is
+                            required</span>
+                    </div>
+                    <div *ngIf="submitted && hsnForm.controls['igst'].touched &&
+                                hsnForm.controls['igst'].invalid" class="text-danger">
+                        <div *ngIf="hsnForm.controls['igst'].errors?.['max']">Maximum IGST can be 100
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-success" (click)="submit(hsnForm.value)">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button (click)="cancel()" class="btn btn-danger">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>

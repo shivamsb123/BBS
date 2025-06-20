@@ -1,0 +1,51 @@
+<div class="modal-popup">
+   <div class="modal-header text-center bg-primary text-white">
+    <h4 class="modal-title w-100">Add Unit</h4>
+    <div class="close-modal">
+      <i class="fa fa-close" (click)="cancel()" style="color: white; font-size: 20px; cursor: pointer;"></i>
+    </div>
+  </div>
+
+
+  <div class="modal-body p-3">
+     <app-alert [alertData]="alertData" [alertType]="alertType" *ngIf="alertTrigger"></app-alert>
+         <form [formGroup]="unitForm">
+              <div class="row">
+                  <div class="col-md-12 mb-3">
+                      <label class="form-label">Unit Code</label>
+                      <div class="input-group ">
+                          <input type="text"  class="form-control" formControlName="code"
+                              placeholder="Enter Unit Code"  aria-describedby="button-addon2" />
+                      </div>
+                       <div *ngIf="unitForm.get('code')?.invalid && (unitForm.get('code')?.dirty || unitForm.get('code')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="unitForm.get('code')?.errors?.['required']">Unit Code is
+                                        required</span>
+                                </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                  <label class="form-label">Unit Name</label>
+                      <div class="input-group ">
+                          <input type="text"  class="form-control" formControlName="name"
+                              placeholder="Enter Unit Name"  aria-describedby="button-addon2" />
+                      </div>
+                       <div *ngIf="unitForm.get('name')?.invalid && (unitForm.get('name')?.dirty || unitForm.get('name')?.touched )"
+                                    class="text-danger">
+                                    <span *ngIf="unitForm.get('name')?.errors?.['required']">Unit Name is
+                                        required</span>
+                                </div>
+                  </div>          
+                  <div class="col-md-6">
+                      <button class="btn btn-success" (click)="submit(unitForm.value)">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add
+                      </button>
+                  </div>
+                  <div class="col-md-6">
+                      <button class="btn btn-danger" (click)="cancel()">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                      </button>
+                  </div>
+              </div>      
+            </form>
+  </div>
+</div>
